@@ -39,6 +39,7 @@
     "express-messages": "^1.0.1",
     "express-session": "^1.15.6",
     "express-validator": "^4.2.1",
+    "hat": "^0.0.3",
     "lodash": "^4.17.4",
     "mongodb": "^2.2.31",
     "mongoose": "^4.10",
@@ -48,6 +49,7 @@
     "passport-local": "^1.0.0",
     "pify": "^3.0.0",
     "pretty-error": "^2.1.1",
-    "pug": "^2.0.0-rc.4"
+    "pug": "^2.0.0-rc.4",
+    "require-dir": "^0.3.2"
   }
 }

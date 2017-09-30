@@ -1,4 +1,5 @@
 import {User, createUser} from '../../models/user'
+import hat from 'hat'
 
 const registerHandler = async (req, res) => {
   const {
@@ -24,13 +25,14 @@ const registerHandler = async (req, res) => {
     const newUser = new User({
       email,
       username,
-      password
+      password,
+      'apikey': hat()
     })
 
     try {
       await createUser(newUser)
     } catch (error) {
-      req.flash('msg:error', 'This e-mail address is already attached to an account')
+      req.flash('msg:error', 'Submitted data rejected. If you already used this e-mail address with an account, please log in with that one.')
       res.redirect('/users/register')
       return false
     }

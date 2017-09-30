@@ -19,6 +19,10 @@ const UserSchema = new Schema({
   'email': {
     'type':   String,
     'unique': true
+  },
+  'apikey': {
+    'type':   String,
+    'unique': true
   }
 })
 

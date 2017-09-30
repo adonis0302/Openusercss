@@ -1,3 +1,5 @@
+- const thisYear = new Date().getFullYear()
+
 mixin metas
   meta(charset="utf-8")
   meta(http-equiv="x-ua-compatible", content="ie=edge")
@@ -45,7 +47,7 @@ mixin frame
         .footer.is-paddingless(data-c-margin-top="2")
           .container(data-c-padding="6")
             .content.has-text-centered
-              p Copyright &copy; 2017 DecentM
+              p Copyright &copy; #{thisYear} DecentM
       +bottom-assets
 
 +frame
