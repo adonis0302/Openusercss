@@ -1,0 +1,51 @@
+{
+  "name": "account-center",
+  "version": "0.0.1",
+  "description": "DecentM Account manager",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --watch 'src/**/*.js' --exec 'babel-node' src/app.js"
+  },
+  "keywords": [
+    "sso"
+  ],
+  "author": "DecentM",
+  "license": "MIT",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.0.1",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-flow": "^6.23.0",
+    "babel-preset-stage-3": "^6.24.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.2",
+    "bulma": "^0.5.3",
+    "chalk-console": "^1.0.1",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.3",
+    "eslint": "^4.7.2",
+    "eslint-config-nodesecurity": "^1.3.1",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-async": "^0.1.1",
+    "eslint-plugin-flowtype": "^2.36.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.2.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-security": "^1.4.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "express": "^4.16.0",
+    "express-messages": "^1.0.1",
+    "express-pug": "^1.0.0",
+    "express-session": "^1.15.6",
+    "express-validator": "^4.2.1",
+    "mongodb": "^2.2.31",
+    "mongoose": "^4.10",
+    "passport": "^0.4.0",
+    "passport-http": "^0.3.0",
+    "passport-local": "^1.0.0",
+    "pify": "^3.0.0",
+    "pug": "^2.0.0-rc.4"
+  }
+}

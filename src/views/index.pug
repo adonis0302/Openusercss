@@ -1,0 +1,6 @@
+extends layouts/main
+
+block page
+  h1 Welcome to this test
+  if user
+    code #{JSON.stringify(user)}

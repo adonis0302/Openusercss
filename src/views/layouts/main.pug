@@ -1,0 +1,66 @@
+mixin metas
+  meta(charset="utf-8")
+  meta(http-equiv="x-ua-compatible", content="ie=edge")
+  meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
+  meta(name="robots", content="index,follow,noodp")
+  meta(name="googlebot", content="index,follow")
+  meta(name="mobile-web-app-capable", content="yes")
+  
+mixin bottom-assets
+  script(type="text/javascript", src="/js/script.js", data-instant-track, async, defer)
+  script(type="text/javascript", src="/js/fontawesome.min.js", data-instant-track, defer)
+  script(type="text/javascript", src="/js/brands.min.js", data-instant-track, async, defer)
+  script(type="text/javascript", src="/js/regular.min.js", data-instant-track, async, defer)
+  link(type="text/css", rel='stylesheet', href='/css/bulma.css')
+  link(type="text/css", rel='stylesheet', href='/css/cly.min.css')
+  link(type="text/css", rel='stylesheet', href='/css/styles.css')
+
+mixin frame
+  doctype html
+  html.no-js
+    head
+      title Your DecentM account
+      +metas
+      body
+        nav.navbar.is-primary(role="navigation", aria-label="main navigation")
+          .navbar-brand
+            a.navbar-item(href="/")
+              | DecentM Accounts
+            button.button.navbar-burger.is-primary(data-target="navMenu")
+              span
+              span
+              span
+          .navbar-menu#navMenu
+            .navbar-end
+              a.navbar-item(href="/users/login") Login
+              a.navbar-item(href="/users/register") Register
+              a.navbar-item(href="/users/logout") Logout
+        .container(data-c-padding-top="4", data-c-padding="2")
+          if errors
+            .message.is-danger
+              .message-header
+                p Errors occurred while processing your request
+              .message-body.content(data-c-padding-left="4")
+                ul.is-marginless
+                  each error in errors
+                    li #{error.msg}
+          if (successMsg.length > 0)
+            .message.is-info
+              .message-header
+                if (successMsg.length === 1)
+                  p Notification
+                else
+                  p Notifications
+              .message-body.content(data-c-padding-left="4")
+                each notification in successMsg
+                  p #{notification}
+          if block
+            block
+        .footer.is-paddingless(data-c-margin-top="2")
+          .container(data-c-padding="6")
+            .content.has-text-centered
+              p Copyright &copy; 2017 DecentM
+      +bottom-assets
+
++frame
+  block page
