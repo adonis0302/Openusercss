@@ -1,5 +1,6 @@
 import {Router as expressRouter} from 'express'
-import {newKeyHandler} from './handlers/new-key-handler'
+import {newKeyHandler} from './handlers/new-key'
+import {accountDeleteHandler} from './handlers/account-delete'
 
 const router = expressRouter()
 
@@ -17,5 +18,6 @@ router.get('/', ensureAuthenticated, (req, res) => {
 })
 
 router.post('/reset-key', ensureAuthenticated, newKeyHandler)
+router.post('/delete-account', ensureAuthenticated, accountDeleteHandler)
 
 module.exports = router
