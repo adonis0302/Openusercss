@@ -1,3 +1,19 @@
 .button {
   border-radius: 0;
 }
+
+.hoverhidden {
+  padding: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  transition-duration: .3s;
+  transition-property: background-color, color;
+  transition-timing-function: ease-in-out;
+}
+
+.hoverhidden:not(:hover) {
+  background-color: #000000;
+  color: #000000;
+  border-radius: 3px;
+  user-select: none;
+}

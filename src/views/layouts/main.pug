@@ -35,6 +35,7 @@ mixin frame
           .navbar-menu#navMenu
             .navbar-end
               if user
+                a.navbar-item(href="/settings") Settings
                 a.navbar-item(href="/users/logout") Logout
               else
                 a.navbar-item(href="/users/login") Login

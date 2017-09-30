@@ -36,20 +36,6 @@ const createUser = async (newUser) => {
 
   newUser.password = hash
   return newUser.save()
-
-  /* bcrypt.genSalt(10, (error, salt) => {
-    if (error) {
-      throw error
-    }
-    bcrypt.hash(newUser.password, salt, (err, hash) => {
-      if (err) {
-        throw err
-      }
-
-      newUser.password = hash
-      newUser.save(callback)
-    })
-  }) */
 }
 
 const getUserByEmail = async (email) => {

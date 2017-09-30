@@ -1,0 +1,25 @@
+extends layouts/main
+
+block page
+  h1 Settings
+  .container(data-c-margin-top="4")
+    .columns
+      .column
+        .notification.is-primary
+          p Your API key:&nbsp;
+            span.hoverhidden #{user.apikey}
+    .columns
+      .column
+        .notification
+          form(method="post", action="settings/reset-key")
+            .field
+              button.button(type="submit")
+                i.far.fa-key
+                | &nbsp;Reset API key
+      .column
+        .notification.is-danger
+          form(method="post", action="/settings/delete-account")
+            .field
+              button.button(type="submit")
+                i.far.fa-trash
+                | &nbsp;Delete account

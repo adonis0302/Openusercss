@@ -5,7 +5,8 @@
   "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --watch 'src/**/*.js' --exec 'babel-node' src/app.js"
+    "dev": "nodemon --watch 'src/**/*.js' --exec 'babel-node' src/app.js",
+    "build": "babel src -d build && cp -a src/public/* build/public && cp -a src/views build/views"
   },
   "keywords": [
     "sso"

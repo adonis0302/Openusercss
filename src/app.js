@@ -12,6 +12,11 @@ import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
 import log from 'chalk-console'
 import {concat} from 'lodash'
+import {handle} from './utils/error-handler'
+
+import routes from './routes'
+import users from './routes/users'
+import settings from './routes/settings'
 
 mongoose.Promise = global.Promise // eslint-disable-line
 
@@ -21,8 +26,6 @@ const init = async () => {
   })
   // const db = mongoose.connection
 
-  const routes = require('./routes')
-  const users = require('./routes/users')
   const app = express()
 
   const appSecret = await bcrypt.genSalt()
@@ -82,6 +85,7 @@ const init = async () => {
 
   app.use('/', routes)
   app.use('/users', users)
+  app.use('/settings', settings)
 
   app.set('port', 80)
 
@@ -93,5 +97,9 @@ const init = async () => {
 }
 
 (async () => {
-  await init()
+  try {
+    await init()
+  } catch (error) {
+    handle(error)
+  }
 })()
