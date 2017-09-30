@@ -1,67 +1,53 @@
-import mongoose from 'mongoose'
-import bcrypt from 'bcryptjs'
-import pify from 'pify'
+const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs')
 
-const {Schema} = mongoose
-
-const UserSchema = new Schema({
+// User Schema
+const UserSchema = mongoose.Schema({
   'username': {
-    'type':   String,
-    'unique': true
+    'type':  String,
+    'index': true
   },
   'password': {
     'type': String
   },
   'email': {
-    'type':   String,
-    'index':  true,
-    'unique': true
-  },
-  'name': {
     'type': String
   }
 })
 
-const User = mongoose.model('User', UserSchema)
+const User = module.exports = mongoose.model('User', UserSchema)
 
-const createUser = async (newUser) => {
-  const salt = await pify(bcrypt.genSalt)(10)
-  const hash = await pify(bcrypt.hash)(newUser.password, salt)
-
-  newUser.password = hash
-  return newUser.save()
-}
-
-const getUserByEmail = (address) => {
-  const query = {
-    'email': address
-  }
-
-  return User.findOne(query)
-}
-
-const getUserById = (id) => {
-  const query = {
-    id
-  }
-
-  return User.findOne(query)
-}
-
-const comparePassword = (candidate, hash, callback) => {
-  bcrypt.compare(candidate, hash, (error, isMatch) => {
+module.exports.createUser = (newUser, callback) => {
+  bcrypt.genSalt(10, (error, salt) => {
     if (error) {
       throw error
     }
+    bcrypt.hash(newUser.password, salt, (err, hash) => {
+      if (err) {
+        throw err
+      }
 
-    callback(null, isMatch)
+      newUser.password = hash
+      newUser.save(callback)
+    })
   })
 }
 
-module.exports = {
-  User,
-  createUser,
-  getUserByEmail,
-  getUserById,
-  comparePassword
+module.exports.getUserByEmail = (email, callback) => {
+  const query = {email}
+
+  User.findOne(query, callback)
+}
+
+module.exports.getUserById = (id, callback) => {
+  User.findById(id, callback)
+}
+
+module.exports.comparePassword = (candidatePassword, hash, callback) => {
+  bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
+    if (err) {
+      throw err
+    }
+    callback(null, isMatch)
+  })
 }

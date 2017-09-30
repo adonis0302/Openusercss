@@ -1,101 +1,109 @@
-import {Router as expressRouter} from 'express'
-import log from 'chalk-console'
-import {User, createUser, getUserByEmail} from '../models/user'
-import passport from 'passport'
-import {Strategy as LocalStrategy} from 'passport-local'
+const express = require('express')
+const router = express.Router()
+const passport = require('passport')
+const LocalStrategy = require('passport-local').Strategy
+const log = require('chalk-console')
 
-const router = expressRouter()
+const User = require('../models/user')
 
+// Register
 router.get('/register', (req, res) => {
   res.render('register')
 })
 
-router.post('/register', async (req, res) => {
+// Login
+router.get('/login', (req, res) => {
+  res.render('login')
+})
+
+// Register User
+router.post('/register', (req, res) => {
   const {
     username,
     email,
     password
   } = req.body
 
+  // Validation
+  req.checkBody('email', 'Email is required').notEmpty()
+  req.checkBody('email', 'Email is not valid').isEmail()
   req.checkBody('username', 'Username is required').notEmpty()
-  req.checkBody('email', 'E-mail is required').notEmpty()
-  req.checkBody('email', 'E-mail is not a vaild address').isEmail()
-  req.checkBody('password', 'Password can not be empty').notEmpty()
+  req.checkBody('password', 'Password is required').notEmpty()
   req.checkBody('passwordverify', 'Passwords do not match').equals(password)
 
   const errors = req.validationErrors()
-  let newUser = null
 
   if (errors) {
     res.render('register', {
       errors
     })
   } else {
-    newUser = new User({
-      username,
+    const newUser = new User({
       email,
+      username,
       password
     })
 
-    try {
-      await createUser(newUser)
-    } catch (error) {
-      req.flash('msg:error', 'A system error occurred')
-      log.error('Error while creating user:')
-      log.error(error)
-      log.error(error.stack)
-    }
+    User.createUser(newUser, (err, user) => {
+      if (err) {
+        throw err
+      }
+    })
 
-    req.flash('msg:success', 'Registration successful')
+    req.flash('msg:success', 'You are registered and can now login')
+
     res.redirect('/users/login')
   }
 })
 
-router.get('/login', (req, res) => {
-  res.render('login')
-})
+passport.use(
+  new LocalStrategy({
+    'usernameField': 'email',
+    'passwordField': 'password'
+  },
+  (email, password, done) => {
+    User.getUserByEmail(email, (err, user) => {
+      if (err) {
+        throw err
+      }
+      if (!user) {
+        return done(null, false, {'message': 'Invalid credentials'})
+      }
 
-passport.use(new LocalStrategy((email, password, done) => {
-  getUserByEmail({email}, (error, user) => {
-    if (error) {
-      return done(error)
-      console.log(error)
-    }
-
-    if (!user || !user.validPassword(password)) {
-      return done(null, false, {
-        'message': 'Invalid credentials'
+      User.comparePassword(password, user.password, (error, isMatch) => {
+        if (error) {
+          throw error
+        }
+        if (isMatch) {
+          return done(null, user)
+        }
+        return done(null, false, {'message': 'Invalid credentials'})
       })
-    }
-
-    return done(null, user)
-  })
-}))
+    })
+  }))
 
 passport.serializeUser((user, done) => {
   done(null, user.id)
 })
 
 passport.deserializeUser((id, done) => {
-  User.getUserById(id, (error, user) => {
-    done(error, user)
+  User.getUserById(id, (err, user) => {
+    done(err, user)
   })
 })
 
 router.post('/login',
-  passport.authenticate('local', {
-    'successRedirect': '/',
-    'failureRedirect': '/users/login',
-    'failureFlash':    true
-  }),
+  passport.authenticate('local', {'successRedirect': '/', 'failureRedirect': '/users/login', 'failureFlash': true}),
   (req, res) => {
+    req.flash('msg:success', 'Login successful, welcome!')
     res.redirect('/')
-  }
-)
+  })
 
 router.get('/logout', (req, res) => {
   req.logout()
-  req.flash('msg:success', 'Logged out')
+
+  req.flash('msg:success', 'You are logged out')
+
   res.redirect('/users/login')
 })
 

@@ -1,0 +1,26 @@
+if (authError.length > 0)
+  .message.is-danger
+    .message-header
+      p An error occurred while logging you in
+    .message-body.content(data-c-padding-left="4")
+      ul.is-marginless
+        p #{authError}
+if (errorMsg.length > 0)
+  .message.is-danger
+    .message-header
+      p Errors occurred while processing your request
+    .message-body.content(data-c-padding-left="4")
+      ul.is-marginless
+        if (errorMsg.length > 0)
+          each error in errorMsg
+            li #{error}
+if (successMsg.length > 0)
+  .message.is-info
+    .message-header
+      if (successMsg.length === 1)
+        p Notification
+      else
+        p Notifications
+    .message-body.content(data-c-padding-left="4")
+      each notification in successMsg
+        p #{notification}

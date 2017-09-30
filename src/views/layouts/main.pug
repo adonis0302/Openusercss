@@ -38,28 +38,7 @@ mixin frame
                 a.navbar-item(href="/users/login") Login
                 a.navbar-item(href="/users/register") Register
         .container(data-c-padding-top="4", data-c-padding="2")
-          if (errors || errorMsg.length > 0)
-            .message.is-danger
-              .message-header
-                p Errors occurred while processing your request
-              .message-body.content(data-c-padding-left="4")
-                ul.is-marginless
-                  if errors
-                    each error in errors
-                      li #{error.msg}
-                  if (errorMsg.length > 0)
-                    each error in errorMsg
-                      li #{error}
-          if (successMsg.length > 0)
-            .message.is-info
-              .message-header
-                if (successMsg.length === 1)
-                  p Notification
-                else
-                  p Notifications
-              .message-body.content(data-c-padding-left="4")
-                each notification in successMsg
-                  p #{notification}
+          include ../elements/flashes
           if block
             block
         .footer.is-paddingless(data-c-margin-top="2")
