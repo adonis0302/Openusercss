@@ -1,24 +1,39 @@
-const mongoose = require('mongoose')
-const bcrypt = require('bcryptjs')
+import mongoose from 'mongoose'
+import bcrypt from 'bcryptjs'
+// import pify from 'pify'
+// import log from 'chalk-console'
+import {handle} from '../utils/error-handler'
+import uniqueValidator from 'mongoose-unique-validator'
 
-// User Schema
-const UserSchema = mongoose.Schema({
+const {Schema} = mongoose
+
+const UserSchema = new Schema({
   'username': {
-    'type':  String,
-    'index': true
+    'type':   String,
+    'index':  true,
+    'unique': true
   },
   'password': {
     'type': String
   },
   'email': {
-    'type': String
+    'type':   String,
+    'unique': true
   }
 })
 
-const User = module.exports = mongoose.model('User', UserSchema)
+UserSchema.plugin(uniqueValidator)
 
-module.exports.createUser = (newUser, callback) => {
-  bcrypt.genSalt(10, (error, salt) => {
+const User = mongoose.model('User', UserSchema)
+
+const createUser = async (newUser) => {
+  const salt = await bcrypt.genSalt(10)
+  const hash = await bcrypt.hash(newUser.password, salt)
+
+  newUser.password = hash
+  return newUser.save()
+
+  /* bcrypt.genSalt(10, (error, salt) => {
     if (error) {
       throw error
     }
@@ -30,24 +45,36 @@ module.exports.createUser = (newUser, callback) => {
       newUser.password = hash
       newUser.save(callback)
     })
-  })
+  }) */
 }
 
-module.exports.getUserByEmail = (email, callback) => {
+const getUserByEmail = async (email) => {
   const query = {email}
+  let foundUser = null
 
-  User.findOne(query, callback)
+  try {
+    foundUser = User.findOne(query)
+  } catch (error) {
+    handle(error)
+  }
+
+  return foundUser
 }
 
-module.exports.getUserById = (id, callback) => {
-  User.findById(id, callback)
+const getUserById = async (id, callback) => {
+  return User.findById(id, callback)
 }
 
-module.exports.comparePassword = (candidatePassword, hash, callback) => {
-  bcrypt.compare(candidatePassword, hash, (err, isMatch) => {
-    if (err) {
-      throw err
-    }
-    callback(null, isMatch)
-  })
+const comparePassword = async (candidatePassword, hash) => {
+  const isMatch = await bcrypt.compare(candidatePassword, hash)
+
+  return isMatch
+}
+
+module.exports = {
+  comparePassword,
+  getUserById,
+  getUserByEmail,
+  createUser,
+  User
 }

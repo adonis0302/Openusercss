@@ -4,19 +4,21 @@ import express from 'express'
 import path from 'path'
 import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
-// import pugEngine from 'express-pug'
 import expressValidator from 'express-validator'
 import flash from 'connect-flash'
 import session from 'express-session'
 import passport from 'passport'
-// import {LocalStrategy} from 'passport-local'
-// import mongo from 'mongodb'
 import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
 import log from 'chalk-console'
+import {concat} from 'lodash'
 
-(async () => {
-  mongoose.connect('mongodb://localhost/account-center')
+mongoose.Promise = global.Promise // eslint-disable-line
+
+const init = async () => {
+  mongoose.connect('mongodb://localhost/account-center', {
+    'useMongoClient': true
+  })
   // const db = mongoose.connection
 
   const routes = require('./routes')
@@ -66,9 +68,14 @@ import log from 'chalk-console'
   app.use(flash())
 
   app.use((req, res, next) => {
-    res.locals.successMsg = req.flash('msg:success')
-    res.locals.errorMsg = req.flash('msg:error')
-    res.locals.authError = req.flash('error')
+    res.locals.infoMsg = concat(
+      req.flash('msg:info'),
+      req.flash('msg:success')
+    )
+    res.locals.errorMsg = concat(
+      req.flash('error'),
+      req.flash('msg:error')
+    )
     res.locals.user = req.user || null
     next()
   })
@@ -81,4 +88,10 @@ import log from 'chalk-console'
   app.listen(app.get('port'), () => {
     log.info(`App started on port ${app.get('port')}`)
   })
+
+  return true
+}
+
+(async () => {
+  await init()
 })()

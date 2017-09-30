@@ -37,10 +37,11 @@ mixin frame
               else
                 a.navbar-item(href="/users/login") Login
                 a.navbar-item(href="/users/register") Register
-        .container(data-c-padding-top="4", data-c-padding="2")
-          include ../elements/flashes
-          if block
-            block
+        .section
+          .container
+            include ../elements/flashes
+            if block
+              block
         .footer.is-paddingless(data-c-margin-top="2")
           .container(data-c-padding="6")
             .content.has-text-centered

@@ -7,7 +7,6 @@ const ensureAuthenticated = (req, res, next) => {
     return next()
   }
 
-  // req.flash('error_msg','You are not logged in');
   res.redirect('/users/login')
 }
 

@@ -1,99 +1,73 @@
-const express = require('express')
-const router = express.Router()
-const passport = require('passport')
-const LocalStrategy = require('passport-local').Strategy
-const log = require('chalk-console')
+import express from 'express'
+import passport from 'passport'
+import {Strategy as LocalStrategy} from 'passport-local'
+import {getUserByEmail, comparePassword, getUserById} from '../models/user'
+import {registerHandler} from './handlers/registration'
+import {handle} from '../utils/error-handler'
 
-const User = require('../models/user')
+const router = express.Router() // eslint-disable-line new-cap
 
-// Register
 router.get('/register', (req, res) => {
   res.render('register')
 })
 
-// Login
 router.get('/login', (req, res) => {
   res.render('login')
 })
 
-// Register User
-router.post('/register', (req, res) => {
-  const {
-    username,
-    email,
-    password
-  } = req.body
-
-  // Validation
-  req.checkBody('email', 'Email is required').notEmpty()
-  req.checkBody('email', 'Email is not valid').isEmail()
-  req.checkBody('username', 'Username is required').notEmpty()
-  req.checkBody('password', 'Password is required').notEmpty()
-  req.checkBody('passwordverify', 'Passwords do not match').equals(password)
-
-  const errors = req.validationErrors()
-
-  if (errors) {
-    res.render('register', {
-      errors
-    })
-  } else {
-    const newUser = new User({
-      email,
-      username,
-      password
-    })
-
-    User.createUser(newUser, (err, user) => {
-      if (err) {
-        throw err
-      }
-    })
-
-    req.flash('msg:success', 'You are registered and can now login')
-
-    res.redirect('/users/login')
-  }
-})
+router.post('/register', registerHandler)
 
 passport.use(
   new LocalStrategy({
     'usernameField': 'email',
     'passwordField': 'password'
   },
-  (email, password, done) => {
-    User.getUserByEmail(email, (err, user) => {
-      if (err) {
-        throw err
-      }
-      if (!user) {
-        return done(null, false, {'message': 'Invalid credentials'})
-      }
+  async (email, password, done) => {
+    let user = null
+    let matchedPassword = null
 
-      User.comparePassword(password, user.password, (error, isMatch) => {
-        if (error) {
-          throw error
-        }
-        if (isMatch) {
-          return done(null, user)
-        }
-        return done(null, false, {'message': 'Invalid credentials'})
-      })
-    })
-  }))
+    try {
+      user = await getUserByEmail(email)
+    } catch (error) {
+      handle(error)
+    }
 
-passport.serializeUser((user, done) => {
-  done(null, user.id)
+    if (!user) {
+      return done(null, false, {'message': 'Invalid credentials'})
+    }
+
+    try {
+      matchedPassword = await comparePassword(password, user.password)
+    } catch (error) {
+      handle(error)
+    }
+
+    if (matchedPassword) {
+      return done(null, user)
+    }
+
+    return done(null, false, {'message': 'Invalid credentials'})
+  })
+)
+
+passport.serializeUser(async (user, done) => {
+  return done(null, user.id)
 })
 
-passport.deserializeUser((id, done) => {
-  User.getUserById(id, (err, user) => {
-    done(err, user)
-  })
+passport.deserializeUser(async (id, done) => {
+  let user = null
+
+  try {
+    user = await getUserById(id)
+  } catch (error) {
+    handle(error)
+  }
+
+  return done(null, user)
 })
 
 router.post('/login',
-  passport.authenticate('local', {'successRedirect': '/', 'failureRedirect': '/users/login', 'failureFlash': true}),
+  passport.authenticate('local', {'failureRedirect': '/users/login', 'failureFlash': true}),
   (req, res) => {
     req.flash('msg:success', 'Login successful, welcome!')
     res.redirect('/')
@@ -102,8 +76,7 @@ router.post('/login',
 router.get('/logout', (req, res) => {
   req.logout()
 
-  req.flash('msg:success', 'You are logged out')
-
+  req.flash('msg:success', 'You have been logged out')
   res.redirect('/users/login')
 })
 
