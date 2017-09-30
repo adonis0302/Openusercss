@@ -32,18 +32,24 @@ mixin frame
               span
           .navbar-menu#navMenu
             .navbar-end
-              a.navbar-item(href="/users/login") Login
-              a.navbar-item(href="/users/register") Register
-              a.navbar-item(href="/users/logout") Logout
+              if user
+                a.navbar-item(href="/users/logout") Logout
+              else
+                a.navbar-item(href="/users/login") Login
+                a.navbar-item(href="/users/register") Register
         .container(data-c-padding-top="4", data-c-padding="2")
-          if errors
+          if (errors || errorMsg.length > 0)
             .message.is-danger
               .message-header
                 p Errors occurred while processing your request
               .message-body.content(data-c-padding-left="4")
                 ul.is-marginless
-                  each error in errors
-                    li #{error.msg}
+                  if errors
+                    each error in errors
+                      li #{error.msg}
+                  if (errorMsg.length > 0)
+                    each error in errorMsg
+                      li #{error}
           if (successMsg.length > 0)
             .message.is-info
               .message-header

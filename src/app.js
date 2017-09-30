@@ -69,6 +69,7 @@ import log from 'chalk-console'
     res.locals.successMsg = req.flash('msg:success')
     res.locals.errorMsg = req.flash('msg:error')
     res.locals.error = req.flash('error')
+    res.locals.user = req.user || null
     next()
   })
 

@@ -1,6 +1,8 @@
 import {Router as expressRouter} from 'express'
 import log from 'chalk-console'
-import {User, createUser} from '../models/user'
+import {User, createUser, getUserByEmail} from '../models/user'
+import passport from 'passport'
+import {Strategy as LocalStrategy} from 'passport-local'
 
 const router = expressRouter()
 
@@ -51,6 +53,50 @@ router.post('/register', async (req, res) => {
 
 router.get('/login', (req, res) => {
   res.render('login')
+})
+
+passport.use(new LocalStrategy((email, password, done) => {
+  getUserByEmail({email}, (error, user) => {
+    if (error) {
+      return done(error)
+      console.log(error)
+    }
+
+    if (!user || !user.validPassword(password)) {
+      return done(null, false, {
+        'message': 'Invalid credentials'
+      })
+    }
+
+    return done(null, user)
+  })
+}))
+
+passport.serializeUser((user, done) => {
+  done(null, user.id)
+})
+
+passport.deserializeUser((id, done) => {
+  User.getUserById(id, (error, user) => {
+    done(error, user)
+  })
+})
+
+router.post('/login',
+  passport.authenticate('local', {
+    'successRedirect': '/',
+    'failureRedirect': '/users/login',
+    'failureFlash':    true
+  }),
+  (req, res) => {
+    res.redirect('/')
+  }
+)
+
+router.get('/logout', (req, res) => {
+  req.logout()
+  req.flash('msg:success', 'Logged out')
+  res.redirect('/users/login')
 })
 
 module.exports = router

@@ -32,7 +32,36 @@ const createUser = async (newUser) => {
   return newUser.save()
 }
 
+const getUserByEmail = (address) => {
+  const query = {
+    'email': address
+  }
+
+  return User.findOne(query)
+}
+
+const getUserById = (id) => {
+  const query = {
+    id
+  }
+
+  return User.findOne(query)
+}
+
+const comparePassword = (candidate, hash, callback) => {
+  bcrypt.compare(candidate, hash, (error, isMatch) => {
+    if (error) {
+      throw error
+    }
+
+    callback(null, isMatch)
+  })
+}
+
 module.exports = {
   User,
-  createUser
+  createUser,
+  getUserByEmail,
+  getUserById,
+  comparePassword
 }
