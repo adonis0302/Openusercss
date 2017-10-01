@@ -1,21 +1,24 @@
 if (errorMsg.length > 0)
-  .message.is-danger
+  .message.is-danger.shadow-floating
     .message-header
       if (errorMsg.length === 1)
         p An error occurred while processing your request
       else
-        p Multiple errors occurred while processing your request
-    .message-body.content(data-c-padding-left="4")
+        p Multiple errors occurred while processing your request:
+    .message-body.content.is-borderless(data-c-padding-left="4")
       each notification in errorMsg
-        li #{notification}
+        if notification.msg
+          li #{notification.msg}
+        else
+          li #{notification}
 
 if (infoMsg.length > 0)
-  .message.is-info
+  .message.is-info.shadow-floating
     .message-header
       if (infoMsg.length === 1)
         p Notification
       else
         p Notifications
-    .message-body.content(data-c-padding-left="4")
+    .message-body.content.is-borderless(data-c-padding-left="4")
       each notification in infoMsg
         li #{notification}

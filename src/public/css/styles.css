@@ -1,7 +1,3 @@
-.button {
-  border-radius: 0;
-}
-
 .hoverhidden {
   padding: 5px;
   padding-left: 5px;
@@ -16,4 +12,20 @@
   color: #000000;
   border-radius: 3px;
   user-select: none;
+}
+
+.shadow-floating {
+  box-shadow: 0 10px 70px -30px rgba(0, 0, 0, .65);
+}
+
+input:not(:focus) {
+  border: 0 !important;
+}
+
+.shadow-inset {
+  box-shadow: inset 0 2px 17px -7px rgba(0, 0, 0, .65) !important;
+}
+
+.is-borderless {
+  border: 0 !important;
 }

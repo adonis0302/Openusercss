@@ -1,17 +1,19 @@
 import {User, createUser} from '../../models/user'
 import hat from 'hat'
+import {handle} from '../../utils/error-handler'
 
 const registerHandler = async (req, res) => {
   const {
     username,
     email,
-    password
+    password,
+    displayname
   } = req.body
 
   // Validation
   req.checkBody('email', 'Email is required').notEmpty()
   req.checkBody('email', 'Email is not valid').isEmail()
-  req.checkBody('username', 'Username is required').notEmpty()
+  req.checkBody('displayname', 'Username is required').notEmpty()
   req.checkBody('password', 'Password is required').notEmpty()
   req.checkBody('passwordverify', 'Passwords do not match').equals(password)
 
@@ -19,12 +21,13 @@ const registerHandler = async (req, res) => {
 
   if (errors) {
     res.render('register', {
-      errors
+      'errorMsg': errors
     })
   } else {
     const newUser = new User({
       email,
       username,
+      displayname,
       password,
       'apikey': hat()
     })
@@ -32,7 +35,8 @@ const registerHandler = async (req, res) => {
     try {
       await createUser(newUser)
     } catch (error) {
-      req.flash('msg:error', 'Submitted data rejected. If you already used this e-mail address with an account, please log in with that one.')
+      handle(error)
+      req.flash('msg:error', 'Submitted data rejected. This e-mail address and/or this username is already used.')
       res.redirect('/users/register')
       return false
     }

@@ -13,6 +13,11 @@ const UserSchema = new Schema({
     'index':  true,
     'unique': true
   },
+  'displayname': {
+    'type':   String,
+    'index':  true,
+    'unique': true
+  },
   'password': {
     'type': String
   },
@@ -34,6 +39,7 @@ const createUser = async (newUser) => {
   const salt = await bcrypt.genSalt(10)
   const hash = await bcrypt.hash(newUser.password, salt)
 
+  newUser.username = newUser.displayname.toLowerCase()
   newUser.password = hash
   return newUser.save()
 }
