@@ -1,3 +1,5 @@
+// @flow
+
 import {Router as expressRouter} from 'express'
 import {newKeyHandler} from './handlers/new-key'
 import {accountDeleteHandler} from './handlers/account-delete'

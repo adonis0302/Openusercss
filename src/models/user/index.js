@@ -1,9 +1,10 @@
+// @flow
+
 import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
-// import pify from 'pify'
-// import log from 'chalk-console'
-import {handle} from '../utils/error-handler'
+import {handle} from '../../utils/error-handler'
 import uniqueValidator from 'mongoose-unique-validator'
+// import log from 'chalk-console'
 
 const {Schema} = mongoose
 
@@ -44,7 +45,7 @@ const createUser = async (newUser) => {
   return newUser.save()
 }
 
-const getUserByEmail = async (email) => {
+const getUserByEmail = async (root, {email}: String) => {
   const query = {email}
   let foundUser = null
 
@@ -57,20 +58,32 @@ const getUserByEmail = async (email) => {
   return foundUser
 }
 
-const getUserById = async (id, callback) => {
-  return User.findById(id, callback)
+const getUserById = async (root, {id}: String) => {
+  return User.findById(id)
 }
 
-const comparePassword = async (candidatePassword, hash) => {
+const getUserByUsername = async (root, {username}: String) => {
+  return User.findOne({username})
+}
+
+const comparePassword = async (candidatePassword: String, hash: String) => {
   const isMatch = await bcrypt.compare(candidatePassword, hash)
 
   return isMatch
+}
+
+const getListOfUsers = async () => {
+  const foundUsers = await User.find({})
+
+  return foundUsers
 }
 
 module.exports = {
   comparePassword,
   getUserById,
   getUserByEmail,
+  getUserByUsername,
+  getListOfUsers,
   createUser,
   User
 }

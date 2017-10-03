@@ -1,3 +1,5 @@
+// @flow
+
 import {User, createUser} from '../../models/user'
 import hat from 'hat'
 import {handle} from '../../utils/error-handler'

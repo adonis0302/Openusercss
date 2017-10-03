@@ -1,3 +1,5 @@
+// @flow
+
 import hat from 'hat'
 import {User} from '../../models/user'
 

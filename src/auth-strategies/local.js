@@ -1,3 +1,5 @@
+// @flow
+
 import passport from 'passport'
 import {Strategy as LocalStrategy} from 'passport-local'
 import {getUserByEmail, comparePassword, getUserById} from '../models/user'
@@ -12,7 +14,7 @@ passport.use(
     let matchedPassword = null
 
     try {
-      user = await getUserByEmail(email)
+      user = await getUserByEmail(null, {email})
     } catch (error) {
       handle(error)
     }
@@ -43,7 +45,7 @@ passport.deserializeUser(async (id, done) => {
   let user = null
 
   try {
-    user = await getUserById(id)
+    user = await getUserById(null, {id})
   } catch (error) {
     handle(error)
   }
