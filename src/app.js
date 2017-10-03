@@ -13,6 +13,7 @@ import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
 import log from 'chalk-console'
 import {concat} from 'lodash'
+
 import {handle} from './utils/error-handler'
 
 import routes from './routes'
@@ -92,6 +93,7 @@ const init = async () => {
 
   app.set('port', 80)
 
+  log.info(`App environment: ${app.get('env')}`)
   app.listen(app.get('port'), () => {
     log.info(`App started on port ${app.get('port')}`)
   })

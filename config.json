@@ -1,0 +1,52 @@
+{
+	"tones": {
+		"brand-primary": "#005FFF",
+		"brand-secondary": "#FFB450",
+		"brand-background": "#3E28B0",
+		"brand-highlight": "#024991",
+		"black": "#0A0A0A",
+		"black-bis": "#121212",
+		"black-ter": "#242424",
+		"grey-darker": "#363636",
+		"grey-dark": "#4A4A4A",
+		"grey": "#7A7A7A",
+		"grey-light": "#B5B5B5",
+		"grey-lighter": "#DBDBDB",
+		"white-ter": "#F5F5F5",
+		"white-bis": "#FAFAFA",
+		"white": "#FFFFFF",
+		"orange": "#F97A1F",
+		"yellow": "#FFDD57",
+		"green": "#06BC5A",
+		"turquoise": "#1EB39D",
+		"blue": "#3273DC",
+		"purple": "#AC52FF",
+		"red": "#F1432A"
+	},
+	"layout": {
+		"base-size": "6rem",
+		"radius-small": "1.5px",
+		"radius": "2px",
+		"radius-large": "3px",
+		"gap": "16px"
+	},
+	"animations": {
+		"animation-function": "ease-in-out-quart",
+		"shorttime": ".3s",
+		"longtime": "1s"
+	},
+	"meta": {
+		"name": "My awesome website's name",
+		"short-name": "My Website",
+		"description": "My long-long description of what can be found on this website",
+		"url": "mywebsite.com"
+	},
+	"image-widths": [
+		640,
+		840,
+		960,
+		1024,
+		1366,
+		1920
+	]
+}

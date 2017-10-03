@@ -1,12 +1,30 @@
-const burgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0)
+/* eslint no-console:0 */
+import 'babel-polyfill'
+import {runPolyfills} from './features'
+import Vue from 'vue'
+import App from '../../../.tmp/app/app.vue'
 
-if (burgers.length > 0) {
-  burgers.forEach((element) => {
-    element.addEventListener('click', () => {
-      const target = document.getElementById(element.dataset.target)
+import './brands.min'
+import './regular.min'
+import './fontawesome.min'
 
-      element.classList.toggle('is-active')
-      target.classList.toggle('is-active')
-    })
-  })
-}
+// =============================================================================
+// FEATURES AND INIT
+// =============================================================================
+
+runPolyfills()
+.then((ranPolyfills) => {
+  window.polyfills = ranPolyfills
+})
+
+// =============================================================================
+// Vue
+// =============================================================================
+
+window.app = new Vue({
+  'el':         'app',
+  'render':     (h) => h(App),
+  'components': {App}
+})
+
+// document.querySelector('.no-js-message').remove()

@@ -9,13 +9,8 @@ mixin metas
   meta(name="mobile-web-app-capable", content="yes")
   
 mixin bottom-assets
-  script(type="text/javascript", src="/js/script.js", data-instant-track, async, defer)
-  script(type="text/javascript", src="/js/fontawesome.min.js", data-instant-track, defer)
-  script(type="text/javascript", src="/js/brands.min.js", data-instant-track, async, defer)
-  script(type="text/javascript", src="/js/regular.min.js", data-instant-track, async, defer)
-  link(type="text/css", rel='stylesheet', href='/css/bulma.css')
-  link(type="text/css", rel='stylesheet', href='/css/cly.min.css')
-  link(type="text/css", rel='stylesheet', href='/css/styles.css')
+  script(type="text/javascript", src="/js/bundle.min.js", data-instant-track, async, defer)
+  link(type="text/css", rel='stylesheet', href='/css/bundle.min.css')
 
 mixin frame
   doctype html
