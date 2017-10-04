@@ -17,8 +17,8 @@ import {concat} from 'lodash'
 import {handle} from './utils/error-handler'
 
 import routes from './routes'
-import usersRoute from './routes/users'
-import settingsRoute from './routes/settings'
+// import usersRoute from './routes/users'
+// import settingsRoute from './routes/settings'
 import graphqlRoute from './routes/graphql'
 
 mongoose.Promise = global.Promise // eslint-disable-line
@@ -87,8 +87,6 @@ const init = async () => {
   })
 
   app.use('/', routes)
-  app.use('/users', usersRoute)
-  app.use('/settings', settingsRoute)
   app.use('/graphql', graphqlRoute)
 
   app.set('port', 80)

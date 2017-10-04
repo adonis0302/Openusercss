@@ -3,28 +3,38 @@ import 'babel-polyfill'
 import {runPolyfills} from './features'
 import Vue from 'vue'
 import App from '../../../.tmp/app/app.vue'
+import fontawesome from '@fortawesome/fontawesome'
 
-import './brands.min'
-import './regular.min'
-import './fontawesome.min'
+const runFA = async () => {
+  try {
+    fontawesome.config = {
+      'familyPrefix': 'fa'
+    }
+    fontawesome.dom.i2svg()
+  } catch (error) {
+    console.error('Error while applying FontAwesome')
+    console.error(error)
+  }
 
-// =============================================================================
-// FEATURES AND INIT
-// =============================================================================
+  return true
+}
 
-runPolyfills()
-.then((ranPolyfills) => {
+const polyfills = async () => {
+  const ranPolyfills = await runPolyfills()
+
   window.polyfills = ranPolyfills
-})
+}
 
-// =============================================================================
-// Vue
-// =============================================================================
+const vue = async () => {
+  window.app = new Vue({
+    'el':         'app',
+    'render':     (h) => h(App),
+    'components': {App}
+  })
 
-window.app = new Vue({
-  'el':         'app',
-  'render':     (h) => h(App),
-  'components': {App}
-})
+  document.querySelector('noscript').remove()
+}
 
-// document.querySelector('.no-js-message').remove()
+runFA()
+polyfills()
+vue()

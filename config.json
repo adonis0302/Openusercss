@@ -25,9 +25,9 @@
 	},
 	"layout": {
 		"base-size": "6rem",
-		"radius-small": "1.5px",
-		"radius": "2px",
-		"radius-large": "3px",
+		"radius-small": "0",
+		"radius": "0",
+		"radius-large": "0",
 		"gap": "16px"
 	},
 	"animations": {

@@ -1,0 +1,57 @@
+$black:         map-get($tones, 'black');
+$black-bis:     map-get($tones, 'black-bis');
+$black-ter:     map-get($tones, 'black-ter');
+
+$grey-darker:	  map-get($tones, 'grey-darker');
+$grey-dark:	    map-get($tones, 'grey-dark');
+$grey:          map-get($tones, 'grey');
+$grey-light:    map-get($tones, 'grey-light');
+$grey-lighter:  map-get($tones, 'grey-lighter');
+
+$white-ter:	    map-get($tones, 'white-ter');
+$white-bis:	    map-get($tones, 'white-bis');
+$white:	        map-get($tones, 'white');
+
+$orange:	      map-get($tones, 'orange');
+$yellow:	      map-get($tones, 'yellow');
+$green:	        map-get($tones, 'green');
+$turquoise:	    map-get($tones, 'turquoise');
+$blue:	        map-get($tones, 'blue');
+$purple:	      map-get($tones, 'purple');
+$red:	          map-get($tones, 'red');
+
+$colors: (
+  'primary':    (map-get($tones, 'brand-primary'), text-for-bg(map-get($tones, 'brand-primary'))),
+  'secondary':  (map-get($tones, 'brand-secondary'), text-for-bg(map-get($tones, 'brand-secondary'))),
+  'background': (map-get($tones, 'brand-background'), text-for-bg(map-get($tones, 'brand-background'))),
+  'highlight':  (map-get($tones, 'brand-highlight'), text-for-bg(map-get($tones, 'brand-highlight')))
+);
+
+$primary: map-get($colors, 'primary');
+$info: map-get($colors, 'secondary');
+$success: map-get($colors, 'highlight');
+$family-primary: map-get($colors, 'primary');
+
+$body-background-color: $white;
+$text: text-for-bg($body-background-color);
+$link: text-for-bg($body-background-color);
+$family-code: 'Nunito';
+$warning: $orange;
+$danger: $red;
+
+$size1: map-get($layout, 'base-size');
+$size2: map-get($layout, 'base-size') / 1.25;
+$size3: map-get($layout, 'base-size') / 1.5;
+$size4: map-get($layout, 'base-size') / 2;
+$size5: (map-get($layout, 'base-size') / 2) - .5rem;
+$size6: map-get($layout, 'base-size') / 3;
+$size7: (map-get($layout, 'base-size') / 3) - .5rem;
+
+$navbar-height: $size3;
+$gap: map-get($layout, 'gap');
+
+$easing: map-get($animations, 'animation-function');
+$radius-small: map-get($layout, 'radius-small');
+$radius: map-get($layout, 'radius');
+$radius-large: map-get($layout, 'radius-large');
+$speed: map-get($animations, 'shorttime');

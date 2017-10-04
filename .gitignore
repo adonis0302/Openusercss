@@ -1,16 +1,11 @@
 .directory
+.gulp-scss-cache
+.sass-cache
+.tmp
+
 bfg.jar
 build
 build.zip
-.gulp-scss-cache
-coverage
-.sass-cache
-locales
-media
-pages
-screenshots
-tmp
-.tmp
 secrets.json
 
 # Created by https://www.gitignore.io/api/node,linux

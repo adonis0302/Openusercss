@@ -1,0 +1,11 @@
+fonts:
+	- #Nunito
+		family:	Nunito
+		variants:
+			- 300
+			- 400
+			- 600
+			- 700
+		subsets:
+			- latin
+			- latin-ext

@@ -1,3 +1,5 @@
+/* eslint no-invalid-this:0 no-underscore-dangle:0 */
+
 const Conf = require('conf')
 const clyConfig = new Conf({
   'cwd':        '.',

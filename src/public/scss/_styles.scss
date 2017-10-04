@@ -1,0 +1,64 @@
+.hoverhidden {
+  padding: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  transition-duration: .3s;
+  transition-property: background-color, color;
+  transition-timing-function: ease-in-out;
+}
+
+.hoverhidden:not(:hover) {
+  background-color: #000;
+  border-radius: 3px;
+  color: #000;
+  user-select: none;
+}
+
+.shadow-floating {
+  box-shadow: 0 10px 70px -30px rgba(0, 0, 0, .65);
+}
+
+input:not(:focus) {
+  border: 0 !important;
+}
+
+.shadow-inset {
+  box-shadow: inset 0 2px 17px -7px rgba(0, 0, 0, .65) !important;
+}
+
+.is-borderless {
+  border: 0 !important;
+}
+
+.fullheight {
+  height: 100vh;
+}
+
+.is-thin {
+  font-weight: 300;
+}
+
+.is-normal {
+  font-weight: 400;
+}
+
+.is-bold {
+  font-weight: 600;
+}
+
+.is-extra-bold {
+  font-weight: 700;
+}
+
+.container,
+.container-fluid {
+  &.is-background {
+    background-color: map-get($tones, 'brand-background');
+    color: text-for-bg(map-get($tones, 'brand-background'));
+  }
+
+  &.is-primary {
+    background-color: map-get($tones, 'brand-primary');
+    color: text-for-bg(map-get($tones, 'brand-primary'));
+  }
+}

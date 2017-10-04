@@ -19,7 +19,17 @@ mixin frame
       title Your DecentM account
       +metas
       body
-        nav.navbar.is-primary(role="navigation", aria-label="main navigation")
+        noscript
+          .container-fluid.has-text-centered.is-background
+            .columns.is-vcentered.fullheight.is-marginless
+              .column.is-paddingless
+                .notification.is-secondary
+                  h3.is-bold When the scripts are gone, only ruins may remain.
+                .notification.is-secondary
+                  h6 Please enable Javascript
+        if block
+          block
+        //- nav.navbar.is-primary(role="navigation", aria-label="main navigation")
           .navbar-brand
             a.navbar-item(href="/")
               | DecentM Accounts
@@ -35,12 +45,12 @@ mixin frame
               else
                 a.navbar-item(href="/users/login") Login
                 a.navbar-item(href="/users/register") Register
-        .section
+        //- .section
           .container
             include ../elements/flashes
             if block
               block
-        .footer.is-paddingless(data-c-margin-top="2")
+        //- .footer.is-paddingless(data-c-margin-top="2")
           .container(data-c-padding="6")
             .content.has-text-centered
               p Copyright &copy; #{thisYear} DecentM

@@ -25,6 +25,8 @@ const bless = require('gulp-bless')
 const pleeease = require('gulp-pleeease')
 // OTHER
 const concat = require('gulp-concat')
+const googleFonts = require('gulp-google-fonts')
+// const file = require('gulp-file')
 
 const {
   clyConfig,
@@ -87,7 +89,10 @@ const mediaTaskWatch = () => {
   const sassStream = pump([
     prettyError(),
     sourcemaps.init(),
-    gulp.src('src/public/scss/main.scss'),
+    gulp.src([
+      'src/public/scss/main.scss',
+      '.tmp/fonts.scss'
+    ]),
     sassGlob(),
     sassVars(ourSassConfig, {
       'verbose': true
@@ -166,7 +171,10 @@ const mediaTaskBuild = () => {
 
   const sassStream = pump([
     prettyError(),
-    gulp.src('src/public/scss/main.scss'),
+    gulp.src([
+      'src/public/scss/main.scss',
+      '.tmp/fonts.scss'
+    ]),
     sassGlob(),
     sassVars(ourSassConfig, {
       'verbose': false
@@ -261,5 +269,14 @@ const mediaTaskBuild = () => {
   return merge(finalCssStream, finalImageStream)
 }
 
-gulp.task('media-build', mediaTaskBuild)
-gulp.task('media-watch', mediaTaskWatch)
+gulp.task('fonts', () => {
+  return pump([
+    gulp.src('fonts.neon'),
+    googleFonts(),
+    concat('fonts.scss'),
+    gulp.dest('.tmp/')
+  ])
+})
+
+gulp.task('media-build', gulp.series('fonts', mediaTaskBuild))
+gulp.task('media-watch', gulp.series('fonts', mediaTaskWatch))

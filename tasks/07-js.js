@@ -87,49 +87,61 @@ const wundle = () => {
   ])
 }
 
-const directFileStream = pump([
-  prettyError(),
-  gulp.src([
-    'package.json',
-    '.npmrc'
+gulp.task('copy-meta', () => {
+  return pump([
+    prettyError(),
+    gulp.src([
+      'package.json',
+      '.npmrc'
+    ]),
+    gulp.dest('build')
   ])
-])
+})
 
-const viewsStream = pump([
-  prettyError(),
-  gulp.src([
-    'package.json',
-    '.npmrc',
-    'src/views/**/*.pug'
-  ], {
-    'base': './src'
-  })
-])
+gulp.task('copy-views', () => {
+  return pump([
+    prettyError(),
+    gulp.src([
+      'package.json',
+      '.npmrc',
+      'src/views/**/*.pug'
+    ], {
+      'base': './src'
+    }),
+    gulp.dest('build')
+  ])
+})
 
-const serverStream = pump([
-  prettyError(),
-  gulp.src([
-    './src/**/*.js',
-    '!./src/public/**/*.js'
-  ]),
-  babel({
-    'presets': [
-      'flow',
-      'env',
-      'stage-3'
-    ]
-  }),
-  uglify(),
-  gulp.dest('build')
-])
+gulp.task('build-express', () => {
+  return pump([
+    prettyError(),
+    gulp.src([
+      './src/**/*.js',
+      '!./src/public/**/*.js'
+    ]),
+    babel({
+      'presets': [
+        'flow',
+        'env',
+        'stage-3'
+      ]
+    }),
+    uglify(),
+    gulp.dest('build')
+  ])
+})
 
-gulp.task('build-server', () => {
+gulp.task('build-server', gulp.parallel(
+  'build-express', 'copy-views', 'copy-meta'
+))
+
+/* gulp.task('server', () => {
   return pump([
     prettyError(),
     merge(serverStream, viewsStream, directFileStream),
     gulp.dest('build')
   ])
-})
+}) */
 
 wify.on('update', wundle)
 wify.on('log', gutil.log)
@@ -139,6 +151,6 @@ gulp.task('js-build', gulp.series(
   bundle
 ))
 gulp.task('js-watch', gulp.series(
-  gulp.parallel('build-server', 'vue-watch'),
+  'vue-watch',
   wundle
 ))

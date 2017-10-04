@@ -1,5 +1,5 @@
 const gulp = require('gulp')
-const express = require('gulp-dev-express')
+const server = require('gulp-develop-server')
 
 const fsWatch = () => {
   gulp.watch([
@@ -11,13 +11,21 @@ const fsWatch = () => {
     'src/public/components/**/*'
   ], gulp.series('js-watch'))
 
+  server.listen({
+    'path': './build/app.js'
+  })
+
   gulp.watch([
-    'src/**/*.(js|pug)',
-    '!src/public/**/*.(js|pug)'
-  ], gulp.series('build-server', express('build/app.js')))
+    'src/**/*.js',
+    '!src/public/**/*.js'
+  ], gulp.series('build-server', server.restart))
+
+  gulp.watch([
+    'src/**/*.pug'
+  ], gulp.series('copy-views'))
 }
 
 gulp.task('watch', gulp.series(
-  gulp.parallel('js-watch', 'media-watch'),
+  gulp.parallel('js-watch', 'media-watch', 'build-server'),
   fsWatch
 ))
