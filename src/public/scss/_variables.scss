@@ -30,12 +30,12 @@ $colors: (
 $primary: map-get($colors, 'primary');
 $info: map-get($colors, 'secondary');
 $success: map-get($colors, 'highlight');
-$family-primary: map-get($colors, 'primary');
 
 $body-background-color: $white;
 $text: text-for-bg($body-background-color);
 $link: text-for-bg($body-background-color);
-$family-code: 'Nunito';
+$family-primary: 'Nunito';
+$family-code: $family-primary;
 $warning: $orange;
 $danger: $red;
 

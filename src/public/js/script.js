@@ -3,9 +3,9 @@ import 'babel-polyfill'
 import {runPolyfills} from './features'
 import Vue from 'vue'
 import App from '../../../.tmp/app/app.vue'
-import fontawesome from '@fortawesome/fontawesome'
+// import fontawesome from '@fortawesome/fontawesome'
 
-const runFA = async () => {
+/* const runFA = async () => {
   try {
     fontawesome.config = {
       'familyPrefix': 'fa'
@@ -17,7 +17,7 @@ const runFA = async () => {
   }
 
   return true
-}
+} */
 
 const polyfills = async () => {
   const ranPolyfills = await runPolyfills()
@@ -35,6 +35,6 @@ const vue = async () => {
   document.querySelector('noscript').remove()
 }
 
-runFA()
+// runFA()
 polyfills()
 vue()

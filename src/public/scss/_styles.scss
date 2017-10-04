@@ -62,3 +62,13 @@ input:not(:focus) {
     color: text-for-bg(map-get($tones, 'brand-primary'));
   }
 }
+
+.navbar {
+  &.is-primary a {
+    color: text-for-bg(map-get($tones, 'brand-primary'));
+  }
+}
+
+.footer {
+  padding-bottom: 48px;
+}

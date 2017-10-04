@@ -26,7 +26,7 @@ const pleeease = require('gulp-pleeease')
 // OTHER
 const concat = require('gulp-concat')
 const googleFonts = require('gulp-google-fonts')
-// const file = require('gulp-file')
+const webfont64 = require('gulp-base64-webfont-css')
 
 const {
   clyConfig,
@@ -270,11 +270,22 @@ const mediaTaskBuild = () => {
 }
 
 gulp.task('fonts', () => {
-  return pump([
+  const googleFontStream = pump([
     gulp.src('fonts.neon'),
     googleFonts(),
+    concat('googleFonts.scss')
+  ])
+
+  const localFontStream = pump([
+    gulp.src('node_modules/mdi/fonts/*.woff'),
+    webfont64(),
+    concat('localFonts.scss')
+  ])
+
+  return pump([
+    merge(googleFontStream, localFontStream),
     concat('fonts.scss'),
-    gulp.dest('.tmp/')
+    gulp.dest('./.tmp')
   ])
 })
 
