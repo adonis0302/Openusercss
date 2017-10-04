@@ -7,7 +7,29 @@ mixin metas
   meta(name="robots", content="index,follow,noodp")
   meta(name="googlebot", content="index,follow")
   meta(name="mobile-web-app-capable", content="yes")
-  
+
+mixin top-assets
+  script.
+    var loadingIndicator = function () {
+      var indicatorElement = document.createElement('div');
+
+      indicatorElement.classList.add('loading-indicator');
+      indicatorElement.style.position = 'absolute';
+      indicatorElement.style.width = '100%';
+      indicatorElement.style.height = '100%';
+      indicatorElement.style.bottom = 0;
+      indicatorElement.style.display = 'flex';
+      indicatorElement.style.justifyContent = 'center';
+      indicatorElement.style.alignItems = 'center';
+      indicatorElement.style.backgroundColor = 'black';
+      indicatorElement.style.zIndex = 100;
+
+      indicatorElement.innerHTML = '<span style="color: white;">Loading...</span>';
+
+      document.querySelector('body').append(indicatorElement);
+    }
+    loadingIndicator();
+
 mixin bottom-assets
   script(type="text/javascript", src="/js/bundle.min.js", data-instant-track, defer)
   link(type="text/css", rel='stylesheet', href='/css/bundle.min.css')
@@ -19,6 +41,7 @@ mixin frame
       title OpenUserCSS
       +metas
       body
+        +top-assets
         noscript
           .container-fluid.has-text-centered.is-background
             .columns.is-vcentered.fullheight.is-marginless
@@ -29,31 +52,6 @@ mixin frame
                   h6 Please enable Javascript
         if block
           block
-        //- nav.navbar.is-primary(role="navigation", aria-label="main navigation")
-          .navbar-brand
-            a.navbar-item(href="/")
-              | DecentM Accounts
-            button.button.navbar-burger.is-primary(data-target="navMenu")
-              span
-              span
-              span
-          .navbar-menu#navMenu
-            .navbar-end
-              if user
-                a.navbar-item(href="/settings") Settings
-                a.navbar-item(href="/users/logout") Logout
-              else
-                a.navbar-item(href="/users/login") Login
-                a.navbar-item(href="/users/register") Register
-        //- .section
-          .container
-            include ../elements/flashes
-            if block
-              block
-        //- .footer.is-paddingless(data-c-margin-top="2")
-          .container(data-c-padding="6")
-            .content.has-text-centered
-              p Copyright &copy; #{thisYear} DecentM
       +bottom-assets
 
 +frame

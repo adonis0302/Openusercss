@@ -22,7 +22,7 @@ export default {
         'opacity':  1,
         'scaleY':   1,
         'duration': 1000,
-        'delay':    1500,
+        'delay':    2000,
         'easing':   'easeOutQuart'
       })
 

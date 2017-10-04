@@ -26,8 +26,8 @@ export default {
         'targets':  element,
         'opacity':  1,
         'scaleY':   1,
-        'duration': 1000,
-        'delay':    1500,
+        'duration': 700,
+        'delay':    2000,
         'easing':   'easeOutQuart'
       })
 
@@ -39,7 +39,7 @@ export default {
         'targets':  element,
         'opacity':  0,
         'scaleY':   0,
-        'duration': 1000,
+        'duration': 700,
         'delay':    500,
         'easing':   'easeInQuart'
       })
