@@ -145,7 +145,7 @@ const mediaTaskWatch = () => {
     prettyError(),
     merge(iconStream, elementStream, backgroundsStream),
     buffer(),
-    gulpif('!*.css', gulp.dest('build/img'))
+    gulpif('!*.css', gulp.dest('build/public/img'))
   ])
 
   const spriteCssStream = pump([
@@ -244,7 +244,7 @@ const mediaTaskBuild = () => {
         ]
       })
     ]),
-    gulpif('!*.css', gulp.dest('build/img'))
+    gulpif('!*.css', gulp.dest('build/public/img'))
   ])
 
   const finalCssStream = pump([

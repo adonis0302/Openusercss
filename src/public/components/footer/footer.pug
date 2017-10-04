@@ -1,4 +1,9 @@
-div
+transition(
+  appear,
+  v-on:before-appear="beforeAppear",
+  v-on:appear="appear",
+  v-bind:css="false"
+)
   b-footer
     b-columns
       b-column(has-text-centered)
@@ -7,8 +12,10 @@ div
         span and 
         a(href="//github.com/OpenUserCSS/app") Contributors
       b-column(has-text-centered)
-        icon(icon="github-circle")
-        a(href="//github.com/OpenUserCSS") GitHub
+        a(href="//github.com/OpenUserCSS")
+          icon(icon="github-circle")
+          | GitHub
       b-column(has-text-centered)
-        icon(icon="email-variant")
-        a(href="/contact") Contact the administrator
+        a(href="/contact")
+          icon(icon="email-variant")
+          | Contact the administrator

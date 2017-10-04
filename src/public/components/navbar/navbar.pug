@@ -1,17 +1,36 @@
-div
+transition(
+  appear,
+  v-on:before-appear="beforeAppear",
+  v-on:appear="appear",
+  v-bind:css="false"
+)
   navbar(is-primary)
-    navbar-brand
-      navbar-item
-        span OpenUserCSS
+    a(href="/")
+      navbar-brand
+        navbar-item
+          img(src="/img/openusercss.icon-x32.png")
+        navbar-item
+          span OpenUserCSS
     navbar-menu
       navbar-start
       navbar-end
         navbar-item
-          icon(icon="home")
-          a(href="/") Home
+          a(href="/")
+            icon(icon="home")
+            | Home
         navbar-item
-          icon(icon="folder-multiple")
-          a(href="/browse") Browse
+          a(href="/users/login")
+            icon(icon="login")
+            | Log in
         navbar-item
-          icon(icon="forum")
-          a(href="//forums.openusercss.org") Forums
+          a(href="/users/register")
+            icon(icon="account-plus")
+            | Register
+        navbar-item
+          a(href="/browse")
+            icon(icon="folder-multiple")
+            | Browse
+        navbar-item
+          a(href="//forums.openusercss.org")
+            icon(icon="forum")
+            | Forums
