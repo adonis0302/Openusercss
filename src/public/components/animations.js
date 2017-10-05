@@ -10,19 +10,21 @@ export const topToBottom = {
       'targets':   element,
       'clip-path': 'polygon(-1px -1px, 101% -1%, 101% 101%, -1% 101%)',
       'duration':  1000,
-      'delay':     2000 + additionalDelay,
+      'delay':     400 + additionalDelay,
       'easing':    'easeOutQuart'
     })
 
     await node.finished
     return done()
   },
+  'beforeLeave': (element) => {
+    element.style.clipPath = 'polygon(-1px -1px, 101% -1%, 101% 101%, -1% 101%)'
+  },
   'leave': async (element, done) => {
     const node = await anime({
       'targets':   element,
       'clip-path': 'polygon(-1px 101%, 101% 101%, 101% 101%, -1% 101%)',
-      'duration':  1000,
-      'delay':     500,
+      'duration':  400,
       'easing':    'easeInQuart'
     })
 
@@ -32,7 +34,7 @@ export const topToBottom = {
 }
 
 export const leftToRight = {
-  'beforeAppear': async (element) => {
+  'beforeAppear': (element) => {
     element.style.clipPath = 'polygon(-1px -1px, -1px -1px, -1px 101%, -1px 101%)'
   },
   'appear': async (element, done) => {
@@ -41,19 +43,21 @@ export const leftToRight = {
       'targets':   element,
       'clip-path': 'polygon(-1px -1px, 101% -1px, 101% 101%, -1px 101%)',
       'duration':  1000,
-      'delay':     2000 + additionalDelay,
+      'delay':     400 + additionalDelay,
       'easing':    'easeOutQuart'
     })
 
     await node.finished
     return done()
   },
+  'beforeLeave': (element) => {
+    element.style.clipPath = 'polygon(-1px -1px, 101% -1%, 101% 101%, -1% 101%)'
+  },
   'leave': async (element, done) => {
     const node = await anime({
       'targets':   element,
-      'clip-path': 'polygon(101% 0, 101% 0, 101% 101%, 101% 101%)',
-      'duration':  1000,
-      'delay':     500,
+      'clip-path': 'polygon(101% -1px, 101% -1%, 101% 101%, 101% 101%)',
+      'duration':  400,
       'easing':    'easeInQuart'
     })
 

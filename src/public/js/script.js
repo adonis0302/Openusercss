@@ -4,9 +4,13 @@ import {runPolyfills} from './features'
 import Vue from 'vue'
 // import App from '../../../.tmp/app/app.vue'
 import VueRouter from 'vue-router'
-import anime from 'animejs'
+// import anime from 'animejs'
 
+import appBase from '../../../.tmp/app-base/app-base.vue'
 import indexRoute from '../../../.tmp/routes/index/index.vue'
+import browseRoute from '../../../.tmp/routes/browse/browse.vue'
+import loginRoute from '../../../.tmp/routes/login/login.vue'
+import registerRoute from '../../../.tmp/routes/register/register.vue'
 
 const polyfills = async () => {
   const ranPolyfills = await runPolyfills()
@@ -16,15 +20,14 @@ const polyfills = async () => {
 
 const removeLoadingIndicator = async () => {
   const loadingIndicator = document.querySelector('.loading-indicator')
-  const node = await anime({
+  /* const node = await anime({
     'targets':  loadingIndicator,
     'bottom':   '100%',
     'duration': 700,
-    'delay':    1300,
     'easing':   'easeInQuart'
   })
 
-  await node.finished
+  await node.finished */
 
   loadingIndicator.remove()
   return true
@@ -39,6 +42,18 @@ const vue = async () => {
       {
         'path':      '/',
         'component': indexRoute
+      },
+      {
+        'path':      '/login',
+        'component': loginRoute
+      },
+      {
+        'path':      '/register',
+        'component': registerRoute
+      },
+      {
+        'path':      '/browse',
+        'component': browseRoute
       }
     ]
   })
@@ -46,7 +61,7 @@ const vue = async () => {
   const app = new Vue({
     router,
     'el':     'app',
-    'render': (handle) => handle(indexRoute)
+    'render': (handle) => handle(appBase)
     // 'components': {App}
   })
 

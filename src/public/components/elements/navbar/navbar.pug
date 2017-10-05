@@ -15,22 +15,22 @@ transition(
       navbar-start
       navbar-end
         navbar-item
-          a(href="/")
+          router-link(to="/")
             icon(icon="home")
             | Home
         navbar-item
-          a(href="/users/login")
+          router-link(to="/login")
             icon(icon="login")
             | Log in
         navbar-item
-          a(href="/users/register")
+          router-link(to="/register")
             icon(icon="account-plus")
             | Register
         navbar-item
-          a(href="/browse")
+          router-link(to="/browse")
             icon(icon="folder-multiple")
             | Browse
         navbar-item
-          a(href="//forums.openusercss.org")
+          a(href="//forums.openusercss.org", target="_blank")
             icon(icon="forum")
             | Forums
