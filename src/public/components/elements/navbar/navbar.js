@@ -55,7 +55,8 @@ export default {
   },
   'created': () => {
     setImmediate(() => {
-      document.querySelector('.navbar-menu').style.marginTop = '-400px'
+      document.querySelector('.navbar-burger').click()
+      document.querySelector('.navbar-burger').click()
     })
   }
 }
