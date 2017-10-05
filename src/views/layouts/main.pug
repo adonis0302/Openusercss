@@ -10,7 +10,7 @@ mixin metas
 
 mixin top-assets
   script.
-    var loadingIndicator = function () {
+    (function (document) {
       var indicatorElement = document.createElement('div');
 
       indicatorElement.classList.add('loading-indicator');
@@ -27,8 +27,7 @@ mixin top-assets
       indicatorElement.innerHTML = '<span style="color: white;">Loading...</span>';
 
       document.querySelector('body').append(indicatorElement);
-    }
-    loadingIndicator();
+    })(window.document)
 
 mixin bottom-assets
   script(type="text/javascript", src="/js/bundle.min.js", data-instant-track, defer)
@@ -43,13 +42,30 @@ mixin frame
       body
         +top-assets
         noscript
-          .container-fluid.has-text-centered.is-background
-            .columns.is-vcentered.fullheight.is-marginless
+          .background
+          .navbar.is-primary
+            a(href="/")
+              .navbar-brand
+                .navbar-item
+                  img(src="/img/openusercss.icon-x32.png")
+                .navbar-item
+                  span OpenUserCSS
+          .container-fluid.fullheight
+            .columns.is-marginless.is-vcentered.fullheight
               .column.is-paddingless
-                .notification.is-secondary
-                  h3.is-bold When the scripts are gone, only ruins may remain.
-                .notification.is-secondary
-                  h6 Please enable Javascript
+                .notification.is-primary.shadow-floating
+                  .container
+                    h3.is-bold When the scripts are gone, only ruins may remain.
+                .notification.is-primary.shadow-floating
+                  .container
+                    p Please enable Javascript or switch to a modern browser to use OpenUserCSS
+          .container
+            a(
+              href="https://commons.wikimedia.org/wiki/File:Ruins_of_Roman_Forum.jpg",
+              target="_blank",
+              rel="noopener"
+            )
+                p "Ruins of the Roman Forum" by Michael Wilson
         if block
           block
       +bottom-assets
