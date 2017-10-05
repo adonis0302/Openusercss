@@ -1,1 +1,6 @@
 /* vue:scoped */
+
+.is-primary {
+  background-color: map-get($tones, 'brand-primary');
+  color: text-for-bg(map-get($tones, 'brand-primary'));
+}
