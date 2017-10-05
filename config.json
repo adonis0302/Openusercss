@@ -21,13 +21,13 @@
 		"turquoise": "#1EB39D",
 		"blue": "#3273DC",
 		"purple": "#AC52FF",
-		"red": "#F1432A"
+		"red": "#D80B00"
 	},
 	"layout": {
 		"base-size": "6rem",
-		"radius-small": "0",
-		"radius": "0",
-		"radius-large": "0",
+		"radius-small": 0,
+		"radius": 0,
+		"radius-large": 0,
 		"gap": "16px"
 	},
 	"animations": {

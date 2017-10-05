@@ -128,6 +128,7 @@
     "stickybits": "^1",
     "sw-precache": "^5",
     "usedcss": "^1",
+    "vee-validate": "^2.0.0-rc.18",
     "vinyl-source-stream": "^1",
     "vinyl-transform": "^1",
     "vue": "^2",

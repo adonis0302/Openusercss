@@ -1,0 +1,14 @@
+transition(
+  enter,
+  v-on:before-enter="beforeAppear",
+  v-on:enter="appear",
+  v-on:before-leave="beforeLeave",
+  v-on:leave="leave",
+  v-bind:css="false"
+)
+  div
+    b-notification(:class="['notification', color]")
+      b-level
+        b-level-left
+          icon(:icon="icon")
+          slot(name="content")

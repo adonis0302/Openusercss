@@ -1,0 +1,11 @@
+transition(
+  enter,
+  v-on:before-enter="beforeAppear",
+  v-on:enter="appear",
+  v-on:before-leave="beforeLeave",
+  v-on:leave="leave",
+  v-bind:css="false"
+)
+  b-button
+    icon(:icon="icon")
+    slot(name="content")

@@ -33,6 +33,7 @@ const iconSizesPx = [
 
 const bgSizesPx = [
   1366,
+  1024,
   1920,
   700,
   360

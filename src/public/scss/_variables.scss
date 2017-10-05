@@ -24,7 +24,8 @@ $colors: (
   'primary':    (map-get($tones, 'brand-primary'), text-for-bg(map-get($tones, 'brand-primary'))),
   'secondary':  (map-get($tones, 'brand-secondary'), text-for-bg(map-get($tones, 'brand-secondary'))),
   'background': (map-get($tones, 'brand-background'), text-for-bg(map-get($tones, 'brand-background'))),
-  'highlight':  (map-get($tones, 'brand-highlight'), text-for-bg(map-get($tones, 'brand-highlight')))
+  'highlight':  (map-get($tones, 'brand-highlight'), text-for-bg(map-get($tones, 'brand-highlight'))),
+  'danger':     (map-get($tones, 'red'), text-for-bg(map-get($tones, 'red')))
 );
 
 $primary: map-get($colors, 'primary');
@@ -37,7 +38,6 @@ $link: text-for-bg($body-background-color);
 $family-primary: 'Nunito';
 $family-code: $family-primary;
 $warning: $orange;
-$danger: $red;
 
 $size1: map-get($layout, 'base-size');
 $size2: map-get($layout, 'base-size') / 1.25;

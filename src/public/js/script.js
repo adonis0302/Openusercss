@@ -4,7 +4,7 @@ import {runPolyfills} from './features'
 import Vue from 'vue'
 // import App from '../../../.tmp/app/app.vue'
 import VueRouter from 'vue-router'
-// import anime from 'animejs'
+import veeValidate from 'vee-validate'
 
 import appBase from '../../../.tmp/app-base/app-base.vue'
 import indexRoute from '../../../.tmp/routes/index/index.vue'
@@ -35,6 +35,27 @@ const removeLoadingIndicator = async () => {
 
 const vue = async () => {
   Vue.use(VueRouter)
+  Vue.use(veeValidate, {
+    'errorBagName':  'errors',
+    'fieldsBagName': 'fields',
+    'delay':         50,
+    'locale':        'en',
+    'dictionary':    null,
+    'strict':        true,
+    'classes':       false,
+    'classNames':    {
+      'touched':   'touched',
+      'untouched': 'untouched',
+      'valid':     'valid',
+      'invalid':   'invalid',
+      'pristine':  'pristine',
+      'dirty':     'dirty'
+    },
+    'events':   'input|blur',
+    'inject':   true,
+    'validity': false,
+    'aria':     true
+  })
 
   const router = new VueRouter({
     'mode':   'history',

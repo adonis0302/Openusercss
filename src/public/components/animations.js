@@ -10,7 +10,7 @@ export const topToBottom = {
       'targets':   element,
       'clip-path': 'polygon(-1px -1px, 101% -1%, 101% 101%, -1% 101%)',
       'duration':  1000,
-      'delay':     400 + additionalDelay,
+      'delay':     500 + additionalDelay,
       'easing':    'easeOutQuart'
     })
 
@@ -24,7 +24,7 @@ export const topToBottom = {
     const node = await anime({
       'targets':   element,
       'clip-path': 'polygon(-1px 101%, 101% 101%, 101% 101%, -1% 101%)',
-      'duration':  400,
+      'duration':  500,
       'easing':    'easeInQuart'
     })
 
@@ -43,7 +43,7 @@ export const leftToRight = {
       'targets':   element,
       'clip-path': 'polygon(-1px -1px, 101% -1px, 101% 101%, -1px 101%)',
       'duration':  1000,
-      'delay':     400 + additionalDelay,
+      'delay':     500 + additionalDelay,
       'easing':    'easeOutQuart'
     })
 
@@ -57,11 +57,46 @@ export const leftToRight = {
     const node = await anime({
       'targets':   element,
       'clip-path': 'polygon(101% -1px, 101% -1%, 101% 101%, 101% 101%)',
-      'duration':  400,
+      'duration':  500,
       'easing':    'easeInQuart'
     })
 
     await node.finished
     return done()
+  }
+}
+
+export const height = (heightPx) => {
+  return {
+    'beforeAppear': (element) => {
+      element.style.height = 0
+    },
+    'appear': async (element, done) => {
+      const additionalDelay = element.dataset.index * 75 || 0
+      const node = await anime({
+        'targets':  element,
+        'height':   heightPx,
+        'duration': 300,
+        'delay':    additionalDelay,
+        'easing':   'easeInOutQuart'
+      })
+
+      await node.finished
+      return done()
+    },
+    'beforeLeave': (element) => {
+      element.style.height = heightPx
+    },
+    'leave': async (element, done) => {
+      const node = await anime({
+        'targets':  element,
+        'height':   0,
+        'duration': 300,
+        'easing':   'easeInOutQuart'
+      })
+
+      await node.finished
+      return done()
+    }
   }
 }

@@ -133,9 +133,8 @@ const mediaTaskWatch = () => {
 
   const backgroundsStream = pump([
     gulp.src([
-      'src/public/img/*'
+      'src/public/img/**/*.bg.*'
     ]),
-    filter('**/*.bg*'),
     responsive({
       '*': bgSizes
     }, resizerOptions)

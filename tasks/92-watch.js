@@ -4,7 +4,7 @@ const server = require('gulp-develop-server')
 const fsWatch = () => {
   gulp.watch([
     'media/**',
-    'src/public/**/*.scss'
+    '!src/public/**/*.scss'
   ], gulp.series('media-watch'))
 
   gulp.watch([

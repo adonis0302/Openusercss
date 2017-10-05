@@ -10,7 +10,6 @@ $mdi-font-name: 'materialdesignicons-webfont';
 @import 'node_modules/mdi/scss/extras';
 @import 'node_modules/mdi/scss/animated';
 
-i {
-  padding-left: .3rem;
-  padding-right: .3rem;
+span {
+  margin-right: .5rem;
 }
