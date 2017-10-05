@@ -89,6 +89,8 @@ const init = async () => {
   app.use('/', routes)
   app.use('/graphql', graphqlRoute)
 
+  app.use('*', routes)
+
   app.set('port', 80)
 
   log.info(`App environment: ${app.get('env')}`)

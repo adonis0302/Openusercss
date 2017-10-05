@@ -2,8 +2,11 @@
 import 'babel-polyfill'
 import {runPolyfills} from './features'
 import Vue from 'vue'
-import App from '../../../.tmp/app/app.vue'
+// import App from '../../../.tmp/app/app.vue'
+import VueRouter from 'vue-router'
 import anime from 'animejs'
+
+import indexRoute from '../../../.tmp/routes/index/index.vue'
 
 const polyfills = async () => {
   const ranPolyfills = await runPolyfills()
@@ -28,10 +31,23 @@ const removeLoadingIndicator = async () => {
 }
 
 const vue = async () => {
+  Vue.use(VueRouter)
+
+  const router = new VueRouter({
+    'mode':   'history',
+    'routes': [
+      {
+        'path':      '/',
+        'component': indexRoute
+      }
+    ]
+  })
+
   const app = new Vue({
-    'el':         'app',
-    'render':     (h) => h(App),
-    'components': {App}
+    router,
+    'el':     'app',
+    'render': (handle) => handle(indexRoute)
+    // 'components': {App}
   })
 
   document.querySelector('noscript').remove()

@@ -11869,7 +11869,7 @@ vue-hot-reload-api@^2.0.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.1.1.tgz#1ba6712166182fd651753804b9d8d8d02d855579"
 
-vue-router@^2:
+vue-router@^2.7.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-2.7.0.tgz#16d424493aa51c3c8cce8b7c7210ea4c3a89aff1"
 

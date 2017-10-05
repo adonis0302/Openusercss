@@ -28,6 +28,10 @@ mixin top-assets
 
       document.querySelector('body').append(indicatorElement);
     })(window.document)
+  style(type="text/css").
+    html {
+      overflow-y: scroll
+    }
 
 mixin bottom-assets
   script(type="text/javascript", src="/js/bundle.min.js", data-instant-track, defer)
