@@ -17,8 +17,6 @@ import {concat} from 'lodash'
 import {handle} from './utils/error-handler'
 
 import routes from './routes'
-// import usersRoute from './routes/users'
-// import settingsRoute from './routes/settings'
 import graphqlRoute from './routes/graphql'
 
 mongoose.Promise = global.Promise // eslint-disable-line
@@ -27,10 +25,8 @@ const init = async () => {
   mongoose.connect('mongodb://localhost/account-center', {
     'useMongoClient': true
   })
-  // const db = mongoose.connection
 
   const app = express()
-
   const appSecret = await bcrypt.genSalt()
 
   app.set('views', path.join(__dirname, 'views'))

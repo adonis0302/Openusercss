@@ -1,10 +1,12 @@
 /* eslint no-console:0 */
 import 'babel-polyfill'
-import {runPolyfills} from './features'
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import veeValidate from 'vee-validate'
+import anime from 'animejs'
+
+import {runPolyfills} from './features'
 
 import appBase from '../../../.tmp/app-base/app-base.vue'
 import indexRoute from '../../../.tmp/routes/index/index.vue'
@@ -20,14 +22,14 @@ const polyfills = async () => {
 
 const removeLoadingIndicator = async () => {
   const loadingIndicator = document.querySelector('.loading-indicator')
-  /* const node = await anime({
+  const node = await anime({
     'targets':  loadingIndicator,
     'bottom':   '100%',
     'duration': 700,
     'easing':   'easeInQuart'
   })
 
-  await node.finished */
+  await node.finished
 
   loadingIndicator.remove()
   return true

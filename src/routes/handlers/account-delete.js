@@ -14,7 +14,7 @@ const accountDeleteHandler = async (req, res) => {
     req.flash('msg:success', 'Your account has been deleted.')
     return res.redirect('/users/login')
   } catch (error) {
-    req.flash('msg:error', 'You account couldn\'t be deleted sue to an error, please contact the system administrator')
+    req.flash('msg:error', 'You account couldn\'t be deleted due to an error, please contact the system administrator')
     handle(error)
   }
 }
