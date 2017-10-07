@@ -98,12 +98,23 @@ gulp.task('copy-meta', () => {
   ])
 })
 
+gulp.task('copy-fonts', () => {
+  return pump([
+    prettyError(),
+    gulp.src([
+      'node_modules/mdi/fonts/**/*'
+    ], {
+      'base': './node_modules/mdi'
+    }),
+    gulp.dest('build/public')
+  ])
+})
+
 gulp.task('copy-views', () => {
   return pump([
     prettyError(),
     gulp.src([
-      'package.json',
-      '.npmrc',
+      'src/views/**/*.pug',
       'src/views/**/*.pug'
     ], {
       'base': './src'

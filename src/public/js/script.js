@@ -1,8 +1,8 @@
 /* eslint no-console:0 */
 import 'babel-polyfill'
 import {runPolyfills} from './features'
+
 import Vue from 'vue'
-// import App from '../../../.tmp/app/app.vue'
 import VueRouter from 'vue-router'
 import veeValidate from 'vee-validate'
 

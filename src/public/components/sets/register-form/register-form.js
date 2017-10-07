@@ -31,11 +31,12 @@ export default {
     icon,
     notification
   },
-  'data': () => {
+  data () {
     return {
-      'login': {
-        'email':    '',
-        'password': ''
+      'register': {
+        'username': '',
+        'password': '',
+        'email':    ''
       }
     }
   },

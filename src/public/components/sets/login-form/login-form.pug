@@ -1,38 +1,46 @@
 form-wrapper
-  b-section(slot="form")
+  b-section(slot="form").ouc-form-section
     b-container(style="max-width: 500px;")
-      b-box
-        form(v-on:submit.prevent="submit")
-          h3 Login to OpenUserCSS
+      b-box.ouc-form-box
+        form(@submit.prevent="send")
+          h3 Log in to OpenUserCSS
           hr
-          b-columns
-            b-column
-              b-field
-                b-control(has-icons-left)
-                  icon(icon="mail-ru")
-                  b-input(
-                    type="email",
-                    name="email",
-                    placeholder="E-mail",
-                    v-validate="'required|email'",
-                    :class="{'input': true, 'is-danger': errors.has('email') }"
-                    v-model="username"
-                  )
-              b-field
-                b-control(has-icons-left)
-                  icon(icon="lock")
-                  b-input(
-                    type="password",
-                    name="password",
-                    placeholder="Passphrase",
-                    v-validate="'required'",
-                    v-model="password"
-                    :class="{'input': true, 'is-danger': errors.has('password') }"
-                  )
-              hr
-              notification(v-show="errors.has('email')", icon="alert", color="is-danger").is-danger
-                p(slot="content") {{errors.first('email')}}
-              notification(v-show="errors.has('password')", icon="alert", color="is-danger").is-danger
-                p(slot="content") {{errors.first('password')}}
-              big-button(icon="login", :disabled="errors.has('email') || errors.has('password')").is-primary
-                p(slot="content") Login
+          b-tile(is-ancestor)
+            b-tile(is-parent, is-vertical)
+              b-tile(is-child)
+                b-field
+                  b-control(has-icons-left)
+                    icon(icon="mail-ru")
+                    b-input(
+                      type="email",
+                      name="email",
+                      placeholder="E-mail",
+                      v-validate="'required|email'",
+                      v-model.lazy="login.email",
+                      :class="{'input': true, 'is-danger': errors.has('email') }",
+                      data-vv-as="e-mail"
+                    )
+              b-tile(is-child)
+                b-columns
+                  b-column
+                    b-field
+                      b-control(has-icons-left)
+                        icon(icon="lock")
+                        b-input(
+                          type="password",
+                          name="password",
+                          placeholder="Passphrase",
+                          v-validate="'required'",
+                          v-model.lazy="login.password"
+                          :class="{'input': true, 'is-danger': errors.has('password') }",
+                          data-vv-as="passphrase"
+                        )
+              b-tile(is-parent, is-vertical, is-paddingless)
+                b-tile(is-child)
+                  big-button(icon="account-plus", :disabled="errors.any()").is-primary
+                    p(slot="content") Register
+                b-tile(is-child, v-show="errors.any()")
+                  notification(v-show="errors.any()", icon="alert", color="is-danger").is-danger
+                    div(slot="content")
+                      ul
+                        li(v-for="error in errors.all()") {{error}}

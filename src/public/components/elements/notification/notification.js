@@ -1,7 +1,7 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import icon from '../icon/icon.vue'
 import {
-  height
+  leftToRight
 } from '../../../src/public/components/animations'
 
 export default {
@@ -13,7 +13,7 @@ export default {
     icon
   },
   'methods': {
-    ...height('82px')
+    ...leftToRight
   },
   'props': {
     'icon': {
