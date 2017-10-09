@@ -10,7 +10,7 @@ import userType from './type'
 import {User} from './index'
 
 export default {
-  'addUser': {
+  'register': {
     'type': userType,
     'args': {
       'username': {
@@ -20,9 +20,13 @@ export default {
       'email': {
         'name': 'email',
         'type': new GraphQLNonNull(GraphQLString)
+      },
+      'password': {
+        'name': 'password',
+        'type': new GraphQLNonNull(GraphQLString)
       }
     },
-    'resolve': User.addUser
+    'resolve': User.register
   },
   'updateUser': {
     'type': userType,

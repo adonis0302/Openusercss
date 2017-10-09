@@ -97,6 +97,7 @@
     "imagemin-jpeg-recompress": "^5",
     "james-browser-launcher": "^1",
     "jarallax": "^1",
+    "jsonwebtoken": "^8.0.1",
     "legal-eagle": "^0",
     "lighthouse": "git+https://github.com/GoogleChrome/lighthouse.git#v2.0.0",
     "log-log": "^1",

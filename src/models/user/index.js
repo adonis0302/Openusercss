@@ -4,7 +4,6 @@ import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
 import {handle} from '../../utils/error-handler'
 import uniqueValidator from 'mongoose-unique-validator'
-// import log from 'chalk-console'
 
 const {Schema} = mongoose
 
