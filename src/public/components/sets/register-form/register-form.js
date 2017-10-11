@@ -45,7 +45,7 @@ export default {
       const validated = await this.$validator.validateAll()
 
       if (validated) {
-        console.log(this.register)
+        console.log(this.register.password)
       } else {
         console.log('Invalid form')
       }

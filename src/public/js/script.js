@@ -5,12 +5,13 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VeeValidate from 'vee-validate'
 import VueApollo from 'vue-apollo'
+import {store} from './store'
 
 import {ApolloClient, createBatchingNetworkInterface} from 'apollo-client'
 import anime from 'animejs'
 import log from 'chalk-console'
 
-import {runPolyfills} from './features'
+import {runPolyfills} from './utils/features'
 
 import appBase from '../../../.tmp/app-base/app-base.vue'
 import indexRoute from '../../../.tmp/routes/index/index.vue'
@@ -42,11 +43,13 @@ const removeLoadingIndicator = async () => {
 }
 
 const vue = async () => {
+  const networkInterface = createBatchingNetworkInterface({
+    'uri': '/graphql'
+  })
   const apolloClient = new ApolloClient({
-    'networkInterface': createBatchingNetworkInterface({
-      'uri': '/graphql'
-    }),
-    'connectToDevTools': true
+    networkInterface,
+    'connectToDevTools':  true,
+    'ssrForceFetchDelay': 100
   })
 
   Vue.use(VueApollo)
@@ -100,6 +103,7 @@ const vue = async () => {
   })
 
   const app = new Vue({
+    store,
     apolloProvider,
     router,
     'el':     'app',

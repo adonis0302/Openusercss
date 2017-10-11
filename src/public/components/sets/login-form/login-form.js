@@ -1,7 +1,5 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
-import themeCard from '../../elements/theme-card/theme-card.vue'
 import formWrapper from '../../elements/form-wrapper/form-wrapper.vue'
-import flushImg from '../../elements/flush-img/flush-img.vue'
 import icon from '../../elements/icon/icon.vue'
 import notification from '../../elements/notification/notification.vue'
 import button from '../../elements/button/button.vue'
@@ -25,8 +23,6 @@ export default {
     'b-help':      bulma('help', 'p'),
     'b-tile':      bulma('tile', 'div'),
     'big-button':  button,
-    themeCard,
-    flushImg,
     formWrapper,
     icon,
     notification
@@ -43,8 +39,9 @@ export default {
     async send () {
       const validated = await this.$validator.validateAll()
 
+      console.log(this)
       if (validated) {
-        console.log(this.register)
+        console.log(this.login)
       } else {
         console.log('Invalid form')
       }
