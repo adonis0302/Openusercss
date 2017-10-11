@@ -3,7 +3,10 @@ import 'babel-polyfill'
 
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import veeValidate from 'vee-validate'
+import VeeValidate from 'vee-validate'
+import VueApollo from 'vue-apollo'
+
+import {ApolloClient, createBatchingNetworkInterface} from 'apollo-client'
 import anime from 'animejs'
 import log from 'chalk-console'
 
@@ -39,8 +42,16 @@ const removeLoadingIndicator = async () => {
 }
 
 const vue = async () => {
+  const apolloClient = new ApolloClient({
+    'networkInterface': createBatchingNetworkInterface({
+      'uri': '/graphql'
+    }),
+    'connectToDevTools': true
+  })
+
+  Vue.use(VueApollo)
   Vue.use(VueRouter)
-  Vue.use(veeValidate, {
+  Vue.use(VeeValidate, {
     'errorBagName':  'errors',
     'fieldsBagName': 'fields',
     'delay':         50,
@@ -84,7 +95,12 @@ const vue = async () => {
     ]
   })
 
+  const apolloProvider = new VueApollo({
+    'defaultClient': apolloClient
+  })
+
   const app = new Vue({
+    apolloProvider,
     router,
     'el':     'app',
     'render': (handle) => handle(appBase)

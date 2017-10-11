@@ -7,8 +7,9 @@ import path from 'path'
 import keypair from 'keypair'
 
 const defaultConfig = {
-  'port':   80,
-  'domain': 'openusercss.org'
+  'port':       80,
+  'domain':     'openusercss.org',
+  'saltRounds': 15
 }
 
 const genKeypair = async () => {
@@ -33,6 +34,9 @@ const initConfig = async () => {
    *
    * It's only useful for deterring users from editing the file
    * and for checking integrity!
+   *
+   * Nevertheless, we can write our keys into it, because we expect the
+   * system administrator to properly secure the runtime environment.
    */
 
   const secretsConfig = new Conf({

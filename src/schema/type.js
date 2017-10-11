@@ -14,10 +14,16 @@ const typeDefs = `
     userId: String!
   }
 
+  type Test {
+    id: Int!
+    content: String!
+  }
+
   type Query {
-    allUsers: [User!]!,
+    allUsers: [User!]!
     allLogins: [UserLogin!]!
     getEvilSecret(token: String!): String
+    test: [Test!]!
   }
 
   type LoginPayload {
