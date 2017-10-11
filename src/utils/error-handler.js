@@ -25,12 +25,27 @@ pe.appendStyle({
   },
   'pretty-error > trace > item > header > what': {
     'color': 'bright-white'
+  },
+  'pretty-error > trace > item > footer > addr': {
+    'color': 'white'
   }
 })
+pe.skipPackage('regenerator-runtime')
+pe.skipNodeFiles()
+pe.filter((traceLine) => {
+  if (traceLine.shortenedAddr) {
+    traceLine.shortenedAddr = traceLine.shortenedAddr.replace(process.cwd(), '')
+  }
+})
+
 const handle = (error: Error) => {
   const rendered = pe.render(error)
 
-  log.error(rendered)
+  if (error.message) {
+    log.error([error.message, rendered])
+  } else {
+    log.error(rendered)
+  }
 }
 
 module.exports = {
