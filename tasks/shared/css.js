@@ -1,13 +1,11 @@
 const devtools = require('postcss-devtools')
 const rucksack = require('rucksack-css')
-const material = require('postcss-material-icons')
 const flexibility = require('postcss-flexibility')
 const fixes = require('postcss-fixes')
 const zindex = require('postcss-zindex')
 const importUrl = require('postcss-import-url')
 const mqpacker = require('css-mqpacker')
 const cssnano = require('cssnano')
-// const usedcss = require('usedcss')
 
 const postCssPluginsBuild = [
   devtools(),
@@ -19,7 +17,6 @@ const postCssPluginsBuild = [
     'alias':             false,
     'inputPseudo':       false
   }),
-  material(),
   importUrl(),
   zindex(),
   fixes(),
@@ -40,8 +37,7 @@ const postCssPluginsWatch = [
     'quantityQueries':   false,
     'alias':             false,
     'inputPseudo':       false
-  }),
-  material()
+  })
 ]
 
 module.exports = {

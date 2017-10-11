@@ -18,7 +18,7 @@ const fsWatch = () => {
   gulp.watch([
     'src/**/*.js',
     '!src/public/**/*.js'
-  ], gulp.series('build-server', server.restart))
+  ], gulp.series('watch-server', server.restart))
 
   gulp.watch([
     'src/**/*.pug'
@@ -26,6 +26,6 @@ const fsWatch = () => {
 }
 
 gulp.task('watch', gulp.series(
-  gulp.parallel('js-watch', 'media-watch', 'build-server'),
+  gulp.parallel('js-watch', 'media-watch', 'watch-server'),
   fsWatch
 ))

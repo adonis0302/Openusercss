@@ -5,34 +5,20 @@ import express from 'express'
 import path from 'path'
 import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
-import expressValidator from 'express-validator'
-import flash from 'connect-flash'
-import session from 'express-session'
-import passport from 'passport'
-import mongoose from 'mongoose'
-import bcrypt from 'bcryptjs'
+// import expressValidator from 'express-validator'
 import log from 'chalk-console'
-import {concat} from 'lodash'
+import staticConfig from './config'
 
 import {handle} from './utils/error-handler'
-
-import routes from './routes'
-import graphqlRoute from './routes/graphql'
-
-mongoose.Promise = global.Promise // eslint-disable-line
+import setupRoutes from './routes'
 
 const init = async () => {
-  mongoose.connect('mongodb://localhost/account-center', {
-    'useMongoClient': true
-  })
-
   const app = express()
-  const appSecret = await bcrypt.genSalt()
+  const config = await staticConfig()
 
   app.set('views', path.join(__dirname, 'views'))
   app.set('view engine', 'pug')
 
-  app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({
     'extended': false
   }))
@@ -40,56 +26,11 @@ const init = async () => {
 
   app.use(express.static(path.join(__dirname, 'public')))
 
-  app.use(session({
-    'secret':            appSecret,
-    'saveUninitialized': true,
-    'resave':            true
-  }))
-
-  app.use(passport.initialize())
-  app.use(passport.session())
-
-  app.use(expressValidator({
-    'errorFormatter': (formParam, msg, value) => {
-      const namespace = formParam.split('.')
-      const root = namespace.shift()
-      let param = root
-
-      while (namespace.length) {
-        param = `${param}[${namespace.shift()}]`
-      }
-
-      return {
-        param,
-        msg,
-        value
-      }
-    }
-  }))
-
-  app.use(flash())
-
-  app.use((req, res, next) => {
-    res.locals.infoMsg = concat(
-      req.flash('msg:info'),
-      req.flash('msg:success')
-    )
-    res.locals.errorMsg = concat(
-      req.flash('error'),
-      req.flash('msg:error')
-    )
-    res.locals.user = req.user || null
-    next()
-  })
-
-  app.use('/', routes)
-  app.use('/graphql', graphqlRoute)
-
-  app.use('*', routes)
-
-  app.set('port', 80)
+  app.use(await setupRoutes())
+  app.set('port', config.get('port'))
 
   log.info(`App environment: ${app.get('env')}`)
+
   app.listen(app.get('port'), () => {
     log.info(`App started on port ${app.get('port')}`)
   })

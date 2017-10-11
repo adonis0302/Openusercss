@@ -1,65 +1,56 @@
 // CSS tests
-require('browsernizr/test/css/animations')
-require('browsernizr/test/css/backdropfilter')
-require('browsernizr/test/css/backgroundrepeat')
-require('browsernizr/test/css/backgroundsize')
-require('browsernizr/test/css/backgroundsizecover')
-require('browsernizr/test/css/boxshadow')
-require('browsernizr/test/css/calc')
-require('browsernizr/test/css/checked')
-require('browsernizr/test/css/cubicbezierrange')
-require('browsernizr/test/css/filters')
-require('browsernizr/test/css/flexbox')
-require('browsernizr/test/css/flexwrap')
-require('browsernizr/test/css/fontface')
-require('browsernizr/test/css/gradients')
-require('browsernizr/test/css/lastchild')
-require('browsernizr/test/css/mediaqueries')
-require('browsernizr/test/css/nthchild')
-require('browsernizr/test/css/opacity')
-require('browsernizr/test/css/pointerevents')
-require('browsernizr/test/css/remunit')
-require('browsernizr/test/css/scrollsnappoints')
-require('browsernizr/test/css/supports')
-require('browsernizr/test/css/transforms')
-require('browsernizr/test/css/transforms3d')
-require('browsernizr/test/css/transformslevel2')
-require('browsernizr/test/css/transitions')
-require('browsernizr/test/css/userselect')
+import 'browsernizr/test/css/animations'
+import 'browsernizr/test/css/backdropfilter'
+import 'browsernizr/test/css/backgroundrepeat'
+import 'browsernizr/test/css/backgroundsize'
+import 'browsernizr/test/css/backgroundsizecover'
+import 'browsernizr/test/css/boxshadow'
+import 'browsernizr/test/css/calc'
+import 'browsernizr/test/css/checked'
+import 'browsernizr/test/css/cubicbezierrange'
+import 'browsernizr/test/css/filters'
+import 'browsernizr/test/css/flexbox'
+import 'browsernizr/test/css/flexwrap'
+import 'browsernizr/test/css/fontface'
+import 'browsernizr/test/css/gradients'
+import 'browsernizr/test/css/lastchild'
+import 'browsernizr/test/css/mediaqueries'
+import 'browsernizr/test/css/nthchild'
+import 'browsernizr/test/css/opacity'
+import 'browsernizr/test/css/pointerevents'
+import 'browsernizr/test/css/remunit'
+import 'browsernizr/test/css/scrollsnappoints'
+import 'browsernizr/test/css/supports'
+import 'browsernizr/test/css/transforms'
+import 'browsernizr/test/css/transforms3d'
+import 'browsernizr/test/css/transformslevel2'
+import 'browsernizr/test/css/transitions'
+import 'browsernizr/test/css/userselect'
 
 // DOM & ELEMENT TESTS
-require('browsernizr/test/dom/classlist')
-require('browsernizr/test/dom/hidden')
-require('browsernizr/test/script/async')
-require('browsernizr/test/script/defer')
-require('browsernizr/test/svg')
-require('browsernizr/test/video/autoplay')
-require('browsernizr/test/video/loop')
-require('browsernizr/test/video/preload')
+import 'browsernizr/test/dom/classlist'
+import 'browsernizr/test/dom/hidden'
+import 'browsernizr/test/script/async'
+import 'browsernizr/test/script/defer'
+import 'browsernizr/test/svg'
+import 'browsernizr/test/video/autoplay'
+import 'browsernizr/test/video/loop'
+import 'browsernizr/test/video/preload'
 
 // OTHER TESTS
-require('browsernizr/test/es6/promises')
-require('browsernizr/test/serviceworker')
-// require('browsernizr/test/url/data-uri') // FIXME: Chrome throws an error on this
+import 'browsernizr/test/es6/promises'
+import 'browsernizr/test/serviceworker'
+import 'browsernizr/test/url/data-uri'
 
-const Modernizr = require('browsernizr')
+import Modernizr from 'browsernizr'
+import log from 'chalk-console'
+import supports from 'css-supports'
+import promise from 'es6-promise'
+import flexibility from 'flexibility'
+import stickybits from 'stickybits'
 
-require('classlist-polyfill')
-require('console-polyfill')
-require('../../../node_modules/scrollsnap-polyfill/dist/scrollsnap-polyfill.bundled.js')
-
-const loglog = require('log-log')
-const supports = require('css-supports')
-const promise = require('es6-promise')
-const flexibility = require('flexibility')
-
-require('jarallax')
-
-const fixed = require('sticky-header')
-const stickybits = require('stickybits')
-const log = loglog.create({
-  'applicationName': 'cly.featuredetect'
-})
+import 'classlist-polyfill'
+import 'console-polyfill'
 
 // CUSTOM TESTS
 Modernizr.addTest('battery', () => {
@@ -71,10 +62,6 @@ Modernizr.addTest('https', () => {
 Modernizr.addTest('localhost', () => {
   return window.location.hostname === 'localhost'
 })
-if (!Modernizr.supports) {
-  log.warning('css/supports - support not found, shimming')
-  supports.shim()
-}
 Modernizr.addTest('cssgrid', () => {
   return window.CSS.supports('(display: grid)')
 })
@@ -85,40 +72,34 @@ Modernizr.addTest('fixedposition', () => {
   return window.CSS.supports('(position: fixed)')
 })
 Modernizr.addTest('stickyposition', () => {
-  return window.CSS.supports('(position: sticky)') || window.CSS.supports('(position: -webkit-sticky)')
+  return window.CSS.supports('(position: sticky)')
 })
 
-const runPolyfills = () => {
-  return new Promise((resolve, reject) => {
-    const ranPolyfills = []
+const runPolyfills = async () => {
+  const ranPolyfills = []
 
-    try {
-      if (!(Modernizr.flexbox && Modernizr.flexbox)) {
-        log.warning('css/flexbox - support not found, polyfilling')
-        flexibility(document.documentElement)
-        ranPolyfills.push('flexibility')
-      }
-      if (!Modernizr.promises) {
-        log.warning('js/promise - support not found, polyfilling')
-        promise.polyfill()
-        ranPolyfills.push('promises')
-      }
-      if (!Modernizr.fixedposition) {
-        log.warning('css/fixedposition not supported, polyfilling')
-        fixed(document.querySelector('[data-c-position="fixed"]'))
-        fixed(document.querySelector('[data-c-position="sticky"]'))
-        ranPolyfills.push('fixedposition')
-      }
-      if (!Modernizr.stickyposition) {
-        log.warning('css/stickyposition not supported, polyfilling')
-        stickybits('[data-c-position="sticky"]')
-        ranPolyfills.push('stickyposition')
-      }
-      resolve(ranPolyfills)
-    } catch (error) {
-      reject(error)
-    }
-  })
+  if (!Modernizr.supports) {
+    log.info('css/supports - support not found, shimming')
+    supports.shim()
+    ranPolyfills.push('supports')
+  }
+  if (!(Modernizr.flexbox && Modernizr.flexbox)) {
+    log.info('css/flexbox - support not found, polyfilling')
+    flexibility(document.documentElement)
+    ranPolyfills.push('flexibility')
+  }
+  if (!Modernizr.promises) {
+    log.info('js/promise - support not found, polyfilling')
+    promise.polyfill()
+    ranPolyfills.push('promises')
+  }
+  if (!Modernizr.stickyposition) {
+    log.info('css/stickyposition not supported, polyfilling')
+    stickybits('[data-c-position="sticky"]')
+    ranPolyfills.push('stickyposition')
+  }
+
+  return ranPolyfills
 }
 
 module.exports = {

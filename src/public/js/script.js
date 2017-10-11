@@ -5,6 +5,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import veeValidate from 'vee-validate'
 import anime from 'animejs'
+import log from 'chalk-console'
 
 import {runPolyfills} from './features'
 
@@ -13,6 +14,8 @@ import indexRoute from '../../../.tmp/routes/index/index.vue'
 import browseRoute from '../../../.tmp/routes/browse/browse.vue'
 import loginRoute from '../../../.tmp/routes/login/login.vue'
 import registerRoute from '../../../.tmp/routes/register/register.vue'
+
+const scriptsStart = Date.now()
 
 const polyfills = async () => {
   const ranPolyfills = await runPolyfills()
@@ -85,12 +88,14 @@ const vue = async () => {
     router,
     'el':     'app',
     'render': (handle) => handle(appBase)
-    // 'components': {App}
   })
 
   document.querySelector('noscript').remove()
   removeLoadingIndicator()
 
+  const executionLength = Date.now() - scriptsStart
+
+  log.info(`Clientside Javascript execution took ${executionLength}ms`)
   return app
 }
 

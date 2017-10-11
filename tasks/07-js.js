@@ -5,7 +5,7 @@ const prettyError = require('gulp-prettyerror')
 const gulpif = require('gulp-if')
 const rename = require('gulp-rename')
 const sourcemaps = require('gulp-sourcemaps')
-const merge = require('merge-stream')
+// const merge = require('merge-stream')
 
 const browserify = require('browserify')
 const closure = require('google-closure-compiler-js').gulp()
@@ -142,8 +142,30 @@ gulp.task('build-express', () => {
   ])
 })
 
+gulp.task('copy-express', () => {
+  return pump([
+    prettyError(),
+    gulp.src([
+      './src/**/*.js',
+      '!./src/public/**/*.js'
+    ]),
+    babel({
+      'presets': [
+        'flow',
+        'env',
+        'stage-3'
+      ]
+    }),
+    gulp.dest('build')
+  ])
+})
+
 gulp.task('build-server', gulp.parallel(
   'build-express', 'copy-views', 'copy-meta'
+))
+
+gulp.task('watch-server', gulp.parallel(
+  'copy-express', 'copy-views', 'copy-meta'
 ))
 
 /* gulp.task('server', () => {

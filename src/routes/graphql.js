@@ -1,48 +1,30 @@
 // @flow
 
-import {
+/* import {
   GraphQLObjectType,
   GraphQLSchema
-} from 'graphql'
-import userQueries from '../models/user/queries'
-import userMutations from '../models/user/mutations'
+} from 'graphql' */
+// import userQueries from '../models/user/queries'
+// import userMutations from '../models/user/mutations'
 import {Router as expressRouter} from 'express'
-import graphqlHTTP from 'express-graphql'
+// import graphqlHTTP from 'express-graphql'
+import {graphqlExpress, graphiqlExpress} from 'apollo-server-express'
+import bodyParser from 'body-parser'
 
-const router = expressRouter()
+import schema from '../schema'
+import connectMongo from '../connector'
 
-// Setup GraphQL RootQuery
-const RootQuery = new GraphQLObjectType({
-  'name':        'Query',
-  'description': 'Realize Root Query',
-  'fields':      () => ({
-    'user':           userQueries.user,
-    'users':          userQueries.users,
-    'userId':         userQueries.userId,
-    'userByUsername': userQueries.userByUsername,
-    'userByEmail':    userQueries.userByEmail
-  })
-})
+export default async () => {
+  const router = expressRouter()
+  const context = await connectMongo()
 
-// Setup GraphQL RootMutation
-const RootMutation = new GraphQLObjectType({
-  'name':        'Mutation',
-  'description': 'Realize Root Mutations',
-  'fields':      () => ({
-    'addUser':    userMutations.register,
-    'updateUser': userMutations.updateUser
-  })
-})
+  router.use('/graphql', bodyParser.json(), graphqlExpress({
+    context,
+    schema
+  }))
+  router.use('/graphiql', graphiqlExpress({
+    'endpointURL': '/graphql'
+  }))
 
-// Set up GraphQL Schema with our RootQuery and RootMutation
-const schema = new GraphQLSchema({
-  'query':    RootQuery,
-  'mutation': RootMutation
-})
-
-router.use('/', graphqlHTTP({
-  schema,
-  'graphiql': true
-}))
-
-module.exports = router
+  return router
+}

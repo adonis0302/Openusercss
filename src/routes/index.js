@@ -1,11 +1,25 @@
 // @flow
 
-import {Router as expressRouter} from 'express'
+import express from 'express'
+// import log from 'chalk-console'
+// import jwt from 'express-jwt'
+// import hat from 'hat'
+import path from 'path'
 
-const router = expressRouter()
+import graphqlRoute from './graphql'
 
-router.get('/', (req, res) => {
-  res.render('index')
-})
+const expressRouter = express.Router
+const setupRoutes = async () => {
+  const router = expressRouter()
 
-module.exports = router
+  router.use('/', await graphqlRoute())
+
+  router.use(express.static(path.join(__dirname, 'public')))
+  router.get('*', (req, res) => {
+    res.render('index')
+  })
+
+  return router
+}
+
+export default setupRoutes

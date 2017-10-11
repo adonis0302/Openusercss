@@ -21,7 +21,6 @@ const sassVars = require('gulp-sass-vars')
 const spritesmith = require('gulp.spritesmith-multi')
 // POSTCSS
 const postcss = require('gulp-postcss')
-const bless = require('gulp-bless')
 const pleeease = require('gulp-pleeease')
 // OTHER
 const concat = require('gulp-concat')
@@ -256,9 +255,6 @@ const mediaTaskBuild = () => {
 
     save('before-ie'),
     rename('bundle.ie.css'),
-    bless({
-      'suffix': '-'
-    }),
     gulp.dest(out),
 
     save.restore('before-ie'),
