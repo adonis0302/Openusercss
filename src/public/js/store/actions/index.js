@@ -5,6 +5,7 @@ import localStore from 'store2'
 import verifyToken from './verify-token'
 import logout from './remote-logout'
 import login from './remote-login'
+import register from './remote-register'
 
 const networkInterface = createBatchingNetworkInterface({
   'uri': '/graphql'
@@ -37,5 +38,6 @@ export default {
   },
   logout,
   login,
+  register,
   verifyToken
 }

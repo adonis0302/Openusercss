@@ -34,20 +34,19 @@ export default {
   data () {
     return {
       'register': {
-        'username': '',
-        'password': '',
-        'email':    ''
+        'displayname': '',
+        'password':    '',
+        'email':       ''
       }
     }
   },
   'methods': {
-    async send () {
+    async submitRegistration () {
       const validated = await this.$validator.validateAll()
 
       if (validated) {
-        console.log(this.register.password)
-      } else {
-        console.log('Invalid form')
+        this.$store.dispatch('updateFormData', this.register)
+        this.$store.dispatch('register', this.register)
       }
     }
   }

@@ -2,7 +2,7 @@ form-wrapper
   b-section(slot="form").ouc-form-section
     b-container(style="max-width: 500px;")
       b-box.ouc-form-box
-        form(@submit.prevent="send")
+        form(@submit.prevent="submitRegistration")
           h3 Create your OpenUserCSS account
           hr
           b-tile(is-ancestor)
@@ -26,12 +26,12 @@ form-wrapper
                     icon(icon="account")
                     b-input(
                       type="text",
-                      name="username",
+                      name="displayname",
                       placeholder="Username",
                       v-validate="'required|alpha_num'",
-                      v-model.lazy="register.username"
-                      :class="{'input': true, 'is-danger': errors.has('username') }",
-                      data-vv-as="username"
+                      v-model.lazy="register.displayname"
+                      :class="{'input': true, 'is-danger': errors.has('displayname') }",
+                      data-vv-as="displayname"
                     )
               b-tile(is-child)
                 b-columns
@@ -69,65 +69,3 @@ form-wrapper
                     div(slot="content")
                       ul
                         li(v-for="error in errors.all()") {{error}}
-                
-
-          //- b-columns(is-multiline)
-            b-column(is-6)
-              b-field
-                b-control(has-icons-left)
-                  icon(icon="mail-ru")
-                  b-input(
-                    type="email",
-                    name="email",
-                    placeholder="E-mail",
-                    v-validate="'required|email'",
-                    :class="{'input': true, 'is-danger': errors.has('email') }"
-                    v-model="email"
-                  )
-            b-column(is-6)
-              b-field
-                b-control(has-icons-left)
-                  icon(icon="account")
-                  b-input(
-                    type="text",
-                    name="username",
-                    placeholder="Username",
-                    v-validate="'required'",
-                    v-model="username"
-                    :class="{'input': true, 'is-danger': errors.has('username') }"
-                  )
-            b-column(is-6)
-              b-field
-                b-control(has-icons-left)
-                  icon(icon="lock")
-                  b-input(
-                    type="password",
-                    name="password",
-                    placeholder="Passphrase",
-                    v-validate="'required'",
-                    v-model="password"
-                    :class="{'input': true, 'is-danger': errors.has('password') }"
-                  )
-            b-column(is-6)
-              b-field
-                b-control(has-icons-left)
-                  icon(icon="lock-plus")
-                  b-input(
-                    type="password",
-                    name="password-verify",
-                    placeholder="Verify passphrase",
-                    v-validate="'required|password-verify'",
-                    v-model="password"
-                    :class="{'input': true, 'is-danger': errors.has('password-verify') }"
-                  )
-            b-tile(is-ancestor)
-              b-tile(is-parent, is-vertical)
-                b-tile(is-child, v-show="errors.any()")
-                  notification(v-show="errors.any()", icon="alert", color="is-danger").is-danger
-                    div(slot="content")
-                      ul
-                        li(v-for="error in errors.all()") {{error}}
-                b-tile(is-child)
-                  hr
-                  big-button(icon="account-plus", :disabled="errors.any()").is-primary
-                    p(slot="content") Register
