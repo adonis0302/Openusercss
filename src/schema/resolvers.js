@@ -1,20 +1,18 @@
-import allUsersQuery from './queries/all-users'
-import allLoginsQuery from './queries/all-logins'
-import evilSecretQuery from './queries/evil-secret'
 import testQuery from './queries/test'
+import verifyTokenQuery from './queries/verify-token'
 
 import registerMutation from './mutations/register'
 import loginMutation from './mutations/login'
+import logoutMutation from './mutations/logout'
 
 export default {
   'Query': {
-    'allUsers':      allUsersQuery,
-    'allLogins':     allLoginsQuery,
-    'getEvilSecret': evilSecretQuery,
-    'test':          testQuery
+    'verifyToken': verifyTokenQuery,
+    'test':        testQuery
   },
   'Mutation': {
     'register': registerMutation,
-    'login':    loginMutation
+    'login':    loginMutation,
+    'logout':   logoutMutation
   }
 }

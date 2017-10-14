@@ -1,5 +1,5 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
-import {mapGetters, mapMutations} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 
 import {leftToRight} from '../../../src/public/components/animations'
 import icon from '../icon/icon.vue'
@@ -21,12 +21,11 @@ export default {
   },
   'methods': {
     ...leftToRight,
-    ...mapMutations([
-      'changeTestText'
+    ...mapActions([
+      'logout'
     ])
   },
   'computed': mapGetters({
-    'user':     'currentUser',
-    'testText': 'testText'
+    'user': 'currentUser'
   })
 }

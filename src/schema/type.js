@@ -13,16 +13,9 @@ const typeDefs = `
     userId: String!
   }
 
-  type Test {
-    id: Int!
-    content: String!
-  }
-
   type Query {
-    allUsers: [User!]!
-    allLogins: [UserLogin!]!
-    getEvilSecret(token: String!): String
-    test: [Test!]!
+    verifyToken(token: String!): Boolean!
+    test: Boolean!
   }
 
   type LoginPayload {
@@ -33,6 +26,7 @@ const typeDefs = `
   type Mutation {
     register(displayname: String!, email: String!, password: String!): User
     login(email: String!, password: String!): LoginPayload
+    logout(token: String!): Boolean
   }
 `
 

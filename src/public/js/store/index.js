@@ -9,12 +9,11 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   'state': {
-    'currentUser':  null,
     'latestThemes': [],
     'formData':     [],
     'testText':     '',
     'loginError':   '',
-    'token':        null
+    'session':      null
   },
   getters,
   mutations,

@@ -1,13 +1,18 @@
-import hat from 'hat'
+import localStore from 'store2'
 
 /*
  * All mutations are synchronous
  */
 
 export default {
-  login (state, token) {
-    state.token = token
+  login (state, {data}) {
+    state.session = data.login
+    localStore.set('session', data.login)
     state.loginError = null
+  },
+
+  logout (state) {
+    state.session = null
   },
 
   loginFailure (state, message) {
@@ -20,7 +25,7 @@ export default {
     state.formData = payload
   },
 
-  changeTestText (state) {
-    state.testText = hat()
+  deleteSessionData (state) {
+    state.session = null
   }
 }

@@ -11,22 +11,26 @@ transition(
           img(src="/img/openusercss.icon-x32.png")
         navbar-item
           span OpenUserCSS
-    navbar-brand
-      navbar-item
-        b-button(@click="changeTestText")
-          p {{testText}}
     navbar-menu(is-primary, is-active)
       navbar-start
       navbar-end
+        navbar-item(v-if="user")
+          router-link(to="/profile")
+            icon(icon="account")
+            | Welcome, {{user.displayname}}
+        navbar-item(v-if="user")
+          a(@click.prevent="logout")
+            icon(icon="logout")
+            | Log out
         navbar-item
           router-link(to="/")
             icon(icon="home")
             | Home
-        navbar-item
+        navbar-item(v-if="!user")
           router-link(to="/login")
             icon(icon="login")
             | Log in
-        navbar-item
+        navbar-item(v-if="!user")
           router-link(to="/register")
             icon(icon="account-plus")
             | Register

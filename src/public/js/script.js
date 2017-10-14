@@ -2,25 +2,20 @@
 import 'babel-polyfill'
 
 import Vue from 'vue'
-import VueRouter from 'vue-router'
 import VeeValidate from 'vee-validate'
-import VueApollo from 'vue-apollo'
-import {store} from './store'
+import VueRouter from 'vue-router'
 
-import {ApolloClient, createBatchingNetworkInterface} from 'apollo-client'
+import {router} from './vue-modules'
+import {store} from './store'
+import {runPolyfills} from './utils/features'
+
 import anime from 'animejs'
 import log from 'chalk-console'
 
-import {runPolyfills} from './utils/features'
-
 import appBase from '../../../.tmp/app-base/app-base.vue'
-import indexRoute from '../../../.tmp/routes/index/index.vue'
-import browseRoute from '../../../.tmp/routes/browse/browse.vue'
-import loginRoute from '../../../.tmp/routes/login/login.vue'
-import registerRoute from '../../../.tmp/routes/register/register.vue'
 
 const scriptsStart = Date.now()
-const perfTelemetry = {
+const perfStats = {
   'blocking': [],
   'sync':     [],
   'async':    []
@@ -30,7 +25,7 @@ const polyfills = async () => {
   const polyfillsStart = Date.now()
   const ranPolyfills = await runPolyfills()
 
-  perfTelemetry.sync.push({
+  perfStats.sync.push({
     'name': 'polyfills',
     'time': Date.now() - polyfillsStart
   })
@@ -50,7 +45,7 @@ const removeLoadingIndicator = async () => {
   await node.finished
 
   loadingIndicator.remove()
-  perfTelemetry.async.push({
+  perfStats.async.push({
     'name': 'indicator',
     'time': Date.now() - indicatorStart
   })
@@ -60,16 +55,7 @@ const removeLoadingIndicator = async () => {
 
 const vue = async () => {
   const vueStart = Date.now()
-  const networkInterface = createBatchingNetworkInterface({
-    'uri': '/graphql'
-  })
-  const apolloClient = new ApolloClient({
-    networkInterface,
-    'connectToDevTools':  true,
-    'ssrForceFetchDelay': 100
-  })
 
-  Vue.use(VueApollo)
   Vue.use(VueRouter)
   Vue.use(VeeValidate, {
     'errorBagName':  'errors',
@@ -93,35 +79,8 @@ const vue = async () => {
     'aria':     true
   })
 
-  const router = new VueRouter({
-    'mode':   'history',
-    'routes': [
-      {
-        'path':      '/',
-        'component': indexRoute
-      },
-      {
-        'path':      '/login',
-        'component': loginRoute
-      },
-      {
-        'path':      '/register',
-        'component': registerRoute
-      },
-      {
-        'path':      '/browse',
-        'component': browseRoute
-      }
-    ]
-  })
-
-  const apolloProvider = new VueApollo({
-    'defaultClient': apolloClient
-  })
-
   const app = new Vue({
     store,
-    apolloProvider,
     router,
     'el':     'app',
     'render': (handle) => handle(appBase)
@@ -129,7 +88,7 @@ const vue = async () => {
 
   document.querySelector('noscript').remove()
 
-  perfTelemetry.sync.push({
+  perfStats.sync.push({
     'name': 'vue',
     'time': Date.now() - vueStart
   })
@@ -179,7 +138,7 @@ const loadedFonts = async () => {
     })
   }
 
-  perfTelemetry.async.push({
+  perfStats.async.push({
     'name': 'fontStats',
     'time': Date.now() - fontsStart
   })
@@ -202,12 +161,12 @@ const init = async () => {
 const main = async () => {
   await init()
 
-  log.info(`Performance telemetry: ${JSON.stringify(perfTelemetry, null, 4)}`)
+  // log.info(`Performance statistics: ${JSON.stringify(perfStats, null, 4)}`)
 }
 
 main()
 
-perfTelemetry.blocking.push({
+perfStats.blocking.push({
   'name': 'mainThread',
   'time': Date.now() - scriptsStart
 })

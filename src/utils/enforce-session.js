@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken'
 import {AuthenticationError} from './custom-errors'
 import {handle} from '../utils/error-handler'
 
-export default async (token: String) => {
+export default async (token: String, Logins) => {
   const config = await staticConfig()
 
   try {
@@ -15,6 +15,14 @@ export default async (token: String) => {
         'HS256'
       ]
     })
+
+    const session = Logins.findOne({
+      token
+    })
+
+    if (!await session) {
+      throw new AuthenticationError('Invalid token')
+    }
   } catch (error) {
     handle(error)
     throw new AuthenticationError(error.message)

@@ -1,6 +1,9 @@
 export default {
   currentUser (state) {
-    return state.currentUser
+    if (!state.session) {
+      return null
+    }
+    return state.session.user
   },
 
   latestThemes (state) {
@@ -16,6 +19,14 @@ export default {
   },
 
   loginError (state) {
-    return state.loginError
+    return state.sessionError
+  },
+
+  token (state) {
+    if (state.session) {
+      return state.session.auth.token
+    }
+
+    return null
   }
 }

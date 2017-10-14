@@ -1,5 +1,4 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
-import log from 'chalk-console'
 import {mapGetters} from 'vuex'
 
 import formWrapper from '../../elements/form-wrapper/form-wrapper.vue'
