@@ -7,14 +7,20 @@ import jwt from 'jsonwebtoken'
 import log from 'chalk-console'
 import bcrypt from 'bcryptjs'
 
-export default async (root, {email, password}, {Users, Logins}) => {
+export default async (root, {email, password}: Object<String>, {Users, Logins}) => {
   const config = await staticConfig()
   const foundUser = await Users.findOne({
     email
   })
 
   const loginStarted = Date.now()
-  const authResult = await bcrypt.compare(password, foundUser.password)
+  let authResult = null
+
+  try {
+    authResult = await bcrypt.compare(password, foundUser.password)
+  } catch (error) {
+    throw new AuthenticationError('Invalid credentials')
+  }
 
   if (!authResult) {
     throw new AuthenticationError('Invalid credentials')

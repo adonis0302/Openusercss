@@ -2,7 +2,7 @@ form-wrapper
   b-section(slot="form").ouc-form-section
     b-container(style="max-width: 500px;")
       b-box.ouc-form-box
-        form(@submit.prevent="send", method="GET")
+        form(@submit.prevent="submitLogin", method="GET")
           h3 Log in to OpenUserCSS
           hr
           b-tile(is-ancestor)
@@ -44,3 +44,6 @@ form-wrapper
                     div(slot="content")
                       ul
                         li(v-for="error in errors.all()") {{error}}
+                notification(v-show="loginError", icon="alert", color="is-danger").is-danger
+                  div(slot="content")
+                    p {{loginError}}

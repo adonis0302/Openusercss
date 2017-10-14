@@ -1,4 +1,7 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
+import log from 'chalk-console'
+import {mapGetters} from 'vuex'
+
 import formWrapper from '../../elements/form-wrapper/form-wrapper.vue'
 import icon from '../../elements/icon/icon.vue'
 import notification from '../../elements/notification/notification.vue'
@@ -36,15 +39,16 @@ export default {
     }
   },
   'methods': {
-    async send () {
+    async submitLogin () {
       const validated = await this.$validator.validateAll()
 
-      console.log(this)
       if (validated) {
-        console.log(this.login)
-      } else {
-        console.log('Invalid form')
+        this.$store.dispatch('updateFormData', this.login)
+        this.$store.dispatch('login', this.login)
       }
     }
-  }
+  },
+  'computed': mapGetters([
+    'loginError'
+  ])
 }

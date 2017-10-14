@@ -11,6 +11,10 @@ transition(
           img(src="/img/openusercss.icon-x32.png")
         navbar-item
           span OpenUserCSS
+    navbar-brand
+      navbar-item
+        b-button(@click="changeTestText")
+          p {{testText}}
     navbar-menu(is-primary, is-active)
       navbar-start
       navbar-end
