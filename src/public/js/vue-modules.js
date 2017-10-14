@@ -5,6 +5,7 @@ import browseRoute from '../../../.tmp/routes/browse/browse.vue'
 import loginRoute from '../../../.tmp/routes/login/login.vue'
 import registerRoute from '../../../.tmp/routes/register/register.vue'
 import profileRoute from '../../../.tmp/routes/profile/profile.vue'
+import newThemeRoute from '../../../.tmp/routes/new-theme/new-theme.vue'
 
 export const router = new VueRouter({
   'mode':   'history',
@@ -28,6 +29,10 @@ export const router = new VueRouter({
     {
       'path':      '/profile',
       'component': profileRoute
+    },
+    {
+      'path':      '/new-theme',
+      'component': newThemeRoute
     }
   ]
 })

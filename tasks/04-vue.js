@@ -10,13 +10,13 @@ const pug = require('gulp-pug')
 const emailEncoder = require('gulp-email-encoder')
 
 // const pleeease = require('gulp-pleeease')
-// const postcss = require('gulp-postcss')
+const postcss = require('gulp-postcss')
 const sassGlob = require('gulp-sass-glob')
 const sassVars = require('gulp-sass-vars')
 const htmlmin = require('gulp-htmlmin')
 
 const {pugOptions} = require('./shared/pug')
-// const {postCssPluginsBuild, postCssPluginsWatch} = require('./shared/css')
+const {postCssPluginsBuild, postCssPluginsWatch} = require('./shared/css')
 const {ourSassConfig} = require('./appshell')
 
 const sources = [
@@ -36,7 +36,8 @@ gulp.task('vue-watch', (done) => {
           sassVars(ourSassConfig, {
             'verbose': true
           }),
-          sass()
+          sass(),
+          postcss(postCssPluginsWatch)
         ])
       },
 
@@ -68,7 +69,8 @@ gulp.task('vue-build', (done) => {
           sassVars(ourSassConfig, {
             'verbose': false
           }),
-          sass()
+          sass(),
+          postcss(postCssPluginsBuild)
         ])
       },
 

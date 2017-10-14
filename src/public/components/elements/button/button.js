@@ -6,10 +6,7 @@ import {
 
 export default {
   'components': {
-    'b-button':     bulma('button', 'button'),
-    'b-tile':       bulma('tile', 'div'),
-    'b-level':      bulma('level', 'div'),
-    'b-level-left': bulma('level-left', 'div'),
+    'b-button': bulma('button', 'button'),
     icon
   },
   'methods': {

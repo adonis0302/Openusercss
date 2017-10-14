@@ -3,19 +3,24 @@
 @import 'node_modules/css-reset-and-normalize-sass/scss/flavored-reset-and-normalize';
 @import 'node_modules/md-shadows/md-shadows';
 
-@import 'node_modules/bulma/sass/utilities/initial-variables';
+@import './variables';
+@import './compat';
+/* @import 'node_modules/bulma/sass/utilities/initial-variables';
 @import './autocolor';
 @import './variables';
 
-// @import 'node_modules/bulma/sass/utilities/all';
-// @import 'node_modules/bulma/sass/base/all';
-// @import 'node_modules/bulma/sass/grid/all';
-// @import 'node_modules/bulma/sass/layout/all';
-// @import 'node_modules/bulma/sass/elements/all';
-// @import 'node_modules/bulma/sass/components/all';
+@import 'node_modules/bulma/bulma';
+*/
+
+// @import './reboot';
+@import './styles';
+
+/*
+
+@import 'node_modules/bulma/sass/utilities/initial-variables';
+@import 'scss/autocolor';
+@import 'scss/variables';
 
 @import 'node_modules/bulma/bulma';
 
-@import './reboot';
-@import './compat';
-@import './styles';
+*/

@@ -1,1 +1,16 @@
 /* vue:scoped */
+
+@import 'node_modules/bulma/sass/utilities/initial-variables';
+@import '../../../scss/autocolor';
+@import '../../../scss/variables';
+
+@import 'node_modules/bulma/sass/utilities/all';
+
+@import 'node_modules/bulma/sass/grid/tiles';
+@import 'node_modules/bulma/sass/elements/notification';
+
+.notification {
+  padding: 32px;
+}
+
+@import '../../../scss/reboot';

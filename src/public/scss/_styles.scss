@@ -1,21 +1,21 @@
 .hoverhidden {
-  padding: 5px;
-  padding-left: 5px;
-  padding-right: 5px;
-  transition-duration: .3s;
-  transition-property: background-color, color;
-  transition-timing-function: ease-in-out;
+  padding: 5px !important;
+  padding-left: 5px !important;
+  padding-right: 5px !important;
+  transition-duration: .3s !important;
+  transition-property: background-color, color !important;
+  transition-timing-function: ease-in-out !important;
 }
 
 .hoverhidden:not(:hover) {
-  background-color: #000;
-  border-radius: 3px;
-  color: #000;
-  user-select: none;
+  background-color: #000 !important;
+  border-radius: 3px !important;
+  color: #000 !important;
+  user-select: none !important;
 }
 
 .shadow-floating {
-  box-shadow: 0 10px 70px -30px rgba(0, 0, 0, .65);
+  box-shadow: 0 10px 70px -30px rgba(0, 0, 0, .65) !important;
 }
 
 .shadow-inset {
@@ -27,25 +27,26 @@
 }
 
 .fullheight {
-  height: 100%;
+  height: 100% !important;
 }
 
 .is-thin {
-  font-weight: 300;
+  font-weight: 300 !important;
 }
 
 .is-normal {
-  font-weight: 400;
+  font-weight: 400 !important;
 }
 
 .is-bold {
-  font-weight: 600;
+  font-weight: 600 !important;
 }
 
 .is-extra-bold {
-  font-weight: 700;
+  font-weight: 700 !important;
 }
 
+/*
 .container,
 .container-fluid {
   &.is-background {
@@ -58,13 +59,4 @@
     color: text-for-bg(map-get($tones, 'brand-primary'));
   }
 }
-
-.navbar {
-  &.is-primary a {
-    color: text-for-bg(map-get($tones, 'brand-primary'));
-  }
-}
-
-.footer {
-  padding-bottom: 48px;
-}
+*/

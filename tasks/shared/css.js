@@ -37,7 +37,8 @@ const postCssPluginsWatch = [
     'quantityQueries':   false,
     'alias':             false,
     'inputPseudo':       false
-  })
+  }),
+  importUrl()
 ]
 
 module.exports = {

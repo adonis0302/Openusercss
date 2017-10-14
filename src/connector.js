@@ -16,6 +16,7 @@ export default async () => {
 
   return {
     'Users':  db.collection('users'),
-    'Logins': db.collection('logins')
+    'Logins': db.collection('logins'),
+    'Themes': db.collection('themes')
   }
 }

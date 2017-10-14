@@ -9,7 +9,8 @@ import keypair from 'keypair'
 const defaultConfig = {
   'port':       80,
   'domain':     'openusercss.org',
-  'saltRounds': 15
+  'saltRounds': 15,
+  'env':        process.env.NODE_ENV || 'development' // eslint-disable-line
 }
 
 const genKeypair = async () => {

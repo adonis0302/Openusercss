@@ -8,12 +8,19 @@
 }
 
 p,
-span,
 a,
-li {
+li,
+ul {
   font-size: responsive;
-  line-height: 20px;
+  line-height: 22px;
   max-font-size: 17px;
   min-font-size: 15px;
   text-decoration: none;
+}
+
+p,
+a,
+li,
+span {
+  font-family: 'Nunito';
 }

@@ -1,6 +1,21 @@
 /* vue:scoped */
 
-.is-primary {
+@import 'node_modules/bulma/sass/utilities/initial-variables';
+@import '../../../scss/autocolor';
+@import '../../../scss/variables';
+
+@import 'node_modules/bulma/sass/utilities/all';
+@import 'node_modules/bulma/sass/base/all';
+
+@import 'node_modules/bulma/sass/components/navbar';
+
+a {
   background-color: map-get($tones, 'brand-primary');
   color: text-for-bg(map-get($tones, 'brand-primary'));
+
+  &:hover {
+    color: darken(text-for-bg(map-get($tones, 'brand-primary')), 10);
+  }
 }
+
+@import '../../../scss/reboot';

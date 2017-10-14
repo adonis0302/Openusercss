@@ -28,13 +28,16 @@ const browserifyOpts = {
   'debug':        false,
   'fullPaths':    false,
   'cache':        {},
-  'packageCache': {}
+  'packageCache': {},
+  'transform':    [
+    vueify
+  ]
 }
 
 const bify = browserify(browserifyOpts)
-.transform(vueify)
 .transform(babelify, {
   'presets': [
+    'vue',
     'flow',
     'env',
     'stage-3'
@@ -44,6 +47,7 @@ const bify = browserify(browserifyOpts)
 const wify = watchify(browserify(browserifyOpts))
 .transform(babelify, {
   'presets': [
+    'vue',
     'flow',
     'env',
     'stage-3'
@@ -52,7 +56,6 @@ const wify = watchify(browserify(browserifyOpts))
 .plugin(hmr, {
   'mode': 'websocket'
 })
-.transform(vueify)
 
 const bundle = () => {
   return pump([
