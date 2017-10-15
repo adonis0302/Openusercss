@@ -1,0 +1,114 @@
+b-container
+      b-section
+        form-wrapper
+          form(slot="form", @submit.prevent="submit").ouc-new-theme-form
+            b-tile(is-ancestor)
+              b-tile(is-parent, is-vertical)
+                b-tile.ouc-new-theme-header(is-child)
+                  b-level
+                    b-level-left
+                      h1 Create a new theme
+                    b-level-right
+                      b-button(type="submit", is-primary)
+                        div(slot="content") Upload theme
+
+                b-tile.ouc-new-theme-title(is-child)
+                  b-field
+                    b-control(has-icons-left)
+                      icon(icon="tag")
+                      b-input(
+                        type="text",
+                        name="title",
+                        placeholder="Theme title",
+                        v-validate="'required'",
+                        v-model.lazy="theme.title",
+                        :class="{'input': true, 'is-danger': errors.has('title') }"
+                      )
+
+                b-tile(is-child, is-paddingless)
+                  b-columns
+                    b-column.ouc-new-theme-description(is-child, is-7)
+                      b-field
+                        b-control
+                          b-textarea(
+                            type="text",
+                            name="description",
+                            placeholder="Theme description",
+                            v-validate="'required'",
+                            v-model.lazy="theme.description",
+                            :class="{'input': true, 'is-danger': errors.has('description') }"
+                          )
+                    b-column.ouc-new-theme-help(is-child, is-5)
+                      b-box(is-primary)
+                        p(is-primary)
+                          icon(icon="information")
+                          | To make writing CSS even easier, you can look through these
+                          | resources: 
+                        hr
+                        a(href="http://www.htmldog.com/guides/css/beginner/selectors/", target="_blank", rel="nofollow") Selectors, Properties, and Values (HTML Dog)
+                        br
+                        a(href="https://learn.shayhowe.com/html-css/getting-to-know-css/", target="_blank", rel="nofollow") Getting to Know CSS (Shay Howe)
+                        br
+                        a(href="https://www.w3schools.com/css/", target="_blank", rel="nofollow") CSS Tutorial (W3Schools - The W3C Consortium)
+
+
+                b-tile.ouc-new-theme-editor(is-child)
+                  b-box(is-paddingless)
+                    editor(v-model="theme.content")
+                  p Theme: {{theme}}
+
+//- b-container
+  b-tile(is-ancestor)
+    b-tile(is-parent, is-vertical)
+      b-tile
+        b-tile(is-child, is-10)
+          h1 Create a new theme
+        b-tile(is-child, is-2)
+          b-button
+            div(slot="content") Upload theme
+      b-tile
+        form-wrapper
+          form(slot="form", @submit.prevent="submit")
+            b-tile(slot="form", is-ancestor)
+              b-tile(is-parent, is-vertical)
+                b-tile(is-child)
+                  b-field
+                    b-control(has-icons-left)
+                      icon(icon="tag")
+                      b-input(
+                        type="text",
+                        name="title",
+                        placeholder="Theme title",
+                        v-validate="'required'",
+                        v-model.lazy="theme.title",
+                        :class="{'input': true, 'is-danger': errors.has('title') }"
+                      )
+                b-columns
+                  b-column(is-7)
+                    b-field
+                      b-control
+                        b-textarea(
+                          type="text",
+                          name="description",
+                          placeholder="Theme description",
+                          v-validate="'required'",
+                          v-model.lazy="theme.description",
+                          :class="{'input': true, 'is-danger': errors.has('description') }"
+                        )
+                  b-column(is-5)
+                    b-box(is-primary)
+                      p(is-primary)
+                        icon(icon="information")
+                        | To make writing CSS even easier, you can look through these
+                        | resources: 
+                      hr
+                      a(href="http://www.htmldog.com/guides/css/beginner/selectors/", target="_blank", rel="nofollow") Selectors, Properties, and Values (HTML Dog)
+                      br
+                      a(href="https://learn.shayhowe.com/html-css/getting-to-know-css/", target="_blank", rel="nofollow") Getting to Know CSS (Shay Howe)
+                      br
+                      a(href="https://www.w3schools.com/css/", target="_blank", rel="nofollow") CSS Tutorial (W3Schools - The W3C Consortium)
+      b-tile
+        //- hr
+        b-box(is-paddingless)
+          editor(v-model="theme.content")
+        p Data: {{theme}}

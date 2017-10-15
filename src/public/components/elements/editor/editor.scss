@@ -8,83 +8,101 @@ $background: nth(map-get($colors, 'background'), 1);
 $highlight: nth(map-get($colors, 'highlight'), 1);
 $danger: nth(map-get($colors, 'danger'), 1);
 
-// Editor environment
-
 #editor {
+  // Editor environment
+
   background-color: $white;
   color: $black;
   height: 400px;
-}
 
-#editor .ace_gutter {
-  background: $white-ter;
-  color: $black;
-  overflow: hidden;
-}
+  span {
+    font-size: 12px !important;
+  }
 
-#editor .ace_print-margin {
-  width: .2rem;
-  background: $white-ter
-}
+  .ace_gutter {
+    background: $white-ter;
+    color: $black;
+    overflow: hidden;
+  }
 
-// Editor elements
+  .ace_print-margin {
+    width: .2rem;
+    background: $white-ter
+  }
 
-#editor .ace_cursor {
-  border-color: $primary;
-}
+  // Editor elements
 
-#editor .ace_warning {
-  background-image: url('/img/warning.icon-x32.png');
-  background-size: contain;
-}
+  .ace_cursor {
+    border-color: $primary;
+  }
 
-#editor .ace_error {
-  background-image: url('/img/error.icon-x32.png');
-  background-size: contain;
-}
+  .ace_warning {
+    background-image: url('/img/warning.icon-x32.png');
+    background-size: contain;
+  }
 
-// Editor text
+  .ace_error {
+    background-image: url('/img/error.icon-x32.png');
+    background-size: contain;
+  }
 
-#editor .ace_invisible {
-  color: $grey-lighter;
-}
+  .ace_tooltip {
+    background-color: $primary;
+    background-image: none;
+    border: 0;
+    box-shadow: 0 10px 50px -15px rgba(0, 0, 0, .65);
+    color: text-for-bg($primary);
+    font-family: $family-primary;
+    font-size: 14px;
+    padding-top: .5rem;
+    padding-bottom: .5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
 
-#editor .ace_constant {
-  color: $primary;
-}
+  // Editor text
 
-#editor .ace_invalid {
-  color: $danger;
-}
+  .ace_invisible {
+    color: $grey-lighter;
+  }
 
-#editor .ace_comment {
-  color: $grey;
-}
+  .ace_constant {
+    color: $primary;
+  }
 
-#editor .ace-support {
-  color: ligten($primary, 15);
-}
+  .ace_invalid {
+    color: $danger;
+  }
 
-#editor .ace_keyword.ace_operator {
-  color: $background;
-}
+  .ace_comment {
+    color: $grey;
+  }
 
-#editor .ace_constant.ace_numeric {
-  color: darken($secondary, 10);
-}
+  .ace-support {
+    color: ligten($primary, 15);
+  }
 
-#editor .ace_string {
-  color: $highlight;
-}
+  .ace_keyword.ace_operator {
+    color: $background;
+  }
 
-#editor .ace_variable {
-  color: $primary;
-}
+  .ace_constant.ace_numeric {
+    color: darken($secondary, 10);
+  }
 
-#editor .ace_function {
-  color: $black;
-}
+  .ace_string {
+    color: $highlight;
+  }
 
-#editor .ace_support {
-  color: $background;
+  .ace_variable {
+    color: $primary;
+  }
+
+  .ace_function {
+    color: $black;
+  }
+
+  .ace_support {
+    color: $background;
+  }
 }

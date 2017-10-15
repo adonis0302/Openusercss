@@ -4,11 +4,7 @@ import 'brace/ext/themelist'
 import 'brace/mode/css'
 
 const modelist = brace.acequire('ace/ext/modelist')
-
 let editor = null
-const regMap = {
-  'isInt': new RegExp('^\\d+$')
-}
 
 export default {
   'props': {
@@ -27,11 +23,6 @@ export default {
       'default':   'markbegin',
       'validator': (val) => ['manual', 'markbegin', 'markbeginend'].includes(val)
     },
-    'softwrap': {
-      'type':      String,
-      'default':   'free',
-      'validator': (val) => ['off', 'free'].includes(val) || regMap.isInt.test(val)
-    },
     'selectionstyle': {
       'type':      String,
       'default':   'text',
@@ -40,6 +31,10 @@ export default {
     'highlightline': {
       'type':    Boolean,
       'default': true
+    },
+    'value': {
+      'type':    String,
+      'default': ''
     }
   },
   'methods': {
@@ -55,16 +50,20 @@ export default {
       editorSession.setOptions({
         'tabSize': 2
       })
-    },
-    emitCode (action, session) {
-      this.$emit('code-change', editor.getValue())
     }
   },
   mounted () {
+    const self = this
+
     editor = brace.edit('editor')
     this.setMode()
+
+    this.$emit('init', editor)
     editor.$blockScrolling = Infinity
-    editor.getSession().on('change', this.emitCode)
+
+    editor.on('change', () => {
+      self.$emit('input', editor.getValue())
+    })
   },
   'watch': {
     mode () {
@@ -79,9 +78,6 @@ export default {
     codefolding (newVal) {
       editor.session.setFoldStyle(newVal)
       editor.setShowFoldWidgets(newVal !== 'manual')
-    },
-    softwrap (newVal) {
-      editor.setOption('wrap', newVal)
     },
     selectionstyle (newVal) {
       editor.setOption('selectionStyle', newVal)

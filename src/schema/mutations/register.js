@@ -2,7 +2,7 @@ import bcrypt from 'bcryptjs'
 import log from 'chalk-console'
 
 export default async (root, {displayname, email, password}, {Users}) => {
-  const saltRounds = 15
+  const saltRounds = 14
   const newUser = {
     displayname,
     email

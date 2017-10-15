@@ -1,1 +1,14 @@
 /* vue:scoped */
+
+@import 'node_modules/bulma/sass/utilities/initial-variables';
+@import '../../../scss/autocolor';
+@import '../../../scss/variables';
+
+@import 'node_modules/bulma/sass/utilities/all';
+@import 'node_modules/bulma/sass/base/all';
+
+@import 'node_modules/bulma/sass/elements/container';
+@import 'node_modules/bulma/sass/grid/columns';
+@import 'node_modules/bulma/sass/layout/section';
+
+@import '../../../scss/reboot';
