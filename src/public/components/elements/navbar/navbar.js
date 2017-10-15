@@ -16,6 +16,7 @@ export default {
     'navbar-link':     bulma('navbar-link', 'div'),
     'navbar-dropdown': bulma('navbar-dropdown', 'div'),
     'navbar-divider':  bulma('navbar-divider', 'div'),
+    'b-container':     bulma('container', 'div'),
     icon
   },
   'methods': {

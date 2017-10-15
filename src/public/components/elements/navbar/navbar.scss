@@ -8,6 +8,7 @@
 @import 'node_modules/bulma/sass/base/all';
 
 @import 'node_modules/bulma/sass/components/navbar';
+@import 'node_modules/bulma/sass/elements/container';
 
 a {
   background-color: map-get($tones, 'brand-primary');
@@ -15,6 +16,22 @@ a {
 
   &:hover {
     color: darken(text-for-bg(map-get($tones, 'brand-primary')), 10);
+  }
+}
+
+.navbar-brand {
+  img {
+    max-height: 32px;
+  }
+}
+
+.spacer {
+  width: 10px;
+}
+
+.navbar-menu {
+  &.is-primary {
+    background-color: map-get($tones, 'brand-primary');
   }
 }
 
