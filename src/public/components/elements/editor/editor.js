@@ -1,40 +1,93 @@
-// import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
+import brace from 'brace'
+import 'brace/ext/modelist'
+import 'brace/ext/themelist'
+import 'brace/mode/css'
 
-import {noop} from 'lodash'
-import CodeMirror from 'codemirror/lib/codemirror'
+const modelist = brace.acequire('ace/ext/modelist')
 
-/* import 'codemirror/mode/meta' */
-
-import 'codemirror/mode/css/css'
-import 'codemirror/mode/markdown/markdown'
-import 'codemirror/mode/sass/sass'
-
-import 'codemirror/addon/search/search'
-import 'codemirror/addon/search/searchcursor'
-import 'codemirror/addon/search/jump-to-line'
-import 'codemirror/addon/search/matchesonscrollbar'
-import 'codemirror/addon/search/match-highlighter'
-import 'codemirror/addon/scroll/annotatescrollbar'
-import 'codemirror/addon/scroll/simplescrollbars'
-import 'codemirror/addon/dialog/dialog'
-import 'codemirror/addon/selection/active-line'
-import 'codemirror/addon/edit/trailingspace'
-import 'codemirror/addon/mode/overlay'
-
-// import './CodeMirror.global.less'
-
-CodeMirror.requireMode = noop
-CodeMirror.autoLoadMode = noop
+let editor = null
+const regMap = {
+  'isInt': new RegExp('^\\d+$')
+}
 
 export default {
-  async mounted () {
-    const element = document.querySelector('textarea.ouc-editor')
-    const editor = CodeMirror.fromTextArea(element, {
-      'lineNumbers': true,
-      'mode':        'css',
-      'value':       ''
-    })
+  'props': {
+    'mode': {
+      'type':      String,
+      'default':   'css',
+      'validator': (val) => modelist.modes.findIndex((mode) => mode.name === val) > -1
+    },
+    'fontsize': {
+      'type':      String,
+      'default':   '12px',
+      'validator': (val) => parseInt(val, 10) > 11 && parseInt(val, 10) < 25
+    },
+    'codefolding': {
+      'type':      String,
+      'default':   'markbegin',
+      'validator': (val) => ['manual', 'markbegin', 'markbeginend'].includes(val)
+    },
+    'softwrap': {
+      'type':      String,
+      'default':   'free',
+      'validator': (val) => ['off', 'free'].includes(val) || regMap.isInt.test(val)
+    },
+    'selectionstyle': {
+      'type':      String,
+      'default':   'text',
+      'validator': (val) => ['text', 'line'].includes(val)
+    },
+    'highlightline': {
+      'type':    Boolean,
+      'default': true
+    }
+  },
+  'methods': {
+    setMode () {
+      const modeObj = modelist.modesByName[this.mode]
+      const editorSession = editor.getSession()
 
-    console.log(element)
+      if (modeObj) {
+        require(`brace/mode/${modeObj.name}`)
+        editorSession.setMode(modeObj.mode)
+      }
+
+      editorSession.setOptions({
+        'tabSize': 2
+      })
+    },
+    emitCode (action, session) {
+      this.$emit('code-change', editor.getValue())
+    }
+  },
+  mounted () {
+    editor = brace.edit('editor')
+    this.setMode()
+    editor.$blockScrolling = Infinity
+    editor.getSession().on('change', this.emitCode)
+  },
+  'watch': {
+    mode () {
+      this.setMode()
+    },
+    theme () {
+      this.setTheme()
+    },
+    fontsize (newVal) {
+      editor.setFontSize(newVal)
+    },
+    codefolding (newVal) {
+      editor.session.setFoldStyle(newVal)
+      editor.setShowFoldWidgets(newVal !== 'manual')
+    },
+    softwrap (newVal) {
+      editor.setOption('wrap', newVal)
+    },
+    selectionstyle (newVal) {
+      editor.setOption('selectionStyle', newVal)
+    },
+    highlightline (newVal) {
+      editor.setHighlightActiveLine(newVal)
+    }
   }
 }

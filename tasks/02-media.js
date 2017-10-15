@@ -101,9 +101,8 @@ const mediaTaskWatch = () => {
 
   const iconStream = pump([
     gulp.src([
-      'src/public/img/*'
+      'src/public/img/*.icon.*'
     ]),
-    filter('**/*.icon.png'),
     responsive({
       '*': iconSizes
     }, resizerOptions)
