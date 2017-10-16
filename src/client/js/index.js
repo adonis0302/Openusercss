@@ -149,10 +149,12 @@ const init = async () => {
   const polyfillsResult = await polyfills()
 
   await vue()
-  await Promise.all([
+  const bunch = await Promise.all([
     loadedFonts(),
     removeLoadingIndicator()
   ])
+
+  log.info(`Font statistics: ${JSON.stringify(bunch[0], null, 4)}`)
   log.info(`Needed polyfills on this browser: ${JSON.stringify(polyfillsResult, null, 4)}`)
 
   return true
@@ -160,8 +162,7 @@ const init = async () => {
 
 const main = async () => {
   await init()
-
-  // log.info(`Performance statistics: ${JSON.stringify(perfStats, null, 4)}`)
+  log.info(`Performance statistics: ${JSON.stringify(perfStats, null, 4)}`)
 }
 
 main()
