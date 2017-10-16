@@ -16,25 +16,25 @@ export default {
       'latestThemes': [
         {
           'title':         'A thing',
-          'screenshotUrl': '/img/main.bg-x360.jpg',
+          'screenshotUrl': '/img/main.bg-x360.png',
           'author':        'decentm',
           'description':   'This is not really a theme, but just a test to see how cards will look when the site gets finished.'
         },
         {
           'title':         'The amazing placeholder',
-          'screenshotUrl': '/img/main.bg-x360.jpg',
+          'screenshotUrl': '/img/main.bg-x360.png',
           'author':        'decentm',
           'description':   'This is not really a theme, but just a test to see how cards will look when the site gets finished.'
         },
         {
           'title':         'Google all in pink but blue',
-          'screenshotUrl': '/img/main.bg-x360.jpg',
+          'screenshotUrl': '/img/main.bg-x360.png',
           'author':        'decentm',
           'description':   'This is not really a theme, but just a test to see how cards will look when the site gets finished.'
         },
         {
           'title':         'The theme that saves us all',
-          'screenshotUrl': '/img/main.bg-x360.jpg',
+          'screenshotUrl': '/img/main.bg-x360.png',
           'author':        'decentm',
           'description':   'This is not really a theme, but just a test to see how cards will look when the site gets finished.'
         }
