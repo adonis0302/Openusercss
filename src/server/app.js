@@ -14,7 +14,7 @@ const init = async () => {
   const app = express()
   const config = await staticConfig()
 
-  app.set('views', path.resolve('views'))
+  app.set('views', path.join(__dirname, 'views'))
   app.set('view engine', 'pug')
 
   app.use(bodyParser.urlencoded({

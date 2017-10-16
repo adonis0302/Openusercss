@@ -242,3 +242,9 @@ gulp.task('media:fast', () => {
 
   return merge(finalCssStream, finalImageStream)
 })
+
+gulp.task('media:watch', (done) => {
+  gulp.watch([
+    'src/client/{fonts|img|scss}/**/*'
+  ], gulp.series('media:fast'))
+})

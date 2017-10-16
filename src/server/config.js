@@ -14,7 +14,7 @@ const defaultConfig = {
 }
 
 const genKeypair = async () => {
-  log.warn(`A new keypair in being generated.
+  log.warn(`A new keypair is being generated.
   All users will be logged out when the app starts.`)
 
   const generationStart = Date.now()
@@ -51,8 +51,8 @@ const initConfig = async () => {
     secretsConfig.set('version', newVersion)
   }
   if (!configKey) {
-    await pify(cp)(path.resolve('secrets.json'), path.resolve(`bkup.${newVersion}.secrets`))
-    await pify(cp)(path.resolve('config.json'), path.resolve(`bkup.${newVersion}.config`))
+    await pify(cp)(path.join(__dirname, 'secrets.json'), path.join(__dirname, `bkup.${newVersion}.secrets`))
+    await pify(cp)(path.join(__dirname, 'config.json'), path.join(__dirname, `bkup.${newVersion}.config`))
 
     log.error('Unable to decrypt config.json, because our secrets.json is either missing or corrupt!')
     log.warn('Your configuration options have been reset to defaults')

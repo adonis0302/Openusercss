@@ -6,12 +6,16 @@ gulp.task('build:fast', gulp.parallel(
   'client:fast'
 ))
 
-/* gulp.task('zip-source', (done) => {
-  spawnSync('git', ['archive', '--format=zip', '-o', 'build/source.zip', '-9', 'HEAD'])
-  done()
-})
+gulp.task('build:prod', gulp.parallel(
+  'media:prod',
+  'server:prod',
+  'client:prod'
+))
 
-gulp.task('build', gulp.series(
-  cleanBuild,
-  gulp.parallel('js-build', 'media-build')
-)) */
+gulp.task('build:watch', gulp.parallel(
+  'media:watch',
+  'client:watch',
+  'server:watch'
+))
+
+gulp.task('watch', gulp.series('build:fast', 'build:watch'))

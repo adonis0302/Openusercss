@@ -99,6 +99,13 @@ gulp.task('server:fast', gulp.parallel(
   'runtime:copy-config'
 ))
 
+gulp.task('server:fast-non-descruvtive', gulp.parallel(
+  'express:fast',
+  'shared:fast',
+  'views:copy',
+  'meta:copy'
+))
+
 gulp.task('server:prod', gulp.parallel(
   'express:prod',
   'shared:prod',
@@ -107,3 +114,18 @@ gulp.task('server:prod', gulp.parallel(
   'runtime:copy-secrets',
   'runtime:copy-config'
 ))
+
+const server = require('gulp-develop-server')
+
+gulp.task('server:watch', (done) => {
+  server.listen({
+    'path': './build/app'
+  })
+
+  gulp.watch([
+    'src/server/**/*.js',
+    'src/shared/**/*.js',
+    'package.json',
+    '.npmrc'
+  ], gulp.series('server:fast-non-descruvtive', server.restart))
+})

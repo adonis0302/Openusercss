@@ -123,3 +123,9 @@ gulp.task('vue:fast', (done) => {
     done()
   })
 })
+
+gulp.task('vue:watch', (done) => {
+  gulp.watch([
+    'src/client/components/**/*'
+  ], gulp.series('vue:fast'))
+})

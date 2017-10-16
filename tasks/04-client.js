@@ -93,8 +93,8 @@ gulp.task('js:watch', () => {
 wify.on('update', gulp.series('js:watch'))
 wify.on('log', gutil.log)
 
-gulp.task('client:watch', gulp.series(
-  'vue:fast',
+gulp.task('client:watch', gulp.parallel(
+  'vue:watch',
   'js:watch'
 ))
 
