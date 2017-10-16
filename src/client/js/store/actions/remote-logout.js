@@ -2,7 +2,7 @@ import gql from 'graphql-tag'
 import localStore from 'store2'
 import log from 'chalk-console'
 
-import {AuthenticationError} from '../../../../utils/custom-errors'
+import {AuthenticationError} from '../../../../shared/custom-errors'
 import {router} from '../../vue-modules'
 import {apolloClient} from '.'
 

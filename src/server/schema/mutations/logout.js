@@ -1,4 +1,4 @@
-import mustAuthenticate from '../../utils/enforce-session'
+import mustAuthenticate from '../../shared/enforce-session'
 
 export default async (root, {token}, {Logins}) => {
   await mustAuthenticate(token, Logins)

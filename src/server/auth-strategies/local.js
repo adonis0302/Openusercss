@@ -3,7 +3,7 @@
 import passport from 'passport'
 import {Strategy as LocalStrategy} from 'passport-local'
 import {getUserByEmail, comparePassword, getUserById} from '../models/user'
-import {handle} from '../utils/error-handler'
+import {handle} from '../shared/error-handler'
 
 passport.use(
   new LocalStrategy({

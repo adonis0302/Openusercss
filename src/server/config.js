@@ -51,14 +51,16 @@ const initConfig = async () => {
     secretsConfig.set('version', newVersion)
   }
   if (!configKey) {
-    await pify(cp)(path.join(__dirname, 'secrets.json'), path.join(__dirname, `bkup.${newVersion}.secrets`))
-    await pify(cp)(path.join(__dirname, 'config.json'), path.join(__dirname, `bkup.${newVersion}.config`))
+    await pify(cp)(path.resolve('secrets.json'), path.resolve(`bkup.${newVersion}.secrets`))
+    await pify(cp)(path.resolve('config.json'), path.resolve(`bkup.${newVersion}.config`))
+
     log.error('Unable to decrypt config.json, because our secrets.json is either missing or corrupt!')
     log.warn('Your configuration options have been reset to defaults')
     log.warn('A backup of your previous config has been made, just in case')
     log.warn(`You can find your backups here:
   ${path.join(__dirname, `bkup.${newVersion}.(config name)`)}
     `)
+
     secretsConfig.set('configKey', hat(256))
     secretsConfig.set('version', newVersion)
   }

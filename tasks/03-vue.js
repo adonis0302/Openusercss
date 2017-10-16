@@ -15,12 +15,8 @@ const sassVars = require('gulp-sass-vars')
 const htmlmin = require('gulp-htmlmin')
 const pleeease = require('gulp-pleeease')
 
-const uglify = require('gulp-uglify')
-const es3ify = require('gulp-es3ify')
-
 const {pugOptions} = require('./shared/pug')
-const {postCssPluginsProd, postCssPluginsFast} = require('./shared/css')
-const {ourSassConfig} = require('./appshell')
+const {postCssPluginsProd, postCssPluginsFast, ourSassConfig} = require('./shared/css')
 
 const sources = [
   'src/client/components/**/*.+(js|scss|pug)'
@@ -31,13 +27,6 @@ gulp.task('vue:prod', (done) => {
     prettyError(),
     gulp.src(sources),
     manifold({
-      '**/*.js': (stream) => {
-        return pump([
-          uglify(),
-          es3ify()
-        ])
-      },
-
       '**/*.scss': (stream) => {
         return pump([
           prettyError(),

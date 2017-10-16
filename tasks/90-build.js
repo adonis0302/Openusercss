@@ -1,13 +1,10 @@
 const gulp = require('gulp')
-const del = require('del')
-const {spawnSync} = require('child_process')
 
-const cleanBuild = (done) => {
-  del.sync([
-    'build'
-  ])
-  done()
-}
+gulp.task('build:fast', gulp.parallel(
+  'media:fast',
+  'server:fast',
+  'client:fast'
+))
 
 /* gulp.task('zip-source', (done) => {
   spawnSync('git', ['archive', '--format=zip', '-o', 'build/source.zip', '-9', 'HEAD'])

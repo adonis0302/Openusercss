@@ -63,7 +63,7 @@ gulp.task('js:prod', () => {
   return pump([
     prettyError(),
     bify.bundle(),
-    source('bundle.js'),
+    source('bundle.min.js'),
     buffer(),
     uglify(),
     es3ify(),

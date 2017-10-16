@@ -2,7 +2,7 @@
 /* eslint no-underscore-dangle:0 */
 
 import staticConfig from '../../config'
-import {AuthenticationError} from '../../utils/custom-errors'
+import {AuthenticationError} from '../../shared/custom-errors'
 import jwt from 'jsonwebtoken'
 import log from 'chalk-console'
 import bcrypt from 'bcryptjs'

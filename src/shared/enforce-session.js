@@ -3,7 +3,7 @@
 import staticConfig from '../config'
 import jwt from 'jsonwebtoken'
 import {AuthenticationError} from './custom-errors'
-import {handle} from '../utils/error-handler'
+import {handle} from './error-handler'
 
 export default async (token: String, Logins) => {
   const config = await staticConfig()

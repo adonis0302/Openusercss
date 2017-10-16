@@ -33,14 +33,15 @@ const {
   iconSizes,
   bgSizes,
   sizes,
-  ourSassConfig
-} = require('./appshell')
+  ourSassConfig,
+  postCssPluginsProd,
+  postCssPluginsFast
+} = require('./shared/css')
 
 // =============================================================================
 // SCSS -> CSS and IMG => SPRITES
 // =============================================================================
 
-const {postCssPluginsProd, postCssPluginsFast} = require('./shared/css')
 const sources = {
   'fonts': [
     'node_modules/mdi/fonts/*.woff',

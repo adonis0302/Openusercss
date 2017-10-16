@@ -1,4 +1,4 @@
-import mustAuthenticate from '../../utils/enforce-session'
+import mustAuthenticate from '../../shared/enforce-session'
 import log from 'chalk-console'
 
 export default async (root, {token, title, description, content}, {Logins, Themes, Users}) => {

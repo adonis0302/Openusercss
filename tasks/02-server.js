@@ -3,8 +3,67 @@ const babel = require('gulp-babel')
 const prettyError = require('gulp-prettyerror')
 const pump = require('pump')
 const uglify = require('gulp-uglify')
+const rename = require('gulp-rename')
 
-gulp.task('copy-meta', () => {
+const sources = {
+  'server': [
+    'src/server/**/*.js'
+  ],
+  'shared': [
+    'src/shared/**/*.js'
+  ],
+  'views': [
+    'src/server/views/**/*'
+  ]
+}
+
+gulp.task('express:fast', () => {
+  return pump([
+    prettyError(),
+    gulp.src(sources.server),
+    babel(),
+    gulp.dest('build')
+  ])
+})
+
+gulp.task('express:prod', () => {
+  return pump([
+    prettyError(),
+    gulp.src(sources.server),
+    babel(),
+    uglify(),
+    gulp.dest('build')
+  ])
+})
+
+gulp.task('shared:fast', () => {
+  return pump([
+    prettyError(),
+    gulp.src(sources.shared),
+    babel(),
+    gulp.dest('build/shared')
+  ])
+})
+
+gulp.task('shared:prod', () => {
+  return pump([
+    prettyError(),
+    gulp.src(sources.shared),
+    babel(),
+    uglify(),
+    gulp.dest('build/shared')
+  ])
+})
+
+gulp.task('views:copy', () => {
+  return pump([
+    prettyError(),
+    gulp.src(sources.views),
+    gulp.dest('build/views')
+  ])
+})
+
+gulp.task('meta:copy', () => {
   return pump([
     prettyError(),
     gulp.src([
@@ -15,60 +74,36 @@ gulp.task('copy-meta', () => {
   ])
 })
 
-gulp.task('copy-fonts', () => {
+gulp.task('runtime:copy-secrets', () => {
   return pump([
-    prettyError(),
-    gulp.src([
-      'node_modules/mdi/fonts/**/*'
-    ], {
-      'base': './node_modules/mdi'
-    }),
-    gulp.dest('build/public')
-  ])
-})
-
-gulp.task('copy-views', () => {
-  return pump([
-    prettyError(),
-    gulp.src([
-      'src/views/**/*.pug',
-      'src/views/**/*.pug'
-    ], {
-      'base': './src'
-    }),
+    gulp.src('src/empty-file'),
+    rename('secrets.json'),
     gulp.dest('build')
   ])
 })
 
-gulp.task('build-express', () => {
+gulp.task('runtime:copy-config', () => {
   return pump([
-    prettyError(),
-    gulp.src([
-      './src/**/*.js',
-      '!./src/public/**/*.js'
-    ]),
-    babel(),
-    uglify(),
+    gulp.src('src/empty-file'),
+    rename('config.json'),
     gulp.dest('build')
   ])
 })
-
-gulp.task('copy-express', () => {
-  return pump([
-    prettyError(),
-    gulp.src([
-      './src/**/*.js',
-      '!./src/public/**/*.js'
-    ]),
-    babel(),
-    gulp.dest('build')
-  ])
-})
-
-gulp.task('server:prod', gulp.parallel(
-  'build-express', 'copy-views', 'copy-meta'
-))
 
 gulp.task('server:fast', gulp.parallel(
-  'copy-express', 'copy-views', 'copy-meta'
+  'express:fast',
+  'shared:fast',
+  'views:copy',
+  'meta:copy',
+  'runtime:copy-secrets',
+  'runtime:copy-config'
+))
+
+gulp.task('server:prod', gulp.parallel(
+  'express:prod',
+  'shared:prod',
+  'views:copy',
+  'meta:copy',
+  'runtime:copy-secrets',
+  'runtime:copy-config'
 ))
