@@ -11,10 +11,6 @@ export const topToBottom = {
 
     // Set clipPath so all our clip points are at the top
     element.style.clipPath = 'polygon(-1px -1px, 101% -1%, 101% -1px, -1px -1px)'
-
-    // Set opacity to 0, so browsers without clipPath support don't show
-    // both us and the guy before us at the same time
-    element.style.opacity = 0
   },
   'appear': async (element, done) => {
     // We are a newborn component
@@ -26,7 +22,6 @@ export const topToBottom = {
     const node = await anime({
       'targets':   element,
       'clip-path': 'polygon(-1px -1px, 101% -1%, 101% 101%, -1% 101%)',
-      'opacity':   1,
       'duration':  1000,
       'delay':     500 + additionalDelay,
       'easing':    'easeOutQuart'
@@ -71,10 +66,6 @@ export const leftToRight = {
 
     // Set clipPath so all our clip points are on our left
     element.style.clipPath = 'polygon(-1px -1px, -1px -1px, -1px 101%, -1px 101%)'
-
-    // Set opacity to 0, so browsers without clipPath support don't show
-    // both us and the guy before us at the same time
-    element.style.opacity = 0
   },
   'appear': async (element, done) => {
     // We are a newborn component
@@ -86,7 +77,6 @@ export const leftToRight = {
     const node = await anime({
       'targets':   element,
       'clip-path': 'polygon(-1px -1px, 101% -1px, 101% 101%, -1px 101%)',
-      'opacity':   1,
       'duration':  1000,
       'delay':     500 + additionalDelay,
       'easing':    'easeOutQuart'
