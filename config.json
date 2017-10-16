@@ -40,13 +40,5 @@
 		"short-name": "My Website",
 		"description": "My long-long description of what can be found on this website",
 		"url": "mywebsite.com"
-	},
-	"image-widths": [
-		640,
-		840,
-		960,
-		1024,
-		1366,
-		1920
-	]
+	}
 }

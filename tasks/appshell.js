@@ -6,8 +6,6 @@ const clyConfig = new Conf({
   'configName': 'config'
 })
 const options = {}
-const {freeze} = Object
-const parseAuthor = require('parse-author')
 
 // IP ADDRESSES
 // Get the most remote IP address on interfaces for browserSync
@@ -25,21 +23,7 @@ for (const dev in os.networkInterfaces()) {
 
 const myIp = first(ips)
 
-const iconSizesPx = [
-  32,
-  128,
-  512
-]
-
-const bgSizesPx = [
-  1366,
-  1024,
-  1920,
-  700,
-  360
-]
-
-freeze(options)
+Object.freeze(options)
 
 const processObject = (object, func) => {
   for (const index in object) {
@@ -72,111 +56,62 @@ const ourSassConfig = processObject(clyConfig.get(), (index, value) => {
   return `"${value}"`
 })
 
-const returnAuthors = (pkgName) => {
-  let author = null
+const iconSizesPx = [
+  32,
+  128,
+  512
+]
 
-  try {
-    author = require(`../../node_modules/${pkgName}/package.json`).author
-  } catch (err_) {
-    return null
-  }
-  const orgAuthor = author
+const bgSizesPx = [
+  1366,
+  1920,
+  360
+]
 
-  if (author instanceof Array) {
-    const temp = []
+const elementSizesPx = [
+  640,
+  960,
+  1366,
+  1920
+]
 
-    author.forEach((tmpAuthor) => {
-      temp.push(parseAuthor(tmpAuthor).name)
-    })
+const sizes = []
 
-    return temp.join(', ')
-  }
-
-  switch (typeof author) {
-  case 'string':
-    try {
-      author = parseAuthor(author).name
-    } catch (err_) {
-      author = orgAuthor
-    }
-    break
-  case 'object':
-    author = parseAuthor(author.name).name
-    break
-  default:
-    break
-  }
-
-  return author
-}
-
-const {includes, forIn, defaultsDeep} = require('lodash')
-const gitUrl = require('github-url-from-git')
-const requireFile = require('require-file')
-
-const prepareObject = (pkg) => {
-  const pkgDefault = {
-    'name':            'Unknown',
-    'license':         'Unknown',
-    'source':          'Unknown',
-    'repository':      '',
-    'author':          null,
-    'importedLicense': false,
-    'sourceText':      [
-      'Unknown'
-    ]
-  }
-
-  return defaultsDeep(pkg, pkgDefault)
-}
-
-const processSummary = (summary) => {
-  const result = []
-
-  forIn(summary, (value, key) => {
-    if (includes(value.repository, '@')) {
-      value.repository = gitUrl(String(value.repository))
-    }
-    if (!value.repository) {
-      value.repository = `https://npmjs.com/package/${String(key).split('@')[0]}`
-    }
-    value.repository = String(value.repository).replace('git+', '')
-
-    value.author = returnAuthors(String(key).split('@')[0])
-
-    if (!value.sourceText) {
-      try {
-        value.sourceText = requireFile(`../licenses/${String(value.license).toUpperCase().replace(' ', '_')}`)
-        value.importedLicense = true
-      } catch (err) {
-        throw new Error(`An error occurred while importing a license for ${key}:
-  ${err}
-        `)
-      }
-    }
-
-    result.push(prepareObject({
-      'name':            String(key).split('@')[0],
-      'license':         value.license,
-      'source':          value.source,
-      'repository':      value.repository,
-      'authors':         value.author,
-      'importedLicense': value.importedLicense,
-      'sourceText':      String(value.sourceText).split(/(?:\r\n|\r|\n)/g)
-    }))
+elementSizesPx.forEach((width) => {
+  sizes.push({
+    'suffix':  `x${width}`,
+    'upscale': false,
+    width
   })
+})
 
-  return result
-}
+const iconSizes = []
+
+iconSizesPx.forEach((iconSize) => {
+  iconSizes.push({
+    'suffix':  `x${iconSize}`,
+    'width':   iconSize,
+    'upscale': false
+  })
+})
+
+const bgSizes = []
+
+bgSizesPx.forEach((bgSize) => {
+  bgSizes.push({
+    'suffix':  `x${bgSize}`,
+    'width':   bgSize,
+    'upscale': false
+  })
+})
 
 module.exports = {
   clyConfig,
   options,
   myIp,
-  iconSizesPx,
-  bgSizesPx,
   processObject,
-  returnAuthors,
-  processSummary,
-  ourSassConfig
+  ourSassConfig,
+  iconSizes,
+  bgSizes,
+  sizes
 }

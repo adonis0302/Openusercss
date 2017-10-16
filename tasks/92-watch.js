@@ -25,7 +25,7 @@ const fsWatch = () => {
   ], gulp.series('copy-views'))
 }
 
-gulp.task('watch', gulp.series(
+/* gulp.task('watch', gulp.series(
   gulp.parallel('js-watch', 'media-watch', 'watch-server'),
   fsWatch
-))
+)) */

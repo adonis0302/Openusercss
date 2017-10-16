@@ -7,9 +7,8 @@ const importUrl = require('postcss-import-url')
 const mqpacker = require('css-mqpacker')
 const cssnano = require('cssnano')
 
-const postCssPluginsBuild = [
+const postCssPluginsProd = [
   devtools(),
-  mqpacker(),
   rucksack({
     'autoprefixer':      false,
     'shorthandPosition': false,
@@ -20,16 +19,10 @@ const postCssPluginsBuild = [
   importUrl(),
   zindex(),
   fixes(),
-  flexibility(),
-  cssnano({
-    'autoprefixer': {
-      'browsers': [ '> 1%' ],
-      'add':      true
-    }
-  })
+  flexibility()
 ]
 
-const postCssPluginsWatch = [
+const postCssPluginsFast = [
   devtools(),
   rucksack({
     'autoprefixer':      false,
@@ -37,11 +30,10 @@ const postCssPluginsWatch = [
     'quantityQueries':   false,
     'alias':             false,
     'inputPseudo':       false
-  }),
-  importUrl()
+  })
 ]
 
 module.exports = {
-  postCssPluginsWatch,
-  postCssPluginsBuild
+  postCssPluginsFast,
+  postCssPluginsProd
 }

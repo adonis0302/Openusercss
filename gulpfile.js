@@ -6,5 +6,5 @@ requireDir('./tasks/', {
   'recurse': true
 })
 
-gulp.task('dev', gulp.series('build', 'watch'))
-gulp.task('default', gulp.series('dev'))
+/* gulp.task('dev', gulp.series('build', 'watch'))
+gulp.task('default', gulp.series('dev')) */
