@@ -27,7 +27,7 @@ b-section
       b-box
         h2 Your themes
         hr
-        theme-card(v-for="(theme, index) in user.themes", :data-index="index", direction="horizontal").has-bottom-margin
+        theme-card(v-for="(theme, index) in user.themes", :data-index="index", direction="horizontal", card-class="is-primary").has-bottom-margin
           h4(slot="title") {{theme.title}}
           flush-img(slot="screenshot", :src="theme.screenshotUrl", height="135")
           p(slot="description") {{theme.description}}

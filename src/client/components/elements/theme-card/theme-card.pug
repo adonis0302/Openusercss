@@ -1,33 +1,25 @@
-div
-  transition(
-    appear,
-    v-on:before-appear="topBottomBeforeAppear",
-    v-on:appear="topBottomAppear",
-    v-bind:css="false",
-    v-if="direction === 'vertical'"
-  )
-    b-card.ouc-theme-card
-      b-card-image
-        slot(name="screenshot").ouc-screenshot
-      b-card-header
-        b-card-header-title.ouc-theme-title
-          slot(name="title")
-      b-card-content
-        b-media
-          b-media-left
-            slot(name="author-avatar")
-          b-media-content
-            slot(name="author-displayname")
-            slot(name="author-username")
-        slot(name="description")
+transition(
+  appear,
+  v-on:before-appear="leftRightBeforeAppear",
+  v-on:appear="leftRightAppear",
+  :css="false"
+)
+  b-card(v-if="direction === 'vertical'").ouc-theme-card
+    b-card-image
+      slot(name="screenshot").ouc-theme-screenshot
+    b-card-header
+      b-card-header-title.ouc-theme-title
+        slot(name="title")
+    b-card-content
+      b-media
+        b-media-left
+          slot(name="author-avatar")
+        b-media-content
+          slot(name="author-displayname")
+          slot(name="author-username")
+      slot(name="description")
 
-  transition(
-    appear,
-    v-on:before-appear="leftRightBeforeAppear",
-    v-on:appear="leftRightAppear",
-    v-bind:css="false",
-    v-else="direction === 'vertical'"
-  )
+  div(v-else="direction === 'vertical'", :class="cardClass")
     b-box(is-paddingless)
       b-tile(is-parent, is-paddingless)
         b-tile(is-4, is-child).ouc-theme-screenshot
@@ -38,34 +30,3 @@ div
               slot(name="title")
             b-tile(is-child)
               slot(name="description")
-      //- b-card-image
-        
-      //- b-card-header
-        b-card-header-title.ouc-theme-title
-          slot(name="title")
-      //- b-card-content
-        b-media
-          b-media-left
-            slot(name="author-avatar")
-          b-media-content
-            slot(name="author-displayname")
-            slot(name="author-username")
-        slot(name="description")
-
-//- b-tile(is-parent, is-paddingless)
-  b-tile(is-4)
-    b-tile(is-child).ouc-user-avatar
-      flush-img(:src="user.avatarUrl", height="185", align="left").contain
-  b-tile(is-8)
-    b-tile(is-parent)
-      b-tile(is-parent)
-        b-tile(is-child, is-parent, is-vertical, is-paddingless)
-          h2 {{user.displayname}}
-          br
-          p {{user.themes.length}} themes
-          p {{user.installs}} installs
-          p Average rating: {{user.rating}}
-          b-level
-            b-level-left(is-mobile)
-              icon(v-if="isOnline(user.lastOnline)", icon="circle", color="#06BC5A")
-              p.ouc-last-seen {{lastOnlineDisplay}}

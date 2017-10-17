@@ -1,6 +1,6 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import icon from '../icon/icon.vue'
-import {topBottom, leftRight} from '../../../src/client/components/animations'
+import {leftRight} from '../../../src/client/components/animations'
 
 export default {
   'components': {
@@ -20,7 +20,6 @@ export default {
     icon
   },
   'methods': {
-    ...topBottom,
     ...leftRight
   },
   'props': {
@@ -29,6 +28,9 @@ export default {
       'default': 'vertical'
     },
     'height': {
+      'type': String
+    },
+    'card-class': {
       'type': String
     }
   }

@@ -12,4 +12,9 @@
 @import 'node_modules/bulma/sass/grid/tiles';
 @import 'node_modules/bulma/sass/elements/box';
 
+.is-primary > .box {
+  background-color: map-get($tones, 'brand-primary');
+  color: text-for-bg(map-get($tones, 'brand-primary'));
+}
+
 @import '../../../scss/reboot';
