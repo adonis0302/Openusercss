@@ -4,16 +4,15 @@
 import staticConfig from '../../config'
 import {AuthenticationError} from '../../shared/custom-errors'
 import jwt from 'jsonwebtoken'
-import log from 'chalk-console'
+import moment from 'moment'
 import bcrypt from 'bcryptjs'
 
-export default async (root, {email, password}: Object<String>, {Users, Logins}) => {
+export default async (root, {email, password}: Object<String>, {User, Session}) => {
   const config = await staticConfig()
-  const foundUser = await Users.findOne({
+  const foundUser = await User.findOne({
     email
   })
 
-  const loginStarted = Date.now()
   let authResult = null
 
   try {
@@ -26,7 +25,6 @@ export default async (root, {email, password}: Object<String>, {Users, Logins}) 
     throw new AuthenticationError('Invalid credentials')
   }
 
-  log.info(`Authentication took ${Date.now() - loginStarted}ms`)
   const token = jwt.sign({
     'userId': foundUser._id
   }, config.get('keypair.private'), {
@@ -34,16 +32,13 @@ export default async (root, {email, password}: Object<String>, {Users, Logins}) 
     'issuer':    config.get('domain'),
     'algorithm': 'HS256'
   })
-  const authItem = {
-    token,
-    'userId': foundUser._id
-  }
-  const loginPayload = {
-    'auth': authItem,
-    'user': foundUser
-  }
 
-  Logins.insert(authItem)
+  const newSession = Session.create({
+    'user':      foundUser,
+    'expiresAt': Date.parse(moment().add(60, 'days')),
+    'createdAt': Date.now(),
+    token
+  })
 
-  return loginPayload
+  return newSession.save()
 }

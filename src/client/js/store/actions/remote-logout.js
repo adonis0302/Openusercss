@@ -14,9 +14,13 @@ const remoteLogout = async (token) => {
   `)
 
   try {
-    await apolloClient.mutate({
+    const result = await apolloClient.mutate({
       'mutation': logoutMutation
     })
+
+    if (!result.data.logout) {
+      throw new AuthenticationError('Failed to shred session')
+    }
   } catch (error) {
     log.error(error.message)
     throw new AuthenticationError(error.message)

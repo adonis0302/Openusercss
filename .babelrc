@@ -1,7 +1,13 @@
 {
   "presets": [
     "flow",
-    "env",
+    [
+      "env", {
+        "targets": {
+          "node": "5.12.0"
+        }
+      }
+    ],
     "stage-3"
   ]
 }

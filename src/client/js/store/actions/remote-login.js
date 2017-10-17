@@ -9,20 +9,19 @@ const remoteLogin = async ({email, password}) => {
   const loginMutation = gql(`
     mutation {
       login(email: "${email}", password: "${password}") {
-        auth {
-          token
-          userId
-        }
+        token,
+        expiresAt,
+        createdAt,
         user {
           displayname
         }
       }
     }
   `)
-  let token = null
+  let session = null
 
   try {
-    token = await apolloClient.mutate({
+    session = await apolloClient.mutate({
       'mutation': loginMutation
     })
   } catch (error) {
@@ -30,15 +29,15 @@ const remoteLogin = async ({email, password}) => {
     throw new AuthenticationError(error.message)
   }
 
-  return token
+  return session
 }
 
 export default async ({getters, commit}, loginData) => {
-  let token = null
+  let session = null
 
   try {
-    token = await remoteLogin(getters.formData)
-    commit('login', token)
+    session = await remoteLogin(getters.formData)
+    commit('login', session)
     router.push('/')
   } catch (error) {
     commit('loginFailure', error.message)

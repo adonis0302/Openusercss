@@ -24,14 +24,19 @@ const verifyToken = async (token) => {
 export default async (context) => {
   const session = localStore.get('session')
 
-  if (session && !await verifyToken(session.auth.token)) {
-    log.warn('Session token verification rejected by server')
-    localStore.remove('session')
-    context.commit('deleteSessionData')
+  try {
+    if (session && !await verifyToken(session.token)) {
+      log.warn('Session token rejected by server, forcing logout')
+      localStore.remove('session')
+      context.commit('deleteSessionData')
 
-    return false
-  } else if (!session) {
-    log.info('No token to verify')
+      return false
+    } else if (!session) {
+      log.info('No token to verify')
+      return false
+    }
+  } catch (error) {
+    log.error(error)
     return false
   }
 

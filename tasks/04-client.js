@@ -30,16 +30,7 @@ const browserifyOpts = ({entries}) => {
     'packageCache': {},
     'transform':    [
       vueify,
-      [
-        babelify, {
-          'presets': [
-            'vue',
-            'flow',
-            'env',
-            'stage-3'
-          ]
-        }
-      ]
+      babelify
     ]
   }
 }

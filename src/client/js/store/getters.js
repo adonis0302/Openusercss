@@ -24,7 +24,7 @@ export default {
 
   token (state) {
     if (state.session) {
-      return state.session.auth.token
+      return state.session.token
     }
 
     return null

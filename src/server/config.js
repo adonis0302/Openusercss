@@ -24,7 +24,9 @@ const defaultConfig = {
 if (inProd()) {
   defaultConfig.env = 'production'
 } else {
+  log.warn('App in development mode, salt rounds are set to 12!')
   defaultConfig.env = 'development'
+  defaultConfig.saltRounds = 12
 }
 
 const genKeypair = async () => {
@@ -103,9 +105,10 @@ const initConfig = async () => {
   return config
 }
 
-initConfig()
-.then((config) => {
+(async () => {
+  const config = await initConfig()
+
   log.info(`Loaded configuration, version ${config.get('version')}`)
-})
+})()
 
 export default initConfig
