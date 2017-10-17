@@ -1,0 +1,20 @@
+b-section
+  b-level
+    b-level-left
+      h1 Profile
+    b-level-right
+      b-columns
+        b-column
+          router-link(to="new-theme")
+            b-button(is-primary)
+              | Upload new theme
+        b-column
+          b-button(is-primary)
+            | Change account details
+        b-column
+          b-button(is-primary)
+            | Edit profile
+  b-columns
+    b-column(is-6)
+      profile-card
+    b-column

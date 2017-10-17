@@ -16,6 +16,7 @@ const hmr = require('browserify-hmr')
 const glob = require('glob')
 const merge = require('merge-stream')
 const flatten = require('gulp-flatten')
+const buffer = require('gulp-buffer')
 
 const browserifyOpts = ({entries}) => {
   return {
@@ -64,11 +65,13 @@ gulp.task('js:prod', () => {
     })
 
     return pump([
+      prettyError(),
       bify.bundle(),
       source(entry),
-      flatten(),
+      buffer(),
       uglify(),
       es3ify(),
+      flatten(),
       gulp.dest('build/client/js')
     ])
   })
@@ -80,7 +83,6 @@ gulp.task('js:fast', () => {
   const files = glob.sync(sources.client)
 
   const bundles = files.map((entry, index) => {
-    gutil.log(`Bundling ${entry}`)
     const bify = createBrowserify({
       'entries': [
         entry
@@ -118,6 +120,7 @@ gulp.task('js:watch', () => {
 
     const bundle = () => {
       return pump([
+        prettyError(),
         bify.bundle(),
         source(entry),
         flatten(),

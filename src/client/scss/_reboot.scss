@@ -2,7 +2,7 @@
   h#{$i} {
     font-family: 'Nunito';
     font-size: responsive;
-    max-font-size: (8px + (7 - $i) * 5);
+    max-font-size: (4px + (8 - $i) * 4);
     min-font-size: (8px + (7 - $i) * 3);
   }
 }

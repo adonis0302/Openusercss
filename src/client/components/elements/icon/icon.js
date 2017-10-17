@@ -9,6 +9,9 @@ export default {
     'size': {
       'type':    String,
       'default': '18'
+    },
+    'color': {
+      'type': String
     }
   },
   'methods': {

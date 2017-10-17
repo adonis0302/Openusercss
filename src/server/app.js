@@ -5,6 +5,7 @@ import express from 'express'
 import path from 'path'
 import bodyParser from 'body-parser'
 import log from 'chalk-console'
+import morgan from 'morgan'
 
 import staticConfig from './config'
 import {handle} from './shared/error-handler'
@@ -17,6 +18,7 @@ const init = async () => {
   app.set('views', path.join(__dirname, 'views'))
   app.set('view engine', 'pug')
 
+  app.use(morgan('combined'))
   app.use(bodyParser.urlencoded({
     'extended': false
   }))

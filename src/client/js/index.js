@@ -124,7 +124,7 @@ const init = async () => {
   vue()
   const fontResults = await loadedFonts()
 
-  log.info(`Font statistics: ${JSON.stringify(fontResults, null, 4)}`)
+  // log.info(`Font statistics: ${JSON.stringify(fontResults, null, 4)}`)
   log.info(`Needed polyfills on this browser: ${JSON.stringify(polyfillsResult, null, 4)}`)
 
   return true
@@ -132,7 +132,7 @@ const init = async () => {
 
 const main = async () => {
   await init()
-  log.info(`Performance statistics: ${JSON.stringify(perfStats, null, 4)}`)
+  // log.info(`Performance statistics: ${JSON.stringify(perfStats, null, 4)}`)
 }
 
 main()

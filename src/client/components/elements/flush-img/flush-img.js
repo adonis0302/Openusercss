@@ -5,8 +5,12 @@ export default {
       'default': '/img/openusercss.icon-x128.png'
     },
     'height': {
-      'type':    Number,
-      'default': 200
+      'type':    String,
+      'default': '200'
+    },
+    'align': {
+      'type':    String,
+      'default': 'center'
     }
   }
 }
