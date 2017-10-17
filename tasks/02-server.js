@@ -4,6 +4,7 @@ const prettyError = require('gulp-prettyerror')
 const pump = require('pump')
 const uglify = require('gulp-uglify')
 const rename = require('gulp-rename')
+const save = require('gulp-save')
 
 const sources = {
   'server': [
@@ -74,19 +75,21 @@ gulp.task('meta:copy', () => {
   ])
 })
 
-gulp.task('runtime:copy-secrets', () => {
+gulp.task('runtime:empties', () => {
   return pump([
     gulp.src('src/empty-file'),
-    rename('secrets.json'),
-    gulp.dest('build')
-  ])
-})
+    save('created'),
 
-gulp.task('runtime:copy-config', () => {
-  return pump([
-    gulp.src('src/empty-file'),
+    rename('secrets.json'),
+    gulp.dest('build', {
+      'overwrite': false
+    }),
+
+    save.restore('created'),
     rename('config.json'),
-    gulp.dest('build')
+    gulp.dest('build', {
+      'overwrite': false
+    })
   ])
 })
 
@@ -95,15 +98,7 @@ gulp.task('server:fast', gulp.parallel(
   'shared:fast',
   'views:copy',
   'meta:copy',
-  'runtime:copy-secrets',
-  'runtime:copy-config'
-))
-
-gulp.task('server:fast-non-descruvtive', gulp.parallel(
-  'express:fast',
-  'shared:fast',
-  'views:copy',
-  'meta:copy'
+  'runtime:empties'
 ))
 
 gulp.task('server:prod', gulp.parallel(
@@ -111,8 +106,7 @@ gulp.task('server:prod', gulp.parallel(
   'shared:prod',
   'views:copy',
   'meta:copy',
-  'runtime:copy-secrets',
-  'runtime:copy-config'
+  'runtime:empties'
 ))
 
 const server = require('gulp-develop-server')
@@ -127,5 +121,9 @@ gulp.task('server:watch', (done) => {
     'src/shared/**/*.js',
     'package.json',
     '.npmrc'
-  ], gulp.series('server:fast-non-descruvtive', server.restart))
+  ], gulp.series('server:fast', server.restart))
+
+  gulp.watch([
+    'src/server/views/**/*'
+  ], gulp.series('views:copy'))
 })

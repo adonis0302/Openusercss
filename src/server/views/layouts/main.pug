@@ -8,33 +8,8 @@ mixin metas
   meta(name="googlebot", content="index,follow")
   meta(name="mobile-web-app-capable", content="yes")
 
-mixin top-assets
-  script.
-    (function (document) {
-      var indicatorElement = document.createElement('div');
-
-      indicatorElement.classList.add('loading-indicator');
-      indicatorElement.style.position = 'absolute';
-      indicatorElement.style.width = '100%';
-      indicatorElement.style.height = '100%';
-      indicatorElement.style.bottom = 0;
-      indicatorElement.style.display = 'flex';
-      indicatorElement.style.justifyContent = 'center';
-      indicatorElement.style.alignItems = 'center';
-      indicatorElement.style.backgroundColor = 'black';
-      indicatorElement.style.zIndex = 100;
-
-      indicatorElement.innerHTML = '<span style="color: white;">Loading...</span>';
-
-      document.querySelector('body').append(indicatorElement);
-    })(window.document)
-  style(type="text/css").
-    html {
-      overflow-y: scroll
-    }
-
 mixin bottom-assets
-  script(type="text/javascript", src="/js/bundle.min.js", data-instant-track, defer)
+  script(type="text/javascript", src="/js/loader.js", defer)
   link(type="text/css", rel='stylesheet', href='/css/bundle.min.css')
 
 mixin frame
@@ -44,7 +19,6 @@ mixin frame
       title OpenUserCSS
       +metas
       body
-        +top-assets
         noscript
           .background
           .navbar.is-primary

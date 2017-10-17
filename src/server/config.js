@@ -6,21 +6,43 @@ import pify from 'pify'
 import path from 'path'
 import keypair from 'keypair'
 
+const inProd = () => {
+  // eslint-disable-next-line
+  if (process.env.NODE_ENV !== 'production') {
+    return false
+  }
+
+  return true
+}
+
 const defaultConfig = {
   'port':       80,
   'domain':     'openusercss.org',
-  'saltRounds': 15,
-  'env':        process.env.NODE_ENV || 'development' // eslint-disable-line
+  'saltRounds': 15
+}
+
+if (inProd()) {
+  defaultConfig.env = 'production'
+} else {
+  defaultConfig.env = 'development'
 }
 
 const genKeypair = async () => {
-  log.warn(`A new keypair is being generated.
-  All users will be logged out when the app starts.`)
+  log.warn('A new keypair is being generated. All users will be logged out when the app starts.')
 
   const generationStart = Date.now()
-  const pair = keypair({
-    'bits': 4096
-  })
+  let pair = null
+
+  if (inProd()) {
+    pair = keypair({
+      'bits': 4096
+    })
+  } else {
+    log.warn('App in development mode, the new keypair is very weak!')
+    pair = keypair({
+      'bits': 128
+    })
+  }
 
   log.info(`Keypair generated in ${Date.now() - generationStart}ms`)
   return pair

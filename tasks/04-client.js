@@ -15,6 +15,9 @@ const watchify = require('watchify')
 const gutil = require('gulp-util')
 const source = require('vinyl-source-stream')
 const hmr = require('browserify-hmr')
+const glob = require('glob')
+const merge = require('merge-stream')
+const flatten = require('gulp-flatten')
 
 const browserifyOpts = ({entries}) => {
   return {
@@ -42,56 +45,103 @@ const browserifyOpts = ({entries}) => {
   }
 }
 
-const bify = browserify(browserifyOpts({
-  'entries': [
-    './src/client/js/index.js',
-    './src/client/js/loader.js'
-  ]
-}))
-const wify = watchify(browserify(browserifyOpts({
-  'entries': [
-    './src/client/js/index.js',
-    './src/client/js/loader.js'
-  ]
-})))
+const sources = {
+  'client': 'src/client/js/*.js'
+}
 
-wify.plugin(hmr, {
-  'mode': 'websocket'
-})
+const createBrowserify = ({entries}) => {
+  return browserify(browserifyOpts({
+    entries
+  }))
+}
 
 gulp.task('js:prod', () => {
+  const files = glob.sync(sources.client)
+
+  const bundles = files.map((entry, index) => {
+    const bify = createBrowserify({
+      'entries': [
+        entry
+      ]
+    })
+
+    return pump([
+      bify.bundle(),
+      source(entry)
+    ])
+  })
+
   return pump([
     prettyError(),
-    bify.bundle(),
-    source('bundle.min.js'),
-    buffer(),
+    merge(bundles),
+    flatten(),
     uglify(),
     es3ify(),
-    size(),
     gulp.dest('build/client/js')
   ])
 })
 
 gulp.task('js:fast', () => {
+  const files = glob.sync(sources.client)
+
+  const bundles = files.map((entry, index) => {
+    const bify = createBrowserify({
+      'entries': [
+        entry
+      ]
+    })
+
+    return pump([
+      bify.bundle(),
+      source(entry),
+      flatten()
+    ])
+  })
+
   return pump([
     prettyError(),
-    bify.bundle(),
-    source('bundle.min.js'),
+    merge(bundles),
     gulp.dest('build/client/js')
   ])
 })
 
 gulp.task('js:watch', () => {
+  const files = glob.sync(sources.client)
+
+  const bundles = files.map((entry, index) => {
+    const bify = createBrowserify({
+      'entries': [
+        entry
+      ]
+    })
+
+    bify.plugin(watchify)
+    bify.plugin(hmr, {
+      'mode': 'websocket',
+      'port': 3123 + index,
+      'url':  `http://localhost:${3123 + index}`
+    })
+
+    const bundle = () => {
+      return pump([
+        bify.bundle(),
+        source(entry),
+        flatten()
+      ])
+    }
+
+    bify.on('update', bundle)
+    bify.on('log', gutil.log)
+
+    return bundle()
+  })
+
   return pump([
     prettyError(),
-    wify.bundle(),
-    source('bundle.min.js'),
+    merge(bundles),
     gulp.dest('build/client/js')
   ])
 })
-
-wify.on('update', gulp.series('js:watch'))
-wify.on('log', gutil.log)
 
 gulp.task('client:watch', gulp.parallel(
   'vue:watch',
