@@ -17,9 +17,20 @@ export default {
     'b-media':             bulma('media', 'div'),
     'b-media-left':        bulma('media-left', 'div'),
     'b-media-content':     bulma('media-content', 'div'),
+    'b-tile':              bulma('tile', 'div'),
+    'b-box':               bulma('box', 'div'),
     icon
   },
   'methods': {
     ...topToBottom
+  },
+  'props': {
+    'direction': {
+      'type':    String,
+      'default': 'vertical'
+    },
+    'height': {
+      'type':    String
+    }
   }
 }
