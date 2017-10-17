@@ -1,12 +1,10 @@
 const gulp = require('gulp')
 const pump = require('pump')
-const size = require('gulp-size')
 const prettyError = require('gulp-prettyerror')
 
 const browserify = require('browserify')
 const uglify = require('gulp-uglify')
 
-const buffer = require('gulp-buffer')
 const babelify = require('babelify')
 const es3ify = require('gulp-es3ify')
 
@@ -67,24 +65,22 @@ gulp.task('js:prod', () => {
 
     return pump([
       bify.bundle(),
-      source(entry)
+      source(entry),
+      flatten(),
+      uglify(),
+      es3ify(),
+      gulp.dest('build/client/js')
     ])
   })
 
-  return pump([
-    prettyError(),
-    merge(bundles),
-    flatten(),
-    uglify(),
-    es3ify(),
-    gulp.dest('build/client/js')
-  ])
+  return merge(bundles)
 })
 
 gulp.task('js:fast', () => {
   const files = glob.sync(sources.client)
 
   const bundles = files.map((entry, index) => {
+    gutil.log(`Bundling ${entry}`)
     const bify = createBrowserify({
       'entries': [
         entry
@@ -92,17 +88,15 @@ gulp.task('js:fast', () => {
     })
 
     return pump([
+      prettyError(),
       bify.bundle(),
       source(entry),
-      flatten()
+      flatten(),
+      gulp.dest('build/client/js')
     ])
   })
 
-  return pump([
-    prettyError(),
-    merge(bundles),
-    gulp.dest('build/client/js')
-  ])
+  return merge(bundles)
 })
 
 gulp.task('js:watch', () => {
@@ -126,7 +120,8 @@ gulp.task('js:watch', () => {
       return pump([
         bify.bundle(),
         source(entry),
-        flatten()
+        flatten(),
+        gulp.dest('build/client/js')
       ])
     }
 
@@ -136,11 +131,7 @@ gulp.task('js:watch', () => {
     return bundle()
   })
 
-  return pump([
-    prettyError(),
-    merge(bundles),
-    gulp.dest('build/client/js')
-  ])
+  return merge(bundles)
 })
 
 gulp.task('client:watch', gulp.parallel(
