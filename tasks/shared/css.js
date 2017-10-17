@@ -68,6 +68,7 @@ const bgSizesPx = [
 ]
 
 const elementSizesPx = [
+  360,
   640,
   960,
   1366,
