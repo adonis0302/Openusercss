@@ -5,7 +5,7 @@ import navbar from '../../elements/navbar/navbar.vue'
 import showcase from '../../sets/theme-showcase/theme-showcase.vue'
 import themeCreator from '../../sets/theme-creator/theme-creator.vue'
 
-import {leftToRight} from '../../../src/client/components/animations'
+import {leftRight} from '../../../src/client/components/animations'
 
 export default {
   'components': {
@@ -19,6 +19,6 @@ export default {
     themeCreator
   },
   'methods': {
-    ...leftToRight
+    ...leftRight
   }
 }

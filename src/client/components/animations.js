@@ -5,14 +5,14 @@ import anime from 'animejs'
  * `methotds` object.
  */
 
-export const topToBottom = {
-  'beforeAppear': async (element) => {
+export const topBottom = {
+  'topBottomBeforeAppear': async (element) => {
     // We are a zygote component
 
     // Set clipPath so all our clip points are at the top
     element.style.clipPath = 'polygon(-1px -1px, 101% -1%, 101% -1px, -1px -1px)'
   },
-  'appear': async (element, done) => {
+  'topBottomAppear': async (element, done) => {
     // We are a newborn component
 
     // If we are part of a stagger list, add some delay based on our index
@@ -36,14 +36,14 @@ export const topToBottom = {
     return done()
   },
 
-  'beforeLeave': (element) => {
+  'topBottomBeforeLeave': (element) => {
     // We are a component that's about to go away
 
     // Set clipPath so all our clip points surround us, as our entry
     // should have made it, but just in case we got modified
     element.style.clipPath = 'polygon(-1px -1px, 101% -1%, 101% 101%, -1% 101%)'
   },
-  'leave': async (element, done) => {
+  'topBottomLeave': async (element, done) => {
     // We are a component that's going away
 
     // Start our exit animation, the next guy is coming in 500ms
@@ -60,14 +60,14 @@ export const topToBottom = {
   }
 }
 
-export const leftToRight = {
-  'beforeAppear': (element) => {
+export const leftRight = {
+  'leftRightBeforeAppear': (element) => {
     // We are a zygote component
 
     // Set clipPath so all our clip points are on our left
     element.style.clipPath = 'polygon(-1px -1px, -1px -1px, -1px 101%, -1px 101%)'
   },
-  'appear': async (element, done) => {
+  'leftRightAppear': async (element, done) => {
     // We are a newborn component
 
     // If we are part of a stagger list, add some delay based on our index
@@ -90,14 +90,14 @@ export const leftToRight = {
     element.style.clipPath = 'none'
     return done()
   },
-  'beforeLeave': (element) => {
+  'leftRightBeforeLeave': (element) => {
     // We are a component that's about to go away
 
     // Set clipPath so all our clip points surround us, as our entry
     // should have made it, but just in case we got modified
     element.style.clipPath = 'polygon(-1px -1px, 101% -1%, 101% 101%, -1% 101%)'
   },
-  'leave': async (element, done) => {
+  'leftRightLeave': async (element, done) => {
     // We are a component that's going away
 
     // Start our exit animation, the next guy is coming in 500ms

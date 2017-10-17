@@ -1,10 +1,11 @@
-transition(
-  appear,
-  v-on:before-appear="beforeAppear",
-  v-on:appear="appear",
-  v-bind:css="false"
-)
-  div(v-if="direction === 'vertical'")
+div
+  transition(
+    appear,
+    v-on:before-appear="topBottomBeforeAppear",
+    v-on:appear="topBottomAppear",
+    v-bind:css="false",
+    v-if="direction === 'vertical'"
+  )
     b-card.ouc-theme-card
       b-card-image
         slot(name="screenshot").ouc-screenshot
@@ -20,7 +21,13 @@ transition(
             slot(name="author-username")
         slot(name="description")
 
-  div(v-else)
+  transition(
+    appear,
+    v-on:before-appear="leftRightBeforeAppear",
+    v-on:appear="leftRightAppear",
+    v-bind:css="false",
+    v-else="direction === 'vertical'"
+  )
     b-box(is-paddingless)
       b-tile(is-parent, is-paddingless)
         b-tile(is-4, is-child).ouc-theme-screenshot

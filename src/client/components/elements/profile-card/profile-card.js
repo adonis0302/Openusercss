@@ -3,8 +3,7 @@ import icon from '../icon/icon.vue'
 import gravatarUrl from 'gravatar-url'
 import flushImg from '../flush-img/flush-img.vue'
 import moment from 'moment'
-import log from 'chalk-console'
-import {topToBottom} from '../../../src/client/components/animations'
+import {topBottom} from '../../../src/client/components/animations'
 
 window.moment = moment
 
@@ -27,7 +26,7 @@ export default {
     isOnline (date) {
       return moment(this.time).diff(date) < 600000
     },
-    ...topToBottom
+    ...topBottom
   },
   mounted () {
     setInterval(() => {

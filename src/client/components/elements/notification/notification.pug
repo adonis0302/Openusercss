@@ -1,9 +1,9 @@
 transition(
   enter,
-  v-on:before-enter="beforeAppear",
-  v-on:enter="appear",
-  v-on:before-leave="beforeLeave",
-  v-on:leave="leave",
+  v-on:before-enter="leftRightBeforeAppear",
+  v-on:enter="leftRightAppear",
+  v-on:before-leave="leftRightBeforeLeave",
+  v-on:leave="leftRightLeave",
   v-bind:css="false"
 )
   b-notification(:class="['notification', color]")

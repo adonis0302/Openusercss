@@ -1,7 +1,7 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import {mapGetters, mapActions} from 'vuex'
 
-import {leftToRight} from '../../../src/client/components/animations'
+import {leftRight} from '../../../src/client/components/animations'
 import icon from '../icon/icon.vue'
 
 export default {
@@ -20,7 +20,7 @@ export default {
     icon
   },
   'methods': {
-    ...leftToRight,
+    ...leftRight,
     ...mapActions([
       'logout'
     ])
