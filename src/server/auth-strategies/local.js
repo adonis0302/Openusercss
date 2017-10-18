@@ -3,31 +3,19 @@
 import passport from 'passport'
 import {Strategy as LocalStrategy} from 'passport-local'
 import {getUserByEmail, comparePassword, getUserById} from '../models/user'
-import {handle} from '../shared/error-handler'
 
 passport.use(
   new LocalStrategy({
     'usernameField': 'email',
     'passwordField': 'password'
   }, async (email, password, done) => {
-    let user = null
-    let matchedPassword = null
-
-    try {
-      user = await getUserByEmail(null, {email})
-    } catch (error) {
-      handle(error)
-    }
+    const user = await getUserByEmail(null, {email})
 
     if (!user) {
       return done(null, false, {'message': 'Invalid credentials'})
     }
 
-    try {
-      matchedPassword = await comparePassword(password, user.password)
-    } catch (error) {
-      handle(error)
-    }
+    const matchedPassword = await comparePassword(password, user.password)
 
     if (matchedPassword) {
       return done(null, user)
@@ -42,13 +30,7 @@ passport.serializeUser(async (user, done) => {
 })
 
 passport.deserializeUser(async (id, done) => {
-  let user = null
-
-  try {
-    user = await getUserById(null, {id})
-  } catch (error) {
-    handle(error)
-  }
+  const user = await getUserById(null, {id})
 
   return done(null, user)
 })

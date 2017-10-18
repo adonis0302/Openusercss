@@ -2,8 +2,9 @@
 
 import staticConfig from '../config'
 import jwt from 'jsonwebtoken'
-import {AuthenticationError} from './custom-errors'
-import {handle} from './error-handler'
+import {expected} from './custom-errors'
+
+const {AuthenticationError} = expected
 
 export default async (token: String, Session) => {
   const config = await staticConfig()
@@ -24,7 +25,6 @@ export default async (token: String, Session) => {
       throw new Error('Invalid token')
     }
   } catch (error) {
-    handle(error)
     throw new AuthenticationError(error.message)
   }
 

@@ -1,5 +1,4 @@
 // import {MongoClient} from 'mongodb'
-import {handle} from './shared/error-handler'
 import log from 'chalk-console'
 import {Document, connect} from 'camo'
 import moment from 'moment'
@@ -53,6 +52,10 @@ const validators = {
   },
 
   'moment': (data) => {
+    if (!data.isValid) {
+      return false
+    }
+
     return data.isValid() || false
   }
 }
@@ -161,12 +164,8 @@ class Session extends Document {
 }
 
 (async () => {
-  try {
-    await connect(connectionUrl)
-    log.info('Database connection established')
-  } catch (error) {
-    handle(error)
-  }
+  await connect(connectionUrl)
+  log.info('Database connection established')
 })()
 
 export default async () => {

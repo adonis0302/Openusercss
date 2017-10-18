@@ -3,6 +3,8 @@ import profileCard from '../../elements/profile-card/profile-card.vue'
 import themeCard from '../../elements/theme-card/theme-card.vue'
 import flushImg from '../../elements/flush-img/flush-img.vue'
 
+import {leftRight} from '../../../src/client/components/animations'
+
 export default {
   'components': {
     'b-columns':     bulma('columns', 'div'),
@@ -17,7 +19,8 @@ export default {
     themeCard,
     flushImg
   },
-  'data': () => {
+  'methods': leftRight,
+  'data':    () => {
     return {
       'user': {
         'description': 'One morning, when Gregor Samsa woke from troubled dreams, he found himself transformed in his bed into a horrible vermin. He lay on his armour-like back, and if he lifted his head a little he could see his brown belly, slightly domed and divided by arches into stiff sections. The bedding was hardly able to cover it and seemed ready to slide off any moment.',

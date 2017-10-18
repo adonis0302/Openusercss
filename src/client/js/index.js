@@ -122,7 +122,7 @@ const init = async () => {
   const polyfillsResult = await polyfills()
 
   vue()
-  const fontResults = await loadedFonts()
+  // const fontResults = await loadedFonts()
 
   // log.info(`Font statistics: ${JSON.stringify(fontResults, null, 4)}`)
   log.info(`Needed polyfills on this browser: ${JSON.stringify(polyfillsResult, null, 4)}`)
@@ -130,12 +130,10 @@ const init = async () => {
   return true
 }
 
-const main = async () => {
+(async () => {
   await init()
   // log.info(`Performance statistics: ${JSON.stringify(perfStats, null, 4)}`)
-}
-
-main()
+})()
 
 perfStats.blocking.push({
   'name': 'mainThread',
