@@ -1,13 +1,24 @@
-noscript
-  .background
-  .navbar.is-primary
-    a(href="/")
-      .navbar-brand
-        .navbar-item
-          img(src="/img/openusercss.icon-x32.png")
-        .navbar-item
-          span OpenUserCSS
-  .container-fluid.fullheight
+noscript.ouc-noscript-root
+  .ouc-noscript-background
+  .ouc-fake-navbar-wrapper
+    .ouc-fake-navbar
+      a(href="/")
+        img(src="/img/openusercss.icon-x32.png")
+      a(href="/")
+        span OpenUserCSS
+  .ouc-noscript-content-wrapper
+    .ouc-noscript-content
+      h1 When the scripts are gone, only ruins may remain.
+    .ouc-noscript-content
+      p Please enable Javascript or switch to a browser with Javascript support to use OpenUserCSS
+  .ouc-noscript-attribution
+    a(
+      href="https://commons.wikimedia.org/wiki/File:Ruins_of_Roman_Forum.jpg",
+      target="_blank",
+      rel="noopener"
+    )
+        p "Ruins of the Roman Forum" by Michael Wilson
+  //- .container-fluid.fullheight
     .columns.is-marginless.is-vcentered.fullheight
       .column.is-paddingless
         .notification.is-primary.shadow-floating
@@ -16,7 +27,7 @@ noscript
         .notification.is-primary.shadow-floating
           .container
             p Please enable Javascript or switch to a browser with Javascript support to use OpenUserCSS
-  .container
+  //- .container
     a(
       href="https://commons.wikimedia.org/wiki/File:Ruins_of_Roman_Forum.jpg",
       target="_blank",
