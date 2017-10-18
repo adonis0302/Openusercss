@@ -1,39 +1,35 @@
 navbar(is-primary)
     b-container
-      router-link(to="/")
-        navbar-brand
-          navbar-item
-            img(src="/img/openusercss.icon-x32.png")
-            .spacer
-            span OpenUserCSS
-      navbar-menu(is-primary, is-active)
+      navbar-brand
+        router-link(to="/").navbar-item.no-active
+          img(src="/img/openusercss.icon-x32.png")
+          .spacer
+          span OpenUserCSS
+        navbar-burger(@click="toggleOpen")
+          span
+          span
+          span
+      navbar-menu(:class="['navbar-menu', 'is-primary', {'is-active': open}]")
         navbar-start
-        navbar-end
-          navbar-item(v-if="user")
-            router-link(to="/profile")
-              icon(icon="account")
-              | Welcome, {{user.displayname}}
-            navbar-item(v-if="user")
-            a(@click.prevent="logout")
-              icon(icon="logout")
-              | Log out
-          navbar-item
-            router-link(to="/")
-              icon(icon="home")
-              | Home
-          navbar-item(v-if="!user")
-            router-link(to="/login")
-              icon(icon="login")
-              | Log in
-          navbar-item(v-if="!user")
-            router-link(to="/register")
-              icon(icon="account-plus")
-              | Register
-          navbar-item
-            router-link(to="/browse")
-              icon(icon="folder-multiple")
-              | Browse
-          navbar-item
-            a(href="//forums.openusercss.org", target="_blank")
-              icon(icon="forum")
-              | Forums
+        navbar-end(@click="close")
+          router-link(v-if="user", to="/profile").navbar-item
+            icon(icon="account")
+            | Welcome, {{user.displayname}}
+          a(v-if="user", @click.prevent="logout").navbar-item
+            icon(icon="logout")
+            | Log out
+          router-link(to="/").navbar-item
+            icon(icon="home")
+            | Home
+          router-link(v-if="!user", to="/login").navbar-item
+            icon(icon="login")
+            | Log in
+          router-link(v-if="!user", to="/register").navbar-item
+            icon(icon="account-plus")
+            | Register
+          router-link(to="/browse").navbar-item
+            icon(icon="folder-multiple")
+            | Browse
+          a(href="//forums.openusercss.org", target="_blank").navbar-item
+            icon(icon="forum")
+            | Forums

@@ -10,17 +10,11 @@
 @import 'node_modules/bulma/sass/components/navbar';
 @import 'node_modules/bulma/sass/elements/container';
 
+$primary: map-get($colors, 'primary');
+$background: map-get($colors, 'background');
+
 nav {
   z-index: 100;
-}
-
-a {
-  background-color: map-get($tones, 'brand-primary');
-  color: text-for-bg(map-get($tones, 'brand-primary'));
-
-  &:hover {
-    color: darken(text-for-bg(map-get($tones, 'brand-primary')), 10);
-  }
 }
 
 .navbar-brand {
@@ -29,13 +23,25 @@ a {
   }
 }
 
+.navbar-menu {
+  &.is-primary {
+    background-color: map-get($tones, 'brand-primary');
+  }
+}
+
 .spacer {
   width: 10px;
 }
 
-.navbar-menu {
-  &.is-primary {
-    background-color: map-get($tones, 'brand-primary');
+.navbar-item:not(.no-active) {
+  &.router-link-exact-active {
+    background-color: nth($background, 1);
+    color: nth($background, 2);
+  }
+
+  &:not(.router-link-exact-active):not(:hover) {
+    background-color: nth($primary, 1) !important;
+    color: nth($primary, 2) !important;
   }
 }
 

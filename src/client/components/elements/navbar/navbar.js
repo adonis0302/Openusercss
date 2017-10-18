@@ -22,7 +22,18 @@ export default {
   'methods': {
     ...mapActions([
       'logout'
-    ])
+    ]),
+    toggleOpen () {
+      this.open = !this.open
+    },
+    close () {
+      this.open = false
+    }
+  },
+  data () {
+    return {
+      'open': false
+    }
   },
   'computed': mapGetters({
     'user': 'currentUser'
