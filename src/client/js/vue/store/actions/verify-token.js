@@ -6,7 +6,9 @@ import {apolloClient} from '.'
 
 const verifyToken = async (token) => {
   const query = gql(`{
-    verifyToken(token: "${token}")
+    verifyToken(token: "${token}") {
+      token
+    }
   }`)
   let result = null
 
