@@ -1,1 +1,10 @@
 /* vue:scoped */
+
+@import 'node_modules/bulma/sass/utilities/initial-variables';
+@import '../../scss/variables';
+
+.ouc-app-root {
+  background-color: $white;
+  position: absolute;
+  width: 100%;
+}

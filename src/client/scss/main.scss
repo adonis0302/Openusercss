@@ -3,24 +3,10 @@
 @import 'node_modules/css-reset-and-normalize-sass/scss/flavored-reset-and-normalize';
 @import 'node_modules/md-shadows/md-shadows';
 
-@import './variables';
-@import './compat';
-/* @import 'node_modules/bulma/sass/utilities/initial-variables';
 @import './autocolor';
 @import './variables';
 
-@import 'node_modules/bulma/bulma';
-*/
-
-// @import './reboot';
+@import './compat';
+@import './noscript';
 @import './styles';
-
-/*
-
-@import 'node_modules/bulma/sass/utilities/initial-variables';
-@import 'scss/autocolor';
-@import 'scss/variables';
-
-@import 'node_modules/bulma/bulma';
-
-*/
+@import './reboot';

@@ -47,7 +47,6 @@ import log from 'chalk-console'
 import supports from 'css-supports'
 import promise from 'es6-promise'
 import flexibility from 'flexibility'
-import stickybits from 'stickybits'
 
 import 'classlist-polyfill'
 import 'console-polyfill'
@@ -92,11 +91,6 @@ const runPolyfills = async () => {
     log.info('js/promise - support not found, polyfilling')
     promise.polyfill()
     ranPolyfills.push('promises')
-  }
-  if (!Modernizr.stickyposition) {
-    log.info('css/stickyposition not supported, polyfilling')
-    stickybits('[data-c-position="sticky"]')
-    ranPolyfills.push('stickyposition')
   }
 
   return ranPolyfills

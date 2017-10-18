@@ -1,6 +1,5 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import {mapGetters, mapActions} from 'vuex'
-import stickybits from 'stickybits'
 
 import icon from '../icon/icon.vue'
 
@@ -37,8 +36,5 @@ export default {
   },
   'computed': mapGetters({
     'user': 'currentUser'
-  }),
-  mounted () {
-    stickybits(this.$el)
-  }
+  })
 }
