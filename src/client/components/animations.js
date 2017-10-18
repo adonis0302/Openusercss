@@ -139,9 +139,9 @@ export const topBottom = {
     const node = await anime({
       'targets':   element,
       'clip-path': 'polygon(-1px -1px, 101% -1%, 101% 101%, -1% 101%)',
-      'duration':  1000,
-      'delay':     500 + additionalDelay,
-      'easing':    'easeOutQuart'
+      'duration':  700,
+      'delay':     100 + additionalDelay,
+      'easing':    'easeInOutQuart'
     })
 
     // Wait for the animejs animation to finish
@@ -171,8 +171,8 @@ export const topBottom = {
     const node = await anime({
       'targets':   element,
       'clip-path': 'polygon(-1px 101%, 101% 101%, 101% 101%, -1% 101%)',
-      'duration':  500,
-      'easing':    'easeInQuart'
+      'duration':  700,
+      'easing':    'easeInOutQuart'
     })
 
     // Wait for the animejs animation to finish
