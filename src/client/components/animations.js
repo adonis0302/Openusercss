@@ -60,6 +60,61 @@ export class TopBottom extends Animation {
   }
 }
 
+export class Opacity extends Animation {
+  constructor () {
+    super()
+
+    this.beforeEnter = async ({element, length}) => {
+      element.style.opacity = 0
+    }
+
+    this.enter = async ({element, length}) => {
+      // We are a newborn component
+
+      // If we are part of a stagger list, add some delay based on our index
+      const additionalDelay = element.dataset.index * 75 || 0
+
+      // And we appear after a 500ms delay to let the guy before us go away
+      const node = await anime({
+        'targets':  element,
+        'opacity':  1,
+        'duration': this.lengths[length],
+        'delay':    500 + additionalDelay,
+        'easing':   'easeOutQuart'
+      })
+
+      // Wait for the animejs animation to finish
+      await node.finished
+
+      // After the animation is suppoed to finish, remove the clipPath property to
+      // prevent unfinished animations from messing us up
+      element.style.opacity = null
+
+      return true
+    }
+
+    this.beforeLeave = async ({element, length}) => {
+      element.style.opacity = 1
+    }
+
+    this.leave = async ({element, length}) => {
+      // We are a newborn component
+
+      // And we appear after a 500ms delay to let the guy before us go away
+      const node = await anime({
+        'targets':  element,
+        'opacity':  0,
+        'duration': length,
+        'easing':   'easeOutQuart'
+      })
+
+      // Wait for the animejs animation to finish
+      await node.finished
+      return true
+    }
+  }
+}
+
 export const popperCreate = async (popper) => {
   const element = popper.instance.popper
 
@@ -147,12 +202,11 @@ export const leftRight = {
     const node = await anime({
       'targets':   element,
       'clip-path': 'polygon(-1px -1px, 101% -1px, 101% 101%, -1px 101%)',
-      'duration':  1000,
-      'delay':     500 + additionalDelay,
-      'easing':    'easeOutQuart'
+      'duration':  700,
+      'delay':     additionalDelay,
+      'easing':    'easeInOutQuart'
     })
 
-    // Wait for the animejs animation to finish
     await node.finished
 
     // After the animation is suppoed to finish, remove the clipPath property to
@@ -178,8 +232,8 @@ export const leftRight = {
     const node = await anime({
       'targets':   element,
       'clip-path': 'polygon(101% -1px, 101% -1%, 101% 101%, 101% 101%)',
-      'duration':  500,
-      'easing':    'easeInQuart'
+      'duration':  700,
+      'easing':    'easeInOutQuart'
     })
 
     // Wait for the animejs animation to finish
