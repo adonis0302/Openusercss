@@ -49,14 +49,6 @@ const validators = {
 
       return result >= 0 && result < limit
     }
-  },
-
-  'moment': (data) => {
-    if (!data.isValid) {
-      return false
-    }
-
-    return data.isValid() || false
   }
 }
 
