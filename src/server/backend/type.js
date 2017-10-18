@@ -5,7 +5,8 @@ const typeDefs = `
     _id:         ID!
     username:    String!
     displayname: String!
-    email:       String!
+    email:       String
+    themes:      [Theme]!
   }
 
   type Session {
@@ -28,7 +29,7 @@ const typeDefs = `
   }
 
   type Query {
-    verifyToken(token: String!): Boolean!
+    verifyToken(token: String!): Session!
     test: Boolean!
     getTheme: Theme!
   }

@@ -8,6 +8,15 @@ const {AuthenticationError} = expected
 
 export default async (token: String, Session) => {
   const config = await staticConfig()
+  let session = null
+
+  session = await Session.findOne({
+    token
+  })
+
+  if (!await session) {
+    throw new Error('Invalid session')
+  }
 
   try {
     jwt.verify(token, config.get('keypair.private'), {
@@ -16,17 +25,9 @@ export default async (token: String, Session) => {
         'HS256'
       ]
     })
-
-    const session = await Session.findOne({
-      token
-    })
-
-    if (!await session) {
-      throw new Error('Invalid token')
-    }
   } catch (error) {
     throw new AuthenticationError(error.message)
   }
 
-  return true
+  return session
 }

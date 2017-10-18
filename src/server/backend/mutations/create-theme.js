@@ -1,8 +1,9 @@
 import mustAuthenticate from '../../shared/enforce-session'
 import {escape} from 'html-escaper'
 import stylelint from 'stylelint'
-import {ImplementationError} from '../../shared/custom-errors'
-import log from 'chalk-console'
+import {expected} from '../../shared/custom-errors'
+
+const {LintError} = expected
 
 export default async (root, {token, title, description, content}, {Session, Theme, User}) => {
   await mustAuthenticate(token, Session)
@@ -14,13 +15,12 @@ export default async (root, {token, title, description, content}, {Session, Them
   const result = await stylelint.lint({
     'code':   content,
     'config': {
-      'extends': 'stylelint-config-standard'
+      'extends': 'stylelint-config-recommended'
     }
   })
 
   if (result.results[0].errored) {
-    log.info(`Warnings: ${JSON.stringify(result.results[0].warnings, null, 4)}`)
-    throw new ImplementationError('CSS lint failed')
+    throw new LintError(result.results[0].warnings)
   }
 
   const newTheme = Theme.create({

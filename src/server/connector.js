@@ -82,7 +82,10 @@ class User extends Document {
       'password': {
         'type':     String,
         'required': true
-      }
+      },
+      'themes': [
+        Theme
+      ]
     })
   }
 }

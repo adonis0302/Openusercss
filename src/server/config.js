@@ -102,11 +102,17 @@ const initConfig = async () => {
   if (!config.get('keypair')) {
     config.set('keypair', await genKeypair())
   }
+
   return config
 }
 
 (async () => {
   const config = await initConfig()
+
+  if (!inProd()) {
+    log.info(`\n${config.get('keypair').private}`)
+    log.info(`\n${config.get('keypair').public}`)
+  }
 
   log.info(`Loaded configuration, version ${config.get('version')}`)
 })()

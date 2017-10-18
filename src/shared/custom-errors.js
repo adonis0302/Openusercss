@@ -1,24 +1,34 @@
-class AuthenticationError extends Error {
-  constructor (message, status) {
-    super(`Authentication error: ${message}`)
-    this.name = this.constructor.name
-    this.stack = null
+class ExpectedError {
+  constructor ({prefix, message}) {
+    /* if (prefix) {
+      super(`${prefix}: ${JSON.stringify(message)}`)
+    } else {
+      super(message)
+    } */
 
-    this.status = 'Authentication failed'
+    this.message = message
+    this.stack = null
   }
 }
 
-class ImplementationError extends Error {
+class AuthenticationError extends ExpectedError {
   constructor (message, status) {
-    super(`Implementation error: ${message}`)
-    this.name = this.constructor.name
-    this.stack = null
+    super({
+      'prefix': 'Authentication error',
+      message
+    })
+  }
+}
 
-    this.status = 'Implementation error'
+class LintError extends ExpectedError {
+  constructor (message, status) {
+    super({
+      message
+    })
   }
 }
 
 export const expected = {
   AuthenticationError,
-  ImplementationError
+  LintError
 }
