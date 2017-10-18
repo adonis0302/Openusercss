@@ -121,6 +121,7 @@
     "store2": "^2",
     "stylelint": "^8.2.0",
     "sw-precache": "^5",
+    "v-tooltip": "^2.0.0-rc.2",
     "vee-validate": "^2.0.0-rc.18",
     "vinyl-source-stream": "^1",
     "vinyl-transform": "^1",

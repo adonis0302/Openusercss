@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 import log from 'chalk-console'
 
-import {router} from '../../vue-modules'
+import {router} from '../../modules'
 import {apolloClient} from '.'
 
 const remoteRegister = async ({email, password, displayname}) => {

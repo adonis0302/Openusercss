@@ -7931,6 +7931,10 @@ pngjs@^3.0.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/pngjs/-/pngjs-3.3.0.tgz#1f5730c189c94933b81beda2ab2f8e2855263a8f"
 
+popper.js@^1.0.2:
+  version "1.12.5"
+  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.12.5.tgz#229e4dea01629e1f1a1e26991ffade5024220fa6"
+
 postcss-alias@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/postcss-alias/-/postcss-alias-2.0.0.tgz#018f46c2fbff818e29fa6af67afa4be2becd376d"
@@ -10431,6 +10435,12 @@ token-stream@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/token-stream/-/token-stream-0.0.1.tgz#ceeefc717a76c4316f126d0b9dbaa55d7e7df01a"
 
+tooltip.js@^1.1.4:
+  version "1.1.5"
+  resolved "https://registry.yarnpkg.com/tooltip.js/-/tooltip.js-1.1.5.tgz#740703c7c0a52ff72bd3ae3e78c12a8609997a71"
+  dependencies:
+    popper.js "^1.0.2"
+
 topo@1.x.x:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/topo/-/topo-1.1.0.tgz#e9d751615d1bb87dc865db182fa1ca0a5ef536d5"
@@ -10769,6 +10779,12 @@ uuid@^2.0.1:
 uuid@^3.0.0, uuid@^3.0.1, uuid@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.1.0.tgz#3dd3d3e790abc24d7b0d3a034ffababe28ebbc04"
+
+v-tooltip@^2.0.0-rc.2:
+  version "2.0.0-rc.2"
+  resolved "https://registry.yarnpkg.com/v-tooltip/-/v-tooltip-2.0.0-rc.2.tgz#91e012bc37392f66b11d12734c7a4a7682f44db0"
+  dependencies:
+    tooltip.js "^1.1.4"
 
 v8flags@^2.0.9, v8flags@^2.1.1:
   version "2.1.1"

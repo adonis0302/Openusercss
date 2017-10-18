@@ -1,3 +1,12 @@
+$secondary: map-get($colors, 'secondary');
+
+.vue-tooltip-theme {
+  background-color: nth($secondary, 1);
+  color: nth($secondary, 2);
+  padding: .5rem;
+  transition: opacity .5s;
+}
+
 .hoverhidden {
   padding: 5px !important;
   padding-left: 5px !important;
@@ -49,18 +58,3 @@
 .is-borderless {
   border: 0 !important;
 }
-
-/*
-.container,
-.container-fluid {
-  &.is-background {
-    background-color: map-get($tones, 'brand-background');
-    color: text-for-bg(map-get($tones, 'brand-background'));
-  }
-
-  &.is-primary {
-    background-color: map-get($tones, 'brand-primary');
-    color: text-for-bg(map-get($tones, 'brand-primary'));
-  }
-}
-*/

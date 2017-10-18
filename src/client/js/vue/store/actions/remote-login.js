@@ -1,8 +1,8 @@
 import gql from 'graphql-tag'
 import log from 'chalk-console'
 
-import {router} from '../../vue-modules'
-import {AuthenticationError} from '../../../../shared/custom-errors'
+import {router} from '../../modules'
+import {AuthenticationError} from '../../../../../shared/custom-errors'
 import {apolloClient} from '.'
 
 const remoteLogin = async ({email, password}) => {
