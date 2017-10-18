@@ -1,21 +1,15 @@
-transition(
-  appear,
-  v-on:before-appear="leftRightBeforeAppear",
-  v-on:appear="leftRightAppear",
-  v-bind:css="false"
-)
-  b-footer
-    b-columns
-      b-column(has-text-centered)
-        span Copyright&nbsp;&copy;&nbsp;{{new Date().getFullYear()}} 
-        a(href="//github.com/DecentM") DecentM 
-        span and 
-        a(href="//github.com/OpenUserCSS/app") Contributors
-      b-column(has-text-centered)
-        a(href="//github.com/OpenUserCSS")
-          icon(icon="github-circle")
-          | GitHub
-      b-column(has-text-centered)
-        a(href="/contact")
-          icon(icon="email-variant")
-          | Contact the administrator
+b-footer
+  b-columns
+    b-column(has-text-centered)
+      span Copyright&nbsp;&copy;&nbsp;{{new Date().getFullYear()}} 
+      a(href="//github.com/DecentM") DecentM 
+      span and 
+      a(href="//github.com/OpenUserCSS/app") Contributors
+    b-column(has-text-centered)
+      a(href="//github.com/OpenUserCSS")
+        icon(icon="github-circle")
+        | GitHub
+    b-column(has-text-centered)
+      a(href="/contact")
+        icon(icon="email-variant")
+        | Contact the administrator

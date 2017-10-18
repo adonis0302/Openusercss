@@ -1,1 +1,10 @@
-router-view.ouc-app-root
+div
+  navbar
+  transition(
+    @before-enter="leftRightBeforeAppear",
+    @enter="leftRightAppear",
+    @before-leave="leftRightBeforeLeave",
+    @leave="leftRightLeave",
+    :css="false"
+  )
+    router-view.ouc-app-root

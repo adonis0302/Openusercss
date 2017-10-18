@@ -5,6 +5,68 @@ import anime from 'animejs'
  * `methotds` object.
  */
 
+class Animation {
+  constructor () {
+    this.lengths = {
+      'slow': '1s',
+      'fast': '.5s'
+    }
+
+    this.easings = {
+      'leave': {
+        'small': 'easeInQuad',
+        'large': 'easeInQuart'
+      },
+      'enter': {
+        'small': 'easeOutQuad',
+        'large': 'easeOutQuart'
+      },
+      'move': {
+        'small': 'easeInOutQuad',
+        'large': 'easeInOutQuart'
+      }
+    }
+  }
+}
+
+export class TopBottom extends Animation {
+  constructor () {
+    super()
+
+    this.enter = async ({element, length}) => {
+      // We are a newborn component
+
+      // If we are part of a stagger list, add some delay based on our index
+      const additionalDelay = element.dataset.index * 75 || 0
+
+      // And we appear after a 500ms delay to let the guy before us go away
+      const node = await anime({
+        'targets':   element,
+        'clip-path': 'polygon(-1px -1px, 101% -1%, 101% 101%, -1% 101%)',
+        'duration':  1000,
+        'delay':     500 + additionalDelay,
+        'easing':    'easeOutQuart'
+      })
+
+      // Wait for the animejs animation to finish
+      await node.finished
+
+      // After the animation is suppoed to finish, remove the clipPath property to
+      // prevent unfinished animations from messing us up
+      element.style.clipPath = 'none'
+
+      return true
+    }
+  }
+}
+
+export const popperCreate = async (popper) => {
+  const element = popper.instance.popper
+
+  await leftRight.leftRightBeforeAppear(element)
+  await leftRight.leftRightAppear(element)
+}
+
 export const topBottom = {
   'topBottomBeforeAppear': async (element) => {
     // We are a zygote component
@@ -33,7 +95,11 @@ export const topBottom = {
     // After the animation is suppoed to finish, remove the clipPath property to
     // prevent unfinished animations from messing us up
     element.style.clipPath = 'none'
-    return done()
+
+    if (done) {
+      return done()
+    }
+    return true
   },
 
   'topBottomBeforeLeave': (element) => {
@@ -56,7 +122,11 @@ export const topBottom = {
 
     // Wait for the animejs animation to finish
     await node.finished
-    return done()
+
+    if (done) {
+      return done()
+    }
+    return true
   }
 }
 
@@ -88,7 +158,11 @@ export const leftRight = {
     // After the animation is suppoed to finish, remove the clipPath property to
     // prevent unfinished animations from messing us up
     element.style.clipPath = 'none'
-    return done()
+
+    if (done) {
+      return done()
+    }
+    return true
   },
   'leftRightBeforeLeave': (element) => {
     // We are a component that's about to go away
@@ -110,6 +184,10 @@ export const leftRight = {
 
     // Wait for the animejs animation to finish
     await node.finished
-    return done()
+
+    if (done) {
+      return done()
+    }
+    return true
   }
 }

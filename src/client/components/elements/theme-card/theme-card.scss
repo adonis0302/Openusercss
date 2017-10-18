@@ -12,9 +12,37 @@
 @import 'node_modules/bulma/sass/grid/tiles';
 @import 'node_modules/bulma/sass/elements/box';
 
+$background: map-get($colors, 'background');
+
 .is-primary > .box {
   background-color: map-get($tones, 'brand-primary');
   color: text-for-bg(map-get($tones, 'brand-primary'));
+}
+
+.ouc-theme-favicon {
+  background-color: red;
+  border-radius: 50%;
+  margin-top: -35px;
+  float: right;
+  margin-right: 10px;
+  height: 25px;
+  width: 25px;
+}
+
+.ouc-theme-favicon-wrapper {
+  // height: 35px;
+  // margin-top: -35px;
+  // position: absolute;
+
+  /* > .ouc-theme-siteurl {
+    background-color: nth($background, 1);
+    color: nth($background, 2);
+    float: right;
+    text-align: center;
+    transform: translate(55px, 30px);
+    // margin-right: -50px;
+    // height: 25px;
+  } */
 }
 
 @import '../../../scss/reboot';

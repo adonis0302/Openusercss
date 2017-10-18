@@ -1,10 +1,4 @@
-transition(
-  appear,
-  v-on:before-appear="leftRightBeforeAppear",
-  v-on:appear="leftRightAppear",
-  v-bind:css="false"
-)
-  navbar(is-primary)
+navbar(is-primary)
     b-container
       router-link(to="/")
         navbar-brand

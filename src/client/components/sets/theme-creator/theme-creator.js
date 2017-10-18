@@ -1,7 +1,6 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import {mapGetters} from 'vuex'
 
-import formWrapper from '../../elements/form-wrapper/form-wrapper.vue'
 import icon from '../../elements/icon/icon.vue'
 import notification from '../../elements/notification/notification.vue'
 import editor from '../../elements/editor/editor.vue'
@@ -27,7 +26,6 @@ export default {
     'b-level':       bulma('level', 'div'),
     'b-level-left':  bulma('level-left', 'div'),
     'b-level-right': bulma('level-right', 'div'),
-    formWrapper,
     icon,
     notification,
     editor

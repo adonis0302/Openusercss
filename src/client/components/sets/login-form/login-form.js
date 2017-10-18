@@ -1,7 +1,6 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import {mapGetters} from 'vuex'
 
-import formWrapper from '../../elements/form-wrapper/form-wrapper.vue'
 import icon from '../../elements/icon/icon.vue'
 import notification from '../../elements/notification/notification.vue'
 import button from '../../elements/button/button.vue'
@@ -25,7 +24,6 @@ export default {
     'b-help':      bulma('help', 'p'),
     'b-tile':      bulma('tile', 'div'),
     'big-button':  button,
-    formWrapper,
     icon,
     notification
   },
