@@ -1,16 +1,20 @@
 import log from 'chalk-console'
 import {connect} from 'camo'
+import staticConfig from '../config'
 
 import Theme from './schema/theme'
 import User from './schema/user'
 import Session from './schema/session'
 
-const connectionUrl = 'mongodb://localhost:27017/openusercss'
+const init = async () => {
+  const config = await staticConfig()
+  const connectionUrl = config.get('database.main')
 
-connect(connectionUrl)
-.then(() => {
+  await connect(connectionUrl)
   log.info('Database connection established')
-})
+}
+
+init()
 
 export default async () => {
   return {

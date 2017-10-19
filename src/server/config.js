@@ -1,3 +1,5 @@
+/* eslint no-process-env:0 */
+
 import Conf from 'conf'
 import hat from 'hat'
 import log from 'chalk-console'
@@ -7,7 +9,6 @@ import path from 'path'
 import keypair from 'keypair'
 
 const inProd = () => {
-  // eslint-disable-next-line
   if (process.env.NODE_ENV !== 'production') {
     return false
   }
@@ -18,7 +19,11 @@ const inProd = () => {
 const defaultConfig = {
   'port':       80,
   'domain':     'openusercss.org',
-  'saltRounds': 15
+  'saltRounds': 15,
+  'database':   {
+    'main':  'mongodb://localhost:27017/openusercss-main',
+    'brute': 'mongodb://localhost:27017/openusercss-brute'
+  }
 }
 
 if (inProd()) {

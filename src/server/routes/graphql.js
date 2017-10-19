@@ -6,12 +6,13 @@ import bodyParser from 'body-parser'
 
 import schema from '../backend'
 import connectMongo from '../connector'
+import brute from '../brute'
 
 export default async () => {
   const router = expressRouter()
   const context = await connectMongo()
 
-  router.use('/graphql', bodyParser.json(), graphqlExpress({
+  router.use('/graphql', brute.prevent, bodyParser.json(), graphqlExpress({
     context,
     schema
   }))

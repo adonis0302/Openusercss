@@ -40,5 +40,9 @@
 		"short-name": "My Website",
 		"description": "My long-long description of what can be found on this website",
 		"url": "mywebsite.com"
+	},
+	"database": {
+		"main": "mongodb://localhost:27017/openusercss.org",
+		"brute": "mongodb://localhost:27017/openusercss-brute"
 	}
 }
