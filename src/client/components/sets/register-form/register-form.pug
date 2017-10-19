@@ -60,11 +60,12 @@ b-section(slot="form").ouc-form-section
                           data-vv-as="passphrase"
                         )
               b-tile(is-parent, is-vertical, is-paddingless)
-                b-tile(is-child)
-                  big-button(icon="account-plus", :disabled="errors.any()").is-primary
-                    p(slot="content") Register
-                b-tile(is-child, v-show="errors.any()")
-                  notification(v-show="errors.any()", icon="alert", color="is-danger").is-danger
-                    div(slot="content")
-                      ul
-                        li(v-for="error in errors.all()") {{error}}
+                big-button(icon="account-plus", :disabled="errors.any()").is-primary
+                  p(slot="content") Register
+                notification(v-show="errors.any()", icon="alert", color="is-danger").is-danger
+                  div(slot="content")
+                    ul
+                      li(v-for="error in errors.all()") {{error}}
+                notification(v-show="actionError", icon="alert", color="is-danger").is-danger
+                  div(slot="content")
+                    p {{actionError}}

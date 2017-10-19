@@ -1,12 +1,6 @@
 class ExpectedError {
   constructor ({prefix, message}) {
-    /* if (prefix) {
-      super(`${prefix}: ${JSON.stringify(message)}`)
-    } else {
-      super(message)
-    } */
-
-    this.message = message
+    this.message = message.replace('GraphQL error: ', '')
     this.stack = null
   }
 }

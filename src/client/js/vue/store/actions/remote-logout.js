@@ -2,9 +2,11 @@ import gql from 'graphql-tag'
 import localStore from 'store2'
 import log from 'chalk-console'
 
-import {AuthenticationError} from '../../../../../shared/custom-errors'
+import {expected} from '../../../../../shared/custom-errors'
 import {router} from '../../modules'
 import {apolloClient} from '.'
+
+const {AuthenticationError} = expected
 
 const remoteLogout = async (token) => {
   const logoutMutation = gql(`

@@ -27,10 +27,18 @@ const remoteRegister = async ({email, password, displayname}) => {
 }
 
 export default async ({getters, commit}, registerData) => {
+  commit('loading', true)
+
   try {
     await remoteRegister(getters.formData)
     router.push('/login')
   } catch (error) {
-    commit('registerFailure', error.message)
+    commit('actionError', error.message)
+
+    setTimeout(() => {
+      commit('actionError', null)
+    }, 10000)
   }
+
+  commit('loading', false)
 }

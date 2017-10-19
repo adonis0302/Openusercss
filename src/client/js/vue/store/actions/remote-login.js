@@ -2,8 +2,10 @@ import gql from 'graphql-tag'
 import log from 'chalk-console'
 
 import {router} from '../../modules'
-import {AuthenticationError} from '../../../../../shared/custom-errors'
+import {expected} from '../../../../../shared/custom-errors'
 import {apolloClient} from '.'
+
+const {AuthenticationError} = expected
 
 const remoteLogin = async ({email, password}) => {
   const loginMutation = gql(`
@@ -35,11 +37,19 @@ const remoteLogin = async ({email, password}) => {
 export default async ({getters, commit}, loginData) => {
   let session = null
 
+  commit('loading', true)
+
   try {
     session = await remoteLogin(getters.formData)
     commit('login', session)
     router.push('/')
   } catch (error) {
-    commit('loginFailure', error.message)
+    commit('actionError', error.message)
+
+    setTimeout(() => {
+      commit('actionError', null)
+    }, 10000)
   }
+
+  commit('loading', false)
 }

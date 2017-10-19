@@ -20,6 +20,11 @@ export default {
     state.loginError = message
   },
 
+  actionError (state, message) {
+    state.token = null
+    state.actionError = message
+  },
+
   updateFormData (state, payload) {
     state.loginError = null
     state.formData = payload
@@ -27,5 +32,9 @@ export default {
 
   deleteSessionData (state) {
     state.session = null
+  },
+
+  loading (state, isLoading) {
+    state.loading = isLoading
   }
 }

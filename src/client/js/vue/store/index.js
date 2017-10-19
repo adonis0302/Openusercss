@@ -12,8 +12,10 @@ export const store = new Vuex.Store({
     'latestThemes': [],
     'formData':     [],
     'testText':     '',
-    'loginError':   '',
-    'session':      null
+    'loginError':   '', // This is deprecated, use actionError
+    'actionError':  '',
+    'session':      null,
+    'loading':      false
   },
   getters,
   mutations,

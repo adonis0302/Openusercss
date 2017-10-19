@@ -6,6 +6,6 @@ transition(
   v-on:leave="leftRightLeave",
   v-bind:css="false"
 )
-  b-button
+  b-button(:class="['button', {'is-loading': loading}]")
     icon(:icon="icon")
     slot(name="content")

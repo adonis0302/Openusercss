@@ -2,10 +2,12 @@
 /* eslint no-underscore-dangle:0 */
 
 import staticConfig from '../../config'
-import {AuthenticationError} from '../../shared/custom-errors'
+import {expected} from '../../shared/custom-errors'
 import jwt from 'jsonwebtoken'
 import moment from 'moment'
 import bcrypt from 'bcryptjs'
+
+const {AuthenticationError} = expected
 
 export default async (root, {email, password}: Object<String>, {User, Session}) => {
   const config = await staticConfig()

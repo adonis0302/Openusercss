@@ -1,4 +1,6 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
+import {mapGetters} from 'vuex'
+
 import themeCard from '../../elements/theme-card/theme-card.vue'
 import flushImg from '../../elements/flush-img/flush-img.vue'
 import icon from '../../elements/icon/icon.vue'
@@ -38,6 +40,9 @@ export default {
       }
     }
   },
+  'computed': mapGetters([
+    'actionError'
+  ]),
   'methods': {
     async submitRegistration () {
       const validated = await this.$validator.validateAll()
