@@ -1,10 +1,17 @@
 b-footer
   b-columns
     b-column(has-text-centered)
-      span Copyright&nbsp;&copy;&nbsp;{{new Date().getFullYear()}} 
-      a(href="//github.com/DecentM") DecentM 
-      span and 
-      a(href="//github.com/OpenUserCSS/app") Contributors
+      b-tile
+        span
+          | Copyright&nbsp;&copy;&nbsp;{{new Date().getFullYear()}} 
+          a(href="//github.com/DecentM") DecentM&#32;
+          | and&#32;
+          a(href="//github.com/OpenUserCSS/app") Contributors
+      b-tile
+        span
+          a(href="//forums.openusercss.org/topic/5/privacy-policy") Privacy policy
+          | &#32;|&#32;
+          a(href="//forums.openusercss.org/topic/6/terms-of-service") Terms of service
     b-column(has-text-centered)
       a(href="//github.com/OpenUserCSS")
         icon(icon="github-circle")
