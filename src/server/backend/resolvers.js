@@ -18,9 +18,9 @@ export default {
     'latestThemes': latestThemesQuery
   },
   'Mutation': {
-    'register':    registerMutation,
-    'login':       loginMutation,
-    'logout':      logoutMutation,
-    'createTheme': createThemeMutation
+    'register': registerMutation,
+    'login':    loginMutation,
+    'logout':   logoutMutation,
+    'theme':    createThemeMutation
   }
 }

@@ -2573,6 +2573,10 @@ dateformat@^2.0.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/dateformat/-/dateformat-2.2.0.tgz#4065e2013cf9fb916ddfd82efb506ad4c6769062"
 
+dddos@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/dddos/-/dddos-0.1.1.tgz#4f369de39fb94e00741cf43ff43ca23ae928a01a"
+
 de-indent@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/de-indent/-/de-indent-1.0.2.tgz#b2038e846dc33baa5796128d0804b455b8c1e21d"

@@ -40,7 +40,7 @@ const typeDefs = `
     register(displayname: String!, email: String!, password: String!): User!
     login(email: String!, password: String!): Session!
     logout(token: String!): Boolean!
-    createTheme(token: String!, title: String!, description: String!, content: String!, scope: String!): Theme!
+    theme(token: String!, id: ID, title: String!, description: String!, content: String!, scope: String!): Theme!
   }
 `
 
