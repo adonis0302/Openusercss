@@ -5,7 +5,7 @@ import express from 'express'
 import path from 'path'
 import log from 'chalk-console'
 // import bodyParser from 'body-parser'
-// import morgan from 'morgan'
+import morgan from 'morgan'
 
 import staticConfig from './config'
 import setupRoutes from './routes'
@@ -29,7 +29,7 @@ const init = async () => {
   app.listen(app.get('port'), () => {
     log.info(`App started on port ${app.get('port')}`)
   })
-  // app.use(morgan('combined'))
+  app.use(morgan('combined'))
   /* app.use(bodyParser.urlencoded({
     'extended': false
   })) */

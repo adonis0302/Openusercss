@@ -5,7 +5,6 @@ const typeDefs = `
     _id:         ID!
     username:    String!
     displayname: String!
-    email:       String
     themes:      [Theme]!
   }
 
@@ -31,9 +30,10 @@ const typeDefs = `
 
   type Query {
     verifyToken(token: String!): Session!
-    test: Boolean!
-    getTheme: Theme!
-    search: [Theme]!
+    theme(id: ID!): Theme!
+    user(id: ID!): User!
+    search(terms: String!, count: Int, offset: Int): [Theme]!
+    latestThemes(count: Int): [Theme]!
   }
 
   type Mutation {
