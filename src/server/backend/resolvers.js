@@ -1,5 +1,6 @@
 import testQuery from './queries/test'
 import verifyTokenQuery from './queries/verify-token'
+import searchQuery from './queries/search'
 
 import registerMutation from './mutations/register'
 import loginMutation from './mutations/login'
@@ -9,7 +10,8 @@ import createThemeMutation from './mutations/create-theme'
 export default {
   'Query': {
     'verifyToken': verifyTokenQuery,
-    'test':        testQuery
+    'test':        testQuery,
+    'search':      searchQuery
   },
   'Mutation': {
     'register':    registerMutation,

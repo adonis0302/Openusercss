@@ -4,23 +4,19 @@ transition(
   v-on:appear="leftRightAppear",
   :css="false"
 )
-  b-card(v-if="direction === 'vertical'").ouc-theme-card
-    b-card-image
-      slot(name="screenshot").ouc-theme-screenshot
-    b-card-header
-      b-card-header-title.ouc-theme-title
-        slot(name="title")
-    b-card-content
-      b-media
-        b-media-left
-          slot(name="author-avatar")
-        b-media-content
-          slot(name="author-displayname")
-          slot(name="author-username")
-      slot(name="description")
+  div(v-if="small", :class="cardClass")
+    b-box(is-paddingless).ouc-theme-card
+      b-tile(is-parent, is-paddingless)
+        b-tile(is-3, is-child).ouc-theme-screenshot
+          slot(name="screenshot", :height="height")
+        b-tile(is-9).ouc-theme-metadata
+          b-tile(is-parent, is-vertical)
+            b-tile(is-child)
+              slot(name="title")
+              slot(name="author")
 
-  div(v-else="direction === 'vertical'", :class="cardClass")
-    b-box(is-paddingless)
+  div(v-else="small", :class="cardClass")
+    b-box(is-paddingless).ouc-theme-card
       b-tile(is-parent, is-paddingless)
         b-tile(is-4, is-child).ouc-theme-screenshot
           slot(name="screenshot", :height="height")
@@ -29,5 +25,6 @@ transition(
           b-tile(is-parent, is-vertical)
             b-tile(is-child)
               slot(name="title")
+              slot(name="author")
             b-tile(is-child)
               slot(name="description")

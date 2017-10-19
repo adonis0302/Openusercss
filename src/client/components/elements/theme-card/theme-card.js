@@ -22,6 +22,14 @@ export default {
   'methods': {
     ...leftRight
   },
+  data () {
+    return {
+      'sideWidth': null
+    }
+  },
+  mounted () {
+    this.sideWidth = window.getComputedStyle(this.$el).width
+  },
   'props': {
     'direction': {
       'type':    String,
@@ -32,6 +40,10 @@ export default {
     },
     'card-class': {
       'type': String
+    },
+    'small': {
+      'type':    Boolean,
+      'default': false
     }
   }
 }

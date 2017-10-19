@@ -9844,10 +9844,6 @@ stdout-stream@^1.4.0:
   dependencies:
     readable-stream "^2.0.1"
 
-stickybits@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/stickybits/-/stickybits-2.0.4.tgz#e9b62c6317ea118fdaee0e908997fd9e2cdeff7f"
-
 store2@^2:
   version "2.5.7"
   resolved "https://registry.yarnpkg.com/store2/-/store2-2.5.7.tgz#0f1d15c6c45e51940bea0a4bf09fe23e77f1d508"
@@ -10314,6 +10310,10 @@ ternary-stream@^2.0.1:
 ternary@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/ternary/-/ternary-1.0.0.tgz#45702725608c9499d46a9610e9b0e49ff26f789e"
+
+text-ellipsis@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/text-ellipsis/-/text-ellipsis-1.0.3.tgz#b7991ca1518eaef2603252e26dc6330a61b44348"
 
 text-table@^0.2.0, text-table@~0.2.0:
   version "0.2.0"

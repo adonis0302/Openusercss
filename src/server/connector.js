@@ -27,6 +27,10 @@ const validators = {
     case 'objectid':
       match = /^[a-f\d]{24}$/i
       break
+    case 'regex':
+      // eslint-disable-next-line
+      match = /\/((?![*+?])(?:[^\r\n\[\/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)\/((?:g(?:im?|mi?)?|i(?:gm?|mg?)?|m(?:gi?|ig?)?)?)/
+      break
     default:
       // eslint-disable-next-line
       match = /[]/
@@ -77,7 +81,7 @@ class User extends Document {
           'preset':    'email',
           'validator': false
         }),
-        'validate': validators.length(255)
+        'validate': validators.length(256)
       },
       'password': {
         'type':     String,
@@ -112,13 +116,22 @@ class Theme extends Document {
       },
       'description': {
         'type':     String,
-        'validate': validators.length(255),
+        'validate': validators.length(256),
         'required': true
       },
       'content': {
         'type':     String,
         'validate': validators.length(102400),
         'required': true
+      },
+      'scope': {
+        'type':     String,
+        'required': true,
+        'match':    validators.regex({
+          'preset':    'regex',
+          'validator': false
+        }),
+        'validate': validators.length(128)
       },
       'rating': {
         'type':    Number,

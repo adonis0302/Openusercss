@@ -1,1 +1,7 @@
-div(:style="'background-image: url(' + src + '); height: ' + height + 'px; background-position: ' + align + ';'")
+div(:style="\
+  'background-image: url(' + src + ');\
+  width: ' + width + ';\
+  height: ' + height + ';\
+  background-position: ' + align + ';\
+  background-size: ' + mode + ';'\
+")

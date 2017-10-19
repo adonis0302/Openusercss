@@ -8,9 +8,17 @@ export default {
       'type':    String,
       'default': '200'
     },
+    'width': {
+      'type':    String,
+      'default': '100%'
+    },
     'align': {
       'type':    String,
       'default': 'center'
+    },
+    'mode': {
+      'type':    String,
+      'default': 'cover'
     }
   }
 }

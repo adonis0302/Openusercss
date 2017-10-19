@@ -26,19 +26,21 @@ const typeDefs = `
     createdAt: String!
     lastUpdate: String!
     rating: Float!
+    scope: String!
   }
 
   type Query {
     verifyToken(token: String!): Session!
     test: Boolean!
     getTheme: Theme!
+    search: [Theme]!
   }
 
   type Mutation {
     register(displayname: String!, email: String!, password: String!): User!
     login(email: String!, password: String!): Session!
     logout(token: String!): Boolean!
-    createTheme(token: String!, title: String!, description: String!, content: String!): Theme!
+    createTheme(token: String!, title: String!, description: String!, content: String!, scope: String!): Theme!
   }
 `
 

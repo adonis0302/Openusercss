@@ -58,3 +58,9 @@ $secondary: map-get($colors, 'secondary');
 .is-borderless {
   border: 0 !important;
 }
+
+.is-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

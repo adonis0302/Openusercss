@@ -29,7 +29,7 @@ div
           h2 Your themes
           hr
           theme-card(v-for="(theme, index) in user.themes", :data-index="index", direction="horizontal", card-class="is-primary").has-bottom-margin
-            flush-img(slot="screenshot", :src="theme.screenshotUrl", height="135")
+            flush-img(slot="screenshot", :src="theme.screenshotUrl", height="135px")
             h4(slot="title") {{theme.title}}
             p(slot="description") {{theme.description}}
             //- p(slot="author-displayname") Full Name here
