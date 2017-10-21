@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 import log from 'chalk-console'
 
-import {router} from '../../modules'
+import router from '../../router'
 import {expected} from '../../../../../shared/custom-errors'
 import {apolloClient} from '.'
 
@@ -34,7 +34,7 @@ const remoteLogin = async ({email, password}) => {
   return session
 }
 
-export default async ({getters, commit}, loginData) => {
+export default async ({getters, commit}) => {
   let session = null
 
   commit('loading', true)
@@ -45,10 +45,6 @@ export default async ({getters, commit}, loginData) => {
     router.push('/')
   } catch (error) {
     commit('actionError', error.message)
-
-    setTimeout(() => {
-      commit('actionError', null)
-    }, 10000)
   }
 
   commit('loading', false)

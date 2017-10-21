@@ -30,6 +30,11 @@ export default class User extends Document {
         }),
         'validate': validators.length(254)
       },
+      'emailVerified': {
+        'type':     Boolean,
+        'required': true,
+        'default':  false
+      },
       'password': {
         'type':     String,
         'required': true

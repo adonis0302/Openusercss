@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 import log from 'chalk-console'
 
-import {router} from '../../modules'
+import router from '../../router'
 import {apolloClient} from '.'
 
 const remoteRegister = async ({email, password, displayname}) => {
@@ -34,10 +34,6 @@ export default async ({getters, commit}, registerData) => {
     router.push('/login')
   } catch (error) {
     commit('actionError', error.message)
-
-    setTimeout(() => {
-      commit('actionError', null)
-    }, 10000)
   }
 
   commit('loading', false)

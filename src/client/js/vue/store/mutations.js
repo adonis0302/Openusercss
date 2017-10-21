@@ -1,4 +1,5 @@
 import localStore from 'store2'
+import {union} from 'lodash'
 
 /*
  * All mutations are synchronous
@@ -8,30 +9,26 @@ export default {
   login (state, {data}) {
     state.session = data.login
     localStore.set('session', data.login)
-    state.loginError = null
+    state.actionErrors = []
   },
 
   logout (state) {
     state.session = null
   },
 
-  loginFailure (state, message) {
-    state.token = null
-    state.loginError = message
-  },
-
   actionError (state, message) {
-    state.token = null
-    state.actionError = message
+    if (message) {
+      state.actionErrors = union(state.actionErrors, [
+        message
+      ])
+    } else {
+      state.actionErrors = []
+    }
   },
 
   updateFormData (state, payload) {
-    state.loginError = null
+    state.actionErrors = []
     state.formData = payload
-  },
-
-  deleteSessionData (state) {
-    state.session = null
   },
 
   loading (state, isLoading) {

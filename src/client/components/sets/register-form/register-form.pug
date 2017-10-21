@@ -66,6 +66,6 @@ b-section(slot="form").ouc-form-section
                   div(slot="content")
                     ul
                       li(v-for="error in errors.all()") {{error}}
-                notification(v-show="actionError", icon="alert", color="is-danger").is-danger
+                notification(v-show="actionErrors.length > 0", icon="alert", color="is-danger").is-danger
                   div(slot="content")
-                    p {{actionError}}
+                    p(v-for="error in actionErrors") {{error}}

@@ -31,4 +31,10 @@ textarea[name="description"] {
   }
 }
 
+.ouc-icon-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 @import '../../../scss/reboot';

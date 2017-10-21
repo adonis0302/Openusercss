@@ -14,16 +14,8 @@ export default {
     return state.formData
   },
 
-  testText (state) {
-    return state.testText
-  },
-
-  loginError (state) {
-    return state.sessionError
-  },
-
-  actionError (state) {
-    return state.actionError
+  actionErrors (state) {
+    return state.actionErrors
   },
 
   token (state) {

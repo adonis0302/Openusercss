@@ -5,17 +5,8 @@
 @import '../../../scss/variables';
 
 @import 'node_modules/bulma/sass/utilities/all';
+@import 'node_modules/bulma/sass/base/all';
 
-@import 'node_modules/bulma/sass/grid/tiles';
-@import 'node_modules/bulma/sass/elements/notification';
-
-.notification {
-  padding: 32px;
-}
-
-.ouc-icon-wrapper {
-  align-items: center;
-  justify-content: center;
-}
+@import 'node_modules/bulma/sass/elements/form';
 
 @import '../../../scss/reboot';

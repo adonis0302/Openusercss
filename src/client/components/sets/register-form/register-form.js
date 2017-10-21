@@ -41,7 +41,7 @@ export default {
     }
   },
   'computed': mapGetters([
-    'actionError'
+    'actionErrors'
   ]),
   'methods': {
     async submitRegistration () {

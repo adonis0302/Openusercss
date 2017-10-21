@@ -46,6 +46,6 @@ export default {
     }
   },
   'computed': mapGetters([
-    'actionError'
+    'actionErrors'
   ])
 }

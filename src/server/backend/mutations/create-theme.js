@@ -29,8 +29,8 @@ export default async (root, {token, title, description, content, scope}, {Sessio
     'title':       escape(title),
     'description': escape(description),
     'user':        session.user,
-    scope,
-    content
+    content,
+    scope
   })
 
   return newTheme.save()

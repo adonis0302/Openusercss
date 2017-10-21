@@ -5,7 +5,7 @@ import User from './user'
 
 export default class Theme extends Document {
   preSave () {
-    this.updatedAt = Date.now()
+    this.lastUpdate = Date.now()
   }
 
   constructor () {
@@ -13,11 +13,6 @@ export default class Theme extends Document {
 
     this.schema({
       'createdAt': {
-        'type':     Date,
-        'default':  Date.now(),
-        'required': true
-      },
-      'updatedAt': {
         'type':     Date,
         'default':  Date.now(),
         'required': true

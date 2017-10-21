@@ -3,7 +3,7 @@ import localStore from 'store2'
 import log from 'chalk-console'
 
 import {expected} from '../../../../../shared/custom-errors'
-import {router} from '../../modules'
+import router from '../../router'
 import {apolloClient} from '.'
 
 const {AuthenticationError} = expected

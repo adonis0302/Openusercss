@@ -30,7 +30,7 @@ export default async (context) => {
     if (session && !await verifyToken(session.token)) {
       log.warn('Session token rejected by server, forcing logout')
       localStore.remove('session')
-      context.commit('deleteSessionData')
+      context.commit('logout')
 
       return false
     } else if (!session) {

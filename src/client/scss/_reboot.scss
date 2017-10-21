@@ -2,8 +2,6 @@
   h#{$i} {
     font-family: 'Nunito';
     font-size: responsive;
-    // max-font-size: (4px + (8 - $i) * 4);
-    // min-font-size: (8px + (7 - $i) * 3);
     max-font-size: ((10px - $i * 4) + 30px);
     min-font-size: ((11px - $i * 4) + 25px);
   }
@@ -12,8 +10,7 @@
 p,
 a,
 li,
-ul,
-span {
+ul {
   font-family: 'Nunito';
   font-size: responsive;
   line-height: 22px;

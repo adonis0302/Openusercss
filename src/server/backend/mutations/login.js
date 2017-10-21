@@ -8,27 +8,28 @@ import moment from 'moment'
 import bcrypt from 'bcryptjs'
 
 const {AuthenticationError} = expected
+const invalidCreds = 'Invalid credentials'
 
 export default async (root, {email, password}: Object<String>, {User, Session}) => {
   const config = await staticConfig()
-  const foundUser = await User.findOne({
+  const requestedUser = await User.findOne({
     email
   })
 
   let authResult = null
 
   try {
-    authResult = await bcrypt.compare(password, foundUser.password)
+    authResult = await bcrypt.compare(password, requestedUser.password)
   } catch (error) {
-    throw new AuthenticationError('Invalid credentials')
+    throw new AuthenticationError(invalidCreds)
   }
 
   if (!authResult) {
-    throw new AuthenticationError('Invalid credentials')
+    throw new AuthenticationError(invalidCreds)
   }
 
   const token = jwt.sign({
-    'userId': foundUser._id
+    'userId': requestedUser._id
   }, config.get('keypair.private'), {
     'expiresIn': '60d',
     'issuer':    config.get('domain'),
@@ -36,7 +37,7 @@ export default async (root, {email, password}: Object<String>, {User, Session}) 
   })
 
   const newSession = Session.create({
-    'user':      foundUser,
+    'user':      requestedUser,
     'expiresAt': Date.parse(moment().add(60, 'days')),
     'createdAt': Date.now(),
     token

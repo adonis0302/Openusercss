@@ -5,6 +5,19 @@ import icon from '../../elements/icon/icon.vue'
 import notification from '../../elements/notification/notification.vue'
 import editor from '../../elements/editor/editor.vue'
 
+import bInput from '../../bulma/b-input/b-input.vue'
+import bTextarea from '../../bulma/b-textarea/b-textarea.vue'
+
+const customDictionary = {
+  'en': {
+    'custom': {
+      'content': {
+        'required': 'Theme code must not be empty.'
+      }
+    }
+  }
+}
+
 export default {
   'components': {
     'b-columns':     bulma('columns', 'div'),
@@ -14,8 +27,8 @@ export default {
     'b-container':   bulma('container', 'div'),
     'b-field':       bulma('field', 'div'),
     'b-label':       bulma('label', 'label'),
-    'b-input':       bulma('input', 'input'),
-    'b-textarea':    bulma('textarea', 'textarea'),
+    // 'b-input':       bulma('input', 'input'),
+    // 'b-textarea':    bulma('textarea', 'textarea'),
     'b-select':      bulma('select', 'select'),
     'b-control':     bulma('control', 'div'),
     'b-checkbox':    bulma('checkbox', 'checkbox'),
@@ -28,34 +41,41 @@ export default {
     'b-level-right': bulma('level-right', 'div'),
     icon,
     notification,
-    editor
+    editor,
+    bInput,
+    bTextarea
   },
   'data': () => {
     return {
       'theme': {
         'title':       '',
         'description': '',
+        'scope':       '',
         'content':     ''
       },
-      'code': ''
+      // eslint-disable-next-line
+      'regex': /((?![*+?])(?:[^\r\n\[\/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)/
     }
+  },
+  created () {
+    this.$validator.updateDictionary(customDictionary)
   },
   'methods': {
     async submit () {
       const validated = await this.$validator.validateAll()
 
       if (validated) {
-        this.$store.dispatch('updateFormData', this.theme)
-        this.$store.dispatch('createTheme', this.theme)
+        // this.$store.dispatch('updateFormData', this.theme)
+        this.$store.dispatch('createTheme', {
+          'title':       this.theme.title,
+          'description': this.theme.description,
+          'scope':       this.theme.scope,
+          'content':     this.theme.content
+        })
       }
     }
   },
-  'computed': {
-    /* data () {
-      return this.theme.content
-    }, */
-    ...mapGetters([
-      'submitError'
-    ])
-  }
+  'computed': mapGetters([
+    'actionErrors'
+  ])
 }

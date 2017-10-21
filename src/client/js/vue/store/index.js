@@ -7,13 +7,12 @@ import actions from './actions'
 
 Vue.use(Vuex)
 
-export const store = new Vuex.Store({
+export default new Vuex.Store({
   'state': {
     'latestThemes': [],
     'formData':     [],
     'testText':     '',
-    'loginError':   '', // This is deprecated, use actionError
-    'actionError':  '',
+    'actionErrors': [],
     'session':      null,
     'loading':      false
   },

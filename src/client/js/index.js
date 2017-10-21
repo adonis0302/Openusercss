@@ -32,7 +32,6 @@ const polyfills = async () => {
   return true
 })()
 
-
 perfStats.blocking.push({
   'name': 'mainThread',
   'time': Date.now() - scriptsStart
