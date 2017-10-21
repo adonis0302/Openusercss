@@ -1,3 +1,5 @@
+/* eslint no-underscore-dangle:0 */
+
 import mustAuthenticate from '../../shared/enforce-session'
 import {escape} from 'html-escaper'
 import stylelint from 'stylelint'
@@ -10,6 +12,10 @@ export default async (root, {token, title, description, content, scope}, {Sessio
 
   const session = await Session.findOne({
     token
+  })
+
+  const user = await User.findOne({
+    '_id': session.user._id
   })
 
   const result = await stylelint.lint({
@@ -32,6 +38,10 @@ export default async (root, {token, title, description, content, scope}, {Sessio
     content,
     scope
   })
+  const savedTheme = await newTheme.save()
 
-  return newTheme.save()
+  user.themes.push(savedTheme)
+  await user.save()
+
+  return savedTheme
 }

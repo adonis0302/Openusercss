@@ -1,4 +1,3 @@
-// @flow
 /* eslint no-underscore-dangle:0 */
 
 import staticConfig from '../../config'
@@ -10,7 +9,7 @@ import bcrypt from 'bcryptjs'
 const {AuthenticationError} = expected
 const invalidCreds = 'Invalid credentials'
 
-export default async (root, {email, password}: Object<String>, {User, Session}) => {
+export default async (root, {email, password}, {User, Session}) => {
   const config = await staticConfig()
   const requestedUser = await User.findOne({
     email

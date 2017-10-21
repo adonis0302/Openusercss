@@ -1,7 +1,7 @@
 import {Document} from 'camo'
-import validators from './validators'
 
 import Theme from './theme'
+import validators from './validators'
 
 export default class User extends Document {
   constructor () {
