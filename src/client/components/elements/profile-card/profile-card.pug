@@ -9,7 +9,7 @@ transition(
       b-tile(is-parent, is-paddingless)
         b-tile(is-4)
           b-tile(is-child).ouc-user-avatar
-            flush-img(:src="user.avatarUrl", height="185px", align="left").contain
+            flush-img(source="//decentm.com/nonexist.png", :placeholder="user.avatarPlaceholder", height="185px", align="left").contain
         b-tile(is-8)
           b-tile(is-parent)
             b-tile(is-parent)

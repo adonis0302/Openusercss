@@ -9,3 +9,15 @@ div {
 div.contain {
   background-size: contain;
 }
+
+.ouc-flush-img-root {
+  overflow: hidden;
+  transition-property: filter, transform;
+  transition-duration: .4s;
+  transition-timing-function: cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.ouc-image-unloaded {
+  filter: blur(5px);
+  transform: scale(1.06);
+}

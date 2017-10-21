@@ -44,8 +44,11 @@ export default {
     },
     user () {
       return {
-        'avatarUrl': gravatarUrl('decentm@decentm.com', {
+        'avatar': gravatarUrl('decentm@decentm.com', {
           'size': 185
+        }),
+        'avatarPlaceholder': gravatarUrl('decentm@decentm.com', {
+          'size': 25
         }),
         'displayname': 'DecentM',
         'installs':    3440,

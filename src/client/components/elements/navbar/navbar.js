@@ -34,7 +34,7 @@ export default {
       'open': false
     }
   },
-  'computed': mapGetters({
-    'user': 'currentUser'
-  })
+  'computed': mapGetters([
+    'user'
+  ])
 }

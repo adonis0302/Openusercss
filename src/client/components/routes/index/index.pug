@@ -16,7 +16,7 @@ div
             b-columns(is-multiline)
               b-column(is-6, v-for="(theme, index) in popularThemes")
                 theme-card(small=true, :data-index="index", direction="horizontal", card-class="is-primary").has-bottom-margin
-                  flush-img(slot="screenshot", :src="theme.screenshotUrl", height="100%")
+                  flush-img(slot="screenshot", :source="theme.screenshotUrl", placeholder="/img/main.bg-x128.png", height="100%", width="100%")
                   h5(slot="title") {{cutText(theme.title, 30)}}
                   p(slot="author") by {{theme.author}}
                   img(slot="author-avatar", src="https://en.gravatar.com/userimage/37343181/d66c2e13a3bf375f9e2bd96a9a9f9c54.png", width="40")

@@ -56,6 +56,7 @@ const ourSassConfig = processObject(clyConfig.get(), (index, value) => {
 })
 
 const iconSizesPx = [
+  16,
   32,
   128,
   512
@@ -64,10 +65,12 @@ const iconSizesPx = [
 const bgSizesPx = [
   1366,
   1920,
-  360
+  360,
+  128
 ]
 
 const elementSizesPx = [
+  128,
   360,
   640,
   960,

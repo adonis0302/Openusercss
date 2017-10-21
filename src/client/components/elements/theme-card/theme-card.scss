@@ -27,6 +27,7 @@ $background: map-get($colors, 'background');
   margin-right: 10px;
   height: 25px;
   width: 25px;
+  z-index: 2;
 }
 
 @import '../../../scss/reboot';

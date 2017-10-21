@@ -1,5 +1,5 @@
 export default {
-  currentUser (state) {
+  user (state) {
     if (!state.session) {
       return null
     }

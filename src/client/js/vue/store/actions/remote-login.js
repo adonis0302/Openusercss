@@ -1,5 +1,4 @@
 import gql from 'graphql-tag'
-import log from 'chalk-console'
 
 import router from '../../router'
 import {expected} from '../../../../../shared/custom-errors'
@@ -12,9 +11,8 @@ const remoteLogin = async ({email, password}) => {
     mutation {
       login(email: "${email}", password: "${password}") {
         token,
-        expiresAt,
-        createdAt,
         user {
+          _id,
           displayname
         }
       }
@@ -27,7 +25,6 @@ const remoteLogin = async ({email, password}) => {
       'mutation': loginMutation
     })
   } catch (error) {
-    log.error(error.message)
     throw new AuthenticationError(error.message)
   }
 

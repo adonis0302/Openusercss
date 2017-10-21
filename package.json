@@ -103,7 +103,6 @@
     "postcss-fixes": "^2",
     "postcss-flexibility": "^2",
     "postcss-import-url": "^2",
-    "postcss-sprites": "^4",
     "postcss-zindex": "^4.0.0-rc.2",
     "pre-commit": "^1",
     "priority-nav": "^1",
