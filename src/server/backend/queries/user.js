@@ -2,15 +2,28 @@
 
 import {ObjectId} from 'mongodb'
 import {pick} from 'lodash'
+import gravatarUrl from 'gravatar-url'
 
 export default async (root, {id, token}, {Session, Theme, User}) => {
   const foundUser = await User.findOne({
     '_id': new ObjectId(id)
   })
+
+  foundUser.avatarUrl = gravatarUrl(foundUser.email, {
+    'size': 425
+  })
+  foundUser.smallAvatarUrl = gravatarUrl(foundUser.email, {
+    'size': 15
+  })
+
   const user = pick(foundUser, [
     '_id',
     'username',
-    'displayname'
+    'displayname',
+    'avatarUrl',
+    'smallAvatarUrl',
+    'lastSeen',
+    'lastSeenReason'
   ])
 
   user.themes = await Theme.find({

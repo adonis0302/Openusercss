@@ -13,6 +13,7 @@ export default new Vuex.Store({
     'formData':     [],
     'testText':     '',
     'actionErrors': [],
+    'viewedUser':   {},
     'session':      null,
     'loading':      false
   },

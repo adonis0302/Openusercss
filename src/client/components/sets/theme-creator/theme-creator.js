@@ -61,16 +61,22 @@ export default {
     this.$validator.updateDictionary(customDictionary)
   },
   'methods': {
+    ...mapGetters([
+      'user'
+    ]),
     async submit () {
       const validated = await this.$validator.validateAll()
 
       if (validated) {
-        // this.$store.dispatch('updateFormData', this.theme)
         this.$store.dispatch('createTheme', {
-          'title':       this.theme.title,
-          'description': this.theme.description,
-          'scope':       this.theme.scope,
-          'content':     this.theme.content
+          'theme': {
+            'title':       this.theme.title,
+            'description': this.theme.description,
+            'scope':       this.theme.scope,
+            'content':     this.theme.content
+          },
+          // eslint-disable-next-line no-underscore-dangle
+          'redirect': `/profile/${this.user()._id}`
         })
       }
     }

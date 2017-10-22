@@ -1,8 +1,9 @@
 /* eslint no-underscore-dangle:0 */
-
-import mustAuthenticate from '../../shared/enforce-session'
 import {escape} from 'html-escaper'
 import stylelint from 'stylelint'
+import moment from 'moment'
+
+import mustAuthenticate from '../../shared/enforce-session'
 import {expected} from '../../shared/custom-errors'
 
 const {LintError} = expected
@@ -30,8 +31,8 @@ export default async (root, {token, title, description, content, scope}, {Sessio
   }
 
   const newTheme = Theme.create({
-    'createdAt':   Date.now(),
-    'lastUpdate':  Date.now(),
+    'createdAt':   moment().toJSON(),
+    'lastUpdate':  moment().toJSON(),
     'title':       escape(title),
     'description': escape(description),
     'user':        session.user,

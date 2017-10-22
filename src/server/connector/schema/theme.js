@@ -1,11 +1,12 @@
 import {Document} from 'camo'
-import validators from './validators'
+import moment from 'moment'
 
+import validators from './validators'
 import User from './user'
 
 export default class Theme extends Document {
   preSave () {
-    this.lastUpdate = Date.now()
+    this.lastUpdate = moment()
   }
 
   constructor () {
@@ -13,14 +14,16 @@ export default class Theme extends Document {
 
     this.schema({
       'createdAt': {
-        'type':     Date,
-        'default':  Date.now(),
-        'required': true
+        'type':     String,
+        'default':  moment().toJSON(),
+        'required': true,
+        'validate': validators.isMomentJSON
       },
       'lastUpdate': {
-        'type':     Date,
-        'default':  Date.now(),
-        'required': true
+        'type':     String,
+        'default':  moment().toJSON(),
+        'required': true,
+        'validate': validators.isMomentJSON
       },
       'title': {
         'type':     String,
@@ -52,6 +55,16 @@ export default class Theme extends Document {
         'max':     5,
         'default': 0
       },
+      'screenshots': [
+        {
+          'type':  String,
+          'match': validators.regex({
+            'preset':    'url',
+            'validator': false
+          }),
+          'default': ''
+        }
+      ],
       'user': User
     })
   }

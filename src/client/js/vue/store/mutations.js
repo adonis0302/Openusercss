@@ -33,5 +33,9 @@ export default {
 
   loading (state, isLoading) {
     state.loading = isLoading
+  },
+
+  viewedUser (state, user) {
+    state.viewedUser = user
   }
 }

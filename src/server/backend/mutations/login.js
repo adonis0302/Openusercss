@@ -37,10 +37,14 @@ export default async (root, {email, password}, {User, Session}) => {
 
   const newSession = Session.create({
     'user':      requestedUser,
-    'expiresAt': Date.parse(moment().add(60, 'days')),
-    'createdAt': Date.now(),
+    'expiresAt': moment().add(60, 'days').toJSON(),
+    'createdAt': moment().toJSON(),
     token
   })
+
+  requestedUser.lastSeen = moment().toJSON()
+  requestedUser.lastSeenReason = 'logging in'
+  requestedUser.save()
 
   return newSession.save()
 }

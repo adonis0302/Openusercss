@@ -20,7 +20,7 @@ transition(
       b-tile(is-parent, is-paddingless)
         b-tile(is-4, is-child).ouc-theme-screenshot
           slot(name="screenshot", :height="height")
-          div(v-tooltip="'example.com'").ouc-theme-favicon
+          slot(name="tooltip")
         b-tile(is-8).ouc-theme-metadata
           b-tile(is-parent, is-vertical)
             b-tile(is-child)

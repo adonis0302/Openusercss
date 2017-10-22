@@ -33,7 +33,7 @@ const createTheme = async (theme, token) => {
   return true
 }
 
-export default async ({commit, getters}, theme) => {
+export default async ({commit, getters}, {theme, redirect}) => {
   commit('loading', true)
 
   theme.content = theme.content.replace(/[\n]/g, '\\n')
@@ -44,7 +44,7 @@ export default async ({commit, getters}, theme) => {
   try {
     await createTheme(theme, getters.token)
     commit('actionError', null)
-    router.push('/profile')
+    router.push(redirect)
   } catch (error) {
     const errors = JSON.parse(error.message)
 

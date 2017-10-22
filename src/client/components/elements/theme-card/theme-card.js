@@ -44,6 +44,10 @@ export default {
     'small': {
       'type':    Boolean,
       'default': false
+    },
+    'tooltip': {
+      'type':    String,
+      'default': 'unknown'
     }
   }
 }

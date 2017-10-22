@@ -28,5 +28,9 @@ export default {
 
   loading (state) {
     return state.loading
+  },
+
+  viewedUser (state) {
+    return state.viewedUser
   }
 }

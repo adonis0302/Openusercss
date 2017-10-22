@@ -1,4 +1,5 @@
 import {Document} from 'camo'
+import moment from 'moment'
 
 import Theme from './theme'
 import validators from './validators'
@@ -37,7 +38,20 @@ export default class User extends Document {
       },
       'password': {
         'type':     String,
-        'required': true
+        'required': true,
+        'validate': validators.length(1024)
+      },
+      'lastSeen': {
+        'type':     String,
+        'required': false,
+        'default':  moment().toJSON(),
+        'validate': validators.isMomentJSON
+      },
+      'lastSeenReason': {
+        'type':     String,
+        'required': false,
+        'default':  'registering',
+        'validate': validators.length(64)
       },
       'themes': [
         Theme

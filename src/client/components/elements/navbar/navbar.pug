@@ -13,7 +13,7 @@ div
       navbar-menu(:class="['navbar-menu', 'is-primary', {'is-active': open}]")
         navbar-start
         navbar-end(@click="close")
-          router-link(v-if="user", to="/profile").navbar-item
+          router-link(v-if="user", :to="'/profile/' + user._id").navbar-item
             icon(icon="account")
             | Welcome, {{user.displayname}}
           a(v-if="user", @click.prevent="logout").navbar-item

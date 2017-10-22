@@ -1,7 +1,5 @@
 import VueRouter from 'vue-router'
 
-import store from './store'
-
 import indexRoute from '../../../../.tmp/routes/index/index.vue'
 import browseRoute from '../../../../.tmp/routes/browse/browse.vue'
 import loginRoute from '../../../../.tmp/routes/login/login.vue'
@@ -35,7 +33,7 @@ const router = new VueRouter({
       'component': browseRoute
     },
     {
-      'path':      '/profile',
+      'path':      '/profile/:id',
       'component': profileRoute
     },
     {
@@ -43,11 +41,6 @@ const router = new VueRouter({
       'component': newThemeRoute
     }
   ]
-})
-
-router.beforeEach((to, from, next) => {
-  store.commit('actionError', null)
-  next()
 })
 
 export default router

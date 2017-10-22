@@ -153,7 +153,7 @@ gulp.task('js:watch', () => {
         sourcemaps.init({
           'loadMaps': true
         }),
-        sourcemaps.write('./build/client/js', {
+        sourcemaps.write('.', {
           'sourceMappingURL': (file) => {
             return `/js/${file.relative}.map`
           }

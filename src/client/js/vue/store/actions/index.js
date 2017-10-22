@@ -1,5 +1,5 @@
 import {forOwn, defaultsDeep} from 'lodash'
-import ApolloClient, {createBatchingNetworkInterface} from 'apollo-client'
+import ApolloClient, {createBatchingNetworkInterface, createNetworkInterface} from 'apollo-client'
 import localStore from 'store2'
 
 import verifyToken from './verify-token'
@@ -8,6 +8,7 @@ import login from './remote-login'
 import register from './remote-register'
 import createTheme from './create-theme'
 import getThemes from './get-themes'
+import getFullUser from './get-full-user'
 
 const networkInterface = createBatchingNetworkInterface({
   'uri': '/graphql'
@@ -44,5 +45,6 @@ export default {
   register,
   verifyToken,
   createTheme,
-  getThemes
+  getThemes,
+  getFullUser
 }

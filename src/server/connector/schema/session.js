@@ -10,14 +10,15 @@ export default class Session extends Document {
 
     this.schema({
       'createdAt': {
-        'type':     Date,
+        'type':     String,
         'required': true,
-        'default':  Date.parse(moment())
+        'default':  moment().toJSON(),
+        'validate': validators.isMomentJSON
       },
       'expiresAt': {
-        'type':     Date,
+        'type':     String,
         'required': true,
-        'default':  Date.parse(moment().add(60, 'days')),
+        'default':  moment().add(60, 'days').toJSON(),
         'validate': validators.notLongerDate(60)
       },
       'token': {

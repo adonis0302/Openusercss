@@ -1,4 +1,5 @@
 import moment from 'moment'
+import urlRegex from './url-regex'
 
 export default {
   'length': (max) => {
@@ -26,6 +27,9 @@ export default {
       // eslint-disable-next-line
       match = /\/((?![*+?])(?:[^\r\n\[\/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)\/((?:g(?:im?|mi?)?|i(?:gm?|mg?)?|m(?:gi?|ig?)?)?)/
       break
+    case 'url':
+      match = urlRegex
+      break
     default:
       // eslint-disable-next-line
       match = /[]/
@@ -48,5 +52,15 @@ export default {
 
       return result >= 0 && result < limit
     }
+  },
+
+  'isMomentJSON': (json) => {
+    const momentObject = moment(json)
+
+    if (!momentObject.isValid()) {
+      return false
+    }
+
+    return true
   }
 }

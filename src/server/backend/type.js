@@ -2,10 +2,14 @@
 
 const typeDefs = `
   type User {
-    _id:         ID!
-    username:    String!
-    displayname: String!
-    themes:      [Theme]!
+    _id:            ID!
+    username:       String!
+    displayname:    String!
+    themes:         [Theme]!
+    avatarUrl:      String!
+    smallAvatarUrl: String!
+    lastSeen:       String!
+    lastSeenReason: String!
   }
 
   type Session {
