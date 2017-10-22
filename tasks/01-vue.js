@@ -1,14 +1,12 @@
 const gulp = require('gulp')
-
-const prettyError = require('gulp-prettyerror')
 const pump = require('pump')
 
+const prettyError = require('gulp-prettyerror')
 const vuemaker = require('gulp-vuemaker')
 const manifold = require('gulp-manifold')
 const sass = require('gulp-sass')
 const pug = require('gulp-pug')
 const emailEncoder = require('gulp-email-encoder')
-
 const postcss = require('gulp-postcss')
 const sassGlob = require('gulp-sass-glob')
 const sassVars = require('gulp-sass-vars')

@@ -1,22 +1,21 @@
 const gulp = require('gulp')
 const pump = require('pump')
-const prettyError = require('gulp-prettyerror')
-
-const browserify = require('browserify')
-const uglify = require('gulp-uglify')
-
-const babelify = require('babelify')
-const es3ify = require('gulp-es3ify')
-
-const vueify = require('vueify')
-const watchify = require('watchify')
-const gutil = require('gulp-util')
-const source = require('vinyl-source-stream')
-const hmr = require('browserify-hmr')
 const glob = require('glob')
+const source = require('vinyl-source-stream')
 const merge = require('merge-stream')
+
+const prettyError = require('gulp-prettyerror')
+const uglify = require('gulp-uglify')
+const es3ify = require('gulp-es3ify')
+const gutil = require('gulp-util')
 const flatten = require('gulp-flatten')
 const buffer = require('gulp-buffer')
+
+const browserify = require('browserify')
+const babelify = require('babelify')
+const vueify = require('vueify')
+const watchify = require('watchify')
+const hmr = require('browserify-hmr')
 
 const browserifyOpts = ({entries}) => {
   return {

@@ -5,25 +5,6 @@ const clyConfig = new Conf({
   'cwd':        '.',
   'configName': 'config'
 })
-const options = {}
-
-// IP ADDRESSES
-// Get the most remote IP address on interfaces for browserSync
-const os = require('os')
-const first = require('lodash').first
-const address = require('address')
-const ips = []
-const ifaces = os.networkInterfaces()
-
-for (const dev in os.networkInterfaces()) {
-  if (Object.prototype.hasOwnProperty.call(ifaces, dev)) {
-    ips.splice(0, 0, address.ip(dev))
-  }
-}
-
-const myIp = first(ips)
-
-Object.freeze(options)
 
 const processObject = (object, func) => {
   for (const index in object) {
@@ -39,7 +20,5 @@ const processObject = (object, func) => {
 
 module.exports = {
   clyConfig,
-  options,
-  myIp,
   processObject
 }

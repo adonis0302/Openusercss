@@ -1,4 +1,3 @@
-/* eslint no-console:0 */
 const gulp = require('gulp')
 const pump = require('pump')
 const merge = require('merge-stream')
@@ -16,7 +15,6 @@ const jimp = require('gulp-jimp-resize')
 const sass = require('gulp-sass')
 const sassGlob = require('gulp-sass-glob')
 const sassVars = require('gulp-sass-vars')
-// const spritesmith = require('gulp.spritesmith-multi')
 
 // POSTCSS
 const postcss = require('gulp-postcss')
@@ -39,7 +37,7 @@ const {
 } = require('./shared/css')
 
 // =============================================================================
-// SCSS -> CSS and IMG => SPRITES
+// SCSS -> CSS and OPTIMIZE IMGs
 // =============================================================================
 
 const sources = {

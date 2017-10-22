@@ -1,11 +1,11 @@
 const gulp = require('gulp')
 const babel = require('gulp-babel')
 const prettyError = require('gulp-prettyerror')
-const pump = require('pump')
 const uglify = require('gulp-uglify')
 const rename = require('gulp-rename')
 const save = require('gulp-save')
 const server = require('gulp-develop-server')
+const pump = require('pump')
 
 const sources = {
   'server': [
