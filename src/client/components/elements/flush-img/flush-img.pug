@@ -3,10 +3,9 @@ div(:style="\
   height: ' + height + ';'\
 ").ouc-flush-img-root
   div(
+    @click="onclick",
     :style="\
       'background-image: url(' + src + ');\
-      width: ' + width + ';\
-      height: ' + height + ';\
       background-position: ' + align + ';\
       background-size: ' + mode + ';'\
   ")

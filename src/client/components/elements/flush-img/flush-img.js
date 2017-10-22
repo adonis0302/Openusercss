@@ -1,5 +1,27 @@
 const {Image} = window
 
+const updateImage = (self) => {
+  const img = new Image()
+
+  self.$el.classList.add('ouc-image-unloaded')
+  self.src = self.placeholder
+  img.src = self.source
+
+  img.onload = () => {
+    self.$el.classList.remove('ouc-image-unloaded')
+    self.$el.classList.add('ouc-image-loaded')
+    self.src = self.source
+  }
+
+  img.onerror = () => {
+    self.$el.classList.remove('ouc-image-unloaded')
+    self.$el.classList.add('ouc-image-error')
+    self.src = '/img/image-error-x640.png'
+  }
+
+  return true
+}
+
 export default {
   data () {
     return {
@@ -9,11 +31,11 @@ export default {
   'props': {
     'source': {
       'type':    String,
-      'default': '/img/openusercss.icon-x360.png'
+      'default': '/img/main.bg-x640.png'
     },
     'placeholder': {
       'type':    String,
-      'default': '/img/openusercss.icon-x16.png'
+      'default': '/img/main.bg-x128.png'
     },
     'height': {
       'type':    String,
@@ -32,23 +54,17 @@ export default {
       'default': 'cover'
     }
   },
+  'methods': {
+    onclick () {
+      updateImage(this)
+    }
+  },
+  'watch': {
+    placeholder (newPlaceholder) {
+      updateImage(this)
+    }
+  },
   mounted () {
-    const img = new Image()
-    const self = this
-
-    this.$el.classList.add('ouc-image-unloaded')
-
-    img.src = this.source
-    img.onload = () => {
-      self.$el.classList.remove('ouc-image-unloaded')
-      self.$el.classList.add('ouc-image-loaded')
-      self.src = self.source
-    }
-
-    img.onerror = () => {
-      self.$el.classList.remove('ouc-image-unloaded')
-      self.$el.classList.add('ouc-image-error')
-      self.src = '/img/image-error-x640.png'
-    }
+    updateImage(this)
   }
 }
