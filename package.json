@@ -85,6 +85,7 @@
     "gulp-sass-vars": "^1",
     "gulp-save": "^1",
     "gulp-size": "^2",
+    "gulp-sourcemaps": "^2.6.1",
     "gulp-uglify": "^3",
     "gulp-util": "^3",
     "gulp-vuemaker": "https://github.com/thierrymichel/gulp-vuemaker",

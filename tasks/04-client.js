@@ -11,20 +11,20 @@ const es3ify = require('gulp-es3ify')
 const gutil = require('gulp-util')
 const flatten = require('gulp-flatten')
 const buffer = require('gulp-buffer')
+const sourcemaps = require('gulp-sourcemaps')
 
 const browserify = require('browserify')
+const watchify = require('watchify')
 const babelify = require('babelify')
 const vueify = require('vueify')
-const watchify = require('watchify')
 const hmr = require('browserify-hmr')
 
-const browserifyOpts = ({entries}) => {
-  return {
-    entries,
+const browserifyOpts = (mergeWith) => {
+  const options = {
+    ...mergeWith,
     'extensions': [
       '.js'
     ],
-    'debug':        false,
     'fullPaths':    false,
     'cache':        {},
     'packageCache': {},
@@ -51,6 +51,8 @@ const browserifyOpts = ({entries}) => {
       ]
     ]
   }
+
+  return options
 }
 
 const sources = {
@@ -58,9 +60,10 @@ const sources = {
   'worker': 'src/client/js/worker.js'
 }
 
-const createBrowserify = ({entries}) => {
+const createBrowserify = ({entries, debug}) => {
   return browserify(browserifyOpts({
-    entries
+    entries,
+    debug
   }))
 }
 
@@ -71,7 +74,8 @@ gulp.task('js:prod', () => {
     const bify = createBrowserify({
       'entries': [
         entry
-      ]
+      ],
+      'debug': false
     })
 
     return pump([
@@ -96,7 +100,8 @@ gulp.task('js:fast', () => {
     const bify = createBrowserify({
       'entries': [
         entry
-      ]
+      ],
+      'debug': true
     })
 
     return pump([
@@ -104,8 +109,63 @@ gulp.task('js:fast', () => {
       bify.bundle(),
       source(entry),
       flatten(),
+      buffer(),
+      sourcemaps.init({
+        'loadMaps': true
+      }),
+      sourcemaps.write('./build/client/js', {
+        'sourceMappingURL': (file) => {
+          return `/js/${file.relative}.map`
+        }
+      }),
       gulp.dest('build/client/js')
     ])
+  })
+
+  return merge(bundles)
+})
+
+gulp.task('js:watch', () => {
+  const files = glob.sync(sources.client)
+
+  const bundles = files.map((entry, index) => {
+    const bify = createBrowserify({
+      'entries': [
+        entry
+      ],
+      'debug': true
+    })
+
+    bify.plugin(watchify)
+    bify.plugin(hmr, {
+      'mode': 'websocket',
+      'port': 3123 + index,
+      'url':  `http://localhost:${3123 + index}`
+    })
+
+    const bundle = () => {
+      return pump([
+        prettyError(),
+        bify.bundle(),
+        source(entry),
+        flatten(),
+        buffer(),
+        sourcemaps.init({
+          'loadMaps': true
+        }),
+        sourcemaps.write('./build/client/js', {
+          'sourceMappingURL': (file) => {
+            return `/js/${file.relative}.map`
+          }
+        }),
+        gulp.dest('build/client/js')
+      ])
+    }
+
+    bify.on('update', bundle)
+    bify.on('log', gutil.log)
+
+    return bundle()
   })
 
   return merge(bundles)
@@ -118,7 +178,8 @@ gulp.task('worker:prod', () => {
     const bify = createBrowserify({
       'entries': [
         entry
-      ]
+      ],
+      'debug': false
     })
 
     return pump([
@@ -140,13 +201,23 @@ gulp.task('worker:fast', () => {
   const bify = createBrowserify({
     'entries': [
       sources.worker
-    ]
+    ],
+    'debug': true
   })
 
   return pump([
     prettyError(),
     bify.bundle(),
     source(sources.worker),
+    buffer(),
+    sourcemaps.init({
+      'loadMaps': true
+    }),
+    sourcemaps.write('./build/client/js', {
+      'sourceMappingURL': (file) => {
+        return `/js/${file.relative}.map`
+      }
+    }),
     flatten(),
     gulp.dest('build/client/js')
   ])
@@ -154,42 +225,6 @@ gulp.task('worker:fast', () => {
 
 gulp.task('worker:watch', () => {
   gulp.watch(sources.worker, gulp.series('worker:fast'))
-})
-
-gulp.task('js:watch', () => {
-  const files = glob.sync(sources.client)
-
-  const bundles = files.map((entry, index) => {
-    const bify = createBrowserify({
-      'entries': [
-        entry
-      ]
-    })
-
-    bify.plugin(watchify)
-    bify.plugin(hmr, {
-      'mode': 'websocket',
-      'port': 3123 + index,
-      'url':  `http://localhost:${3123 + index}`
-    })
-
-    const bundle = () => {
-      return pump([
-        prettyError(),
-        bify.bundle(),
-        source(entry),
-        flatten(),
-        gulp.dest('build/client/js')
-      ])
-    }
-
-    bify.on('update', bundle)
-    bify.on('log', gutil.log)
-
-    return bundle()
-  })
-
-  return merge(bundles)
 })
 
 gulp.task('manifest', (done) => {
