@@ -29,7 +29,7 @@ export default async (root, {email, password}, {User, Session}) => {
 
   const token = jwt.sign({
     'userId': requestedUser._id
-  }, config.get('keypair.private'), {
+  }, config.get('keypair.clientprivate'), {
     'expiresIn': '60d',
     'issuer':    config.get('domain'),
     'algorithm': 'HS256'

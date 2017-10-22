@@ -6,7 +6,8 @@ import log from 'chalk-console'
 import cp from 'node-cp'
 import pify from 'pify'
 import path from 'path'
-import keypair from 'keypair'
+// import keypair from 'keypair'
+import selfsigned from 'selfsigned'
 
 const inProd = () => {
   if (process.env.NODE_ENV !== 'production') {
@@ -20,8 +21,11 @@ let defaultConfig = null
 
 if (inProd()) {
   defaultConfig = {
-    'env':        'production',
-    'port':       80,
+    'env':   'production',
+    'ports': {
+      'http':  80,
+      'https': 443
+    },
     'domain':     'openusercss.org',
     'saltRounds': 15,
     'database':   {
@@ -33,8 +37,11 @@ if (inProd()) {
   log.warn('App in development mode, configuration is set to low security!')
 
   defaultConfig = {
-    'env':        'development',
-    'port':       8080,
+    'env':   'development',
+    'ports': {
+      'http':  8080,
+      'https': 8443
+    },
     'domain':     'openusercss.org',
     'saltRounds': 11,
     'database':   {
@@ -48,21 +55,33 @@ const genKeypair = async () => {
   log.warn('A new keypair is being generated. All users will be logged out when the app starts.')
 
   const generationStart = Date.now()
-  let pair = null
+  let pem = null
 
   if (inProd()) {
-    pair = keypair({
-      'bits': 4096
+    pem = selfsigned.generate(null, {
+      'keySize':    4096,
+      'algorithm':  'sha256',
+      'extensions': [
+        {'name': 'basicConstraints'}
+      ],
+      'clientCertificate':   true,
+      'clientCertificateCN': '*'
     })
   } else {
     log.warn('App in development mode, the new keypair is very weak!')
-    pair = keypair({
-      'bits': 128
+    pem = selfsigned.generate(null, {
+      'keySize':    512,
+      'algorithm':  'sha256',
+      'extensions': [
+        {'name': 'basicConstraints'}
+      ],
+      'clientCertificate':   true,
+      'clientCertificateCN': '*'
     })
   }
 
   log.info(`Keypair generated in ${Date.now() - generationStart}ms`)
-  return pair
+  return pem
 }
 
 const initConfig = async () => {

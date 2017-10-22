@@ -12,7 +12,7 @@ export default async (token: String, Session) => {
   })
 
   try {
-    jwt.verify(token, config.get('keypair.private'), {
+    jwt.verify(token, config.get('keypair.clientprivate'), {
       'issuer':     config.get('domain'),
       'algorithms': [
         'HS256'

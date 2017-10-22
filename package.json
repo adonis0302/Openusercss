@@ -148,7 +148,6 @@
     "gravatar-url": "^2",
     "hat": "^0",
     "html-escaper": "^1.0.1",
-    "keypair": "^1",
     "lodash": "^4",
     "morgan": "^1",
     "node-cp": "^0",
