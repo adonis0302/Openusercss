@@ -1,6 +1,6 @@
-import 'babel-polyfill'
+/* eslint no-console:0 */
 
-import log from 'chalk-console'
+import 'babel-polyfill'
 import anime from 'animejs'
 
 const {XMLHttpRequest} = window
@@ -77,7 +77,8 @@ const removeLoadingIndicator = async () => {
 
 const loadScript = async (url) => {
   const request = new XMLHttpRequest()
-  let lastUpdate = null
+  const indicator = document.querySelector('.ouc-loading-indicator .progressbar')
+  let lastUpdate = Date.now()
 
   request.open('GET', url, true)
   request.send()
@@ -85,10 +86,9 @@ const loadScript = async (url) => {
   request.addEventListener('progress', async (event) => {
     if (Date.now() - lastUpdate >= 300 && event.lengthComputable) {
       const percent = event.loaded / event.total * 100
-      const progressbar = document.querySelector('.ouc-loading-indicator .progressbar')
 
-      progressbar.style.transition = 'clip-path .3s'
-      progressbar.style.clipPath = `polygon(-1px -1px, ${percent}% -1px, ${percent}% 101%, -1px 101%)`
+      indicator.style.transition = 'clip-path .3s'
+      indicator.style.clipPath = `polygon(-1px -1px, ${percent}% -1px, ${percent}% 101%, -1px 101%)`
 
       lastUpdate = Date.now()
       return true
@@ -97,7 +97,7 @@ const loadScript = async (url) => {
 
   request.onreadystatechange = async () => {
     if (request.status === 200 && request.readyState === 4) {
-      await removeLoadingIndicator()
+      removeLoadingIndicator()
 
       setImmediate(() => {
         insertScript(request.response)
@@ -109,7 +109,22 @@ const loadScript = async (url) => {
 }
 
 (async () => {
-  showLoadingIndicator()
+  if ('serviceWorker' in navigator) {
+    const isRegistered = navigator.serviceWorker.controller
+
+    if (!isRegistered) {
+      showLoadingIndicator()
+
+      try {
+        await navigator.serviceWorker.register('/worker.js')
+      } catch (error) {
+        console.error(error)
+      }
+    }
+  } else {
+    showLoadingIndicator()
+  }
+
   await loadScript('/js/index.js')
 
   return true

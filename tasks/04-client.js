@@ -54,7 +54,8 @@ const browserifyOpts = ({entries}) => {
 }
 
 const sources = {
-  'client': 'src/client/js/*.js'
+  'client': 'src/client/js/!(worker).js',
+  'worker': 'src/client/js/worker.js'
 }
 
 const createBrowserify = ({entries}) => {
@@ -110,6 +111,51 @@ gulp.task('js:fast', () => {
   return merge(bundles)
 })
 
+gulp.task('worker:prod', () => {
+  const files = glob.sync(sources.worker)
+
+  const bundles = files.map((entry, index) => {
+    const bify = createBrowserify({
+      'entries': [
+        entry
+      ]
+    })
+
+    return pump([
+      prettyError(),
+      bify.bundle(),
+      source(entry),
+      buffer(),
+      uglify(),
+      es3ify(),
+      flatten(),
+      gulp.dest('build/client/js')
+    ])
+  })
+
+  return merge(bundles)
+})
+
+gulp.task('worker:fast', () => {
+  const bify = createBrowserify({
+    'entries': [
+      sources.worker
+    ]
+  })
+
+  return pump([
+    prettyError(),
+    bify.bundle(),
+    source(sources.worker),
+    flatten(),
+    gulp.dest('build/client/js')
+  ])
+})
+
+gulp.task('worker:watch', () => {
+  gulp.watch(sources.worker, gulp.series('worker:fast'))
+})
+
 gulp.task('js:watch', () => {
   const files = glob.sync(sources.client)
 
@@ -148,15 +194,18 @@ gulp.task('js:watch', () => {
 
 gulp.task('client:watch', gulp.parallel(
   'vue:watch',
-  'js:watch'
+  'js:watch',
+  gulp.series('worker:fast', 'worker:watch')
 ))
 
 gulp.task('client:fast', gulp.series(
   'vue:fast',
-  'js:fast'
+  'js:fast',
+  'worker:fast'
 ))
 
 gulp.task('client:prod', gulp.series(
   'vue:prod',
-  'js:prod'
+  'js:prod',
+  'worker:prod'
 ))

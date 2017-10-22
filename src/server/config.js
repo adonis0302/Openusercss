@@ -16,22 +16,32 @@ const inProd = () => {
   return true
 }
 
-const defaultConfig = {
-  'port':       80,
-  'domain':     'openusercss.org',
-  'saltRounds': 15,
-  'database':   {
-    'main':  'mongodb://localhost:27017/openusercss-main',
-    'brute': 'mongodb://localhost:27017/openusercss-brute'
-  }
-}
+let defaultConfig = null
 
 if (inProd()) {
-  defaultConfig.env = 'production'
+  defaultConfig = {
+    'env':        'production',
+    'port':       80,
+    'domain':     'openusercss.org',
+    'saltRounds': 15,
+    'database':   {
+      'main':  'mongodb://localhost:27017/openusercss-main',
+      'brute': 'mongodb://localhost:27017/openusercss-brute'
+    }
+  }
 } else {
-  log.warn('App in development mode, salt rounds are set to 12!')
-  defaultConfig.env = 'development'
-  defaultConfig.saltRounds = 12
+  log.warn('App in development mode, configuration is set to low security!')
+
+  defaultConfig = {
+    'env':        'development',
+    'port':       8080,
+    'domain':     'openusercss.org',
+    'saltRounds': 11,
+    'database':   {
+      'main':  'mongodb://localhost:27017/openusercss-main',
+      'brute': 'mongodb://localhost:27017/openusercss-brute'
+    }
+  }
 }
 
 const genKeypair = async () => {

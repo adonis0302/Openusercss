@@ -21,6 +21,8 @@ const init = async () => {
   app.set('port', config.get('port'))
 
   app.use(express.static(path.join(__dirname, 'client')))
+  app.use('/worker.js', express.static(path.join(__dirname, 'client/js/worker.js')))
+
   app.use(await setupRoutes())
 
   log.info(`App environment: ${app.get('env')}`)

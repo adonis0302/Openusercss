@@ -2,7 +2,6 @@ import Vue from 'vue'
 import VeeValidate from 'vee-validate'
 import VueRouter from 'vue-router'
 import VueTooltip from 'v-tooltip'
-import VueProgressive from 'vue-progressive-image'
 
 import router from './router'
 import store from './store'
@@ -13,9 +12,6 @@ import {popperCreate} from '../../components/animations'
 export default async () => {
   const vueStart = Date.now()
 
-  Vue.use(VueProgressive, {
-    'delay': 2000
-  })
   Vue.use(VueRouter)
   Vue.use(VueTooltip, {
     'disposeTimeout':       0,

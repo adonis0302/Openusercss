@@ -18,4 +18,10 @@ gulp.task('build:watch', gulp.parallel(
   'server:watch'
 ))
 
-gulp.task('watch', gulp.series('build:fast', 'build:watch'))
+gulp.task('watch', gulp.series(
+  gulp.parallel(
+    'media:fast',
+    'server:fast'
+  ),
+  gulp.series('build:watch')
+))

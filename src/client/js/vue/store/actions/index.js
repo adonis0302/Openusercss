@@ -7,6 +7,7 @@ import logout from './remote-logout'
 import login from './remote-login'
 import register from './remote-register'
 import createTheme from './create-theme'
+import getThemes from './get-themes'
 
 const networkInterface = createBatchingNetworkInterface({
   'uri': '/graphql'
@@ -42,5 +43,6 @@ export default {
   login,
   register,
   verifyToken,
-  createTheme
+  createTheme,
+  getThemes
 }

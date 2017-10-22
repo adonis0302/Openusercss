@@ -5,6 +5,7 @@ const pump = require('pump')
 const uglify = require('gulp-uglify')
 const rename = require('gulp-rename')
 const save = require('gulp-save')
+const server = require('gulp-develop-server')
 
 const sources = {
   'server': [
@@ -109,9 +110,7 @@ gulp.task('server:prod', gulp.parallel(
   'runtime:empties'
 ))
 
-const server = require('gulp-develop-server')
-
-gulp.task('server:watch', (done) => {
+gulp.task('server:watch', () => {
   server.listen({
     'path': './build/app'
   })
