@@ -3,6 +3,7 @@ const pump = require('pump')
 const glob = require('glob')
 const source = require('vinyl-source-stream')
 const merge = require('merge-stream')
+const pwaManifest = require('pwa-manifest')
 
 const prettyError = require('gulp-prettyerror')
 const uglify = require('gulp-uglify')
@@ -191,20 +192,46 @@ gulp.task('js:watch', () => {
   return merge(bundles)
 })
 
+gulp.task('manifest', (done) => {
+  pwaManifest.write.sync('build/client/', {
+    'dir':              'ltr',
+    'name':             'OpenUserCSS',
+    'short_name':       'OpenUserCSS',
+    'description':      'Themes for your favourite websites',
+    'start_url':        '/?utm_source=homescreen',
+    'background_color': '#3E28B0',
+    'theme_color':      '#005FFF',
+    'display':          'standalone',
+    'orientation':      'any',
+    'icons':            [
+      {'src': '/img/openusercss.icon-x16.png', 'sizes': '16x16', 'type': 'image/png'},
+      {'src': '/img/openusercss.icon-x32.png', 'sizes': '32x32', 'type': 'image/png'},
+      {'src': '/img/openusercss.icon-x64.png', 'sizes': '64x64', 'type': 'image/png'},
+      {'src': '/img/openusercss.icon-x128.png', 'sizes': '128x128', 'type': 'image/png'},
+      {'src': '/img/openusercss.icon-x360.png', 'sizes': '360x360', 'type': 'image/png'},
+      {'src': '/img/openusercss.icon-x640.png', 'sizes': '640x640', 'type': 'image/png'}
+    ]
+  })
+  done()
+})
+
 gulp.task('client:watch', gulp.parallel(
   'vue:watch',
   'js:watch',
+  'manifest',
   gulp.series('worker:fast', 'worker:watch')
 ))
 
 gulp.task('client:fast', gulp.series(
   'vue:fast',
   'js:fast',
-  'worker:fast'
+  'worker:fast',
+  'manifest'
 ))
 
 gulp.task('client:prod', gulp.series(
   'vue:prod',
   'js:prod',
-  'worker:prod'
+  'worker:prod',
+  'manifest'
 ))
