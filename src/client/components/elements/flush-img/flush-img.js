@@ -1,22 +1,42 @@
 const {Image} = window
 
-const updateImage = (self) => {
-  const img = new Image()
+const preloadImage = (url) => {
+  return new Promise((resolve, reject) => {
+    const img = new Image()
 
+    img.src = url
+    img.onload = resolve
+    img.onerror = reject
+  })
+}
+
+const updateImage = async (self) => {
   self.$el.classList.add('ouc-image-unloaded')
-  self.src = self.placeholder
-  img.src = self.source
 
-  img.onload = () => {
+  const placeholderLoaded = preloadImage(self.placeholder)
+  const sourceLoaded = preloadImage(self.source)
+
+  try {
+    await placeholderLoaded
+    self.src = self.placeholder
+
+    await sourceLoaded
+    self.src = self.source
+
     self.$el.classList.remove('ouc-image-unloaded')
     self.$el.classList.add('ouc-image-loaded')
-    self.src = self.source
-  }
+  } catch (error) {
+    const errorPlaceholderLoaded = preloadImage('/img/image-error-x128.png')
+    const errorSourceLoaded = preloadImage('/img/image-error-x960.png')
 
-  img.onerror = () => {
+    await errorPlaceholderLoaded
+    self.src = '/img/image-error-x128.png'
+
+    await errorSourceLoaded
+    self.src = '/img/image-error-x960.png'
+
     self.$el.classList.remove('ouc-image-unloaded')
-    self.$el.classList.add('ouc-image-error')
-    self.src = '/img/image-error-x640.png'
+    self.$el.classList.add('ouc-image-errored')
   }
 
   return true
