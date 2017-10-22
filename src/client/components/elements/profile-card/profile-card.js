@@ -45,10 +45,10 @@ export default {
     user () {
       return {
         'avatar': gravatarUrl('decentm@decentm.com', {
-          'size': 185
+          'size': 425
         }),
         'avatarPlaceholder': gravatarUrl('decentm@decentm.com', {
-          'size': 25
+          'size': 10
         }),
         'displayname': 'DecentM',
         'installs':    3440,

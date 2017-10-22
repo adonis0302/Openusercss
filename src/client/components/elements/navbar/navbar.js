@@ -1,6 +1,7 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import {mapGetters, mapActions} from 'vuex'
 
+import flushImg from '../flush-img/flush-img.vue'
 import icon from '../icon/icon.vue'
 
 export default {
@@ -16,7 +17,8 @@ export default {
     'navbar-dropdown': bulma('navbar-dropdown', 'div'),
     'navbar-divider':  bulma('navbar-divider', 'div'),
     'b-container':     bulma('container', 'div'),
-    icon
+    icon,
+    flushImg
   },
   'methods': {
     ...mapActions([
