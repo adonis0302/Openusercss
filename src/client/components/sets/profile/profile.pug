@@ -1,5 +1,4 @@
 div
-  p {{user()}}
   b-section
     b-level
       b-level-left
@@ -20,19 +19,51 @@ div
                 | Edit profile
     b-columns
       b-column(is-6)
-        profile-card
+        transition(
+          appear,
+          v-on:before-appear="topBottomBeforeAppear",
+          v-on:appear="topBottomAppear",
+          v-bind:css="false"
+        )
+          div
+            b-box(is-paddingless, is-marginless).ouc-user-card
+              b-column(is-paddingless)
+                b-tile(is-parent, is-paddingless)
+                  b-tile(is-4)
+                    b-tile(is-child).ouc-user-avatar
+                      flush-img(:source="viewedUser().avatarUrl", :placeholder="viewedUser().smallAvatarUrl", height="185px", align="left").contain
+                  b-tile(is-8)
+                    b-tile(is-parent)
+                      b-tile(is-parent)
+                        b-tile(is-child, is-parent, is-vertical, is-paddingless)
+                          h2 {{viewedUser().displayname}}
+                          br
+                          p Themes: {{viewedUserThemeCount()}}
+                          p Installs: {{viewedUser().installs}}
+                          p Average rating: {{viewedUser().rating}}
+            b-box
+              b-level(is-mobile)
+                b-level-left
+                  icon(v-if="isOnline(viewedUser().lastSeen)", icon="circle", color="#06BC5A")
+                  p.ouc-last-seen {{lastOnlineDisplay}}
+
+        hr
         b-box
           h2 About
           hr
           p {{user.description}}
       b-column(is-6)
         b-box
-          h2 Your themes
+          div(v-if="user()")
+            div(v-if="viewedUser()._id === user()._id")
+              h2 Your themes
+          div(v-else="user()")
+            h2 {{viewedUser().displayname}}'s themes
           hr
-          theme-card(v-for="(theme, index) in user.themes", :data-index="index", direction="horizontal", card-class="is-primary").has-bottom-margin
+          theme-card(v-for="(theme, index) in viewedUser().themes", :data-index="index", direction="horizontal", card-class="is-primary").has-bottom-margin
             flush-img(slot="screenshot", :src="theme.screenshotUrl", height="135px")
             h4(slot="title") {{theme.title}}
             p(slot="description") {{theme.description}}
-            //- p(slot="author-displayname") Full Name here
-            //- h6(slot="author-username") @{{theme.author}}
+            p(slot="author") by {{viewedUser().displayname}}
+            div(slot="tooltip", v-tooltip="tooltip").ouc-theme-favicon
             //- img(slot="author-avatar", src="https://en.gravatar.com/userimage/37343181/d66c2e13a3bf375f9e2bd96a9a9f9c54.png", width="40")
