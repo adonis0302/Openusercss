@@ -1,6 +1,7 @@
 import {forOwn} from 'lodash'
 import anime from 'animejs'
 import waterfall from 'p-waterfall'
+import delay from 'delay'
 
 /*
  * This file houses animations as they would appear in a component's
@@ -42,6 +43,14 @@ class Animation {
         'small': 'easeInOutQuad',
         'large': 'easeInOutQuart'
       }
+    }
+
+    this.none = async (element, done) => {
+      element.style.zIndex = 0
+      await delay(element.dataset.speed)
+
+      element.remove()
+      return null
     }
 
     this.finalize = () => {

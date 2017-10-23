@@ -7,4 +7,5 @@
   background-color: $white;
   position: absolute;
   width: 100%;
+  min-height: calc(100vh - #{$navbar-height})
 }
