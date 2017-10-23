@@ -32,10 +32,10 @@ toolbox.precache([
   '/img/main.bg-x128.png'
 ])
 
-// toolbox.router.get(/https?:\/\/.*\/(js|img|css).*/, toolbox.cacheFirst)
-// toolbox.router.any(/graphi?ql/, toolbox.networkOnly)
-// toolbox.router.get(/https?:\/\/localhost:312.\/.*/, toolbox.networkOnly)
-// toolbox.router.get(/https?:\/\/.*\/favicon.ico$/, toolbox.cacheFirst)
-// toolbox.router.get(/https?:\/\/gravatar.com\/avatar/, toolbox.cacheFirst)
+toolbox.router.get(/https?:\/\/.*\/(js|img|css).*/, toolbox.cacheFirst)
+toolbox.router.any(/graphi?ql/, toolbox.networkOnly)
+toolbox.router.get(/https?:\/\/localhost:312.\/.*/, toolbox.networkOnly)
+toolbox.router.get(/https?:\/\/.*\/favicon.ico$/, toolbox.cacheFirst)
+toolbox.router.get(/https?:\/\/gravatar.com\/avatar/, toolbox.cacheFirst)
 
 toolbox.router.default = indexOnly
