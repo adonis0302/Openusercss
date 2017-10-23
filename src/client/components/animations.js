@@ -47,8 +47,6 @@ class Animation {
     this.finalize = () => {
       forOwn(self.stages, (stage, key) => {
         self[key] = async (element, done) => {
-          const styles = window.getComputedStyle(element)
-
           element.dataset.speed = this.speeds.slow
           return waterfall(stage, element)
         }

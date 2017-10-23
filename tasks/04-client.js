@@ -209,6 +209,7 @@ gulp.task('worker:fast', () => {
     prettyError(),
     bify.bundle(),
     source(sources.worker),
+    flatten(),
     buffer(),
     sourcemaps.init({
       'loadMaps': true
@@ -218,7 +219,6 @@ gulp.task('worker:fast', () => {
         return `/js/${file.relative}.map`
       }
     }),
-    flatten(),
     gulp.dest('build/client/js')
   ])
 })
