@@ -22,7 +22,7 @@ export default async (root, {token, title, description, content, scope}, {Sessio
   const result = await stylelint.lint({
     'code':   content,
     'config': {
-      'extends': 'stylelint-config-recommended'
+      'extends': 'stylelint-config-recommended-scss'
     }
   })
 

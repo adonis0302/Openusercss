@@ -1,4 +1,6 @@
+import {forOwn} from 'lodash'
 import anime from 'animejs'
+import waterfall from 'p-waterfall'
 
 /*
  * This file houses animations as they would appear in a component's
@@ -7,9 +9,24 @@ import anime from 'animejs'
 
 class Animation {
   constructor () {
-    this.lengths = {
-      'slow': '1s',
-      'fast': '.5s'
+    const self = this
+
+    this.stack = []
+
+    this.stages = {
+      'beforeAppear': [],
+      'appear':       [],
+      'beforeLeave':  [],
+      'leave':        []
+    }
+
+    this.stage = (stageName, func) => {
+      this.stages[stageName].push(func)
+    }
+
+    this.speeds = {
+      'slow': 700,
+      'fast': 400
     }
 
     this.easings = {
@@ -26,6 +43,19 @@ class Animation {
         'large': 'easeInOutQuart'
       }
     }
+
+    this.finalize = () => {
+      forOwn(self.stages, (stage, key) => {
+        self[key] = async (element, done) => {
+          const styles = window.getComputedStyle(element)
+
+          element.dataset.speed = this.speeds.slow
+          return waterfall(stage, element)
+        }
+      })
+
+      Object.freeze(this)
+    }
   }
 }
 
@@ -33,215 +63,98 @@ export class TopBottom extends Animation {
   constructor () {
     super()
 
-    this.enter = async ({element, length}) => {
-      // We are a newborn component
+    this.stage('beforeAppear', async (element) => {
+      element.style.clipPath = 'polygon(-1px -1px, 101% -1%, 101% -1px, -1px -1px)'
 
-      // If we are part of a stagger list, add some delay based on our index
+      return element
+    })
+
+    this.stage('appear', async (element) => {
       const additionalDelay = element.dataset.index * 75 || 0
 
-      // And we appear after a 500ms delay to let the guy before us go away
       const node = await anime({
         'targets':   element,
         'clip-path': 'polygon(-1px -1px, 101% -1%, 101% 101%, -1% 101%)',
-        'duration':  1000,
-        'delay':     500 + additionalDelay,
-        'easing':    'easeOutQuart'
+        'duration':  element.dataset.speed,
+        'delay':     100 + additionalDelay,
+        'easing':    'easeInOutQuart'
+      })
+
+      await node.finished
+      element.style.clipPath = 'none'
+
+      return element
+    })
+
+    this.stage('beforeLeave', async (element) => {
+      element.style.clipPath = 'polygon(-1px -1px, 101% -1%, 101% 101%, -1% 101%)'
+
+      return element
+    })
+
+    this.stage('leave', async (element) => {
+      const node = await anime({
+        'targets':   element,
+        'clip-path': 'polygon(-1px 101%, 101% 101%, 101% 101%, -1% 101%)',
+        'duration':  element.dataset.speed,
+        'easing':    'easeInOutQuart'
       })
 
       // Wait for the animejs animation to finish
       await node.finished
+      return element
+    })
 
-      // After the animation is suppoed to finish, remove the clipPath property to
-      // prevent unfinished animations from messing us up
-      element.style.clipPath = 'none'
-
-      return true
-    }
+    this.finalize()
   }
 }
 
-export class Opacity extends Animation {
+export class LeftRight extends Animation {
   constructor () {
     super()
 
-    this.beforeEnter = async ({element, length}) => {
-      element.style.opacity = 0
-    }
+    this.stage('beforeAppear', async (element) => {
+      element.style.clipPath = 'polygon(-1px -1px, -1px -1px, -1px 101%, -1px 101%)'
 
-    this.enter = async ({element, length}) => {
-      // We are a newborn component
+      return element
+    })
 
-      // If we are part of a stagger list, add some delay based on our index
+    this.stage('appear', async (element) => {
       const additionalDelay = element.dataset.index * 75 || 0
 
-      // And we appear after a 500ms delay to let the guy before us go away
       const node = await anime({
-        'targets':  element,
-        'opacity':  1,
-        'duration': this.lengths[length],
-        'delay':    500 + additionalDelay,
-        'easing':   'easeOutQuart'
+        'targets':   element,
+        'clip-path': 'polygon(-1px -1px, 101% -1px, 101% 101%, -1px 101%)',
+        'duration':  element.dataset.speed,
+        'delay':     100 + additionalDelay,
+        'easing':    'easeInOutQuart'
+      })
+
+      await node.finished
+      element.style.clipPath = 'none'
+
+      return element
+    })
+
+    this.stage('beforeLeave', async (element) => {
+      element.style.clipPath = 'polygon(-1px -1px, 101% -1%, 101% 101%, -1% 101%)'
+
+      return element
+    })
+
+    this.stage('leave', async (element) => {
+      const node = await anime({
+        'targets':   element,
+        'clip-path': 'polygon(101% -1px, 101% -1%, 101% 101%, 101% 101%)',
+        'duration':  element.dataset.speed,
+        'easing':    'easeInOutQuart'
       })
 
       // Wait for the animejs animation to finish
       await node.finished
-
-      // After the animation is suppoed to finish, remove the clipPath property to
-      // prevent unfinished animations from messing us up
-      element.style.opacity = null
-
-      return true
-    }
-
-    this.beforeLeave = async ({element, length}) => {
-      element.style.opacity = 1
-    }
-
-    this.leave = async ({element, length}) => {
-      // We are a newborn component
-
-      // And we appear after a 500ms delay to let the guy before us go away
-      const node = await anime({
-        'targets':  element,
-        'opacity':  0,
-        'duration': length,
-        'easing':   'easeOutQuart'
-      })
-
-      // Wait for the animejs animation to finish
-      await node.finished
-      return true
-    }
-  }
-}
-
-export const popperCreate = async (popper) => {
-  const element = popper.instance.popper
-
-  await leftRight.leftRightBeforeAppear(element)
-  await leftRight.leftRightAppear(element)
-}
-
-export const topBottom = {
-  'topBottomBeforeAppear': async (element) => {
-    // We are a zygote component
-
-    // Set clipPath so all our clip points are at the top
-    element.style.clipPath = 'polygon(-1px -1px, 101% -1%, 101% -1px, -1px -1px)'
-  },
-  'topBottomAppear': async (element, done) => {
-    // We are a newborn component
-
-    // If we are part of a stagger list, add some delay based on our index
-    const additionalDelay = element.dataset.index * 75 || 0
-
-    // And we appear after a 500ms delay to let the guy before us go away
-    const node = await anime({
-      'targets':   element,
-      'clip-path': 'polygon(-1px -1px, 101% -1%, 101% 101%, -1% 101%)',
-      'duration':  700,
-      'delay':     100 + additionalDelay,
-      'easing':    'easeInOutQuart'
+      return element
     })
 
-    // Wait for the animejs animation to finish
-    await node.finished
-
-    // After the animation is suppoed to finish, remove the clipPath property to
-    // prevent unfinished animations from messing us up
-    element.style.clipPath = 'none'
-
-    if (done) {
-      return done()
-    }
-    return true
-  },
-
-  'topBottomBeforeLeave': (element) => {
-    // We are a component that's about to go away
-
-    // Set clipPath so all our clip points surround us, as our entry
-    // should have made it, but just in case we got modified
-    element.style.clipPath = 'polygon(-1px -1px, 101% -1%, 101% 101%, -1% 101%)'
-  },
-  'topBottomLeave': async (element, done) => {
-    // We are a component that's going away
-
-    // Start our exit animation, the next guy is coming in 500ms
-    const node = await anime({
-      'targets':   element,
-      'clip-path': 'polygon(-1px 101%, 101% 101%, 101% 101%, -1% 101%)',
-      'duration':  700,
-      'easing':    'easeInOutQuart'
-    })
-
-    // Wait for the animejs animation to finish
-    await node.finished
-
-    if (done) {
-      return done()
-    }
-    return true
-  }
-}
-
-export const leftRight = {
-  'leftRightBeforeAppear': (element) => {
-    // We are a zygote component
-
-    // Set clipPath so all our clip points are on our left
-    element.style.clipPath = 'polygon(-1px -1px, -1px -1px, -1px 101%, -1px 101%)'
-  },
-  'leftRightAppear': async (element, done) => {
-    // We are a newborn component
-
-    // If we are part of a stagger list, add some delay based on our index
-    const additionalDelay = element.dataset.index * 75 || 0
-
-    // And we appear after a 500ms delay to let the guy before us go away
-    const node = await anime({
-      'targets':   element,
-      'clip-path': 'polygon(-1px -1px, 101% -1px, 101% 101%, -1px 101%)',
-      'duration':  700,
-      'delay':     additionalDelay,
-      'easing':    'easeInOutQuart'
-    })
-
-    await node.finished
-
-    // After the animation is suppoed to finish, remove the clipPath property to
-    // prevent unfinished animations from messing us up
-    element.style.clipPath = 'none'
-
-    if (done) {
-      return done()
-    }
-    return true
-  },
-  'leftRightBeforeLeave': (element) => {
-    // We are a component that's about to go away
-
-    // Set clipPath so all our clip points surround us, as our entry
-    // should have made it, but just in case we got modified
-    element.style.clipPath = 'polygon(-1px -1px, 101% -1%, 101% 101%, -1% 101%)'
-  },
-  'leftRightLeave': async (element, done) => {
-    // We are a component that's going away
-
-    // Start our exit animation, the next guy is coming in 500ms
-    const node = await anime({
-      'targets':   element,
-      'clip-path': 'polygon(101% -1px, 101% -1%, 101% 101%, 101% 101%)',
-      'duration':  700,
-      'easing':    'easeInOutQuart'
-    })
-
-    // Wait for the animejs animation to finish
-    await node.finished
-
-    if (done) {
-      return done()
-    }
-    return true
+    this.finalize()
   }
 }

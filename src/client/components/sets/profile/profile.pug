@@ -13,17 +13,13 @@ div
             router-link(to="/account")
               b-button(is-primary)
                 | Change account details
-          b-column
-            router-link(to="/profile/edit")
-              b-button(is-primary)
-                | Edit profile
     b-columns
       b-column(is-6)
         transition(
           appear,
-          v-on:before-appear="topBottomBeforeAppear",
-          v-on:appear="topBottomAppear",
-          v-bind:css="false"
+          @before-enter="beforeAppear",
+          @enter="appear",
+          :css="false"
         )
           div
             b-box(is-paddingless, is-marginless).ouc-user-card

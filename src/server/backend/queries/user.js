@@ -9,6 +9,10 @@ export default async (root, {id, token}, {Session, Theme, User}) => {
     '_id': new ObjectId(id)
   })
 
+  if (!foundUser) {
+    throw new Error('No user found')
+  }
+
   foundUser.avatarUrl = gravatarUrl(foundUser.email, {
     'size': 425
   })

@@ -74,11 +74,6 @@ export default {
       'default': 'cover'
     }
   },
-  'methods': {
-    onclick () {
-      updateImage(this)
-    }
-  },
   'watch': {
     placeholder (newPlaceholder) {
       updateImage(this)

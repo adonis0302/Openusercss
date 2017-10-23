@@ -42,6 +42,7 @@
     "csslint": "^1",
     "cssnano": "^3",
     "del": "^3",
+    "delay": "^2.0.0",
     "easy-livereload": "^1",
     "endpoint-utils": "^1",
     "env-name": "^1",
@@ -99,6 +100,7 @@
     "merge-stream": "^1",
     "moment": "^2",
     "needle": "^2",
+    "p-waterfall": "^1.0.0",
     "postcss-devtools": "^1",
     "postcss-fixes": "^2",
     "postcss-flexibility": "^2",
@@ -159,7 +161,8 @@
     "pretty-error": "^2",
     "pug": "^2.0.0-rc.4",
     "selfsigned": "^1.10.1",
-    "stylelint-config-recommended": "^1.0.0",
+    "stylelint-config-recommended-scss": "^2.0.0",
+    "stylelint-scss": "^2.1.0",
     "subscriptions-transport-ws": "^0.9.1"
   }
 }

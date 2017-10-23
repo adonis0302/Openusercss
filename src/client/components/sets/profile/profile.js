@@ -6,7 +6,7 @@ import icon from '../../elements/icon/icon.vue'
 import themeCard from '../../elements/theme-card/theme-card.vue'
 import flushImg from '../../elements/flush-img/flush-img.vue'
 
-import {leftRight, topBottom} from '../../../src/client/components/animations'
+import {TopBottom} from '../../../src/client/components/animations'
 
 export default {
   'components': {
@@ -34,12 +34,11 @@ export default {
     }, 20000)
   },
   'methods': {
-    ...leftRight,
-    ...topBottom,
     ...mapGetters([
       'user',
       'viewedUser'
     ]),
+    ...new TopBottom(),
     isOnline (date) {
       return moment(this.time).diff(date) < 600000
     },

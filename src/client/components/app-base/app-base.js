@@ -1,5 +1,5 @@
 import navbar from '../elements/navbar/navbar.vue'
-import {leftRight} from '../../src/client/components/animations'
+import {LeftRight} from '../../src/client/components/animations'
 
 export default {
   'components': {
@@ -9,7 +9,5 @@ export default {
     this.$store.dispatch('getOfflineToken')
     this.$store.dispatch('verifyToken')
   },
-  'methods': {
-    ...leftRight
-  }
+  'methods': new LeftRight()
 }

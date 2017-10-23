@@ -6,7 +6,7 @@ import User from './user'
 
 export default class Theme extends Document {
   preSave () {
-    this.lastUpdate = moment()
+    this.lastUpdate = moment().toJSON()
   }
 
   constructor () {

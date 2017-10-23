@@ -1,7 +1,7 @@
 transition(
   appear,
-  v-on:before-appear="leftRightBeforeAppear",
-  v-on:appear="leftRightAppear",
+  @before-enter="beforeAppear",
+  @enter="appear",
   :css="false"
 )
   div(v-if="small", :class="cardClass")

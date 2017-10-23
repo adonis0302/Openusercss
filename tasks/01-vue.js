@@ -12,6 +12,7 @@ const sassGlob = require('gulp-sass-glob')
 const sassVars = require('gulp-sass-vars')
 const htmlmin = require('gulp-htmlmin')
 const pleeease = require('gulp-pleeease')
+const sourcemaps = require('gulp-sourcemaps')
 
 const {pugOptions} = require('./shared/pug')
 const {postCssPluginsProd, postCssPluginsFast, ourSassConfig} = require('./shared/css')
@@ -93,6 +94,7 @@ gulp.task('vue:fast', (done) => {
   return pump([
     prettyError(),
     gulp.src(sources),
+    sourcemaps.init(),
     manifold({
       '**/*.scss': (stream) => {
         return pump([
@@ -116,6 +118,7 @@ gulp.task('vue:fast', (done) => {
       }
     }),
     vuemaker(),
+    sourcemaps.write(),
     gulp.dest('.tmp')
   ]).on('end', () => {
     done()

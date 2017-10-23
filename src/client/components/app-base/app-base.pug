@@ -1,10 +1,10 @@
 div
   navbar
   transition(
-    @before-enter="leftRightBeforeAppear",
-    @enter="leftRightAppear",
-    @before-leave="leftRightBeforeLeave",
-    @leave="leftRightLeave",
+    @before-enter="beforeAppear",
+    @enter="appear",
+    @before-leave="beforeLeave",
+    @leave="leave",
     :css="false"
   )
     router-view.ouc-app-root
