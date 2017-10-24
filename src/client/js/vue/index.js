@@ -7,7 +7,7 @@ import router from './router'
 import store from './store'
 
 import appBase from '../../../../build/components/app-base/app-base.vue'
-import {popperCreate} from '../../components/animations'
+import {popperCreate} from '../../../components/animations'
 
 export default async () => {
   const vueStart = Date.now()

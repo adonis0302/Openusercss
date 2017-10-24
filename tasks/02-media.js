@@ -23,7 +23,6 @@ const pleeease = require('gulp-pleeease')
 // OTHER
 const concat = require('gulp-concat')
 const webfont64 = require('gulp-base64-webfont-css')
-const size = require('gulp-size')
 const del = require('del')
 const flatten = require('gulp-flatten')
 
@@ -129,7 +128,6 @@ gulp.task('client:media:prod', () => {
       })
     ]),
     flatten(),
-    size(),
     gulp.dest(destination('img'))
   ])
 
@@ -172,7 +170,6 @@ gulp.task('client:media:prod', () => {
       'sourcemaps': false
     }),
     flatten(),
-    size(),
     gulp.dest(destination('css'))
   ])
 
@@ -222,7 +219,6 @@ gulp.task('client:media:fast', () => {
   const finalImageStream = pump([
     prettyError(),
     merge(backgroundsStream, iconStream, elementStream),
-    size(),
     flatten(),
     gulp.dest(destination('img'))
   ])
@@ -238,7 +234,6 @@ gulp.task('client:media:fast', () => {
     concat('bundle.min.css'),
     postcss(postCssPluginsFast),
     flatten(),
-    size(),
     gulp.dest(destination('css'))
   ])
 

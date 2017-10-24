@@ -1,6 +1,6 @@
 // @flow
 
-import staticConfig from '../config'
+import staticConfig from '../../shared/config'
 import jwt from 'jsonwebtoken'
 
 export default async (token: String, Session) => {

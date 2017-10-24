@@ -1,6 +1,6 @@
 import log from 'chalk-console'
 import {connect} from 'camo'
-import staticConfig from '../config'
+import staticConfig from '../../shared/config'
 
 import Theme from './schema/theme'
 import User from './schema/user'

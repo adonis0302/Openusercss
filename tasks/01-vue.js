@@ -22,7 +22,7 @@ const {
 } = require('./shared/css')
 
 const sources = [
-  'src/client/components/**/*.+(js|scss|pug)'
+  'src/components/**/*.+(js|scss|pug)'
 ]
 
 gulp.task('client:vue:prod', (done) => {
@@ -129,6 +129,6 @@ gulp.task('client:vue:fast', (done) => {
 
 gulp.task('client:vue:watch', (done) => {
   gulp.watch([
-    'src/client/components/**/*'
+    'src/components/**/*'
   ], gulp.series('client:vue:fast'))
 })

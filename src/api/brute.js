@@ -1,7 +1,7 @@
 import ExpressBrute from 'express-brute'
 import BruteMongo from 'express-brute-mongo'
 import {MongoClient} from 'mongodb'
-import staticConfig from './config'
+import staticConfig from '../shared/config'
 
 const {connect} = MongoClient
 const store = new BruteMongo(async (ready) => {

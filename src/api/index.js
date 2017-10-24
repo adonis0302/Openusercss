@@ -5,7 +5,7 @@ import express from 'express'
 import log from 'chalk-console'
 import morgan from 'morgan'
 
-import staticConfig from './config'
+import staticConfig, {inProd} from '../shared/config'
 import setupRoutes from './routes'
 import attachHandler from './shared/error-handler'
 
@@ -18,20 +18,22 @@ const init = async () => {
   const app = express()
   const config = await staticConfig()
 
-  app.set('port', config.get('ports.http'))
-
+  app.set('env', config.get('env'))
   app.use(await setupRoutes())
   app.use(morgan('combined'))
 
   log.info(`API environment: ${app.get('env')}`)
 
-  http.createServer(app).listen(config.get('ports.http'))
+  if (!inProd()) {
+    http.createServer(app).listen(config.get('ports.api.http'))
+  }
+
   https.createServer({
     'key':  config.get('keypair.clientprivate'),
     'cert': config.get('keypair.clientcert')
-  }, app).listen(config.get('ports.https'))
+  }, app).listen(config.get('ports.api.https'))
 
-  log.info(`API started: ${JSON.stringify(config.get('ports'))}`)
+  log.info(`API started: ${JSON.stringify(config.get('ports.api'))}`)
 
   return true
 }
