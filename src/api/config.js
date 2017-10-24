@@ -5,8 +5,8 @@ import hat from 'hat'
 import log from 'chalk-console'
 import cp from 'node-cp'
 import path from 'path'
-// import keypair from 'keypair'
 import selfsigned from 'selfsigned'
+import {defaultsDeep} from 'lodash'
 
 const inProd = () => {
   if (process.env.NODE_ENV !== 'production') {
@@ -16,38 +16,27 @@ const inProd = () => {
   return true
 }
 
-let defaultConfig = null
-
-if (inProd()) {
-  defaultConfig = {
-    'env':   'production',
-    'ports': {
-      'http':  80,
-      'https': 443
-    },
-    'domain':     'openusercss.org',
-    'saltRounds': 15,
-    'database':   {
-      'main':  'mongodb://localhost:27017/openusercss-main',
-      'brute': 'mongodb://localhost:27017/openusercss-brute'
-    }
+let defaultConfig = {
+  'env':   'production',
+  'ports': {
+    'http':  5000,
+    'https': 5001
+  },
+  'domain':     'openusercss.org',
+  'saltRounds': 15,
+  'database':   {
+    'main':  'mongodb://localhost:27017/openusercss-main',
+    'brute': 'mongodb://localhost:27017/openusercss-brute'
   }
-} else {
+}
+
+if (!inProd()) {
   log.warn('App in development mode, configuration is set to low security!')
 
-  defaultConfig = {
-    'env':   'development',
-    'ports': {
-      'http':  8080,
-      'https': 8443
-    },
-    'domain':     'openusercss.org',
-    'saltRounds': 11,
-    'database':   {
-      'main':  'mongodb://localhost:27017/openusercss-main',
-      'brute': 'mongodb://localhost:27017/openusercss-brute'
-    }
-  }
+  defaultConfig = defaultsDeep({
+    'env':        'development',
+    'saltRounds': 11
+  }, defaultConfig)
 }
 
 const genKeypair = () => {

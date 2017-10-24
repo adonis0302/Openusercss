@@ -1,5 +1,6 @@
 /* eslint no-console:0 */
 
+import 'babel-polyfill'
 import log from 'chalk-console'
 
 import {runPolyfills} from './utils/features'

@@ -13,7 +13,6 @@ const htmlmin = require('gulp-htmlmin')
 const sourcemaps = require('gulp-sourcemaps')
 const postcss = require('gulp-postcss')
 const pleeease = require('gulp-pleeease')
-const minify = require('gulp-minify')
 
 const {pugOptions} = require('./shared/pug')
 const {
@@ -26,7 +25,7 @@ const sources = [
   'src/client/components/**/*.+(js|scss|pug)'
 ]
 
-gulp.task('vue:prod', (done) => {
+gulp.task('client:vue:prod', (done) => {
   return pump([
     prettyError(),
     gulp.src(sources),
@@ -93,7 +92,7 @@ gulp.task('vue:prod', (done) => {
   })
 })
 
-gulp.task('vue:fast', (done) => {
+gulp.task('client:vue:fast', (done) => {
   return pump([
     prettyError(),
     gulp.src(sources),
@@ -128,8 +127,8 @@ gulp.task('vue:fast', (done) => {
   })
 })
 
-gulp.task('vue:watch', (done) => {
+gulp.task('client:vue:watch', (done) => {
   gulp.watch([
     'src/client/components/**/*'
-  ], gulp.series('vue:fast'))
+  ], gulp.series('client:vue:fast'))
 })

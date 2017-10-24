@@ -63,11 +63,17 @@ const sources = {
   ]
 }
 
-gulp.task('media:prod', () => {
-  const out = path.resolve('build/client/')
+const destination = (dest) => {
+  if (!dest) {
+    return path.resolve('./build/client/')
+  }
 
-  del.sync(`${out}/css`)
-  del.sync(`${out}/img`)
+  return path.resolve('./build/client/', dest)
+}
+
+gulp.task('client:media:prod', () => {
+  del.sync(destination('css'))
+  del.sync(destination('img'))
 
   const fontStream = pump([
     gulp.src(sources.fonts),
@@ -124,7 +130,7 @@ gulp.task('media:prod', () => {
     ]),
     flatten(),
     size(),
-    gulp.dest(path.resolve(`${out}/img`))
+    gulp.dest(destination('img'))
   ])
 
   const finalCssStream = pump([
@@ -167,17 +173,15 @@ gulp.task('media:prod', () => {
     }),
     flatten(),
     size(),
-    gulp.dest(path.resolve(`${out}/css`))
+    gulp.dest(destination('css'))
   ])
 
   return merge(finalCssStream, finalImageStream)
 })
 
-gulp.task('media:fast', () => {
-  const out = path.resolve('build/client/')
-
-  del.sync(`${out}/css`)
-  del.sync(`${out}/img`)
+gulp.task('client:media:fast', () => {
+  del.sync(destination('css'))
+  del.sync(destination('img'))
 
   const fontStream = pump([
     gulp.src(sources.fonts),
@@ -220,7 +224,7 @@ gulp.task('media:fast', () => {
     merge(backgroundsStream, iconStream, elementStream),
     size(),
     flatten(),
-    gulp.dest(path.resolve(`${out}/img`))
+    gulp.dest(destination('img'))
   ])
 
   const finalCssStream = pump([
@@ -235,14 +239,14 @@ gulp.task('media:fast', () => {
     postcss(postCssPluginsFast),
     flatten(),
     size(),
-    gulp.dest(path.resolve(`${out}/css`))
+    gulp.dest(destination('css'))
   ])
 
   return merge(finalCssStream, finalImageStream)
 })
 
-gulp.task('media:watch', (done) => {
+gulp.task('client:media:watch', (done) => {
   gulp.watch([
     'src/client/{fonts|img|scss}/**/*'
-  ], gulp.parallel('media:fast', 'vue:fast'))
+  ], gulp.parallel('client:media:fast', 'client:vue:fast'))
 })

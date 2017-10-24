@@ -4,6 +4,7 @@ const glob = require('glob')
 const source = require('vinyl-source-stream')
 const merge = require('merge-stream')
 const pwaManifest = require('pwa-manifest')
+const path = require('path')
 
 const prettyError = require('gulp-prettyerror')
 const es3ify = require('gulp-es3ify')
@@ -61,6 +62,14 @@ const sources = {
   'worker': 'src/client/js/worker.js'
 }
 
+const destination = (dest) => {
+  if (!dest) {
+    return path.resolve('./build/client/')
+  }
+
+  return path.resolve('./build/client/', dest)
+}
+
 const createBrowserify = ({entries, debug}) => {
   return browserify(browserifyOpts({
     entries,
@@ -68,7 +77,7 @@ const createBrowserify = ({entries, debug}) => {
   }))
 }
 
-gulp.task('js:prod', () => {
+gulp.task('client:js:prod', () => {
   const files = glob.sync(sources.client)
 
   const bundles = files.map((entry, index) => {
@@ -96,14 +105,14 @@ gulp.task('js:prod', () => {
       }),
       es3ify(),
       flatten(),
-      gulp.dest('build/client/js')
+      gulp.dest(destination('js'))
     ])
   })
 
   return merge(bundles)
 })
 
-gulp.task('js:fast', () => {
+gulp.task('client:js:fast', () => {
   const files = glob.sync(sources.client)
 
   const bundles = files.map((entry, index) => {
@@ -123,19 +132,19 @@ gulp.task('js:fast', () => {
       sourcemaps.init({
         'loadMaps': true
       }),
-      sourcemaps.write('./build/client/js', {
+      sourcemaps.write(destination('js'), {
         'sourceMappingURL': (file) => {
           return `/js/${file.relative}.map`
         }
       }),
-      gulp.dest('build/client/js')
+      gulp.dest(destination('js'))
     ])
   })
 
   return merge(bundles)
 })
 
-gulp.task('js:watch', () => {
+gulp.task('client:js:watch', () => {
   const files = glob.sync(sources.client)
 
   const bundles = files.map((entry, index) => {
@@ -163,12 +172,12 @@ gulp.task('js:watch', () => {
         sourcemaps.init({
           'loadMaps': true
         }),
-        sourcemaps.write('.', {
+        sourcemaps.write(destination(), {
           'sourceMappingURL': (file) => {
             return `/js/${file.relative}.map`
           }
         }),
-        gulp.dest('build/client/js')
+        gulp.dest(destination('js'))
       ])
     }
 
@@ -181,7 +190,7 @@ gulp.task('js:watch', () => {
   return merge(bundles)
 })
 
-gulp.task('worker:prod', () => {
+gulp.task('client:worker:prod', () => {
   const files = glob.sync(sources.worker)
 
   const bundles = files.map((entry, index) => {
@@ -208,14 +217,14 @@ gulp.task('worker:prod', () => {
       }),
       es3ify(),
       flatten(),
-      gulp.dest('build/client')
+      gulp.dest(destination())
     ])
   })
 
   return merge(bundles)
 })
 
-gulp.task('worker:fast', () => {
+gulp.task('client:worker:fast', () => {
   const bify = createBrowserify({
     'entries': [
       sources.worker
@@ -231,22 +240,22 @@ gulp.task('worker:fast', () => {
     sourcemaps.init({
       'loadMaps': true
     }),
-    sourcemaps.write('./build/client', {
+    sourcemaps.write(destination(), {
       'sourceMappingURL': (file) => {
         return `/${file.relative}.map`
       }
     }),
     flatten(),
-    gulp.dest('build/client')
+    gulp.dest(destination())
   ])
 })
 
-gulp.task('worker:watch', () => {
-  gulp.watch(sources.worker, gulp.series('worker:fast'))
+gulp.task('client:worker:watch', () => {
+  gulp.watch(sources.worker, gulp.series('client:worker:fast'))
 })
 
-gulp.task('manifest', (done) => {
-  pwaManifest.write.sync('build/client/', {
+gulp.task('client:manifest', (done) => {
+  pwaManifest.write.sync(destination(), {
     'dir':              'ltr',
     'name':             'OpenUserCSS',
     'short_name':       'OpenUserCSS',
@@ -269,22 +278,22 @@ gulp.task('manifest', (done) => {
 })
 
 gulp.task('client:watch', gulp.parallel(
-  'vue:watch',
-  'js:watch',
-  'manifest',
-  gulp.series('worker:fast', 'worker:watch')
+  gulp.series('client:vue:watch', 'client:js:watch'),
+  gulp.series('client:worker:fast', 'client:worker:watch'),
+  'client:manifest',
+  'client:media:watch'
 ))
 
-gulp.task('client:fast', gulp.series(
-  'vue:fast',
-  'js:fast',
-  'worker:fast',
-  'manifest'
+gulp.task('client:fast', gulp.parallel(
+  gulp.series('client:vue:fast', 'client:js:fast'),
+  'client:worker:fast',
+  'client:manifest',
+  'client:media:fast'
 ))
 
-gulp.task('client:prod', gulp.series(
-  'vue:prod',
-  'js:prod',
-  'worker:prod',
-  'manifest'
+gulp.task('client:prod', gulp.parallel(
+  gulp.series('client:vue:prod', 'client:js:prod'),
+  'client:worker:prod',
+  'client:manifest',
+  'client:media:prod'
 ))

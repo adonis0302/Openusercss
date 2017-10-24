@@ -2,7 +2,6 @@
 import 'babel-polyfill'
 
 import express from 'express'
-import path from 'path'
 import log from 'chalk-console'
 import morgan from 'morgan'
 
@@ -19,16 +18,12 @@ const init = async () => {
   const app = express()
   const config = await staticConfig()
 
-  app.set('views', path.join(__dirname, 'views'))
-  app.set('view engine', 'pug')
   app.set('port', config.get('ports.http'))
-
-  app.use(express.static(path.join(__dirname, 'client')))
 
   app.use(await setupRoutes())
   app.use(morgan('combined'))
 
-  log.info(`App environment: ${app.get('env')}`)
+  log.info(`API environment: ${app.get('env')}`)
 
   http.createServer(app).listen(config.get('ports.http'))
   https.createServer({
@@ -36,7 +31,7 @@ const init = async () => {
     'cert': config.get('keypair.clientcert')
   }, app).listen(config.get('ports.https'))
 
-  log.info(`App started: ${JSON.stringify(config.get('ports'))}`)
+  log.info(`API started: ${JSON.stringify(config.get('ports'))}`)
 
   return true
 }
