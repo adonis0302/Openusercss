@@ -5,7 +5,7 @@ import delay from 'delay'
 
 /*
  * This file houses animations as they would appear in a component's
- * `methotds` object.
+ * `methods` object.
  */
 
 class Animation {
@@ -57,7 +57,7 @@ class Animation {
       forOwn(self.stages, (stage, key) => {
         self[key] = async (element, done) => {
           element.dataset.speed = this.speeds.slow
-          return waterfall(stage, element)
+          return waterfall(stage, {element, done})
         }
       })
 
@@ -70,13 +70,13 @@ export class TopBottom extends Animation {
   constructor () {
     super()
 
-    this.stage('beforeAppear', async (element) => {
+    this.stage('beforeAppear', async ({element}) => {
       element.style.clipPath = 'polygon(-1px -1px, 101% -1%, 101% -1px, -1px -1px)'
 
       return element
     })
 
-    this.stage('appear', async (element) => {
+    this.stage('appear', async ({element, done}) => {
       const additionalDelay = element.dataset.index * 75 || 0
 
       const node = await anime({
@@ -90,16 +90,19 @@ export class TopBottom extends Animation {
       await node.finished
       element.style.clipPath = 'none'
 
+      if (done) {
+        done()
+      }
       return element
     })
 
-    this.stage('beforeLeave', async (element) => {
+    this.stage('beforeLeave', async ({element}) => {
       element.style.clipPath = 'polygon(-1px -1px, 101% -1%, 101% 101%, -1% 101%)'
 
       return element
     })
 
-    this.stage('leave', async (element) => {
+    this.stage('leave', async ({element, done}) => {
       const node = await anime({
         'targets':   element,
         'clip-path': 'polygon(-1px 101%, 101% 101%, 101% 101%, -1% 101%)',
@@ -109,6 +112,10 @@ export class TopBottom extends Animation {
 
       // Wait for the animejs animation to finish
       await node.finished
+
+      if (done) {
+        done()
+      }
       return element
     })
 
@@ -120,13 +127,13 @@ export class LeftRight extends Animation {
   constructor () {
     super()
 
-    this.stage('beforeAppear', async (element) => {
+    this.stage('beforeAppear', async ({element}) => {
       element.style.clipPath = 'polygon(-1px -1px, -1px -1px, -1px 101%, -1px 101%)'
 
       return element
     })
 
-    this.stage('appear', async (element) => {
+    this.stage('appear', async ({element, done}) => {
       const additionalDelay = element.dataset.index * 75 || 0
 
       const node = await anime({
@@ -140,16 +147,19 @@ export class LeftRight extends Animation {
       await node.finished
       element.style.clipPath = 'none'
 
+      if (done) {
+        done()
+      }
       return element
     })
 
-    this.stage('beforeLeave', async (element) => {
+    this.stage('beforeLeave', async ({element}) => {
       element.style.clipPath = 'polygon(-1px -1px, 101% -1%, 101% 101%, -1% 101%)'
 
       return element
     })
 
-    this.stage('leave', async (element) => {
+    this.stage('leave', async ({element, done}) => {
       const node = await anime({
         'targets':   element,
         'clip-path': 'polygon(101% -1px, 101% -1%, 101% 101%, 101% 101%)',
@@ -159,6 +169,10 @@ export class LeftRight extends Animation {
 
       // Wait for the animejs animation to finish
       await node.finished
+
+      if (done) {
+        done()
+      }
       return element
     })
 

@@ -6,12 +6,13 @@ const merge = require('merge-stream')
 const pwaManifest = require('pwa-manifest')
 
 const prettyError = require('gulp-prettyerror')
-const uglify = require('gulp-uglify')
 const es3ify = require('gulp-es3ify')
 const gutil = require('gulp-util')
 const flatten = require('gulp-flatten')
 const buffer = require('gulp-buffer')
 const sourcemaps = require('gulp-sourcemaps')
+const minify = require('gulp-minify')
+const optimize = require('gulp-optimize-js')
 
 const browserify = require('browserify')
 const watchify = require('watchify')
@@ -83,7 +84,16 @@ gulp.task('js:prod', () => {
       bify.bundle(),
       source(entry),
       buffer(),
-      uglify(),
+      optimize(),
+      minify({
+        'ext': {
+          'src': '.js',
+          'min': '.js'
+        },
+        'noSource': true,
+        'mangle':   true,
+        'compress': true
+      }),
       es3ify(),
       flatten(),
       gulp.dest('build/client/js')
@@ -148,8 +158,8 @@ gulp.task('js:watch', () => {
         prettyError(),
         bify.bundle(),
         source(entry),
-        flatten(),
         buffer(),
+        flatten(),
         sourcemaps.init({
           'loadMaps': true
         }),
@@ -187,10 +197,18 @@ gulp.task('worker:prod', () => {
       bify.bundle(),
       source(entry),
       buffer(),
-      uglify(),
+      minify({
+        'ext': {
+          'src': '.js',
+          'min': '.js'
+        },
+        'noSource': true,
+        'mangle':   true,
+        'compress': true
+      }),
       es3ify(),
       flatten(),
-      gulp.dest('build/client/js')
+      gulp.dest('build/client')
     ])
   })
 
@@ -209,17 +227,17 @@ gulp.task('worker:fast', () => {
     prettyError(),
     bify.bundle(),
     source(sources.worker),
-    flatten(),
     buffer(),
     sourcemaps.init({
       'loadMaps': true
     }),
-    sourcemaps.write('./build/client/js', {
+    sourcemaps.write('./build/client', {
       'sourceMappingURL': (file) => {
-        return `/js/${file.relative}.map`
+        return `/${file.relative}.map`
       }
     }),
-    gulp.dest('build/client/js')
+    flatten(),
+    gulp.dest('build/client')
   ])
 })
 

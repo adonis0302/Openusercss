@@ -24,7 +24,6 @@ const init = async () => {
   app.set('port', config.get('ports.http'))
 
   app.use(express.static(path.join(__dirname, 'client')))
-  app.use('/worker.js', express.static(path.join(__dirname, 'client/js/worker.js')))
 
   app.use(await setupRoutes())
   app.use(morgan('combined'))

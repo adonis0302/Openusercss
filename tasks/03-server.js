@@ -1,11 +1,13 @@
 const gulp = require('gulp')
+const pump = require('pump')
+
 const babel = require('gulp-babel')
 const prettyError = require('gulp-prettyerror')
-const uglify = require('gulp-uglify')
 const rename = require('gulp-rename')
 const save = require('gulp-save')
 const server = require('gulp-develop-server')
-const pump = require('pump')
+// const uglify = require('gulp-uglify')
+const minify = require('gulp-minify')
 
 const sources = {
   'server': [
@@ -33,7 +35,15 @@ gulp.task('express:prod', () => {
     prettyError(),
     gulp.src(sources.server),
     babel(),
-    uglify(),
+    minify({
+      'ext': {
+        'src': '.js',
+        'min': '.js'
+      },
+      'noSource': true,
+      'mangle':   true,
+      'compress': true
+    }),
     gulp.dest('build')
   ])
 })
@@ -52,7 +62,15 @@ gulp.task('shared:prod', () => {
     prettyError(),
     gulp.src(sources.shared),
     babel(),
-    uglify(),
+    minify({
+      'ext': {
+        'src': '.js',
+        'min': '.js'
+      },
+      'noSource': true,
+      'mangle':   true,
+      'compress': true
+    }),
     gulp.dest('build/shared')
   ])
 })

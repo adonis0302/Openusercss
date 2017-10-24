@@ -1,5 +1,4 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
-import ellipsis from 'text-ellipsis'
 
 import attributor from '../../elements/footer/footer.vue'
 import navbar from '../../elements/navbar/navbar.vue'
@@ -27,12 +26,7 @@ export default {
     navbar,
     chip
   },
-  'methods': {
-    ...leftRight,
-    cutText (text, length) {
-      return ellipsis(text, length)
-    }
-  },
+  'methods':  leftRight,
   'computed': {
     popularSites () {
       return [

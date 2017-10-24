@@ -7,15 +7,19 @@ const manifold = require('gulp-manifold')
 const sass = require('gulp-sass')
 const pug = require('gulp-pug')
 const emailEncoder = require('gulp-email-encoder')
-const postcss = require('gulp-postcss')
 const sassGlob = require('gulp-sass-glob')
 const sassVars = require('gulp-sass-vars')
 const htmlmin = require('gulp-htmlmin')
-const pleeease = require('gulp-pleeease')
 const sourcemaps = require('gulp-sourcemaps')
+const postcss = require('gulp-postcss')
+const pleeease = require('gulp-pleeease')
 
 const {pugOptions} = require('./shared/pug')
-const {postCssPluginsProd, postCssPluginsFast, ourSassConfig} = require('./shared/css')
+const {
+  ourSassConfig,
+  postCssPluginsProd,
+  postCssPluginsFast
+} = require('./shared/css')
 
 const sources = [
   'src/client/components/**/*.+(js|scss|pug)'
@@ -58,11 +62,9 @@ gulp.task('vue:prod', (done) => {
             'pseudoElements': true,
             'import':         false,
             'rebaseUrls':     false,
-            'minifier':       {
-              'removeAllComments': true
-            },
-            'mqpacker':   true,
-            'sourcemaps': false
+            'minifier':       false,
+            'mqpacker':       true,
+            'sourcemaps':     false
           })
         ])
       },

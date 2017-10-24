@@ -3,7 +3,6 @@ const rucksack = require('rucksack-css')
 const flexibility = require('postcss-flexibility')
 const fixes = require('postcss-fixes')
 const zindex = require('postcss-zindex')
-const importUrl = require('postcss-import-url')
 
 const {
   processObject,
@@ -19,7 +18,6 @@ const postCssPluginsProd = [
     'alias':             false,
     'inputPseudo':       false
   }),
-  importUrl(),
   zindex(),
   fixes(),
   flexibility()
