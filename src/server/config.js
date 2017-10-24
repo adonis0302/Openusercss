@@ -51,7 +51,7 @@ if (inProd()) {
   }
 }
 
-const genKeypair = async () => {
+const genKeypair = () => {
   log.warn('A new keypair is being generated. All users will be logged out when the app starts.')
 
   const generationStart = Date.now()
@@ -84,7 +84,7 @@ const genKeypair = async () => {
   return pem
 }
 
-const initConfig = async () => {
+const initConfig = () => {
   /*
    * WARNING
    * While the configKey does encrypt the contents of our config.json,
@@ -109,8 +109,8 @@ const initConfig = async () => {
     secretsConfig.set('version', newVersion)
   }
   if (!configKey) {
-    await pify(cp)(path.join(__dirname, 'secrets.json'), path.join(__dirname, `bkup.${newVersion}.secrets`))
-    await pify(cp)(path.join(__dirname, 'config.json'), path.join(__dirname, `bkup.${newVersion}.config`))
+    cp(path.join(__dirname, 'secrets.json'), path.join(__dirname, `bkup.${newVersion}.secrets`))
+    cp(path.join(__dirname, 'config.json'), path.join(__dirname, `bkup.${newVersion}.config`))
 
     log.error('Unable to decrypt config.json, because our secrets.json is either missing or corrupt!')
     log.warn('Your configuration options have been reset to defaults')
@@ -123,26 +123,29 @@ const initConfig = async () => {
     secretsConfig.set('version', newVersion)
   }
 
-  const config = new Conf({
+  const conf = new Conf({
     'cwd':           __dirname,
     'configName':    'config',
     'encryptionKey': secretsConfig.get('configKey'),
     'defaults':      defaultConfig
   })
 
-  if (!config.get('version')) {
-    config.set('version', newVersion)
+  if (!conf.get('version')) {
+    conf.set('version', newVersion)
   }
-  if (!config.get('keypair')) {
-    config.set('keypair', await genKeypair())
+  if (!conf.get('keypair')) {
+    conf.set('keypair', genKeypair())
   }
 
+  return conf
+}
+
+const config = initConfig()
+const staticConfig = async () => {
   return config
 }
 
 (async () => {
-  const config = await initConfig()
-
   if (!inProd()) {
     log.info(`\n${config.get('keypair').private}`)
     log.info(`\n${config.get('keypair').public}`)
@@ -151,4 +154,4 @@ const initConfig = async () => {
   log.info(`Loaded configuration, version ${config.get('version')}`)
 })()
 
-export default initConfig
+export default staticConfig
