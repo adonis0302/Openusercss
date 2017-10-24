@@ -2,7 +2,7 @@ import attributor from '../../elements/footer/footer.vue'
 import showcase from '../../sets/theme-showcase/theme-showcase.vue'
 import navbar from '../../elements/navbar/navbar.vue'
 
-import {leftRight} from '../../../src/client/components/animations'
+import {leftRight} from '../../../../src/client/components/animations'
 
 export default {
   'components': {

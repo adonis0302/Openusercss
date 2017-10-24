@@ -1,5 +1,5 @@
 import navbar from '../elements/navbar/navbar.vue'
-import {LeftRight} from '../../src/client/components/animations'
+import {LeftRight} from '../../../src/client/components/animations'
 
 export default {
   'components': {

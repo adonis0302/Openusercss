@@ -13,6 +13,7 @@ const htmlmin = require('gulp-htmlmin')
 const sourcemaps = require('gulp-sourcemaps')
 const postcss = require('gulp-postcss')
 const pleeease = require('gulp-pleeease')
+const minify = require('gulp-minify')
 
 const {pugOptions} = require('./shared/pug')
 const {
@@ -86,7 +87,7 @@ gulp.task('vue:prod', (done) => {
       }
     }),
     vuemaker(),
-    gulp.dest('.tmp')
+    gulp.dest('build/components')
   ]).on('end', () => {
     done()
   })
@@ -121,7 +122,7 @@ gulp.task('vue:fast', (done) => {
     }),
     vuemaker(),
     sourcemaps.write(),
-    gulp.dest('.tmp')
+    gulp.dest('build/components')
   ]).on('end', () => {
     done()
   })

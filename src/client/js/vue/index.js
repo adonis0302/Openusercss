@@ -6,7 +6,7 @@ import VueTooltip from 'v-tooltip'
 import router from './router'
 import store from './store'
 
-import appBase from '../../../../.tmp/app-base/app-base.vue'
+import appBase from '../../../../build/components/app-base/app-base.vue'
 import {popperCreate} from '../../components/animations'
 
 export default async () => {

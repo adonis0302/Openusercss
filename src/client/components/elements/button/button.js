@@ -2,7 +2,7 @@ import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import {mapGetters} from 'vuex'
 
 import icon from '../icon/icon.vue'
-import {LeftRight} from '../../../src/client/components/animations'
+import {LeftRight} from '../../../../src/client/components/animations'
 
 export default {
   'components': {

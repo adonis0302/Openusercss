@@ -10,7 +10,6 @@ const {
 } = require('../appshell')
 
 const postCssPluginsProd = [
-  devtools(),
   rucksack({
     'autoprefixer':      false,
     'shorthandPosition': false,

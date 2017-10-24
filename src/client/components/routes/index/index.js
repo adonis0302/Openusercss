@@ -8,7 +8,7 @@ import showcase from '../../sets/theme-showcase/theme-showcase.vue'
 import themeCard from '../../elements/theme-card/theme-card.vue'
 import flushImg from '../../elements/flush-img/flush-img.vue'
 
-import {leftRight} from '../../../src/client/components/animations'
+import {leftRight} from '../../../../src/client/components/animations'
 
 export default {
   'components': {

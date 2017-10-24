@@ -6,7 +6,6 @@ const prettyError = require('gulp-prettyerror')
 const rename = require('gulp-rename')
 const save = require('gulp-save')
 const server = require('gulp-develop-server')
-// const uglify = require('gulp-uglify')
 const minify = require('gulp-minify')
 
 const sources = {

@@ -6,7 +6,7 @@ import icon from '../../elements/icon/icon.vue'
 import themeCard from '../../elements/theme-card/theme-card.vue'
 import flushImg from '../../elements/flush-img/flush-img.vue'
 
-import {TopBottom} from '../../../src/client/components/animations'
+import {TopBottom} from '../../../../src/client/components/animations'
 
 export default {
   'components': {

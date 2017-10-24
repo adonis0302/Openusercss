@@ -1,3 +1,6 @@
+/* eslint no-process-env:0 */
+const envify = require('loose-envify')
+
 const babelOptions = {
   'presets': [
     'vue',
@@ -13,14 +16,16 @@ const babelOptions = {
       }
     ],
     'stage-3'
+  ],
+  'transform': [
+    [
+      envify, {
+        'NODE_ENV': process.env.NODE_ENV || 'development'
+      }
+    ]
   ]
 }
 
-const uglifyOptions = {
-  'ie8': true
-}
-
 module.exports = {
-  babelOptions,
-  uglifyOptions
+  babelOptions
 }

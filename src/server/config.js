@@ -4,7 +4,6 @@ import Conf from 'conf'
 import hat from 'hat'
 import log from 'chalk-console'
 import cp from 'node-cp'
-import pify from 'pify'
 import path from 'path'
 // import keypair from 'keypair'
 import selfsigned from 'selfsigned'
@@ -116,7 +115,7 @@ const initConfig = () => {
     log.warn('Your configuration options have been reset to defaults')
     log.warn('A backup of your previous config has been made, just in case')
     log.warn(`You can find your backups here:
-  ${path.join(__dirname, `bkup.${newVersion}.(config name)`)}
+  ${path.join(__dirname, `bkup.${newVersion}`)}
     `)
 
     secretsConfig.set('configKey', hat(256))

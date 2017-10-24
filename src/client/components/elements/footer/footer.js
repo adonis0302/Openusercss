@@ -1,6 +1,6 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import icon from '../icon/icon.vue'
-import {leftRight} from '../../../src/client/components/animations'
+import {leftRight} from '../../../../src/client/components/animations'
 
 export default {
   'components': {

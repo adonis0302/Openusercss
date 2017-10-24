@@ -5,7 +5,7 @@ import showcase from '../../sets/theme-showcase/theme-showcase.vue'
 import navbar from '../../elements/navbar/navbar.vue'
 import icon from '../../elements/icon/icon.vue'
 
-import {leftRight} from '../../../src/client/components/animations'
+import {leftRight} from '../../../../src/client/components/animations'
 
 export default {
   'components': {
