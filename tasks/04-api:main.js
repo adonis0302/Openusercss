@@ -1,13 +1,11 @@
-const gulp = require('gulp')
-const pump = require('pump')
-const path = require('path')
-
-const babel = require('gulp-babel')
-const prettyError = require('gulp-prettyerror')
-const rename = require('gulp-rename')
-const save = require('gulp-save')
-const server = require('gulp-develop-server')
-const minify = require('gulp-minify')
+import gulp from 'gulp'
+import pump from 'pump'
+import path from 'path'
+import babel from 'gulp-babel'
+import prettyError from 'gulp-prettyerror'
+import rename from 'gulp-rename'
+import save from 'gulp-save'
+import minify from 'gulp-minify'
 
 const sources = {
   'server': [

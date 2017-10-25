@@ -1,10 +1,9 @@
-const gulp = require('gulp')
-const path = require('path')
-const pump = require('pump')
-
-const prettyError = require('gulp-prettyerror')
-const babel = require('gulp-babel')
-const minify = require('gulp-minify')
+import gulp from 'gulp'
+import path from 'path'
+import pump from 'pump'
+import prettyError from 'gulp-prettyerror'
+import babel from 'gulp-babel'
+import minify from 'gulp-minify'
 
 const sources = {
   'shared': [

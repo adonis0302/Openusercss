@@ -1,39 +1,31 @@
-const gulp = require('gulp')
-const pump = require('pump')
-const merge = require('merge-stream')
-const buffer = require('gulp-buffer')
-const filter = require('gulp-filter')
-const prettyError = require('gulp-prettyerror')
-const path = require('path')
+import gulp from 'gulp'
+import pump from 'pump'
+import merge from 'merge-stream'
+import buffer from 'gulp-buffer'
+import filter from 'gulp-filter'
+import prettyError from 'gulp-prettyerror'
+import path from 'path'
 
 // IMAGES
-const imagemin = require('gulp-imagemin')
-const jpegRecompress = require('imagemin-jpeg-recompress')
-const jimp = require('gulp-jimp-resize')
+import imagemin from 'gulp-imagemin'
+import jpegRecompress from 'imagemin-jpeg-recompress'
+import jimp from 'gulp-jimp-resize'
 
 // SASS
-const sass = require('gulp-sass')
-const sassGlob = require('gulp-sass-glob')
-const sassVars = require('gulp-sass-vars')
+import sass from 'gulp-sass'
+import sassGlob from 'gulp-sass-glob'
+import sassVars from 'gulp-sass-vars'
 
 // POSTCSS
-const postcss = require('gulp-postcss')
-const pleeease = require('gulp-pleeease')
+import postcss from 'gulp-postcss'
+import pleeease from 'gulp-pleeease'
 
 // OTHER
-const concat = require('gulp-concat')
-const webfont64 = require('gulp-base64-webfont-css')
-const del = require('del')
-const flatten = require('gulp-flatten')
-
-const {
-  iconSizes,
-  bgSizes,
-  sizes,
-  ourSassConfig,
-  postCssPluginsProd,
-  postCssPluginsFast
-} = require('./shared/css')
+import concat from 'gulp-concat'
+import webfont64 from 'gulp-base64-webfont-css'
+import del from 'del'
+import flatten from 'gulp-flatten'
+import {iconSizes, bgSizes, sizes, ourSassConfig, postCssPluginsProd, postCssPluginsFast} from './shared/css'
 
 // =============================================================================
 // SCSS -> CSS and OPTIMIZE IMGs
@@ -176,7 +168,7 @@ gulp.task('client:media:prod', () => {
   return merge(finalCssStream, finalImageStream)
 })
 
-gulp.task('client:media:fast', () => {
+gulp.task('client:media:fast', (done) => {
   del.sync(destination('css'))
   del.sync(destination('img'))
 
@@ -237,7 +229,12 @@ gulp.task('client:media:fast', () => {
     gulp.dest(destination('css'))
   ])
 
-  return merge(finalCssStream, finalImageStream)
+  return pump([
+    prettyError(),
+    merge(finalCssStream, finalImageStream)
+  ]).on('end', () => {
+    done()
+  })
 })
 
 gulp.task('client:media:watch', (done) => {

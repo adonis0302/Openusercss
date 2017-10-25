@@ -1,10 +1,9 @@
-const gulp = require('gulp')
-const pump = require('pump')
-const path = require('path')
-
-const babel = require('gulp-babel')
-const prettyError = require('gulp-prettyerror')
-const minify = require('gulp-minify')
+import gulp from 'gulp'
+import pump from 'pump'
+import path from 'path'
+import babel from 'gulp-babel'
+import prettyError from 'gulp-prettyerror'
+import minify from 'gulp-minify'
 
 const sources = {
   'manager': [

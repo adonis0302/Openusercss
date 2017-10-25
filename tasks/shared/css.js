@@ -1,15 +1,11 @@
-const devtools = require('postcss-devtools')
-const rucksack = require('rucksack-css')
-const flexibility = require('postcss-flexibility')
-const fixes = require('postcss-fixes')
-const zindex = require('postcss-zindex')
+import devtools from 'postcss-devtools'
+import rucksack from 'rucksack-css'
+import flexibility from 'postcss-flexibility'
+import fixes from 'postcss-fixes'
+import zindex from 'postcss-zindex'
+import {processObject, appConfig} from '../appshell'
 
-const {
-  processObject,
-  clyConfig
-} = require('../appshell')
-
-const postCssPluginsProd = [
+export const postCssPluginsProd = [
   rucksack({
     'autoprefixer':      false,
     'shorthandPosition': false,
@@ -22,7 +18,7 @@ const postCssPluginsProd = [
   flexibility()
 ]
 
-const postCssPluginsFast = [
+export const postCssPluginsFast = [
   devtools(),
   rucksack({
     'autoprefixer':      false,
@@ -33,7 +29,7 @@ const postCssPluginsFast = [
   })
 ]
 
-const ourSassConfig = processObject(clyConfig.get(), (index, value) => {
+export const ourSassConfig = processObject(appConfig.get(), (index, value) => {
   if (value[0] === '#') {
     return value
   } else if (
@@ -52,21 +48,21 @@ const ourSassConfig = processObject(clyConfig.get(), (index, value) => {
   return `"${value}"`
 })
 
-const iconSizesPx = [
+export const iconSizesPx = [
   16,
   32,
   64,
   128
 ]
 
-const bgSizesPx = [
+export const bgSizesPx = [
   1366,
   1920,
   360,
   128
 ]
 
-const elementSizesPx = [
+export const elementSizesPx = [
   128,
   360,
   640,
@@ -105,10 +101,7 @@ bgSizesPx.forEach((bgSize) => {
   })
 })
 
-module.exports = {
-  postCssPluginsFast,
-  postCssPluginsProd,
-  ourSassConfig,
+export {
   sizes,
   iconSizes,
   bgSizes

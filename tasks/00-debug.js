@@ -1,6 +1,6 @@
 /* eslint no-console:0 */
-const gulp = require('gulp')
-const legalEagle = require('legal-eagle')
+import gulp from 'gulp'
+import legalEagle from 'legal-eagle'
 
 gulp.task('debug', (done) => {
   legalEagle({

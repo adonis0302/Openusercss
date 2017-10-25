@@ -1,25 +1,19 @@
-const gulp = require('gulp')
-const pump = require('pump')
-
-const prettyError = require('gulp-prettyerror')
-const vuemaker = require('gulp-vuemaker')
-const manifold = require('gulp-manifold')
-const sass = require('gulp-sass')
-const pug = require('gulp-pug')
-const emailEncoder = require('gulp-email-encoder')
-const sassGlob = require('gulp-sass-glob')
-const sassVars = require('gulp-sass-vars')
-const htmlmin = require('gulp-htmlmin')
-const sourcemaps = require('gulp-sourcemaps')
-const postcss = require('gulp-postcss')
-const pleeease = require('gulp-pleeease')
-
-const {pugOptions} = require('./shared/pug')
-const {
-  ourSassConfig,
-  postCssPluginsProd,
-  postCssPluginsFast
-} = require('./shared/css')
+import gulp from 'gulp'
+import pump from 'pump'
+import prettyError from 'gulp-prettyerror'
+import vuemaker from 'gulp-vuemaker'
+import manifold from 'gulp-manifold'
+import sass from 'gulp-sass'
+import pug from 'gulp-pug'
+import emailEncoder from 'gulp-email-encoder'
+import sassGlob from 'gulp-sass-glob'
+import sassVars from 'gulp-sass-vars'
+import htmlmin from 'gulp-htmlmin'
+import sourcemaps from 'gulp-sourcemaps'
+import postcss from 'gulp-postcss'
+import pleeease from 'gulp-pleeease'
+import {pugOptions} from './shared/pug'
+import {ourSassConfig, postCssPluginsProd, postCssPluginsFast} from './shared/css'
 
 const sources = [
   'src/components/**/*.+(js|scss|pug)'

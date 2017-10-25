@@ -1,6 +1,7 @@
 /* eslint no-console:0 no-process-env:0 */
-const requireDir = require('require-dir')
-const handler = require('./src/shared/error-handler')
+import 'babel-polyfill'
+import requireDir from 'require-dir'
+import handler from './src/shared/error-handler'
 
 handler()
 

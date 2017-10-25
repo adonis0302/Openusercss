@@ -1,25 +1,23 @@
-const gulp = require('gulp')
-const pump = require('pump')
-const glob = require('glob')
-const source = require('vinyl-source-stream')
-const merge = require('merge-stream')
-const pwaManifest = require('pwa-manifest')
-const path = require('path')
-
-const prettyError = require('gulp-prettyerror')
-const es3ify = require('gulp-es3ify')
-const gutil = require('gulp-util')
-const flatten = require('gulp-flatten')
-const buffer = require('gulp-buffer')
-const sourcemaps = require('gulp-sourcemaps')
-const minify = require('gulp-minify')
-const optimize = require('gulp-optimize-js')
-
-const browserify = require('browserify')
-const watchify = require('watchify')
-const babelify = require('babelify')
-const vueify = require('vueify')
-const hmr = require('browserify-hmr')
+import gulp from 'gulp'
+import pump from 'pump'
+import glob from 'glob'
+import source from 'vinyl-source-stream'
+import merge from 'merge-stream'
+import pwaManifest from 'pwa-manifest'
+import path from 'path'
+import prettyError from 'gulp-prettyerror'
+import es3ify from 'gulp-es3ify'
+import gutil from 'gulp-util'
+import flatten from 'gulp-flatten'
+import buffer from 'gulp-buffer'
+import sourcemaps from 'gulp-sourcemaps'
+import minify from 'gulp-minify'
+import optimize from 'gulp-optimize-js'
+import browserify from 'browserify'
+import watchify from 'watchify'
+import babelify from 'babelify'
+import vueify from 'vueify'
+import hmr from 'browserify-hmr'
 
 const browserifyOpts = (mergeWith) => {
   const options = {

@@ -1,5 +1,5 @@
-const gulp = require('gulp')
-const server = require('gulp-develop-server')
+import gulp from 'gulp'
+import server from 'gulp-develop-server'
 
 gulp.task('build:fast', gulp.parallel(
   'api:fast',

@@ -1,9 +1,9 @@
-const {clyConfig} = require('../appshell')
-const pugGlob = require('pug-include-glob')
+import {appConfig} from '../appshell'
+import pugGlob from 'pug-include-glob'
 
 const pugOptions = {
   'data': {
-    'clyConfig':   clyConfig.get(),
+    'appConfig':   appConfig.get(),
     'packagefile': require('../../package.json'),
     require
   },
@@ -15,6 +15,6 @@ const pugOptions = {
   ]
 }
 
-module.exports = {
+export default {
   pugOptions
 }

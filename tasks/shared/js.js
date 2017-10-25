@@ -1,5 +1,5 @@
 /* eslint no-process-env:0 */
-const envify = require('loose-envify')
+import envify from 'loose-envify'
 
 const babelOptions = {
   'presets': [
@@ -26,6 +26,6 @@ const babelOptions = {
   ]
 }
 
-module.exports = {
+export default {
   babelOptions
 }
