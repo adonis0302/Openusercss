@@ -12,7 +12,8 @@
     "fast": "npm run clean && npm run build:fast",
     "run:prod": "NODE_ENV=production node build/manager",
     "run:dev": "NODE_ENV=development node build/manager",
-    "watch": "npm run fast && NODE_ENV=development gulp watch"
+    "watch": "npm run fast && NODE_ENV=development gulp watch",
+    "watch:dirty": "npm run build:fast && NODE_ENV=development gulp watch"
   },
   "author": "DecentM",
   "license": "MIT",
