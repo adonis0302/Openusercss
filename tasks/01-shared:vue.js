@@ -80,7 +80,7 @@ gulp.task('client:vue:prod', (done) => {
       }
     }),
     vuemaker(),
-    gulp.dest('build/components')
+    gulp.dest('build/webserver')
   ]).on('end', () => {
     done()
   })
@@ -115,7 +115,7 @@ gulp.task('client:vue:fast', (done) => {
     }),
     vuemaker(),
     sourcemaps.write(),
-    gulp.dest('build/components')
+    gulp.dest('build/webserver')
   ]).on('end', () => {
     done()
   })

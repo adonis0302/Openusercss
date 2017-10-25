@@ -10,8 +10,8 @@
     "build:fast": "NODE_ENV=development gulp build:fast",
     "prod": "npm run clean && npm run build:prod",
     "fast": "npm run clean && npm run build:fast",
-    "run:prod": "NODE_ENV=production node build/manager",
-    "run:dev": "NODE_ENV=development node build/manager",
+    "start:prod": "NODE_ENV=production node build/manager",
+    "start:dev": "NODE_ENV=development node build/manager",
     "watch": "npm run fast && NODE_ENV=development gulp watch",
     "watch:dirty": "npm run build:fast && NODE_ENV=development gulp watch"
   },
@@ -30,6 +30,7 @@
     "babel-preset-flow": "^6",
     "babel-preset-stage-3": "^6",
     "babel-preset-vue": "^1",
+    "babel-register": "^6.26.0",
     "babelify": "^7",
     "brace": "^0",
     "browserify": "^14",
@@ -142,7 +143,7 @@
     "lodash": "^4",
     "morgan": "^1",
     "node-cp": "^0",
-    "nuxt": "^1.0.0-rc11",
+    "nuxt": "1.0.0-rc11",
     "passport": "^0",
     "passport-http": "^0",
     "passport-local": "^1",
@@ -157,6 +158,8 @@
     "vue": "^2",
     "vue-bulma-components": "^1",
     "vue-router": "^2",
+    "vue-server-renderer": "^2.5.2",
+    "vue-template-compiler": "^2.5.2",
     "vuex": "^2"
   }
 }

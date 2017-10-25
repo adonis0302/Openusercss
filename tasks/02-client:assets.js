@@ -56,10 +56,10 @@ const sources = {
 
 const destination = (dest) => {
   if (!dest) {
-    return path.resolve('./build/client/')
+    return path.resolve('./build/webserver/static/')
   }
 
-  return path.resolve('./build/client/', dest)
+  return path.resolve('./build/webserver/static/', dest)
 }
 
 gulp.task('client:media:prod', () => {

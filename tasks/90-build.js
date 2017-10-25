@@ -5,14 +5,16 @@ gulp.task('build:fast', gulp.parallel(
   'api:fast',
   'client:fast',
   'shared:fast',
-  'manager:fast'
+  'manager:fast',
+  'webserver:fast'
 ))
 
 gulp.task('build:prod', gulp.parallel(
   'api:prod',
   'client:prod',
   'shared:prod',
-  'manager:prod'
+  'manager:prod',
+  'webserver:prod'
 ))
 
 const watch = () => {
@@ -30,6 +32,10 @@ const watch = () => {
     'package.json',
     '.npmrc'
   ], gulp.series('api:fast', server.restart))
+
+  gulp.watch([
+    'src/webserver/**/*.js'
+  ], gulp.series('webserver:fast', server.restart))
 }
 
 gulp.task('watch', watch)

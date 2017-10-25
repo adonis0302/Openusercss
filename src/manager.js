@@ -10,7 +10,8 @@ import {spawn} from 'child_process'
 log.info('Manager process starting')
 
 const startList = {
-  'API': path.resolve(process.mainModule.paths[0], '../api/index')
+  'API':       path.resolve(process.mainModule.paths[0], '../api/index'),
+  'Webserver': path.resolve(process.mainModule.paths[0], '../webserver/index')
 }
 
 const startProcesses = (list) => {

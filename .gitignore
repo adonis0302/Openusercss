@@ -2,6 +2,7 @@
 .gulp-scss-cache
 .sass-cache
 .tmp
+.nuxt
 
 bfg.jar
 build

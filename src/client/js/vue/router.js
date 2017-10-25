@@ -1,13 +1,13 @@
 import VueRouter from 'vue-router'
 
-import indexRoute from '../../../../build/components/pages/index/index.vue'
-import browseRoute from '../../../../build/components/pages/browse/browse.vue'
-import loginRoute from '../../../../build/components/pages/login/login.vue'
-import registerRoute from '../../../../build/components/pages/register/register.vue'
-import profileRoute from '../../../../build/components/pages/profile/profile.vue'
-import newThemeRoute from '../../../../build/components/pages/new-theme/new-theme.vue'
+import indexRoute from '../../../../build/webserver/pages/index/index.vue'
+import browseRoute from '../../../../build/webserver/pages/browse/browse.vue'
+import loginRoute from '../../../../build/webserver/pages/login/login.vue'
+import registerRoute from '../../../../build/webserver/pages/register/register.vue'
+import profileRoute from '../../../../build/webserver/pages/profile/profile.vue'
+import newThemeRoute from '../../../../build/webserver/pages/new-theme/new-theme.vue'
 
-import notFoundRoute from '../../../../build/components/pages/not-found/not-found.vue'
+import notFoundRoute from '../../../../build/webserver/pages/not-found/not-found.vue'
 
 const router = new VueRouter({
   'mode':   'history',

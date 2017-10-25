@@ -22,7 +22,7 @@ let defaultConfig = {
     'api': {
       'https': 5001
     },
-    'frontent': {
+    'frontend': {
       'https': 5011
     }
   },
@@ -44,7 +44,7 @@ if (!inProd()) {
       'api': {
         'http': 5000
       },
-      'frontent': {
+      'frontend': {
         'http': 5010
       }
     }
