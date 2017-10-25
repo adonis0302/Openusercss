@@ -17,7 +17,8 @@ gulp.task('build:prod', gulp.parallel(
 
 const watch = () => {
   server.listen({
-    'path': './build/manager'
+    'path':       './build/manager',
+    'killSignal': 'SIGTERM'
   })
 
   gulp.watch([

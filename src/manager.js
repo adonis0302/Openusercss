@@ -37,7 +37,7 @@ const stopProcesses = (processes) => {
 
   forOwn(processes, async (child, key) => {
     log.info(`Manager stopping ${child.name}`)
-    child.kill('SIGINT')
+    child.kill('SIGTERM')
     stopped.push(child)
   })
 
@@ -47,9 +47,11 @@ const stopProcesses = (processes) => {
 const children = startProcesses(startList)
 
 process.on('SIGINT', () => {
-  // eslint-disable-next-line
-  console.log()
   log.info('Manager received SIGINT')
+  stopProcesses(children)
+})
+process.on('SIGTERM', () => {
+  log.info('Manager received SIGTERM')
   stopProcesses(children)
 })
 process.on('exit', () => {

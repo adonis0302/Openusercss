@@ -54,8 +54,8 @@ const init = async () => {
   }
 })()
 
-process.on('SIGINT', () => {
-  log.info('API received SIGINT')
+process.on('SIGTERM', () => {
+  log.info('API received SIGTERM')
   servers.forEach((server) => {
     server.close()
   })
