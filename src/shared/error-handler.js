@@ -1,7 +1,8 @@
 // @flow
 
-import PrettyError from 'pretty-error'
-export default async () => {
+const PrettyError = require('pretty-error')
+
+module.exports = async () => {
   const pe = new PrettyError()
 
   pe.appendStyle({

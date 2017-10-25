@@ -1,6 +1,6 @@
 // @flow
 
-import staticConfig from '../../shared/config'
+import staticConfig from './config'
 import jwt from 'jsonwebtoken'
 import {expected} from './custom-errors'
 

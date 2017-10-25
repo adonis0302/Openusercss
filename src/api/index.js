@@ -5,12 +5,14 @@ import express from 'express'
 import log from 'chalk-console'
 import morgan from 'morgan'
 
-import staticConfig, {inProd} from '../shared/config'
+import staticConfig from '../shared/config'
 import setupRoutes from './routes'
-import attachHandler from './shared/error-handler'
+import attachHandler from '../shared/error-handler'
 
 import http from 'http'
 import https from 'https'
+
+const servers = []
 
 const init = async () => {
   await attachHandler()
@@ -24,14 +26,20 @@ const init = async () => {
 
   log.info(`API environment: ${app.get('env')}`)
 
-  if (!inProd()) {
-    http.createServer(app).listen(config.get('ports.api.http'))
+  if (config.get('env') === 'development') {
+    const httpServer = http.createServer(app)
+
+    httpServer.listen(config.get('ports.api.http'))
+    servers.push(httpServer)
   }
 
-  https.createServer({
+  const httpsServer = https.createServer({
     'key':  config.get('keypair.clientprivate'),
     'cert': config.get('keypair.clientcert')
-  }, app).listen(config.get('ports.api.https'))
+  }, app)
+
+  httpsServer.listen(config.get('ports.api.https'))
+  servers.push(httpsServer)
 
   log.info(`API started: ${JSON.stringify(config.get('ports.api'))}`)
 
@@ -45,3 +53,15 @@ const init = async () => {
     log.error(error)
   }
 })()
+
+process.on('SIGINT', () => {
+  log.info('API received SIGINT')
+  servers.forEach((server) => {
+    server.close()
+  })
+  process.exit()
+})
+
+process.on('exit', () => {
+  log.info('API process exiting immediately')
+})

@@ -113,7 +113,6 @@
     "no-mixed-requires": [2,false],
     "no-new-require": 2,
     "no-path-concat": 2,
-    "no-process-exit": 2,
     "no-sync": 1,
     "array-bracket-spacing": [2,"never",{"singleValue":true,"objectsInArrays":true,"arraysInArrays":true}],
     "brace-style": [2,"1tbs",{}],

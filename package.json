@@ -5,8 +5,14 @@
   "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "NODE_ENV=production gulp build:prod",
-    "start": "NODE_ENV=development gulp watch"
+    "clean": "rm -rf build",
+    "build:prod": "NODE_ENV=production gulp build:prod",
+    "build:fast": "NODE_ENV=development gulp build:fast",
+    "prod": "npm run clean && npm run build:prod",
+    "fast": "npm run clean && npm run build:fast",
+    "run:prod": "NODE_ENV=production node build/manager",
+    "run:dev": "NODE_ENV=development node build/manager",
+    "watch": "npm run fast && NODE_ENV=development gulp watch"
   },
   "author": "DecentM",
   "license": "MIT",

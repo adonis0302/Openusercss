@@ -1,21 +1,34 @@
 const gulp = require('gulp')
+const server = require('gulp-develop-server')
 
 gulp.task('build:fast', gulp.parallel(
   'api:fast',
-  'client:fast'
+  'client:fast',
+  'shared:fast',
+  'manager:fast'
 ))
 
 gulp.task('build:prod', gulp.parallel(
   'api:prod',
-  'client:prod'
+  'client:prod',
+  'shared:prod',
+  'manager:prod'
 ))
 
-gulp.task('build:watch', gulp.parallel(
-  'client:watch',
-  'api:watch'
-))
+const watch = () => {
+  server.listen({
+    'path': './build/manager'
+  })
 
-gulp.task('watch', gulp.series(
-  'build:fast',
-  'build:watch'
-))
+  gulp.watch([
+    'src/manager.js'
+  ], gulp.series('manager:fast', server.restart))
+
+  gulp.watch([
+    'src/api/**/*.js',
+    'package.json',
+    '.npmrc'
+  ], gulp.series('api:fast', server.restart))
+}
+
+gulp.task('watch', watch)

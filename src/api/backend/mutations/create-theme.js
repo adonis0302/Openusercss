@@ -3,8 +3,8 @@ import {escape} from 'html-escaper'
 import stylelint from 'stylelint'
 import moment from 'moment'
 
-import mustAuthenticate from '../../shared/enforce-session'
-import {expected} from '../../shared/custom-errors'
+import mustAuthenticate from '../../../shared/enforce-session'
+import {expected} from '../../../shared/custom-errors'
 
 const {LintError} = expected
 

@@ -13,9 +13,6 @@ const sources = {
   'server': [
     'src/api/**/*.js'
   ],
-  'shared': [
-    'src/shared/**/*.js'
-  ],
   'views': [
     'src/api/views/**/*'
   ]
@@ -56,33 +53,6 @@ gulp.task('api:express:prod', () => {
   ])
 })
 
-gulp.task('api:shared:fast', () => {
-  return pump([
-    prettyError(),
-    gulp.src(sources.shared),
-    babel(),
-    gulp.dest(destination('shared'))
-  ])
-})
-
-gulp.task('api:shared:prod', () => {
-  return pump([
-    prettyError(),
-    gulp.src(sources.shared),
-    babel(),
-    minify({
-      'ext': {
-        'src': '.js',
-        'min': '.js'
-      },
-      'noSource': true,
-      'mangle':   true,
-      'compress': true
-    }),
-    gulp.dest(destination('shared'))
-  ])
-})
-
 gulp.task('api:meta:copy', () => {
   return pump([
     prettyError(),
@@ -114,27 +84,12 @@ gulp.task('api:runtime:empties', () => {
 
 gulp.task('api:fast', gulp.parallel(
   'api:express:fast',
-  'api:shared:fast',
   'api:meta:copy',
   'api:runtime:empties'
 ))
 
 gulp.task('api:prod', gulp.parallel(
   'api:express:prod',
-  'api:shared:prod',
   'api:meta:copy',
   'api:runtime:empties'
 ))
-
-gulp.task('api:watch', () => {
-  server.listen({
-    'path': './build/api/index'
-  })
-
-  gulp.watch([
-    'src/api/**/*.js',
-    'src/shared/**/*.js',
-    'package.json',
-    '.npmrc'
-  ], gulp.series('api:fast', server.restart))
-})

@@ -20,11 +20,9 @@ let defaultConfig = {
   'env':   'production',
   'ports': {
     'api': {
-      'http':  5000,
       'https': 5001
     },
     'frontent': {
-      'http':  5010,
       'https': 5011
     }
   },
@@ -41,7 +39,15 @@ if (!inProd()) {
 
   defaultConfig = defaultsDeep({
     'env':        'development',
-    'saltRounds': 11
+    'saltRounds': 11,
+    'ports':      {
+      'api': {
+        'http': 5000
+      },
+      'frontent': {
+        'http': 5010
+      }
+    }
   }, defaultConfig)
 }
 
@@ -130,6 +136,7 @@ const initConfig = () => {
   if (!conf.get('keypair')) {
     conf.set('keypair', genKeypair())
   }
+  conf.set('env', process.env.NODE_ENV || 'development')
 
   return conf
 }
@@ -140,6 +147,10 @@ const staticConfig = async () => {
 }
 
 (async () => {
+  if (config.get('env') !== process.env.NODE_ENV) {
+    throw new Error('Your configuration doesn\'t match your environment')
+  }
+
   if (!inProd()) {
     log.info(`\n${config.get('keypair').private}`)
     log.info(`\n${config.get('keypair').public}`)

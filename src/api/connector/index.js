@@ -11,7 +11,7 @@ const init = async () => {
   const connectionUrl = config.get('database.main')
 
   await connect(connectionUrl)
-  log.info('Database connection established')
+  log.info('API database connection established')
 }
 
 init()
