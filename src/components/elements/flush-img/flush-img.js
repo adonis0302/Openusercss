@@ -1,6 +1,4 @@
-const {Image} = window
-
-const preloadImage = (url) => {
+const preloadImage = (url, Image) => {
   return new Promise((resolve, reject) => {
     const img = new Image()
 
@@ -10,11 +8,11 @@ const preloadImage = (url) => {
   })
 }
 
-const updateImage = async (self) => {
+const updateImage = async (self, Image) => {
   self.$el.classList.add('ouc-image-unloaded')
 
-  const placeholderLoaded = preloadImage(self.placeholder)
-  const sourceLoaded = preloadImage(self.source)
+  const placeholderLoaded = preloadImage(self.placeholder, Image)
+  const sourceLoaded = preloadImage(self.source, Image)
 
   try {
     await placeholderLoaded
@@ -76,10 +74,10 @@ export default {
   },
   'watch': {
     placeholder (newPlaceholder) {
-      updateImage(this)
+      updateImage(this, window.Image)
     }
   },
   mounted () {
-    updateImage(this)
+    updateImage(this, window.Image)
   }
 }

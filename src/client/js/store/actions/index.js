@@ -1,5 +1,5 @@
 import {forOwn, defaultsDeep} from 'lodash'
-import ApolloClient, {createBatchingNetworkInterface, createNetworkInterface} from 'apollo-client'
+import ApolloClient, {createBatchingNetworkInterface} from 'apollo-client'
 import localStore from 'store2'
 
 import verifyToken from './verify-token'

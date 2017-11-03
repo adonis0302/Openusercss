@@ -5,9 +5,9 @@ import express from 'express'
 import log from 'chalk-console'
 import morgan from 'morgan'
 
-import staticConfig from '../shared/config'
-import setupRoutes from './routes'
-import attachHandler from '../shared/error-handler'
+import staticConfig from './shared/config'
+import setupRoutes from './api/routes'
+import attachHandler from './shared/error-handler'
 
 import http from 'http'
 import https from 'https'

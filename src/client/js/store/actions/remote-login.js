@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
 
 import router from '../../router'
-import {expected} from '../../../../../shared/custom-errors'
+import {expected} from '../../../../shared/custom-errors'
 import {apolloClient} from '.'
 
 const {AuthenticationError} = expected

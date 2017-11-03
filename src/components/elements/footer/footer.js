@@ -1,6 +1,5 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import icon from '../icon/icon.vue'
-import {leftRight} from '../../../../src/components/animations'
 
 export default {
   'components': {
@@ -11,8 +10,5 @@ export default {
     'b-column':    bulma('column', 'div'),
     'b-tile':      bulma('tile', 'div'),
     icon
-  },
-  'methods': {
-    ...leftRight
   }
 }

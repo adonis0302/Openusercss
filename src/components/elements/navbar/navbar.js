@@ -4,6 +4,10 @@ import {mapGetters, mapActions} from 'vuex'
 import flushImg from '../flush-img/flush-img.vue'
 import icon from '../icon/icon.vue'
 
+const actions = mapActions([
+  'logout'
+])
+
 export default {
   'components': {
     'navbar':          bulma('navbar', 'nav'),
@@ -21,9 +25,7 @@ export default {
     flushImg
   },
   'methods': {
-    ...mapActions([
-      'logout'
-    ]),
+    'logout': actions.logout,
     toggleOpen () {
       this.open = !this.open
     },

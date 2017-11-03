@@ -56,8 +56,7 @@ const browserifyOpts = (mergeWith) => {
 }
 
 const sources = {
-  'client': 'src/client/js/!(worker).js',
-  'worker': 'src/client/js/worker.js'
+  'client': 'src/client/js/*.js'
 }
 
 const destination = (dest) => {
@@ -65,7 +64,7 @@ const destination = (dest) => {
     return path.resolve('./build/webserver/static/')
   }
 
-  return path.resolve('./build/webserver/static/', dest)
+  return require.resolve('./build/webserver/static/', dest)
 }
 
 const createBrowserify = ({entries, debug}) => {
@@ -79,12 +78,17 @@ gulp.task('client:js:prod', () => {
   const files = glob.sync(sources.client)
 
   const bundles = files.map((entry, index) => {
-    const bify = createBrowserify({
+    const options = {
       'entries': [
         entry
       ],
-      'debug': false
-    })
+      'debug': true
+    }
+
+    if (entry.split('/')[entry.split('/').length - 1] === 'server.js') {
+      options.standalone = 'server'
+    }
+    const bify = createBrowserify(options)
 
     return pump([
       prettyError(),
@@ -103,7 +107,7 @@ gulp.task('client:js:prod', () => {
       }),
       es3ify(),
       flatten(),
-      gulp.dest(destination('js'))
+      gulp.dest(destination())
     ])
   })
 
@@ -114,28 +118,34 @@ gulp.task('client:js:fast', () => {
   const files = glob.sync(sources.client)
 
   const bundles = files.map((entry, index) => {
-    const bify = createBrowserify({
+    const options = {
       'entries': [
         entry
       ],
       'debug': true
-    })
+    }
+
+    if (entry.split('/')[entry.split('/').length - 1] === 'server.js') {
+      options.standalone = 'server'
+    }
+    const bify = createBrowserify(options)
 
     return pump([
       prettyError(),
       bify.bundle(),
       source(entry),
-      flatten(),
       buffer(),
+      flatten(),
       sourcemaps.init({
         'loadMaps': true
       }),
-      sourcemaps.write(destination('js'), {
+      sourcemaps.write(destination(), {
         'sourceMappingURL': (file) => {
-          return `/js/${file.relative}.map`
+          return `/${file.relative}.map`
         }
       }),
-      gulp.dest(destination('js'))
+      flatten(),
+      gulp.dest(destination())
     ])
   })
 
@@ -146,19 +156,29 @@ gulp.task('client:js:watch', () => {
   const files = glob.sync(sources.client)
 
   const bundles = files.map((entry, index) => {
-    const bify = createBrowserify({
+    const options = {
       'entries': [
         entry
       ],
       'debug': true
-    })
+    }
+
+    if (entry.split('/')[entry.split('/').length - 1] === 'server.js') {
+      options.standalone = 'server'
+    } else {
+      options.plugin = [
+        [
+          hmr, {
+            'mode': 'websocket',
+            'port': 3123 + index,
+            'url':  `http://localhost:${3123 + index}`
+          }
+        ]
+      ]
+    }
+    const bify = createBrowserify(options)
 
     bify.plugin(watchify)
-    bify.plugin(hmr, {
-      'mode': 'websocket',
-      'port': 3123 + index,
-      'url':  `http://localhost:${3123 + index}`
-    })
 
     const bundle = () => {
       return pump([
@@ -172,10 +192,11 @@ gulp.task('client:js:watch', () => {
         }),
         sourcemaps.write(destination(), {
           'sourceMappingURL': (file) => {
-            return `/js/${file.relative}.map`
+            return `/${file.relative}.map`
           }
         }),
-        gulp.dest(destination('js'))
+        flatten(),
+        gulp.dest(destination())
       ])
     }
 
@@ -186,70 +207,6 @@ gulp.task('client:js:watch', () => {
   })
 
   return merge(bundles)
-})
-
-gulp.task('client:worker:prod', () => {
-  const files = glob.sync(sources.worker)
-
-  const bundles = files.map((entry, index) => {
-    const bify = createBrowserify({
-      'entries': [
-        entry
-      ],
-      'debug': false
-    })
-
-    return pump([
-      prettyError(),
-      bify.bundle(),
-      source(entry),
-      buffer(),
-      minify({
-        'ext': {
-          'src': '.js',
-          'min': '.js'
-        },
-        'noSource': true,
-        'mangle':   true,
-        'compress': true
-      }),
-      es3ify(),
-      flatten(),
-      gulp.dest(destination())
-    ])
-  })
-
-  return merge(bundles)
-})
-
-gulp.task('client:worker:fast', () => {
-  const bify = createBrowserify({
-    'entries': [
-      sources.worker
-    ],
-    'debug': true
-  })
-
-  return pump([
-    prettyError(),
-    bify.bundle(),
-    source(sources.worker),
-    buffer(),
-    sourcemaps.init({
-      'loadMaps': true
-    }),
-    sourcemaps.write(destination(), {
-      'sourceMappingURL': (file) => {
-        return `/${file.relative}.map`
-      }
-    }),
-    flatten(),
-    gulp.dest(destination())
-  ])
-})
-
-gulp.task('client:worker:watch', () => {
-  gulp.watch(sources.worker, gulp.series('client:worker:fast'))
 })
 
 gulp.task('client:manifest', (done) => {
@@ -276,22 +233,19 @@ gulp.task('client:manifest', (done) => {
 })
 
 gulp.task('client:watch', gulp.parallel(
-  gulp.series('client:vue:watch', 'client:js:watch'),
-  gulp.series('client:worker:fast', 'client:worker:watch'),
+  'client:js:watch',
   'client:manifest',
   'client:media:watch'
 ))
 
 gulp.task('client:fast', gulp.parallel(
-  gulp.series('client:vue:fast', 'client:js:fast'),
-  'client:worker:fast',
+  'client:js:fast',
   'client:manifest',
   'client:media:fast'
 ))
 
 gulp.task('client:prod', gulp.parallel(
-  gulp.series('client:vue:prod', 'client:js:prod'),
-  'client:worker:prod',
+  'client:js:prod',
   'client:manifest',
   'client:media:prod'
 ))

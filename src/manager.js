@@ -5,13 +5,14 @@ import 'babel-polyfill'
 import log from 'chalk-console'
 import path from 'path'
 import {forOwn} from 'lodash'
-import {spawn} from 'child_process'
+import respawn from 'respawn'
 
 log.info('Manager process starting')
 
+const basePath = path.resolve(process.mainModule.paths[0], '..')
 const startList = {
-  'API':       path.resolve(process.mainModule.paths[0], '../api/index'),
-  'Webserver': path.resolve(process.mainModule.paths[0], '../webserver/index')
+  'API':       path.join(basePath, '/api'),
+  'Webserver': path.join(basePath, '/webserver')
 }
 
 const startProcesses = (list) => {
@@ -19,14 +20,18 @@ const startProcesses = (list) => {
 
   forOwn(list, async (value, key) => {
     log.info(`Manager starting ${key}`)
-    const child = spawn('node', [
-      value
-    ], {
-      'stdio': 'inherit',
-      'env':   process.env
+    const child = respawn(['node', value], {
+      'name':        key,
+      'env':         process.env,
+      'cwd':         basePath,
+      'maxRestarts': 10,
+      'sleep':       250,
+      'kill':        30000,
+      'stdio':       'inherit',
+      'fork':        false
     })
 
-    child.name = key
+    child.start()
     started.push(child)
   })
 
@@ -38,7 +43,7 @@ const stopProcesses = (processes) => {
 
   forOwn(processes, async (child, key) => {
     log.info(`Manager stopping ${child.name}`)
-    child.kill('SIGTERM')
+    child.stop()
     stopped.push(child)
   })
 
@@ -47,6 +52,10 @@ const stopProcesses = (processes) => {
 
 const children = startProcesses(startList)
 
+process.on('unhandledRejection', (error) => {
+  log.error(`Unhandled promise rejection: ${error.message}`)
+  process.exit(1)
+})
 process.on('SIGINT', () => {
   log.info('Manager received SIGINT')
   stopProcesses(children)

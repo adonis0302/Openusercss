@@ -1,11 +1,9 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 
-import attributor from '../../elements/footer/footer.vue'
-import showcase from '../../sets/theme-showcase/theme-showcase.vue'
-import navbar from '../../elements/navbar/navbar.vue'
-import icon from '../../elements/icon/icon.vue'
-
-import {leftRight} from '../../../../src/components/animations'
+import attributor from '../../components/footer/footer.vue'
+import showcase from '../../components/theme-showcase/theme-showcase.vue'
+import navbar from '../../components/navbar/navbar.vue'
+import icon from '../../components/icon/icon.vue'
 
 export default {
   'components': {
@@ -18,9 +16,6 @@ export default {
     showcase,
     navbar,
     icon
-  },
-  'methods': {
-    ...leftRight
   },
   'computed': {
     location () {

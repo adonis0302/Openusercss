@@ -16,6 +16,14 @@ export const inProd = () => {
   return true
 }
 
+// Delete ourselve from the require cache, so that different processes
+// can have different configs
+if (require.cache) {
+  Reflect.deleteProperty(require.cache, __filename)
+}
+
+const appPath = path.resolve(process.mainModule.paths[0], '..')
+
 let defaultConfig = {
   'env':   'production',
   'ports': {
@@ -99,8 +107,9 @@ const initConfig = () => {
    */
 
   const secretsConfig = new Conf({
-    'cwd':        __dirname,
-    'configName': 'secrets'
+    'cwd':         appPath,
+    'configName':  'secrets',
+    'projectName': 'opensuercss.org'
   })
   const configKey = secretsConfig.get('configKey')
   const newVersion = `${Date.now()}.${hat(8)}`
@@ -116,7 +125,7 @@ const initConfig = () => {
     log.warn('Your configuration options have been reset to defaults')
     log.warn('A backup of your previous config has been made, just in case')
     log.warn(`You can find your backups here:
-  ${path.join(__dirname, `bkup.${newVersion}`)}
+  ${path.join(appPath, `bkup.${newVersion}`)}
     `)
 
     secretsConfig.set('configKey', hat(256))
@@ -124,8 +133,8 @@ const initConfig = () => {
   }
 
   const conf = new Conf({
-    'cwd':           __dirname,
     'configName':    'config',
+    'cwd':           appPath,
     'encryptionKey': secretsConfig.get('configKey'),
     'defaults':      defaultConfig
   })
@@ -150,13 +159,6 @@ const staticConfig = async () => {
   if (config.get('env') !== process.env.NODE_ENV) {
     throw new Error('Your configuration doesn\'t match your environment')
   }
-
-  if (!inProd()) {
-    log.info(`\n${config.get('keypair').private}`)
-    log.info(`\n${config.get('keypair').public}`)
-  }
-
-  log.info(`Loaded configuration, version ${config.get('version')}`)
 })()
 
 export default staticConfig

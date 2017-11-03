@@ -1,5 +1,5 @@
 import gql from 'graphql-tag'
-import {ExpectedError} from '../../../../../shared/custom-errors'
+import {ExpectedError} from '../../../../shared/custom-errors'
 import {apolloClient} from '.'
 
 const getFullUser = async (id) => {

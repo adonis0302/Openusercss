@@ -1,10 +1,11 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import {mapGetters} from 'vuex'
 
-import icon from '../../elements/icon/icon.vue'
-import notification from '../../elements/notification/notification.vue'
-import button from '../../elements/button/button.vue'
+import icon from '../../components/icon/icon.vue'
+import notification from '../../components/notification/notification.vue'
+import button from '../../components/button/button.vue'
 
+// eslint-disable-next-line
 console.warn('You\'re still using this component, which is deprecated (in-sets)')
 
 export default {

@@ -240,5 +240,7 @@ gulp.task('client:media:fast', (done) => {
 gulp.task('client:media:watch', (done) => {
   gulp.watch([
     'src/client/{fonts|img|scss}/**/*'
-  ], gulp.parallel('client:media:fast', 'client:vue:fast'))
+  ], gulp.series('client:media:fast'))
+
+  done()
 })

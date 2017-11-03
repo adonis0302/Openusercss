@@ -2,13 +2,17 @@ import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import {mapGetters} from 'vuex'
 import moment from 'moment'
 
-import icon from '../../elements/icon/icon.vue'
-import themeCard from '../../elements/theme-card/theme-card.vue'
-import flushImg from '../../elements/flush-img/flush-img.vue'
+import icon from '../../components/icon/icon.vue'
+import themeCard from '../../components/theme-card/theme-card.vue'
+import flushImg from '../../components/flush-img/flush-img.vue'
 
-import {TopBottom} from '../../../../src/components/animations'
-
+// eslint-disable-next-line
 console.warn('You\'re still using this component, which is deprecated (in-sets)')
+
+const getters = mapGetters([
+  'user',
+  'viewedUser'
+])
 
 export default {
   'components': {
@@ -36,11 +40,8 @@ export default {
     }, 20000)
   },
   'methods': {
-    ...mapGetters([
-      'user',
-      'viewedUser'
-    ]),
-    ...new TopBottom(),
+    'user':       getters.user,
+    'viewedUser': getters.viewedUser,
     isOnline (date) {
       return moment(this.time).diff(date) < 600000
     },

@@ -1,12 +1,12 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import {mapGetters} from 'vuex'
 
-import icon from '../../elements/icon/icon.vue'
-import notification from '../../elements/notification/notification.vue'
-import editor from '../../elements/editor/editor.vue'
+import icon from '../icon/icon.vue'
+import notification from '../notification/notification.vue'
+import editor from '../editor/editor.vue'
 
-import bInput from '../../bulma/b-input/b-input.vue'
-import bTextarea from '../../bulma/b-textarea/b-textarea.vue'
+import bInput from '../b-input/b-input.vue'
+import bTextarea from '../b-textarea/b-textarea.vue'
 
 const customDictionary = {
   'en': {
@@ -18,7 +18,12 @@ const customDictionary = {
   }
 }
 
+// eslint-disable-next-line
 console.warn('You\'re still using this component, which is deprecated (in-sets)')
+
+const getters = mapGetters([
+  'user'
+])
 
 export default {
   'components': {
@@ -63,9 +68,7 @@ export default {
     this.$validator.updateDictionary(customDictionary)
   },
   'methods': {
-    ...mapGetters([
-      'user'
-    ]),
+    'user': getters.user,
     async submit () {
       const validated = await this.$validator.validateAll()
 

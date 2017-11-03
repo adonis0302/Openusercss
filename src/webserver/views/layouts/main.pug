@@ -11,7 +11,7 @@ mixin metas
   link(rel="manifest", href="/manifest.json")
 
 mixin bottom-assets
-  script(type="text/javascript", src="/js/loader.js", defer)
+  script(type="text/javascript", src="/js/index.js", defer)
   link(type="text/css", rel='stylesheet', href='/css/bundle.min.css')
 
 mixin frame
@@ -21,8 +21,8 @@ mixin frame
       title OpenUserCSS
       +metas
       body
-        include ../partials/loading-indicator
-        include ../partials/noscript
+        //- include ../partials/loading-indicator
+        //- include ../partials/noscript
         if block
           block
       +bottom-assets

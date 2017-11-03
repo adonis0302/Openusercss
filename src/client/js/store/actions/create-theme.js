@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 import router from '../../router'
-import {ExpectedError} from '../../../../../shared/custom-errors'
+import {ExpectedError} from '../../../../shared/custom-errors'
 import {apolloClient} from '.'
 
 const createTheme = async (theme, token) => {

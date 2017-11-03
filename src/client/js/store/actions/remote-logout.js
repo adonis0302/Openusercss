@@ -2,7 +2,7 @@ import gql from 'graphql-tag'
 import localStore from 'store2'
 import log from 'chalk-console'
 
-import {expected} from '../../../../../shared/custom-errors'
+import {expected} from '../../../../shared/custom-errors'
 import router from '../../router'
 import {apolloClient} from '.'
 

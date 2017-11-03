@@ -1,9 +1,7 @@
-import attributor from '../../elements/footer/footer.vue'
-import navbar from '../../elements/navbar/navbar.vue'
-import showcase from '../../sets/theme-showcase/theme-showcase.vue'
-import loginForm from '../../sets/login-form/login-form.vue'
-
-import {leftRight} from '../../../../src/components/animations'
+import attributor from '../../components/footer/footer.vue'
+import navbar from '../../components/navbar/navbar.vue'
+import showcase from '../../components/theme-showcase/theme-showcase.vue'
+import loginForm from '../../components/login-form/login-form.vue'
 
 export default {
   'components': {
@@ -11,8 +9,5 @@ export default {
     showcase,
     navbar,
     loginForm
-  },
-  'methods': {
-    ...leftRight
   }
 }
