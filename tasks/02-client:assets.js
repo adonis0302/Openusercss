@@ -59,10 +59,10 @@ const sources = {
 
 const destination = (dest) => {
   if (!dest) {
-    return path.resolve('./build/webserver/static/')
+    return path.resolve('./build/static/')
   }
 
-  return path.resolve('./build/webserver/static/', dest)
+  return path.resolve('./build/static/', dest)
 }
 
 gulp.task('client:media:prod', () => {
@@ -251,9 +251,6 @@ gulp.task('client:media:fast', (done) => {
 })
 
 gulp.task('client:media:watch', (done) => {
-  gulp.watch([
-    'src/client/{fonts|img|scss}/**/*'
-  ], gulp.series('client:media:fast'))
-
+  gulp.watch('src/client/{fonts|img|scss}/**/*', gulp.series('client:media:fast'))
   done()
 })

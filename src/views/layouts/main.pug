@@ -1,5 +1,3 @@
-- const thisYear = new Date().getFullYear()
-
 mixin metas
   meta(http-equiv="x-ua-compatible", content="ie=edge")
   meta(charset="utf-8")
@@ -11,7 +9,7 @@ mixin metas
   link(rel="manifest", href="/manifest.json")
 
 mixin bottom-assets
-  script(type="text/javascript", src="/js/index.js", defer)
+  script(type="text/javascript", src="/browser.js", defer)
   link(type="text/css", rel='stylesheet', href='/css/bundle.min.css')
 
 mixin frame

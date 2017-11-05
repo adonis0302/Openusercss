@@ -11,12 +11,14 @@ import http from 'http'
 import https from 'https'
 import pify from 'pify'
 import fs from 'fs'
+import pug from 'pug'
 
 import staticConfig from './shared/config'
 
 const servers = []
 const basePath = path.resolve(process.mainModule.paths[0], '..')
-const clientPath = path.join(basePath, '/webserver/static/server.js')
+const clientPath = path.join(basePath, '/static/server.js')
+const templatePath = path.join(basePath, '/views/index.template.pug')
 
 const init = async () => {
   const app = express()
@@ -29,20 +31,23 @@ const init = async () => {
   app.use(morgan('combined'))
   app.use(express.static(path.join(basePath, 'static')))
 
-  app.get('/', async (req, res) => {
-    res.write(`<!DOCTYPE html><html><head><title>${req.headers.host}</title></head><body>`)
-
+  app.get('*', async (req, res) => {
+    let appHTML = ''
     const appStream = await renderer.renderToStream({
       'url': req.url
     })
 
-    // res.write(appString)
     appStream.on('data', (data) => {
-      res.write(data)
+      appHTML = `${appHTML}${data.toString()}`
     })
 
     appStream.on('end', () => {
-      res.end('<script src="/client.js"></script></body></html>')
+      res.write(pug.renderFile(templatePath, {
+        req,
+        appHTML
+      }))
+
+      res.end()
     })
   })
 

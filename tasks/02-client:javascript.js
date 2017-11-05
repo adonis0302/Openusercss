@@ -19,7 +19,6 @@ import babelify from 'babelify'
 import vueify from 'vueify'
 import hmr from 'browserify-hmr'
 import envify from 'loose-envify'
-import internalify from 'internalify'
 import extractCss from 'vueify-extract-css'
 
 const browserifyOpts = (mergeWith) => {
@@ -51,10 +50,10 @@ const sources = {
 
 const destination = (dest) => {
   if (!dest) {
-    return path.resolve('./build/webserver/static/')
+    return path.resolve('./build/static/')
   }
 
-  return path.resolve('./build/webserver/static/', dest)
+  return path.resolve('./build/static/', dest)
 }
 
 const createBrowserify = ({entries, debug}) => {
@@ -143,7 +142,6 @@ gulp.task('client:js:fast', () => {
       options.standalone = 'server'
     }
     const bify = createBrowserify(options)
-    .transform(internalify)
 
     return pump([
       prettyError(),
