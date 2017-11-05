@@ -3,7 +3,7 @@ import {mapGetters} from 'vuex'
 
 import icon from '../icon/icon.vue'
 import notification from '../notification/notification.vue'
-import editor from '../editor/editor.vue'
+// import editor from '../editor/editor.vue'
 
 import bInput from '../b-input/b-input.vue'
 import bTextarea from '../b-textarea/b-textarea.vue'
@@ -48,7 +48,7 @@ export default {
     'b-level-right': bulma('level-right', 'div'),
     icon,
     notification,
-    editor,
+    // editor,
     bInput,
     bTextarea
   },

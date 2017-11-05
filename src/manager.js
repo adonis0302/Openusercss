@@ -1,5 +1,4 @@
 /* eslint no-process-env:0 */
-
 import 'babel-polyfill'
 
 import log from 'chalk-console'
@@ -25,8 +24,8 @@ const startProcesses = (list) => {
       'env':         process.env,
       'cwd':         basePath,
       'maxRestarts': 10,
-      'sleep':       250,
-      'kill':        30000,
+      'sleep':       500,
+      'kill':        200,
       'stdio':       'inherit',
       'fork':        false
     })
@@ -53,17 +52,21 @@ const stopProcesses = (processes) => {
 const children = startProcesses(startList)
 
 process.on('unhandledRejection', (error) => {
-  log.error(`Unhandled promise rejection: ${error.message}`)
+  log.error(`Unhandled promise rejection in Manager: ${error.message}`)
+  log.error(error.stack)
   process.exit(1)
 })
-process.on('SIGINT', () => {
-  log.info('Manager received SIGINT')
-  stopProcesses(children)
-})
+
 process.on('SIGTERM', () => {
   log.info('Manager received SIGTERM')
   stopProcesses(children)
 })
+
+process.on('SIGINT', () => {
+  log.info('Manager received SIGINT')
+  stopProcesses(children)
+})
+
 process.on('exit', () => {
   log.info('Manager process exiting immediately')
 })

@@ -19,6 +19,9 @@ export default {
   },
   'computed': {
     location () {
+      if (!window) {
+        return ''
+      }
       return window.location
     }
   }

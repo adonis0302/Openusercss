@@ -2,10 +2,22 @@ import devtools from 'postcss-devtools'
 import rucksack from 'rucksack-css'
 import flexibility from 'postcss-flexibility'
 import fixes from 'postcss-fixes'
-import zindex from 'postcss-zindex'
+import willChange from 'postcss-will-change'
+import willChangeTransition from 'postcss-will-change-transition'
+import ellipsis from 'postcss-ellipsis'
+
+import cssnano from 'cssnano'
+import advancedPreset from 'cssnano-preset-advanced'
 import {processObject, appConfig} from '../appshell'
 
-export const postCssPluginsProd = [
+const customPreset = advancedPreset({
+  'discardComments':     false,
+  'normalizeWhitespace': false
+})
+
+export const postCssPluginsFunctional = [
+  devtools(),
+  // Syntax extending plugins
   rucksack({
     'autoprefixer':      false,
     'shorthandPosition': false,
@@ -13,19 +25,26 @@ export const postCssPluginsProd = [
     'alias':             false,
     'inputPseudo':       false
   }),
-  zindex(),
-  fixes(),
-  flexibility()
+  ellipsis(),
+  // Zero-effort feature adding plugins
+  flexibility(),
+  willChange(),
+  willChangeTransition()
 ]
 
-export const postCssPluginsFast = [
-  devtools(),
-  rucksack({
-    'autoprefixer':      false,
-    'shorthandPosition': false,
-    'quantityQueries':   false,
-    'alias':             false,
-    'inputPseudo':       false
+export const postCssPluginsProdComponents = [
+  ...postCssPluginsFunctional,
+  fixes(),
+  cssnano({
+    'preset': customPreset
+  })
+]
+
+export const postCssPluginsProd = [
+  ...postCssPluginsFunctional,
+  fixes(),
+  cssnano({
+    'preset': 'advanced'
   })
 ]
 

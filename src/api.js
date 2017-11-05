@@ -7,7 +7,7 @@ import morgan from 'morgan'
 
 import staticConfig from './shared/config'
 import setupRoutes from './api/routes'
-import attachHandler from './shared/error-handler'
+import {auto} from './shared/error-handler'
 
 import http from 'http'
 import https from 'https'
@@ -15,7 +15,7 @@ import https from 'https'
 const servers = []
 
 const init = async () => {
-  await attachHandler()
+  await auto()
 
   const app = express()
   const config = await staticConfig()
@@ -54,12 +54,24 @@ const init = async () => {
   }
 })()
 
+process.on('unhandledRejection', (error) => {
+  log.error(`Unhandled promise rejection in webserver: ${error.message}`)
+  log.error(error.stack)
+  process.exit(1)
+})
+
 process.on('SIGTERM', () => {
   log.info('API received SIGTERM')
   servers.forEach((server) => {
     server.close()
   })
-  process.exit()
+})
+
+process.on('SIGINT', () => {
+  log.info('API received SIGINT')
+  servers.forEach((server) => {
+    server.close()
+  })
 })
 
 process.on('exit', () => {

@@ -13,18 +13,12 @@ import pify from 'pify'
 import fs from 'fs'
 
 import staticConfig from './shared/config'
-import attachHandler from './shared/error-handler'
-
-// import appBase from '../../build/webserver/pages/app-base/app-base.vue'
-// import client from './client/js'
 
 const servers = []
 const basePath = path.resolve(process.mainModule.paths[0], '..')
 const clientPath = path.join(basePath, '/webserver/static/server.js')
 
 const init = async () => {
-  await attachHandler()
-
   const app = express()
   const config = await staticConfig()
   const clientBuffer = await pify(fs.readFile)(clientPath)
@@ -36,41 +30,21 @@ const init = async () => {
   app.use(express.static(path.join(basePath, 'static')))
 
   app.get('/', async (req, res) => {
-    let appString = ''
-
-    try {
-      appString = await renderer.renderToString({
-        'url': req.url
-      })
-    } catch (error) {
-      console.log(error)
-    }
-
     res.write(`<!DOCTYPE html><html><head><title>${req.headers.host}</title></head><body>`)
-    res.write(appString)
-    res.end('<script src="/client.js"></script></body></html>')
+
+    const appStream = await renderer.renderToStream({
+      'url': req.url
+    })
+
+    // res.write(appString)
+    appStream.on('data', (data) => {
+      res.write(data)
+    })
+
+    appStream.on('end', () => {
+      res.end('<script src="/client.js"></script></body></html>')
+    })
   })
-
-  /* app.get('/', (req, res) => {
-    const vueApp = new Vue({
-      'el':     'app',
-      'render': (handle) => handle(appBase)
-    })
-
-    renderer.renderToString(vueApp, (error, html) => {
-      if (error) {
-        throw error
-      }
-
-      res.end(`
-      <!DOCTYPE html>
-      <html lang="en">
-        <head><title>Hello</title></head>
-        <body>${html}</body>
-      </html>
-      `)
-    })
-  }) */
 
   log.info(`Webserver environment: ${app.get('env')}`)
 
@@ -94,20 +68,29 @@ const init = async () => {
   return true
 }
 
-(async () => {
-  try {
-    await init()
-  } catch (error) {
-    log.error(error)
-  }
-})()
+init()
+.catch((error) => {
+  log.error(error)
+})
+
+process.on('unhandledRejection', (error) => {
+  log.error(`Unhandled promise rejection in webserver: ${error.message}`)
+  log.error(error.stack)
+  process.exit(1)
+})
 
 process.on('SIGTERM', () => {
   log.info('Webserver received SIGTERM')
   servers.forEach((server) => {
     server.close()
   })
-  process.exit()
+})
+
+process.on('SIGINT', () => {
+  log.info('Webserver received SIGINT')
+  servers.forEach((server) => {
+    server.close()
+  })
 })
 
 process.on('exit', () => {

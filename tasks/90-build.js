@@ -6,8 +6,8 @@ gulp.task('build:fast', gulp.series(
   gulp.parallel(
     'shared:fast',
     'client:fast',
-    'server:fast'
-  )
+  ),
+  'server:fast'
 ))
 
 gulp.task('build:prod', gulp.series(
@@ -16,6 +16,6 @@ gulp.task('build:prod', gulp.series(
   gulp.parallel(
     'shared:prod',
     'client:prod',
-    'server:prod'
-  )
+  ),
+  'server:prod'
 ))

@@ -15,7 +15,7 @@ export default {
   'props': {
     'host': {
       'type':    String,
-      'default': window.location.host
+      'default': ''
     }
   }
 }

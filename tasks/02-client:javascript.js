@@ -18,6 +18,9 @@ import watchify from 'watchify'
 import babelify from 'babelify'
 import vueify from 'vueify'
 import hmr from 'browserify-hmr'
+import envify from 'loose-envify'
+import internalify from 'internalify'
+import extractCss from 'vueify-extract-css'
 
 const browserifyOpts = (mergeWith) => {
   const options = {
@@ -25,28 +28,15 @@ const browserifyOpts = (mergeWith) => {
     'extensions': [
       '.js'
     ],
+    'standalone':   'server',
     'fullPaths':    false,
     'cache':        {},
     'packageCache': {},
     'transform':    [
-      vueify,
       [
-        babelify, {
-          'presets': [
-            'vue',
-            'flow',
-            [
-              'env', {
-                'targets': {
-                  'node':     '4',
-                  'browsers': [
-                    'last 4 versions'
-                  ]
-                }
-              }
-            ],
-            'stage-3'
-          ]
+        envify, {
+          // eslint-disable-next-line
+          'NODE_ENV': process.env.NODE_ENV || 'development'
         }
       ]
     ]
@@ -64,14 +54,38 @@ const destination = (dest) => {
     return path.resolve('./build/webserver/static/')
   }
 
-  return require.resolve('./build/webserver/static/', dest)
+  return path.resolve('./build/webserver/static/', dest)
 }
 
 const createBrowserify = ({entries, debug}) => {
-  return browserify(browserifyOpts({
+  const bify = browserify(browserifyOpts({
     entries,
     debug
   }))
+
+  bify.transform(vueify)
+  bify.transform(babelify, {
+    'presets': [
+      'vue',
+      'flow',
+      [
+        'env', {
+          'targets': {
+            'node':     '4',
+            'browsers': [
+              'last 4 versions'
+            ]
+          }
+        }
+      ],
+      'stage-3'
+    ]
+  })
+  bify.plugin(extractCss, {
+    'out': path.resolve('.tmp/components.min.css')
+  })
+
+  return bify
 }
 
 gulp.task('client:js:prod', () => {
@@ -129,6 +143,7 @@ gulp.task('client:js:fast', () => {
       options.standalone = 'server'
     }
     const bify = createBrowserify(options)
+    .transform(internalify)
 
     return pump([
       prettyError(),
@@ -233,19 +248,16 @@ gulp.task('client:manifest', (done) => {
 })
 
 gulp.task('client:watch', gulp.parallel(
-  'client:js:watch',
-  'client:manifest',
-  'client:media:watch'
+  gulp.series('client:js:watch', 'client:media:watch'),
+  'client:manifest'
 ))
 
 gulp.task('client:fast', gulp.parallel(
-  'client:js:fast',
-  'client:manifest',
-  'client:media:fast'
+  gulp.series('client:js:fast', 'client:media:fast'),
+  'client:manifest'
 ))
 
 gulp.task('client:prod', gulp.parallel(
-  'client:js:prod',
-  'client:manifest',
-  'client:media:prod'
+  gulp.series('client:js:prod', 'client:media:prod'),
+  'client:manifest'
 ))

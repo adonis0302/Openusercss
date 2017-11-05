@@ -25,7 +25,7 @@ import concat from 'gulp-concat'
 import webfont64 from 'gulp-base64-webfont-css'
 import del from 'del'
 import flatten from 'gulp-flatten'
-import {iconSizes, bgSizes, sizes, ourSassConfig, postCssPluginsProd, postCssPluginsFast} from './shared/css'
+import {iconSizes, bgSizes, sizes, ourSassConfig, postCssPluginsProd, postCssPluginsFunctional} from './shared/css'
 
 // =============================================================================
 // SCSS -> CSS and OPTIMIZE IMGs
@@ -36,8 +36,11 @@ const sources = {
     'node_modules/mdi/fonts/*.woff',
     'src/client/fonts/*.woff'
   ],
-  'sass': [
+  'scss': [
     'src/client/scss/main.scss'
+  ],
+  'css': [
+    '.tmp/components.min.css'
   ],
   'icons': [
     'src/client/img/*.icon.*'
@@ -73,7 +76,7 @@ gulp.task('client:media:prod', () => {
   ])
 
   const sassStream = pump([
-    gulp.src(sources.sass),
+    gulp.src(sources.scss),
     sassGlob()
   ])
 
@@ -123,16 +126,20 @@ gulp.task('client:media:prod', () => {
     gulp.dest(destination('img'))
   ])
 
+  const componentCssStream = pump([
+    prettyError(),
+    gulp.src(sources.css)
+  ])
+
   const finalCssStream = pump([
     prettyError(),
-    merge(fontStream, sassStream),
+    merge(fontStream, sassStream, componentCssStream),
     sassVars(ourSassConfig, {
       'verbose': false
     }),
     sass(),
     buffer(),
     concat('bundle.min.css'),
-    postcss(postCssPluginsProd),
     pleeease({
       'autoprefixer': {
         'browsers': [
@@ -161,6 +168,7 @@ gulp.task('client:media:prod', () => {
       'mqpacker':   true,
       'sourcemaps': false
     }),
+    postcss(postCssPluginsProd),
     flatten(),
     gulp.dest(destination('css'))
   ])
@@ -179,7 +187,7 @@ gulp.task('client:media:fast', (done) => {
   ])
 
   const sassStream = pump([
-    gulp.src(sources.sass),
+    gulp.src(sources.scss),
     sassGlob()
   ])
 
@@ -215,16 +223,21 @@ gulp.task('client:media:fast', (done) => {
     gulp.dest(destination('img'))
   ])
 
+  const componentCssStream = pump([
+    prettyError(),
+    gulp.src(sources.css)
+  ])
+
   const finalCssStream = pump([
     prettyError(),
-    merge(fontStream, sassStream),
+    merge(fontStream, sassStream, componentCssStream),
     sassVars(ourSassConfig, {
       'verbose': false
     }),
     sass(),
     buffer(),
     concat('bundle.min.css'),
-    postcss(postCssPluginsFast),
+    postcss(postCssPluginsFunctional),
     flatten(),
     gulp.dest(destination('css'))
   ])

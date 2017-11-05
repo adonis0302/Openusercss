@@ -1,3 +1,5 @@
+import 'babel-polyfill'
+
 import {forOwn} from 'lodash'
 import anime from 'animejs'
 import waterfall from 'p-waterfall'

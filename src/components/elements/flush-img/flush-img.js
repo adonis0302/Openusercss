@@ -74,10 +74,14 @@ export default {
   },
   'watch': {
     placeholder (newPlaceholder) {
-      updateImage(this, window.Image)
+      if (window) {
+        updateImage(this, window.Image)
+      }
     }
   },
   mounted () {
-    updateImage(this, window.Image)
+    if (window) {
+      updateImage(this, window.Image)
+    }
   }
 }

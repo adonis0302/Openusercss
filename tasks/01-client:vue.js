@@ -14,7 +14,7 @@ import sourcemaps from 'gulp-sourcemaps'
 import postcss from 'gulp-postcss'
 import pleeease from 'gulp-pleeease'
 import {pugOptions} from './shared/pug'
-import {ourSassConfig, postCssPluginsProd, postCssPluginsFast} from './shared/css'
+import {ourSassConfig, postCssPluginsFunctional, postCssPluginsProdComponents} from './shared/css'
 
 const sources = {
   'components': [
@@ -28,7 +28,7 @@ const sources = {
 }
 
 gulp.task('shared:components:prod', (done) => {
-  del.sync('build/webserver/components')
+  del.sync('.tmp/components')
 
   return pump([
     prettyError(),
@@ -43,7 +43,6 @@ gulp.task('shared:components:prod', (done) => {
             'verbose': false
           }),
           sass(),
-          postcss(postCssPluginsProd),
           pleeease({
             'autoprefixer': {
               'browsers': [
@@ -69,7 +68,8 @@ gulp.task('shared:components:prod', (done) => {
             'minifier':       false,
             'mqpacker':       true,
             'sourcemaps':     false
-          })
+          }),
+          postcss(postCssPluginsProdComponents)
         ])
       },
 
@@ -90,7 +90,7 @@ gulp.task('shared:components:prod', (done) => {
       }
     }),
     vuemaker(),
-    gulp.dest('build/webserver/components')
+    gulp.dest('.tmp/components')
   ]).on('end', () => {
     done()
   })
@@ -98,7 +98,7 @@ gulp.task('shared:components:prod', (done) => {
 
 gulp.task('shared:components:fast', (done) => {
   del.sync([
-    'build/webserver/components'
+    '.tmp/components'
   ])
 
   return pump([
@@ -115,7 +115,7 @@ gulp.task('shared:components:fast', (done) => {
             'verbose': false
           }),
           sass(),
-          postcss(postCssPluginsFast)
+          postcss(postCssPluginsFunctional)
         ])
       },
 
@@ -129,14 +129,14 @@ gulp.task('shared:components:fast', (done) => {
     }),
     vuemaker(),
     sourcemaps.write(),
-    gulp.dest('build/webserver/components')
+    gulp.dest('.tmp/components')
   ]).on('end', () => {
     done()
   })
 })
 
 gulp.task('shared:pages:prod', (done) => {
-  del.sync('build/webserver/pages')
+  del.sync('.tmp/pages')
 
   return pump([
     prettyError(),
@@ -151,7 +151,6 @@ gulp.task('shared:pages:prod', (done) => {
             'verbose': false
           }),
           sass(),
-          postcss(postCssPluginsProd),
           pleeease({
             'autoprefixer': {
               'browsers': [
@@ -177,7 +176,8 @@ gulp.task('shared:pages:prod', (done) => {
             'minifier':       false,
             'mqpacker':       true,
             'sourcemaps':     false
-          })
+          }),
+          postcss(postCssPluginsProdComponents)
         ])
       },
 
@@ -198,7 +198,7 @@ gulp.task('shared:pages:prod', (done) => {
       }
     }),
     vuemaker(),
-    gulp.dest('build/webserver/pages')
+    gulp.dest('.tmp/pages')
   ]).on('end', () => {
     done()
   })
@@ -206,7 +206,7 @@ gulp.task('shared:pages:prod', (done) => {
 
 gulp.task('shared:pages:fast', (done) => {
   del.sync([
-    'build/webserver/pages'
+    '.tmp/pages'
   ])
 
   return pump([
@@ -223,7 +223,7 @@ gulp.task('shared:pages:fast', (done) => {
             'verbose': false
           }),
           sass(),
-          postcss(postCssPluginsFast)
+          postcss(postCssPluginsFunctional)
         ])
       },
 
@@ -237,7 +237,7 @@ gulp.task('shared:pages:fast', (done) => {
     }),
     vuemaker(),
     sourcemaps.write(),
-    gulp.dest('build/webserver/pages')
+    gulp.dest('.tmp/pages')
   ]).on('end', () => {
     done()
   })

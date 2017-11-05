@@ -5,7 +5,7 @@
   "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "rimraf build",
+    "clean": "rimraf build .tmp",
     "build:prod": "cross-env NODE_ENV=production gulp build:prod",
     "build:fast": "cross-env NODE_ENV=development gulp build:fast",
     "prod": "npm run clean && npm run build:prod",
@@ -47,6 +47,8 @@
     "css-reset-and-normalize-sass": "^0",
     "css-supports": "^0",
     "csslint": "^1",
+    "cssnano": "^4.0.0-rc.0",
+    "cssnano-preset-advanced": "^4.0.0-rc.2",
     "del": "^3",
     "delay": "^2",
     "endpoint-utils": "^1",
@@ -108,9 +110,11 @@
     "nodemon": "^1.12.1",
     "p-waterfall": "^1",
     "postcss-devtools": "^1",
+    "postcss-ellipsis": "^1.0.0",
     "postcss-fixes": "^2",
     "postcss-flexibility": "^2",
-    "postcss-zindex": "^4.0.0-rc.2",
+    "postcss-will-change": "^2.0.0",
+    "postcss-will-change-transition": "^1.2.0",
     "pre-commit": "^1",
     "priority-nav": "^1",
     "pug-include-glob": "^0",
@@ -131,7 +135,9 @@
     "vinyl-source-stream": "^1",
     "vinyl-transform": "^1",
     "vueify": "^9",
-    "watchify": "^3"
+    "vueify-extract-css": "https://github.com/DecentM/vueify-extract-css",
+    "watchify": "^3",
+    "windowify": "^0.3.0"
   },
   "dependencies": {
     "apollo-server-express": "^1",

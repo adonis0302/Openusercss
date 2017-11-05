@@ -1,10 +1,23 @@
-import brace from 'brace'
-import 'brace/ext/modelist'
-import 'brace/ext/themelist'
-import 'brace/mode/css'
-
-const modelist = brace.acequire('ace/ext/modelist')
+let brace = null
+let modelist = null
 let editor = null
+
+if (window) {
+  brace = require('brace')
+  modelist = {
+    'modes': {
+      'findIndex': () => {
+        return false
+      }
+    }
+  }
+
+  require('brace/ext/modelist')
+  require('brace/ext/themelist')
+  require('brace/mode/css')
+
+  modelist = brace.acequire('ace/ext/modelist')
+}
 
 export default {
   'props': {

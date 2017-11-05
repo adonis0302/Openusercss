@@ -1,11 +1,10 @@
 {
   "presets": [
-    "vue",
     "flow",
     [
       "env", {
         "targets": {
-          "node": "5.12.0"
+          "node": "8"
         }
       }
     ],

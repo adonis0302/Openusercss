@@ -13,10 +13,13 @@ import minify from 'gulp-minify'
 import optimize from 'gulp-optimize-js'
 import browserify from 'browserify'
 import watchify from 'watchify'
-import babelify from 'babelify'
+import babel from 'gulp-babel'
 import vueify from 'vueify'
+import babelify from 'babelify'
 import path from 'path'
+import envify from 'loose-envify'
 import server from './shared/server'
+import babelOptions from './shared/js'
 
 const destination = (dest) => {
   if (!dest) {
@@ -38,8 +41,12 @@ const browserifyOpts = (mergeWith) => {
     'cache':        {},
     'packageCache': {},
     'transform':    [
-      vueify,
-      babelify
+      [
+        envify, {
+          // eslint-disable-next-line
+          'NODE_ENV': process.env.NODE_ENV || 'development'
+        }
+      ]
     ]
   }
 
@@ -51,10 +58,19 @@ const sources = {
 }
 
 const createBrowserify = ({entries, debug}) => {
-  return browserify(browserifyOpts({
+  const bify = browserify(browserifyOpts({
     entries,
     debug
   }))
+
+  bify.transform(vueify)
+  bify.transform(babelify, {
+    'presets': [
+      'stage-3'
+    ]
+  })
+
+  return bify
 }
 
 gulp.task('server:prod', () => {
@@ -74,6 +90,7 @@ gulp.task('server:prod', () => {
       source(entry),
       buffer(),
       optimize(),
+      babel(babelOptions),
       minify({
         'ext': {
           'src': '.js',
@@ -112,6 +129,7 @@ gulp.task('server:fast', () => {
       sourcemaps.init({
         'loadMaps': true
       }),
+      babel(babelOptions),
       sourcemaps.write(destination(), {
         'sourceMappingURL': (file) => {
           return path.resolve(destination(), `${file.relative}.map`)
@@ -148,6 +166,7 @@ gulp.task('server:watch', () => {
         sourcemaps.init({
           'loadMaps': true
         }),
+        babel(babelOptions),
         sourcemaps.write(destination(), {
           'sourceMappingURL': (file) => {
             return path.resolve(destination(), `${file.relative}.map`)
