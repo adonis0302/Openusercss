@@ -1,5 +1,6 @@
-import {app} from './vue'
+import {app, router} from './vue'
 
-export default () => {
+export default async (context) => {
+  router.push(context.url)
   return app
 }

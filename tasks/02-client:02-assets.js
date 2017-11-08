@@ -25,11 +25,8 @@ import concat from 'gulp-concat'
 import webfont64 from 'gulp-base64-webfont-css'
 import del from 'del'
 import flatten from 'gulp-flatten'
+import {pubsub} from './shared/bus'
 import {iconSizes, bgSizes, sizes, ourSassConfig, postCssPluginsProd, postCssPluginsFunctional} from './shared/css'
-
-// =============================================================================
-// SCSS -> CSS and OPTIMIZE IMGs
-// =============================================================================
 
 const sources = {
   'fonts': [
@@ -250,7 +247,4 @@ gulp.task('client:media:fast', (done) => {
   })
 })
 
-gulp.task('client:media:watch', (done) => {
-  gulp.watch('src/client/{fonts|img|scss}/**/*', gulp.series('client:media:fast'))
-  done()
-})
+pubsub.subscribe('update:client:assets', gulp.series('client:media:fast'))

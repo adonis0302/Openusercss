@@ -30,6 +30,10 @@ JSONStream@^1.0.3:
     jsonparse "^1.2.0"
     through ">=2.2.7 <3"
 
+PubSub@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/PubSub/-/PubSub-3.4.0.tgz#85ff173837781cba7dbea0a548c56fc10c043786"
+
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
@@ -2024,6 +2028,10 @@ coa@~1.0.1:
 code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
+
+codemirror@^5.22.0:
+  version "5.31.0"
+  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.31.0.tgz#ecf3d057eb74174147066bfc7c5f37b4c4e07df2"
 
 collection-map@^1.0.0:
   version "1.0.0"
@@ -6420,10 +6428,6 @@ lodash.memoize@~3.0.3:
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-3.0.4.tgz#2dcbd2c287cbc0a55cc42328bd0c736150d53e3f"
 
-lodash.merge@^4.6.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.0.tgz#69884ba144ac33fe699737a6086deffadd0f89c5"
-
 lodash.mergewith@^4.6.0:
   version "4.6.0"
   resolved "https://registry.yarnpkg.com/lodash.mergewith/-/lodash.mergewith-4.6.0.tgz#150cf0a16791f5903b8891eab154609274bdea55"
@@ -8012,10 +8016,6 @@ pluralize@^7.0.0:
 pngjs@^3.0.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/pngjs/-/pngjs-3.3.0.tgz#1f5730c189c94933b81beda2ab2f8e2855263a8f"
-
-popper.js@^1.12.6:
-  version "1.12.6"
-  resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.12.6.tgz#91e12a97b07815258b76915d64044e8ac053d426"
 
 postcss-alias@^2.0.0:
   version "2.0.0"
@@ -11057,14 +11057,6 @@ uuid@^3.0.0, uuid@^3.0.1, uuid@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.1.0.tgz#3dd3d3e790abc24d7b0d3a034ffababe28ebbc04"
 
-v-tooltip@^2.0.0-rc.2:
-  version "2.0.0-rc.14"
-  resolved "https://registry.yarnpkg.com/v-tooltip/-/v-tooltip-2.0.0-rc.14.tgz#e5100ecf3d4f4bf567e6562dff966a4ec740a86f"
-  dependencies:
-    lodash.merge "^4.6.0"
-    popper.js "^1.12.6"
-    vue-resize "^0.4.3"
-
 v8flags@^2.0.9, v8flags@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/v8flags/-/v8flags-2.1.1.tgz#aab1a1fa30d45f88dd321148875ac02c0b55e5b4"
@@ -11216,13 +11208,19 @@ vue-bulma-components@^1:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/vue-bulma-components/-/vue-bulma-components-1.5.0.tgz#f96651cdf31189f23f52d9fabd3561ece371ffc3"
 
+vue-codemirror-lite@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/vue-codemirror-lite/-/vue-codemirror-lite-1.0.2.tgz#ee6c679689b723b3af380342846fc4fdce6b7fb6"
+  dependencies:
+    codemirror "^5.22.0"
+
 vue-hot-reload-api@^2.0.1:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.2.0.tgz#9a21b35ced3634434a43ee80efb7350ea8fb206d"
 
-vue-resize@^0.4.3:
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/vue-resize/-/vue-resize-0.4.3.tgz#5bdfd1cd60eb2bf1ebc08dff1517754af69e4886"
+vue-no-ssr@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/vue-no-ssr/-/vue-no-ssr-0.2.0.tgz#6d812908e6ddefe7d39b10d19db9311778fa49d4"
 
 vue-router@^2:
   version "2.8.1"

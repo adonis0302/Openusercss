@@ -1,9 +1,10 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import {mapGetters} from 'vuex'
+import noSSR from 'vue-no-ssr'
 
 import icon from '../icon/icon.vue'
 import notification from '../notification/notification.vue'
-// import editor from '../editor/editor.vue'
+import editor from '../editor/editor.vue'
 
 import bInput from '../b-input/b-input.vue'
 import bTextarea from '../b-textarea/b-textarea.vue'
@@ -46,9 +47,10 @@ export default {
     'b-level':       bulma('level', 'div'),
     'b-level-left':  bulma('level-left', 'div'),
     'b-level-right': bulma('level-right', 'div'),
+    'no-ssr':        noSSR,
     icon,
     notification,
-    // editor,
+    editor,
     bInput,
     bTextarea
   },

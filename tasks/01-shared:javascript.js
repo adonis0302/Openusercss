@@ -4,6 +4,7 @@ import pump from 'pump'
 import prettyError from 'gulp-prettyerror'
 import babel from 'gulp-babel'
 import minify from 'gulp-minify'
+import {pubsub} from './shared/bus'
 
 const sources = {
   'shared': [
@@ -46,8 +47,4 @@ gulp.task('shared:prod', () => {
   ])
 })
 
-gulp.task('shared:watch', () => {
-  gulp.watch([
-    'src/shared/**/*.js'
-  ], gulp.series('shared:fast'))
-})
+pubsub.subscribe('update:shared:js', gulp.series('shared:fast'))

@@ -20,6 +20,8 @@ import vueify from 'vueify'
 import hmr from 'browserify-hmr'
 import envify from 'loose-envify'
 import extractCss from 'vueify-extract-css'
+import {pubsub} from './shared/bus'
+import server from './shared/server'
 
 const browserifyOpts = (mergeWith) => {
   const options = {
@@ -30,15 +32,7 @@ const browserifyOpts = (mergeWith) => {
     'standalone':   'server',
     'fullPaths':    false,
     'cache':        {},
-    'packageCache': {},
-    'transform':    [
-      [
-        envify, {
-          // eslint-disable-next-line
-          'NODE_ENV': process.env.NODE_ENV || 'development'
-        }
-      ]
-    ]
+    'packageCache': {}
   }
 
   return options
@@ -63,6 +57,10 @@ const createBrowserify = ({entries, debug}) => {
   }))
 
   bify.transform(vueify)
+  bify.transform(envify, {
+    // eslint-disable-next-line
+    'NODE_ENV': process.env.NODE_ENV || 'development'
+  })
   bify.transform(babelify, {
     'presets': [
       'vue',
@@ -168,7 +166,7 @@ gulp.task('client:js:fast', () => {
 gulp.task('client:js:watch', () => {
   const files = glob.sync(sources.client)
 
-  const bundles = files.map((entry, index) => {
+  files.map((entry, index) => {
     const options = {
       'entries': [
         entry
@@ -213,13 +211,17 @@ gulp.task('client:js:watch', () => {
       ])
     }
 
-    bify.on('update', bundle)
+    const rebundle = () => {
+      bundle()
+      server.restart()
+    }
+
+    bify.on('update', rebundle)
     bify.on('log', gutil.log)
+    pubsub.subscribe('finished:vue:pages', rebundle)
 
     return bundle()
   })
-
-  return merge(bundles)
 })
 
 gulp.task('client:manifest', (done) => {
@@ -244,11 +246,6 @@ gulp.task('client:manifest', (done) => {
   })
   done()
 })
-
-gulp.task('client:watch', gulp.parallel(
-  gulp.series('client:js:watch', 'client:media:watch'),
-  'client:manifest'
-))
 
 gulp.task('client:fast', gulp.parallel(
   gulp.series('client:js:fast', 'client:media:fast'),

@@ -14,6 +14,7 @@ import sourcemaps from 'gulp-sourcemaps'
 import postcss from 'gulp-postcss'
 import pleeease from 'gulp-pleeease'
 import {pugOptions} from './shared/pug'
+import {pubsub} from './shared/bus'
 import {ourSassConfig, postCssPluginsFunctional, postCssPluginsProdComponents} from './shared/css'
 
 const sources = {
@@ -92,6 +93,7 @@ gulp.task('shared:components:prod', (done) => {
     vuemaker(),
     gulp.dest('.tmp/components')
   ]).on('end', () => {
+    pubsub.publish('finished:vue:components')
     done()
   })
 })
@@ -131,6 +133,7 @@ gulp.task('shared:components:fast', (done) => {
     sourcemaps.write(),
     gulp.dest('.tmp/components')
   ]).on('end', () => {
+    pubsub.publish('finished:vue:components')
     done()
   })
 })
@@ -200,6 +203,7 @@ gulp.task('shared:pages:prod', (done) => {
     vuemaker(),
     gulp.dest('.tmp/pages')
   ]).on('end', () => {
+    pubsub.publish('finished:vue:pages')
     done()
   })
 })
@@ -239,6 +243,7 @@ gulp.task('shared:pages:fast', (done) => {
     sourcemaps.write(),
     gulp.dest('.tmp/pages')
   ]).on('end', () => {
+    pubsub.publish('finished:vue:pages')
     done()
   })
 })

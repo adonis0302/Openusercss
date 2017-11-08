@@ -2,7 +2,7 @@ let brace = null
 let modelist = null
 let editor = null
 
-if (window) {
+if (process.BROWSER_BUILD) {
   brace = require('brace')
   modelist = {
     'modes': {

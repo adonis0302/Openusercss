@@ -20,6 +20,7 @@ import path from 'path'
 import envify from 'loose-envify'
 import server from './shared/server'
 import babelOptions from './shared/js'
+import {pubsub} from './shared/bus'
 
 const destination = (dest) => {
   if (!dest) {
@@ -177,11 +178,14 @@ gulp.task('server:watch', () => {
       ])
     }
 
-    bify.on('update', () => {
+    const rebundle = () => {
       bundle()
       server.restart()
-    })
+    }
+
+    bify.on('update', rebundle)
     bify.on('log', gutil.log)
+    pubsub.subscribe('finished:vue:pages', rebundle)
 
     return bundle()
   })
