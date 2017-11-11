@@ -13,13 +13,13 @@ import minify from 'gulp-minify'
 import optimize from 'gulp-optimize-js'
 import browserify from 'browserify'
 import watchify from 'watchify'
-import babel from 'gulp-babel'
+// import babel from 'gulp-babel'
 import vueify from 'vueify'
 import babelify from 'babelify'
 import path from 'path'
 import envify from 'loose-envify'
 import server from './shared/server'
-import babelOptions from './shared/js'
+// import babelOptions from './shared/js'
 import emitter from './shared/bus'
 
 const destination = (dest) => {
@@ -87,7 +87,7 @@ gulp.task('server:prod', () => {
       source(entry),
       buffer(),
       optimize(),
-      babel(babelOptions),
+      // babel(babelOptions),
       minify({
         'ext': {
           'src': '.js',
@@ -126,7 +126,7 @@ gulp.task('server:fast', () => {
       sourcemaps.init({
         'loadMaps': true
       }),
-      babel(babelOptions),
+      // babel(babelOptions),
       sourcemaps.write(destination(), {
         'sourceMappingURL': (file) => {
           return path.resolve(destination(), `${file.relative}.map`)
@@ -163,7 +163,7 @@ gulp.task('server:watch', () => {
         sourcemaps.init({
           'loadMaps': true
         }),
-        babel(babelOptions),
+        // babel(babelOptions),
         sourcemaps.write(destination(), {
           'sourceMappingURL': (file) => {
             return path.resolve(destination(), `${file.relative}.map`)

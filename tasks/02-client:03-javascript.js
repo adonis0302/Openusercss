@@ -26,10 +26,10 @@ import server from './shared/server'
 const browserifyOpts = (mergeWith) => {
   const options = {
     ...mergeWith,
+    'standalone': 'server',
     'extensions': [
       '.js'
     ],
-    'standalone':   'server',
     'fullPaths':    false,
     'cache':        {},
     'packageCache': {}
@@ -63,7 +63,7 @@ const createBrowserify = ({entries, debug}) => {
   })
   bify.transform(babelify, {
     'presets': [
-      'vue',
+      // 'vue',
       'flow',
       [
         'env', {

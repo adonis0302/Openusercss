@@ -1,3 +1,4 @@
+import 'babel-polyfill'
 import {app, router} from './vue'
 
 export default async (context) => {

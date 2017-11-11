@@ -9,6 +9,10 @@ gulp.task('fs-watch', () => {
   gulp.watch('src/views/**/*.pug', gulp.series('server:views'))
   gulp.watch('src/shared/**/*.js', gulp.series('shared:fast'))
   gulp.watch('src/client/(fonts|img|scss)/**/*', gulp.series('client:media:fast'))
+
+  gulp.watch('src/**/*', (...args) => {
+    console.log(args)
+  })
 })
 
 gulp.task('watch', gulp.series(

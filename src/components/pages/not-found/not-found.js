@@ -16,13 +16,5 @@ export default {
     showcase,
     navbar,
     icon
-  },
-  'computed': {
-    location () {
-      if (!window) {
-        return ''
-      }
-      return window.location
-    }
   }
 }
