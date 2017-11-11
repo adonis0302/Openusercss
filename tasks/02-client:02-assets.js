@@ -25,7 +25,6 @@ import concat from 'gulp-concat'
 import webfont64 from 'gulp-base64-webfont-css'
 import del from 'del'
 import flatten from 'gulp-flatten'
-import {pubsub} from './shared/bus'
 import {iconSizes, bgSizes, sizes, ourSassConfig, postCssPluginsProd, postCssPluginsFunctional} from './shared/css'
 
 const sources = {
@@ -246,5 +245,3 @@ gulp.task('client:media:fast', (done) => {
     done()
   })
 })
-
-pubsub.subscribe('update:client:assets', gulp.series('client:media:fast'))

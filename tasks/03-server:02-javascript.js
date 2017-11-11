@@ -20,7 +20,7 @@ import path from 'path'
 import envify from 'loose-envify'
 import server from './shared/server'
 import babelOptions from './shared/js'
-import {pubsub} from './shared/bus'
+import emitter from './shared/bus'
 
 const destination = (dest) => {
   if (!dest) {
@@ -65,11 +65,7 @@ const createBrowserify = ({entries, debug}) => {
   }))
 
   bify.transform(vueify)
-  bify.transform(babelify, {
-    'presets': [
-      'stage-3'
-    ]
-  })
+  bify.transform(babelify)
 
   return bify
 }
@@ -185,7 +181,7 @@ gulp.task('server:watch', () => {
 
     bify.on('update', rebundle)
     bify.on('log', gutil.log)
-    pubsub.subscribe('finished:vue:pages', rebundle)
+    emitter.on('rebundle', rebundle)
 
     return bundle()
   })

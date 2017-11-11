@@ -10,9 +10,16 @@ import createTheme from './create-theme'
 import getThemes from './get-themes'
 import getFullUser from './get-full-user'
 
-const networkInterface = createBatchingNetworkInterface({
-  'uri': '/graphql'
+let networkInterface = createBatchingNetworkInterface({
+  'uri': 'https://api.openusercss.org'
 })
+
+// eslint-disable-next-line
+if (process.env.NODE_ENV === 'development') {
+  networkInterface = createBatchingNetworkInterface({
+    'uri': 'http://localhost:5000'
+  })
+}
 
 export const apolloClient = new ApolloClient({
   networkInterface

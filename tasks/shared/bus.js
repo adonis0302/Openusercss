@@ -1,3 +1,16 @@
-import PubSub from 'PubSub'
+// import PubSub from 'PubSub'
+import gutil from 'gulp-util'
+import Mitt from 'mitt'
+import {debounce} from 'lodash'
+const emitter = new Mitt()
 
-export const pubsub = new PubSub()
+gutil.log('Created new emitter')
+
+export const sendMessage = (message) => {
+  gutil.log(`Sending ${message}`)
+  debounce(() => {
+    emitter.emit(message)
+  }, 250)
+}
+
+export default emitter

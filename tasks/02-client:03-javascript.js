@@ -20,7 +20,7 @@ import vueify from 'vueify'
 import hmr from 'browserify-hmr'
 import envify from 'loose-envify'
 import extractCss from 'vueify-extract-css'
-import {pubsub} from './shared/bus'
+import emitter from './shared/bus'
 import server from './shared/server'
 
 const browserifyOpts = (mergeWith) => {
@@ -218,7 +218,7 @@ gulp.task('client:js:watch', () => {
 
     bify.on('update', rebundle)
     bify.on('log', gutil.log)
-    pubsub.subscribe('finished:vue:pages', rebundle)
+    emitter.on('rebundle', rebundle)
 
     return bundle()
   })
