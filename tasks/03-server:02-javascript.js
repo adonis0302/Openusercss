@@ -87,7 +87,6 @@ gulp.task('server:prod', () => {
       source(entry),
       buffer(),
       optimize(),
-      // babel(babelOptions),
       minify({
         'ext': {
           'src': '.js',
@@ -126,7 +125,6 @@ gulp.task('server:fast', () => {
       sourcemaps.init({
         'loadMaps': true
       }),
-      // babel(babelOptions),
       sourcemaps.write(destination(), {
         'sourceMappingURL': (file) => {
           return path.resolve(destination(), `${file.relative}.map`)
@@ -163,7 +161,7 @@ gulp.task('server:watch', () => {
         sourcemaps.init({
           'loadMaps': true
         }),
-        // babel(babelOptions),
+
         sourcemaps.write(destination(), {
           'sourceMappingURL': (file) => {
             return path.resolve(destination(), `${file.relative}.map`)

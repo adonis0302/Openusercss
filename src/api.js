@@ -4,16 +4,30 @@ import 'babel-polyfill'
 import express from 'express'
 import log from 'chalk-console'
 import morgan from 'morgan'
+import cors from 'cors'
 
 import staticConfig from './shared/config'
 import setupRoutes from './api/routes'
-import cors from 'cors'
 import {auto} from './shared/error-handler'
 
 import http from 'http'
 import https from 'https'
 
 const servers = []
+const corsOptions = {
+  origin (origin, done) {
+    const whitelist = [
+      'https://openusercss.org',
+      'https://openusercss.com'
+    ]
+
+    if (process.env.NODE_ENV === 'development') {
+      whitelist.push('http://localhost:5000')
+    }
+
+    return whitelist.indexOf(origin) !== -1
+  }
+}
 
 const init = async () => {
   await auto()
@@ -22,22 +36,10 @@ const init = async () => {
   const config = await staticConfig()
 
   app.set('env', config.get('env'))
+  app.options('*', cors(corsOptions))
   app.use(await setupRoutes())
   app.use(morgan('combined'))
-  app.use(cors({
-    origin (origin, done) {
-      const whitelist = [
-        'https://openusercss.org',
-        'https://openusercss.com'
-      ]
-
-      if (process.env.NODE_ENV === 'development') {
-        whitelist.push('http://localhost:5000')
-      }
-
-      return whitelist.indexOf(origin) !== -1
-    }
-  }))
+  app.use(cors(corsOptions))
 
   log.info(`API environment: ${app.get('env')}`)
 
