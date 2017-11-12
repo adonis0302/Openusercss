@@ -1,45 +1,20 @@
-let brace = null
-let modelist = null
-let editor = null
-
-if (process.BROWSER_BUILD) {
-  brace = require('brace')
-  modelist = {
-    'modes': {
-      'findIndex': () => {
-        return false
-      }
-    }
-  }
-
-  require('brace/ext/modelist')
-  require('brace/ext/themelist')
-  require('brace/mode/css')
-
-  modelist = brace.acequire('ace/ext/modelist')
-}
-
 export default {
   'props': {
     'mode': {
-      'type':      String,
-      'default':   'css',
-      'validator': (val) => modelist.modes.findIndex((mode) => mode.name === val) > -1
+      'type':    String,
+      'default': 'css'
     },
     'fontsize': {
-      'type':      String,
-      'default':   '12px',
-      'validator': (val) => parseInt(val, 10) > 11 && parseInt(val, 10) < 25
+      'type':    String,
+      'default': '12px'
     },
     'codefolding': {
-      'type':      String,
-      'default':   'markbegin',
-      'validator': (val) => ['manual', 'markbegin', 'markbeginend'].includes(val)
+      'type':    String,
+      'default': 'markbegin'
     },
     'selectionstyle': {
-      'type':      String,
-      'default':   'text',
-      'validator': (val) => ['text', 'line'].includes(val)
+      'type':    String,
+      'default': 'text'
     },
     'highlightline': {
       'type':    Boolean,
@@ -51,14 +26,14 @@ export default {
     }
   },
   'methods': {
-    setMode () {
-      const modeObj = modelist.modesByName[this.mode]
+    setMode (editor) {
+      const brace = require('brace')
       const editorSession = editor.getSession()
+      const modelist = brace.acequire('ace/ext/modelist')
+      const {mode} = modelist.modesByName.css
 
-      if (modeObj) {
-        require(`brace/mode/${modeObj.name}`)
-        editorSession.setMode(modeObj.mode)
-      }
+      require('brace/mode/css')
+      editorSession.setMode(mode)
 
       editorSession.setOptions({
         'tabSize': 2
@@ -66,10 +41,15 @@ export default {
     }
   },
   mounted () {
-    const self = this
+    const brace = require('brace')
 
-    editor = brace.edit('editor')
-    this.setMode()
+    require('brace/ext/modelist')
+    require('brace/ext/themelist')
+    require('brace/mode/css')
+    const self = this
+    const editor = brace.edit('editor')
+
+    this.setMode(editor)
 
     this.$emit('init', editor)
     editor.$blockScrolling = Infinity
@@ -79,24 +59,8 @@ export default {
     })
   },
   'watch': {
-    mode () {
-      this.setMode()
-    },
     theme () {
       this.setTheme()
-    },
-    fontsize (newVal) {
-      editor.setFontSize(newVal)
-    },
-    codefolding (newVal) {
-      editor.session.setFoldStyle(newVal)
-      editor.setShowFoldWidgets(newVal !== 'manual')
-    },
-    selectionstyle (newVal) {
-      editor.setOption('selectionStyle', newVal)
-    },
-    highlightline (newVal) {
-      editor.setHighlightActiveLine(newVal)
     }
   }
 }
