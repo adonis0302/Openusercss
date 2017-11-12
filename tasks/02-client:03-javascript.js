@@ -21,7 +21,6 @@ import hmr from 'browserify-hmr'
 import envify from 'loose-envify'
 import extractCss from 'vueify-extract-css'
 import emitter from './shared/bus'
-import server from './shared/server'
 
 const browserifyOpts = (mergeWith) => {
   const options = {
