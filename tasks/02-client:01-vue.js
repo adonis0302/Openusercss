@@ -13,9 +13,8 @@ import htmlmin from 'gulp-htmlmin'
 import sourcemaps from 'gulp-sourcemaps'
 import postcss from 'gulp-postcss'
 import pleeease from 'gulp-pleeease'
-import gutil from 'gulp-util'
 import {pugOptions} from './shared/pug'
-import {sendMessage} from './shared/bus'
+import emitter from './shared/bus'
 import {ourSassConfig, postCssPluginsFunctional, postCssPluginsProdComponents} from './shared/css'
 
 const sources = {
@@ -202,7 +201,7 @@ gulp.task('shared:pages:prod', (done) => {
     vuemaker(),
     gulp.dest('.tmp/pages')
   ]).on('end', () => {
-    sendMessage('rebundle')
+    emitter.emit('rebundle')
     done()
   })
 })
@@ -242,8 +241,7 @@ gulp.task('shared:pages:fast', (done) => {
     sourcemaps.write(),
     gulp.dest('.tmp/pages')
   ]).on('end', () => {
-    gutil.log('Sending rebundle')
-    sendMessage('rebundle')
+    emitter.emit('rebundle')
     done()
   })
 })
