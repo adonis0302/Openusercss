@@ -14,20 +14,6 @@ import http from 'http'
 import https from 'https'
 
 const servers = []
-const corsOptions = {
-  origin (origin, done) {
-    const whitelist = [
-      'https://openusercss.org',
-      'https://openusercss.com'
-    ]
-
-    if (process.env.NODE_ENV === 'development') {
-      whitelist.push('http://localhost:5000')
-    }
-
-    return whitelist.indexOf(origin) !== -1
-  }
-}
 
 const init = async () => {
   await auto()
