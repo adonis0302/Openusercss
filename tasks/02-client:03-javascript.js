@@ -211,14 +211,9 @@ gulp.task('client:js:watch', () => {
       ])
     }
 
-    const rebundle = () => {
-      bundle()
-      server.restart()
-    }
-
-    bify.on('update', rebundle)
+    bify.on('update', bundle)
     bify.on('log', gutil.log)
-    emitter.on('rebundle', rebundle)
+    emitter.on('rebundle', bundle)
 
     return bundle()
   })
