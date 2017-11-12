@@ -4,7 +4,7 @@ import 'babel-polyfill'
 import express from 'express'
 import log from 'chalk-console'
 import morgan from 'morgan'
-import cors from 'cors'
+import corser from 'corser'
 
 import staticConfig from './shared/config'
 import setupRoutes from './api/routes'
@@ -36,10 +36,10 @@ const init = async () => {
   const config = await staticConfig()
 
   app.set('env', config.get('env'))
-  app.options('*', cors(corsOptions))
+  app.use(corser.create())
+  // app.options('*', cors(corsOptions))
   app.use(await setupRoutes())
   app.use(morgan('combined'))
-  app.use(cors(corsOptions))
 
   log.info(`API environment: ${app.get('env')}`)
 

@@ -47,6 +47,7 @@
     "classlist-polyfill": "^1",
     "console-polyfill": "^0",
     "cors": "^2.8.4",
+    "corser": "^2.0.1",
     "css-reset-and-normalize-sass": "^0",
     "css-supports": "^0",
     "csslint": "^1",

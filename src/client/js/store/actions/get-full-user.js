@@ -1,4 +1,5 @@
 import gql from 'graphql-tag'
+import log from 'chalk-console'
 import {ExpectedError} from '../../../../shared/custom-errors'
 import {apolloClient} from '.'
 
@@ -47,7 +48,13 @@ export default async ({commit, getters}, id) => {
     commit('viewedUser', result.data.user)
     commit('actionError', null)
   } catch (error) {
-    const errors = JSON.parse(error.message)
+    let errors = []
+
+    try {
+      errors = JSON.parse(error.message)
+    } catch (err) {
+      log.error(err)
+    }
 
     errors.forEach((message) => {
       commit('actionError', `${message.text} on line ${message.line}`)

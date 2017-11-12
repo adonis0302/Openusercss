@@ -1,10 +1,14 @@
 const preloadImage = (url, Image) => {
   return new Promise((resolve, reject) => {
-    const img = new Image()
+    if (process.BROWSER_BUILD) {
+      const img = new Image()
 
-    img.src = url
-    img.onload = resolve
-    img.onerror = reject
+      img.src = url
+      img.onload = resolve
+      img.onerror = reject
+    } else {
+      resolve()
+    }
   })
 }
 

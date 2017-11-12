@@ -15,33 +15,27 @@ div
                 | Change account details
     b-columns
       b-column(is-6)
-        transition(
-          appear,
-          @before-enter="beforeAppear",
-          @enter="appear",
-          :css="false"
-        )
-          div
-            b-box(is-paddingless, is-marginless).ouc-user-card
-              b-column(is-paddingless)
-                b-tile(is-parent, is-paddingless)
-                  b-tile(is-4)
-                    b-tile(is-child).ouc-user-avatar
-                      flush-img(:source="viewedUser().avatarUrl", :placeholder="viewedUser().smallAvatarUrl", height="185px", align="left").contain
-                  b-tile(is-8)
+        div
+          b-box(is-paddingless, is-marginless).ouc-user-card
+            b-column(is-paddingless)
+              b-tile(is-parent, is-paddingless)
+                b-tile(is-4)
+                  b-tile(is-child).ouc-user-avatar
+                    flush-img(:source="viewedUser().avatarUrl", :placeholder="viewedUser().smallAvatarUrl", height="185px", align="left").contain
+                b-tile(is-8)
+                  b-tile(is-parent)
                     b-tile(is-parent)
-                      b-tile(is-parent)
-                        b-tile(is-child, is-parent, is-vertical, is-paddingless)
-                          h2 {{viewedUser().displayname}}
-                          br
-                          p Themes: {{viewedUserThemeCount()}}
-                          p Installs: {{viewedUser().installs}}
-                          p Average rating: {{viewedUser().rating}}
-            b-box
-              b-level(is-mobile)
-                b-level-left
-                  icon(v-if="isOnline(viewedUser().lastSeen)", icon="circle", color="#06BC5A")
-                  p.ouc-last-seen {{lastOnlineDisplay}}
+                      b-tile(is-child, is-parent, is-vertical, is-paddingless)
+                        h2 {{viewedUser().displayname}}
+                        br
+                        p Themes: {{viewedUserThemeCount()}}
+                        p Installs: {{viewedUser().installs}}
+                        p Average rating: {{viewedUser().rating}}
+          b-box
+            b-level(is-mobile)
+              b-level-left
+                icon(v-if="isOnline(viewedUser().lastSeen)", icon="circle", color="#06BC5A")
+                p.ouc-last-seen {{lastOnlineDisplay}}
 
         hr
         b-box
