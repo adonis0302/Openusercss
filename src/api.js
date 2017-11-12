@@ -23,17 +23,21 @@ const init = async () => {
 
   app.set('env', config.get('env'))
   app.use(corser.create())
-  // app.options('*', cors(corsOptions))
   app.use(await setupRoutes())
-  app.use(morgan('combined'))
 
   log.info(`API environment: ${app.get('env')}`)
 
-  if (config.get('env') === 'development') {
+  if (process.env.NODE_ENV === 'development') {
     const httpServer = http.createServer(app)
 
     httpServer.listen(config.get('ports.api.http'))
     servers.push(httpServer)
+  }
+
+  // Here, we re-run the above if statement, but with production,
+  // because the minifier will remove everything in that in a prod build.
+  if (process.env.NODE_ENV === 'production') {
+    app.use(morgan('combined'))
   }
 
   const httpsServer = https.createServer({

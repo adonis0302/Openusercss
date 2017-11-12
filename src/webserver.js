@@ -28,8 +28,11 @@ const init = async () => {
   const renderer = createBundleRenderer(client)
 
   app.set('env', config.get('env'))
-  app.use(morgan('combined'))
   app.use(express.static(path.join(basePath, 'static')))
+
+  if (process.env.NODE_ENV === 'production') {
+    app.use(morgan('combined'))
+  }
 
   app.get('*', async (req, res) => {
     let appHTML = ''
