@@ -11,13 +11,9 @@ import buffer from 'gulp-buffer'
 import sourcemaps from 'gulp-sourcemaps'
 import minify from 'gulp-minify'
 import optimize from 'gulp-optimize-js'
-import browserify from 'browserify'
 import watchify from 'watchify'
-import vueify from 'vueify'
-import babelify from 'babelify'
 import path from 'path'
-import envify from 'loose-envify'
-import emitter from './shared/bus'
+import {createBrowserify} from './shared/js'
 
 const destination = (dest) => {
   if (!dest) {
@@ -27,44 +23,8 @@ const destination = (dest) => {
   return path.resolve('./build/', dest)
 }
 
-const browserifyOpts = (mergeWith) => {
-  const options = {
-    ...mergeWith,
-    'bundleExternal': false,
-    'standalone':     'server',
-    'extensions':     [
-      '.js'
-    ],
-    'fullPaths':    false,
-    'cache':        {},
-    'packageCache': {},
-    'transform':    [
-      [
-        envify, {
-          // eslint-disable-next-line
-          'NODE_ENV': process.env.NODE_ENV || 'development'
-        }
-      ]
-    ]
-  }
-
-  return options
-}
-
 const sources = {
   'server': 'src/*.js'
-}
-
-const createBrowserify = ({entries, debug}) => {
-  const bify = browserify(browserifyOpts({
-    entries,
-    debug
-  }))
-
-  bify.transform(vueify)
-  bify.transform(babelify)
-
-  return bify
 }
 
 gulp.task('server:prod', () => {
@@ -75,7 +35,8 @@ gulp.task('server:prod', () => {
       'entries': [
         entry
       ],
-      'debug': false
+      'debug':  false,
+      'target': 'node'
     })
 
     return pump([
@@ -110,7 +71,8 @@ gulp.task('server:fast', () => {
       'entries': [
         entry
       ],
-      'debug': true
+      'debug':  true,
+      'target': 'node'
     })
 
     return pump([
@@ -143,7 +105,8 @@ gulp.task('server:watch', () => {
       'entries': [
         entry
       ],
-      'debug': true
+      'debug':  true,
+      'target': 'node'
     })
 
     bify.plugin(watchify)
@@ -172,7 +135,6 @@ gulp.task('server:watch', () => {
     bify.on('log', (content) => {
       gutil.log(`Server: ${content}`)
     })
-    emitter.on('rebundle', bundle)
 
     return bundle()
   })

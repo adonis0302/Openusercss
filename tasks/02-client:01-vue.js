@@ -1,6 +1,5 @@
 import gulp from 'gulp'
 import pump from 'pump'
-import del from 'del'
 import prettyError from 'gulp-prettyerror'
 import vuemaker from 'gulp-vuemaker'
 import manifold from 'gulp-manifold'
@@ -14,7 +13,6 @@ import sourcemaps from 'gulp-sourcemaps'
 import postcss from 'gulp-postcss'
 import pleeease from 'gulp-pleeease'
 import {pugOptions} from './shared/pug'
-import emitter from './shared/bus'
 import {ourSassConfig, postCssPluginsFunctional, postCssPluginsProdComponents} from './shared/css'
 
 const sources = {
@@ -29,7 +27,9 @@ const sources = {
 }
 
 gulp.task('shared:components:prod', (done) => {
-  del.sync('.tmp/components')
+  // del.sync([
+  //  '.tmp/components'
+  // ])
 
   return pump([
     prettyError(),
@@ -98,9 +98,9 @@ gulp.task('shared:components:prod', (done) => {
 })
 
 gulp.task('shared:components:fast', (done) => {
-  del.sync([
-    '.tmp/components'
-  ])
+  // del.sync([
+  //  '.tmp/components'
+  // ])
 
   return pump([
     prettyError(),
@@ -137,7 +137,9 @@ gulp.task('shared:components:fast', (done) => {
 })
 
 gulp.task('shared:pages:prod', (done) => {
-  del.sync('.tmp/pages')
+  // del.sync([
+  //  '.tmp/pages'
+  // ])
 
   return pump([
     prettyError(),
@@ -201,15 +203,14 @@ gulp.task('shared:pages:prod', (done) => {
     vuemaker(),
     gulp.dest('.tmp/pages')
   ]).on('end', () => {
-    emitter.emit('rebundle')
     done()
   })
 })
 
 gulp.task('shared:pages:fast', (done) => {
-  del.sync([
-    '.tmp/pages'
-  ])
+  // del.sync([
+  //  '.tmp/pages'
+  // ])
 
   return pump([
     prettyError(),
@@ -241,7 +242,6 @@ gulp.task('shared:pages:fast', (done) => {
     sourcemaps.write(),
     gulp.dest('.tmp/pages')
   ]).on('end', () => {
-    emitter.emit('rebundle')
     done()
   })
 })

@@ -13,29 +13,9 @@ import buffer from 'gulp-buffer'
 import sourcemaps from 'gulp-sourcemaps'
 import minify from 'gulp-minify'
 import optimize from 'gulp-optimize-js'
-import browserify from 'browserify'
 import watchify from 'watchify'
-import babelify from 'babelify'
-import vueify from 'vueify'
 import hmr from 'browserify-hmr'
-import envify from 'loose-envify'
-import extractCss from 'vueify-extract-css'
-import emitter from './shared/bus'
-
-const browserifyOpts = (mergeWith) => {
-  const options = {
-    ...mergeWith,
-    'standalone': 'server',
-    'extensions': [
-      '.js'
-    ],
-    'fullPaths':    false,
-    'cache':        {},
-    'packageCache': {}
-  }
-
-  return options
-}
+import {createBrowserify} from './shared/js'
 
 const sources = {
   'client': 'src/client/js/*.js'
@@ -49,41 +29,6 @@ const destination = (dest) => {
   return path.resolve('./build/static/', dest)
 }
 
-const createBrowserify = ({entries, debug}) => {
-  const bify = browserify(browserifyOpts({
-    entries,
-    debug
-  }))
-
-  bify.transform(vueify)
-  bify.transform(envify, {
-    // eslint-disable-next-line
-    'NODE_ENV': process.env.NODE_ENV || 'development'
-  })
-  bify.transform(babelify, {
-    'presets': [
-      // 'vue',
-      'flow',
-      [
-        'env', {
-          'targets': {
-            'node':     '4',
-            'browsers': [
-              'last 4 versions'
-            ]
-          }
-        }
-      ],
-      'stage-3'
-    ]
-  })
-  bify.plugin(extractCss, {
-    'out': path.resolve('.tmp/components.min.css')
-  })
-
-  return bify
-}
-
 gulp.task('client:js:prod', () => {
   const files = glob.sync(sources.client)
 
@@ -92,11 +37,12 @@ gulp.task('client:js:prod', () => {
       'entries': [
         entry
       ],
-      'debug': true
+      'debug':  true,
+      'target': 'browser'
     }
 
-    if (entry.split('/')[entry.split('/').length - 1] === 'server.js') {
-      options.standalone = 'server'
+    if (entry.indexOf('server') !== -1) {
+      options.target = 'node'
     }
     const bify = createBrowserify(options)
 
@@ -132,11 +78,12 @@ gulp.task('client:js:fast', () => {
       'entries': [
         entry
       ],
-      'debug': true
+      'debug':  true,
+      'target': 'browser'
     }
 
-    if (entry.split('/')[entry.split('/').length - 1] === 'server.js') {
-      options.standalone = 'server'
+    if (entry.indexOf('server') !== -1) {
+      options.target = 'node'
     }
     const bify = createBrowserify(options)
 
@@ -170,17 +117,18 @@ gulp.task('client:js:watch', () => {
       'entries': [
         entry
       ],
-      'debug': true
+      'debug':  true,
+      'target': 'browser'
     }
 
-    if (entry.split('/')[entry.split('/').length - 1] === 'server.js') {
-      options.standalone = 'server'
+    if (entry.indexOf('server') !== -1) {
+      options.target = 'node'
     }
 
     const bify = createBrowserify(options)
 
     bify.plugin(watchify)
-    if (!options.standalone) {
+    if (options.target === 'browser') {
       bify.plugin(hmr, {
         'mode': 'websocket',
         'port': 3123 + index,
@@ -212,7 +160,6 @@ gulp.task('client:js:watch', () => {
     bify.on('log', (content) => {
       gutil.log(`Client: ${content}`)
     })
-    emitter.on('rebundle', bundle)
 
     return bundle()
   })

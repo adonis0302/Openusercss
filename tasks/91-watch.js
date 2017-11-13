@@ -15,7 +15,7 @@ gulp.task('fs-watch', () => {
   gulp.watch([
     'build/*.js',
     'build/static/server.js'
-  ], debounce(server.restart, 2000))
+  ], debounce(server.restart, 4000))
 })
 
 gulp.task('watch', gulp.series(
@@ -26,7 +26,7 @@ gulp.task('watch', gulp.series(
     'shared:fast',
     'client:manifest',
     'server:views',
-    'server:watch',
+    'server:watch'
   ),
   gulp.parallel(
     'server:run',
