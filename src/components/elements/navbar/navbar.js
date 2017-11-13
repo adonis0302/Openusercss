@@ -21,6 +21,7 @@ export default {
     'navbar-dropdown': bulma('navbar-dropdown', 'div'),
     'navbar-divider':  bulma('navbar-divider', 'div'),
     'b-container':     bulma('container', 'div'),
+    'b-tag':           bulma('tag', 'div'),
     icon,
     flushImg
   },

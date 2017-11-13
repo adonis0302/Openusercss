@@ -9,6 +9,7 @@
 
 @import 'node_modules/bulma/sass/components/navbar';
 @import 'node_modules/bulma/sass/elements/container';
+@import 'node_modules/bulma/sass/elements/tag';
 
 $primary: map-get($colors, 'primary');
 $background: map-get($colors, 'background');
