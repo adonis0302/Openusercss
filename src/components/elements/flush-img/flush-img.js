@@ -1,44 +1,44 @@
-const preloadImage = (url, Image) => {
+const loadImage = (url) => {
   return new Promise((resolve, reject) => {
     if (process.BROWSER_BUILD) {
+      const {Image} = window
       const img = new Image()
 
       img.src = url
-      img.onload = resolve
-      img.onerror = reject
+      img.onload = resolve(img)
+      img.onerror = () => {
+        throw new Error('Image loading failed')
+      }
     } else {
       resolve()
     }
   })
 }
 
-const updateImage = async (self, Image) => {
-  self.$el.classList.add('ouc-image-unloaded')
+const loaded = (element) => {
+  element.classList.remove('unloaded')
+  element.classList.add('loaded')
+}
 
-  const placeholderLoaded = preloadImage(self.placeholder, Image)
-  const sourceLoaded = preloadImage(self.source, Image)
+const updateImage = async (self, Image) => {
+  const $cover = self.$el.querySelector('.ouc-flush-img-cover')
+  const $real = self.$el.querySelector('.ouc-flush-img-real')
+
+  await loadImage(self.smallsrc)
 
   try {
-    await placeholderLoaded
-    self.src = self.placeholder
-
-    await sourceLoaded
-    self.src = self.source
-
-    self.$el.classList.remove('ouc-image-unloaded')
-    self.$el.classList.add('ouc-image-loaded')
+    await loadImage(self.originalsrc)
+    loaded($real)
+    loaded($cover)
   } catch (error) {
-    const errorPlaceholderLoaded = preloadImage('/img/image-error-x128.png')
-    const errorSourceLoaded = preloadImage('/img/image-error-x960.png')
-
-    await errorPlaceholderLoaded
+    await loadImage('/img/image-error-x128.png')
     self.src = '/img/image-error-x128.png'
 
-    await errorSourceLoaded
+    await loadImage('/img/image-error-x960.png')
     self.src = '/img/image-error-x960.png'
 
-    self.$el.classList.remove('ouc-image-unloaded')
-    self.$el.classList.add('ouc-image-errored')
+    loaded($real)
+    loaded($cover)
   }
 
   return true
@@ -47,7 +47,8 @@ const updateImage = async (self, Image) => {
 export default {
   data () {
     return {
-      'src': this.placeholder
+      'smallsrc':    this.placeholder,
+      'originalsrc': this.source
     }
   },
   'props': {
