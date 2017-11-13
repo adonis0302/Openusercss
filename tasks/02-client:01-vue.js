@@ -27,10 +27,6 @@ const sources = {
 }
 
 gulp.task('shared:components:prod', (done) => {
-  // del.sync([
-  //  '.tmp/components'
-  // ])
-
   return pump([
     prettyError(),
     gulp.src(sources.components),
@@ -98,10 +94,6 @@ gulp.task('shared:components:prod', (done) => {
 })
 
 gulp.task('shared:components:fast', (done) => {
-  // del.sync([
-  //  '.tmp/components'
-  // ])
-
   return pump([
     prettyError(),
     gulp.src(sources.components),
@@ -137,10 +129,6 @@ gulp.task('shared:components:fast', (done) => {
 })
 
 gulp.task('shared:pages:prod', (done) => {
-  // del.sync([
-  //  '.tmp/pages'
-  // ])
-
   return pump([
     prettyError(),
     gulp.src(sources.pages),
@@ -208,10 +196,6 @@ gulp.task('shared:pages:prod', (done) => {
 })
 
 gulp.task('shared:pages:fast', (done) => {
-  // del.sync([
-  //  '.tmp/pages'
-  // ])
-
   return pump([
     prettyError(),
     gulp.src(sources.pages),

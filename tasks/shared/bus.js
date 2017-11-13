@@ -1,4 +1,3 @@
-// import PubSub from 'PubSub'
 import gutil from 'gulp-util'
 import Mitt from 'mitt'
 const emitter = new Mitt()

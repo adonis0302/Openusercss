@@ -76,10 +76,13 @@ const init = async () => {
   return true
 }
 
-init()
-.catch((error) => {
-  log.error(error)
-})
+(async () => {
+  try {
+    await init()
+  } catch (err) {
+    log.error(err)
+  }
+})()
 
 process.on('unhandledRejection', (error) => {
   log.error(`Unhandled promise rejection in webserver: ${error.message}`)

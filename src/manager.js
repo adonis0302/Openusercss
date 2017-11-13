@@ -1,4 +1,3 @@
-/* eslint no-process-env:0 */
 import 'babel-polyfill'
 
 import log from 'chalk-console'

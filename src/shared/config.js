@@ -1,5 +1,3 @@
-/* eslint no-process-env:0 */
-
 import Conf from 'conf'
 import hat from 'hat'
 import log from 'chalk-console'
