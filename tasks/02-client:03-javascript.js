@@ -165,7 +165,7 @@ gulp.task('client:js:fast', () => {
 gulp.task('client:js:watch', () => {
   const files = glob.sync(sources.client)
 
-  files.map((entry, index) => {
+  const bundles = files.map((entry, index) => {
     const options = {
       'entries': [
         entry
@@ -175,20 +175,18 @@ gulp.task('client:js:watch', () => {
 
     if (entry.split('/')[entry.split('/').length - 1] === 'server.js') {
       options.standalone = 'server'
-    } else {
-      options.plugin = [
-        [
-          hmr, {
-            'mode': 'websocket',
-            'port': 3123 + index,
-            'url':  `http://localhost:${3123 + index}`
-          }
-        ]
-      ]
     }
+
     const bify = createBrowserify(options)
 
     bify.plugin(watchify)
+    if (!options.standalone) {
+      bify.plugin(hmr, {
+        'mode': 'websocket',
+        'port': 3123 + index,
+        'url':  `http://localhost:${3123 + index}`
+      })
+    }
 
     const bundle = () => {
       return pump([
@@ -211,11 +209,15 @@ gulp.task('client:js:watch', () => {
     }
 
     bify.on('update', bundle)
-    bify.on('log', gutil.log)
+    bify.on('log', (content) => {
+      gutil.log(`Client: ${content}`)
+    })
     emitter.on('rebundle', bundle)
 
     return bundle()
   })
+
+  return merge(bundles)
 })
 
 gulp.task('client:manifest', (done) => {

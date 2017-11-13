@@ -22,14 +22,14 @@ gulp.task('watch', gulp.series(
   'shared:components:fast',
   'shared:pages:fast',
   gulp.parallel(
+    gulp.series('client:js:watch', 'client:media:fast'),
     'shared:fast',
-    'client:fast',
+    'client:manifest',
     'server:views',
     'server:watch',
   ),
   gulp.parallel(
     'server:run',
-    'client:js:watch',
     'fs-watch'
   ))
 )
