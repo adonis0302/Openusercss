@@ -59,11 +59,15 @@ class Animation {
       forOwn(self.stages, (stage, key) => {
         self[key] = async (element, done) => {
           element.dataset.speed = this.speeds.slow
+          if (process.browser) {
+            if (process.fps < 40) {
+              element.dataset.speed = 0
+            }
+          }
+
           return waterfall(stage, {element, done})
         }
       })
-
-      Object.freeze(this)
     }
   }
 }
