@@ -74,7 +74,7 @@ Modernizr.addTest('stickyposition', () => {
   return window.CSS.supports('(position: sticky)')
 })
 
-const runPolyfills = async () => {
+export const runPolyfills = async () => {
   const ranPolyfills = []
 
   if (!Modernizr.supports) {
@@ -96,7 +96,4 @@ const runPolyfills = async () => {
   return ranPolyfills
 }
 
-module.exports = {
-  runPolyfills,
-  'features': Modernizr
-}
+export const features = Modernizr

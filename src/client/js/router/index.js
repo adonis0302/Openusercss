@@ -9,7 +9,7 @@ import newThemeRoute from '../../../../.tmp/pages/new-theme/new-theme.vue'
 
 import notFoundRoute from '../../../../.tmp/pages/not-found/not-found.vue'
 
-const router = new VueRouter({
+export default new VueRouter({
   'mode':   'history',
   'routes': [
     {
@@ -42,5 +42,3 @@ const router = new VueRouter({
     }
   ]
 })
-
-export default router
