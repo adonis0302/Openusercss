@@ -1,14 +1,11 @@
-const loadImage = (url) => {
+const loadImage = (url, Image) => {
   return new Promise((resolve, reject) => {
     if (process.browser) {
-      const {Image} = window
       const img = new Image()
 
       img.src = url
-      img.onload = resolve(img)
-      img.onerror = () => {
-        throw new Error('Image loading failed')
-      }
+      img.onload = resolve
+      img.onerror = reject
     } else {
       resolve()
     }
@@ -25,18 +22,15 @@ const loaded = (elements) => {
 const updateImage = async (self, Image) => {
   const $images = self.$el.querySelectorAll('.ouc-flush-img-root > *')
 
-  await loadImage(self.smallsrc)
-
   try {
-    await loadImage(self.originalsrc)
+    await loadImage(self.smallsrc, Image)
+    await loadImage(self.originalsrc, Image)
     loaded($images)
   } catch (error) {
-    await loadImage('/img/image-error-x128.png')
-    self.src = '/img/image-error-x128.png'
-
-    await loadImage('/img/image-error-x960.png')
-    self.src = '/img/image-error-x960.png'
-
+    self.smallsrc = '/img/image-error-x128.png'
+    self.originalsrc = '/img/image-error-x960.png'
+    await loadImage(self.smallsrc, Image)
+    await loadImage(self.originalsrc, Image)
     loaded($images)
   }
 
@@ -61,7 +55,7 @@ export default {
     },
     'height': {
       'type':    String,
-      'default': '200'
+      'default': '200px'
     },
     'width': {
       'type':    String,
@@ -78,14 +72,14 @@ export default {
   },
   'watch': {
     placeholder (newPlaceholder) {
-      if (window) {
-        updateImage(this, window.Image)
-      }
+      updateImage(this, window.Image)
+    },
+
+    source (newSource) {
+      updateImage(this, window.Image)
     }
   },
   mounted () {
-    if (window) {
-      updateImage(this, window.Image)
-    }
+    updateImage(this, window.Image)
   }
 }
