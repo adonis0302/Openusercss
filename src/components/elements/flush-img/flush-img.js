@@ -1,6 +1,6 @@
 const loadImage = (url) => {
   return new Promise((resolve, reject) => {
-    if (process.BROWSER_BUILD) {
+    if (process.browser) {
       const {Image} = window
       const img = new Image()
 
@@ -15,21 +15,21 @@ const loadImage = (url) => {
   })
 }
 
-const loaded = (element) => {
-  element.classList.remove('unloaded')
-  element.classList.add('loaded')
+const loaded = (elements) => {
+  elements.forEach((element) => {
+    element.classList.remove('unloaded')
+    element.classList.add('loaded')
+  })
 }
 
 const updateImage = async (self, Image) => {
-  const $cover = self.$el.querySelector('.ouc-flush-img-cover')
-  const $real = self.$el.querySelector('.ouc-flush-img-real')
+  const $images = self.$el.querySelectorAll('.ouc-flush-img-root > *')
 
   await loadImage(self.smallsrc)
 
   try {
     await loadImage(self.originalsrc)
-    loaded($real)
-    loaded($cover)
+    loaded($images)
   } catch (error) {
     await loadImage('/img/image-error-x128.png')
     self.src = '/img/image-error-x128.png'
@@ -37,8 +37,7 @@ const updateImage = async (self, Image) => {
     await loadImage('/img/image-error-x960.png')
     self.src = '/img/image-error-x960.png'
 
-    loaded($real)
-    loaded($cover)
+    loaded($images)
   }
 
   return true
