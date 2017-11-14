@@ -30,6 +30,9 @@ export const browserifyOpts = (input) => {
     input.bundleExternal = false
     input.cache = {}
   }
+  if (input.target === 'worker') {
+    input.cache = {}
+  }
 
   const options = defaultsDeep(input, {
     'extensions': [
@@ -76,6 +79,22 @@ export const createBrowserify = (opts) => {
     bify.transform(babelify)
     bify.plugin(extractCss, {
       'out': path.resolve('.tmp/components.min.css')
+    })
+    break
+  case 'worker':
+    bify.transform(babelify, {
+      'presets': [
+        [
+          'env', {
+            'targets': {
+              'node':     '4',
+              'browsers': [
+                'last 4 versions'
+              ]
+            }
+          }
+        ]
+      ]
     })
     break
   default:

@@ -27,13 +27,12 @@ const indexOnly = (request, values) => {
 
 toolbox.precache([
   '/',
-  '/img/image-error-x640.png',
-  '/img/openusercss.icon-x16.png',
-  '/img/main.bg-x128.png'
+  '/img/image-error-x128.png',
+  '/img/main.bg-x128.png',
+  '/img/openusercss.icon-x16.png'
 ])
 
 toolbox.router.get(/https?:\/\/.*\/(js|img|css).*/, toolbox.cacheFirst)
-toolbox.router.any(/graphi?ql/, toolbox.networkOnly)
 toolbox.router.get(/https?:\/\/localhost:312.\/.*/, toolbox.networkOnly)
 toolbox.router.get(/https?:\/\/.*\/favicon.ico$/, toolbox.cacheFirst)
 toolbox.router.get(/https?:\/\/gravatar.com\/avatar/, toolbox.cacheFirst)

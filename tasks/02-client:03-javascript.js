@@ -44,6 +44,10 @@ gulp.task('client:js:prod', () => {
     if (entry.indexOf('server') !== -1) {
       options.target = 'node'
     }
+    if (entry.indexOf('worker') !== -1) {
+      options.target = 'worker'
+    }
+
     const bify = createBrowserify(options)
 
     return pump([
@@ -85,6 +89,9 @@ gulp.task('client:js:fast', () => {
     if (entry.indexOf('server') !== -1) {
       options.target = 'node'
     }
+    if (entry.indexOf('worker') !== -1) {
+      options.target = 'worker'
+    }
     const bify = createBrowserify(options)
 
     return pump([
@@ -123,6 +130,9 @@ gulp.task('client:js:watch', () => {
 
     if (entry.indexOf('server') !== -1) {
       options.target = 'node'
+    }
+    if (entry.indexOf('worker') !== -1) {
+      options.target = 'worker'
     }
 
     const bify = createBrowserify(options)

@@ -4,32 +4,31 @@ import log from 'chalk-console'
 import FpsEmitter from 'fps-emitter'
 import {app} from './vue'
 
-let runPolyfills = () => {
-  return []
-}
-
-if (document) {
-  runPolyfills = require('./utils/features').runPolyfills
-}
+import {runPolyfills} from './utils/features'
 
 const polyfills = async () => {
-  const ranPolyfills = await runPolyfills()
-
-  return ranPolyfills
+  return runPolyfills()
 }
 
 const main = async () => {
   const polyfillsResult = await polyfills()
 
   app.$mount('app')
-  log.info(`Needed polyfills on this browser: ${JSON.stringify(polyfillsResult, null, 4)}`)
+  if (polyfillsResult.length !== 0) {
+    log.info(`Needed polyfills on this browser: ${JSON.stringify(polyfillsResult, null, 4)}`)
+  }
+
+  const fps = new FpsEmitter(1000)
+
+  fps.on('update', (newFps) => {
+    process.fps = newFps
+  })
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/worker.js')
+    })
+  }
 }
 
-const fps = new FpsEmitter()
-
-fps.on('update', (newFps) => {
-  process.fps = newFps
-})
-
 main()
-window.process = process
