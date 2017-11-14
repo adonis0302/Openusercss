@@ -40,6 +40,7 @@
     "no-regex-spaces": 1,
     "no-sparse-arrays": 2,
     "no-unreachable": 2,
+    "no-useless-escape": 0,
     "use-isnan": 2,
     "valid-jsdoc": 1,
     "valid-typeof": 2,

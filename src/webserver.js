@@ -28,13 +28,15 @@ const init = async () => {
   const renderer = createBundleRenderer(client)
 
   app.set('env', config.get('env'))
-  app.use(express.static(path.join(basePath, 'static')))
-
   if (process.env.NODE_ENV === 'production') {
     app.use(morgan('combined'))
   }
 
-  app.get('*', async (req, res) => {
+  app.get(/.*\.(js|json|png|jpg|txt|css|mp4|map)$/, express.static(path.join(basePath, 'static'), {
+    'dotfiles': 'deny'
+  }))
+
+  app.get(/^(?!.*\.(js|json|png|jpg|txt|css|mp4|map)$)/, async (req, res) => {
     let appHTML = ''
     const appStream = await renderer.renderToStream({
       'url': req.url
