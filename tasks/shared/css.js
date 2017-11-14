@@ -77,6 +77,7 @@ export const iconSizesPx = [
 export const bgSizesPx = [
   1366,
   1920,
+  640,
   360,
   128
 ]

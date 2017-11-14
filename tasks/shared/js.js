@@ -74,6 +74,9 @@ export const createBrowserify = (opts) => {
         'stage-3'
       ]
     })
+    bify.plugin(extractCss, {
+      'out': path.resolve('.tmp/components.min.css')
+    })
     break
   case 'node':
     bify.transform(babelify)
