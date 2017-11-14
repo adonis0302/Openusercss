@@ -2,9 +2,6 @@ import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import themeCard from '../../components/theme-card/theme-card.vue'
 import flushImg from '../../components/flush-img/flush-img.vue'
 
-// eslint-disable-next-line
-console.warn('You\'re still using this component, which is deprecated (in-sets)')
-
 export default {
   'components': {
     'b-columns': bulma('columns', 'div'),

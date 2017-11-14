@@ -1,3 +1,49 @@
 div
-  login-form
+  b-section(slot="form").ouc-form-section
+      b-container(style="max-width: 500px;").ouc-centered
+        b-box.ouc-form-box
+          form(@submit.prevent="submitLogin")
+            h3 Log in to OpenUserCSS
+            hr
+            b-tile(is-ancestor)
+              b-tile(is-parent, is-vertical)
+                b-tile(is-child)
+                  b-field
+                    b-control(has-icons-left)
+                      icon(icon="mail-ru")
+                      b-input(
+                        type="email",
+                        name="email",
+                        placeholder="E-mail",
+                        v-validate="'required|email'",
+                        v-model.lazy="login.email",
+                        :class="{'input': true, 'is-danger': errors.has('email') }",
+                        data-vv-as="e-mail"
+                      )
+                b-tile(is-child)
+                  b-columns
+                    b-column
+                      b-field
+                        b-control(has-icons-left)
+                          icon(icon="lock")
+                          b-input(
+                            type="password",
+                            name="password",
+                            placeholder="Passphrase",
+                            v-validate="'required'",
+                            v-model.lazy="login.password"
+                            :class="{'input': true, 'is-danger': errors.has('password') }",
+                            data-vv-as="passphrase"
+                          )
+                b-tile(is-parent, is-vertical, is-paddingless)
+                  big-button(icon="account-plus", :disabled="errors.any()").is-primary
+                    p(slot="content") Login
+                  notification(v-show="errors.any()", icon="alert", color="is-danger").is-danger
+                    div(slot="content")
+                      ul
+                        li(v-for="error in errors.all()") {{error}}
+                  notification(v-show="actionErrors.length > 0", icon="alert", color="is-danger").is-danger
+                    div(slot="content")
+                      p(v-for="error in actionErrors") {{error}}
+
   attributor

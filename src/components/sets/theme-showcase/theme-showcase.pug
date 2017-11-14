@@ -1,6 +1,6 @@
 div
   theme-card(v-for="(theme, index) in latestThemes", :data-index="index", direction="horizontal", card-class="is-primary").has-bottom-margin
-    flush-img(slot="screenshot", :source="theme.screenshotUrl", placeholder="/img/main.bg-x128.png", height="100%")
+    flush-img(slot="screenshot", :source="theme.screenshotUrl", placeholder="/img/main.bg-x128.png", height="154px")
     h4(slot="title") {{theme.title}}
     p(slot="description") {{theme.description}}
     p(slot="author-displayname") Full Name here
