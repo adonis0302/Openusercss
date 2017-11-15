@@ -19,9 +19,17 @@ const loaded = (elements) => {
   })
 }
 
+const unloaded = (elements) => {
+  elements.forEach((element) => {
+    element.classList.remove('loaded')
+    element.classList.add('unloaded')
+  })
+}
+
 const updateImage = async (self, Image) => {
   const $images = self.$el.querySelectorAll('.ouc-flush-img-root > *')
 
+  unloaded($images)
   self.smallsrc = self.placeholder
   self.originalsrc = self.source
 
