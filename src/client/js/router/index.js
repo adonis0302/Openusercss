@@ -6,6 +6,7 @@ import loginRoute from '../../../../.tmp/pages/login/login.vue'
 import registerRoute from '../../../../.tmp/pages/register/register.vue'
 import profileRoute from '../../../../.tmp/pages/profile/profile.vue'
 import newThemeRoute from '../../../../.tmp/pages/new-theme/new-theme.vue'
+import themeRoute from '../../../../.tmp/pages/theme/theme.vue'
 
 import notFoundRoute from '../../../../.tmp/pages/not-found/not-found.vue'
 
@@ -39,6 +40,10 @@ export default new VueRouter({
     {
       'path':      '/theme/new',
       'component': newThemeRoute
+    },
+    {
+      'path':      '/theme/:id',
+      'component': themeRoute
     }
   ]
 })
