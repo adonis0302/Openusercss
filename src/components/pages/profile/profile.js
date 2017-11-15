@@ -1,11 +1,12 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
-import moment from 'moment'
 import {mapGetters} from 'vuex'
+import moment from 'moment'
 
+import icon from '../../components/icon/icon.vue'
+import themeCard from '../../components/theme-card/theme-card.vue'
+import flushImg from '../../components/flush-img/flush-img.vue'
 import attributor from '../../components/footer/footer.vue'
 import navbar from '../../components/navbar/navbar.vue'
-import flushImg from '../../components/flush-img/flush-img.vue'
-import icon from '../../components/icon/icon.vue'
 
 export default {
   'components': {
@@ -21,11 +22,12 @@ export default {
     'b-section':         bulma('section', 'div'),
     'b-button':          bulma('button', 'button'),
     attributor,
-    flushImg,
     navbar,
+    themeCard,
+    flushImg,
     icon
   },
-  beforeCreate () {
+  beforeMount () {
     this.$store.dispatch('getFullUser', this.$route.params.id)
   },
   mounted () {

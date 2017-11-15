@@ -53,7 +53,7 @@ div
                 h2 {{viewedUser().displayname}}'s themes
               hr
               theme-card(v-for="(theme, index) in viewedUser().themes", :data-index="index", direction="horizontal", card-class="is-primary").has-bottom-margin
-                flush-img(slot="screenshot", :src="theme.screenshotUrl", height="135px")
+                flush-img(slot="screenshot", :source="theme.screenshotUrl", height="135px")
                 h4(slot="title") {{theme.title}}
                 p(slot="description") {{theme.description}}
                 p(slot="author") by {{viewedUser().displayname}}
