@@ -22,6 +22,9 @@ const loaded = (elements) => {
 const updateImage = async (self, Image) => {
   const $images = self.$el.querySelectorAll('.ouc-flush-img-root > *')
 
+  self.smallsrc = self.placeholder
+  self.originalsrc = self.source
+
   try {
     await loadImage(self.smallsrc, Image)
     await loadImage(self.originalsrc, Image)
