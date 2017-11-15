@@ -34,7 +34,6 @@ export default async (context) => {
 
       return false
     } else if (!session) {
-      log.info('No token to verify')
       return false
     }
   } catch (error) {
