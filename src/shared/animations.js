@@ -60,7 +60,8 @@ class Animation {
         self[key] = async (element, done) => {
           element.dataset.speed = this.speeds.slow
           if (process.browser) {
-            if (process.fps < 40) {
+            if (process.fps < 40 || !process.animations) {
+              process.animations = false
               element.dataset.speed = 0
             }
           }

@@ -29,6 +29,8 @@ const main = async () => {
       navigator.serviceWorker.register('/worker.js')
     })
   }
+
+  process.animations = true
 }
 
 main()
