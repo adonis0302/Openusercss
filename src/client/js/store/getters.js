@@ -1,36 +1,25 @@
 export default {
-  user (state) {
-    if (!state.session) {
-      return null
-    }
-    return state.session.user
+  user (state, id) {
+    return state.users[id]
+  },
+
+  theme (state, id) {
+    return state.themes[id]
   },
 
   latestThemes (state) {
     return state.latestThemes
   },
 
-  formData (state) {
-    return state.formData
-  },
-
   actionErrors (state) {
     return state.actionErrors
   },
 
-  token (state) {
-    if (state.session) {
-      return state.session.token
-    }
-
-    return null
+  session (state) {
+    return state.session
   },
 
   loading (state) {
     return state.loading
-  },
-
-  viewedUser (state) {
-    return state.viewedUser
   }
 }

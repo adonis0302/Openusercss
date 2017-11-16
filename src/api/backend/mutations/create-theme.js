@@ -1,4 +1,3 @@
-/* eslint no-underscore-dangle:0 */
 import {escape} from 'html-escaper'
 import stylelint from 'stylelint'
 import moment from 'moment'

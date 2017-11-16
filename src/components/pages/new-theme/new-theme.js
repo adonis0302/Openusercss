@@ -82,7 +82,6 @@ export default {
             'scope':       this.theme.scope,
             'content':     this.theme.content
           },
-          // eslint-disable-next-line no-underscore-dangle
           'redirect': `/profile/${this.user()._id}`
         })
       }

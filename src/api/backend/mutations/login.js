@@ -1,5 +1,3 @@
-/* eslint no-underscore-dangle:0 */
-
 import staticConfig from '../../../shared/config'
 import {expected} from '../../../shared/custom-errors'
 import jwt from 'jsonwebtoken'

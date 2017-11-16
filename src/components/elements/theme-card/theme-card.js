@@ -20,15 +20,7 @@ export default {
     icon
   },
   'methods': new LeftRight(),
-  data () {
-    return {
-      'sideWidth': null
-    }
-  },
-  mounted () {
-    this.sideWidth = window.getComputedStyle(this.$el).width
-  },
-  'props': {
+  'props':   {
     'direction': {
       'type':    String,
       'default': 'vertical'
@@ -46,6 +38,10 @@ export default {
     'tooltip': {
       'type':    String,
       'default': 'unknown'
+    },
+    'themeId': {
+      'type':    String,
+      'default': ''
     }
   }
 }

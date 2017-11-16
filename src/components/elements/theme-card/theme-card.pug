@@ -15,7 +15,7 @@ transition(
               slot(name="title")
               slot(name="author")
 
-  div(v-else="small", :class="cardClass")
+  router-link(v-else="small", :class="cardClass", :to="'/theme/' + themeId")
     b-box(is-paddingless).ouc-theme-card
       b-tile(is-parent, is-paddingless)
         b-tile(is-4, is-child).ouc-theme-screenshot

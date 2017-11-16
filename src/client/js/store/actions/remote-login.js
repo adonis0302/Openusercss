@@ -7,13 +7,26 @@ import {apolloClient} from '.'
 const {AuthenticationError} = expected
 
 const remoteLogin = async ({email, password}) => {
-  const loginMutation = gql(`
+  const mutation = gql(`
     mutation {
       login(email: "${email}", password: "${password}") {
         token,
         user {
+          themes {
+            _id,
+            title,
+            description,
+            createdAt,
+            lastUpdate,
+            rating
+          },
           _id,
-          displayname
+          displayname,
+          username,
+          avatarUrl,
+          smallAvatarUrl,
+          lastSeen,
+          lastSeenReason
         }
       }
     }
@@ -22,7 +35,7 @@ const remoteLogin = async ({email, password}) => {
 
   try {
     session = await apolloClient.mutate({
-      'mutation': loginMutation
+      mutation
     })
   } catch (error) {
     throw new AuthenticationError(error.message)
@@ -31,13 +44,13 @@ const remoteLogin = async ({email, password}) => {
   return session
 }
 
-export default async ({getters, commit}) => {
+export default async ({commit}, login) => {
   let session = null
 
   commit('loading', true)
 
   try {
-    session = await remoteLogin(getters.formData)
+    session = await remoteLogin(login)
     commit('login', session)
     router.push('/')
   } catch (error) {

@@ -8,6 +8,10 @@ import {union} from 'lodash'
 export default {
   login (state, {data}) {
     state.session = data.login
+    if (data.login && data.login.user) {
+      state.users[data.login.user._id] = data.login.user
+    }
+
     localStore.set('session', data.login)
     state.actionErrors = []
   },
@@ -35,7 +39,11 @@ export default {
     state.loading = isLoading
   },
 
-  viewedUser (state, user) {
-    state.viewedUser = user
+  users (state, user) {
+    state.users[user._id] = user
+  },
+
+  themes (state, theme) {
+    state.themes[theme._id] = theme
   }
 }

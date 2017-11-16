@@ -1,8 +1,5 @@
-/* eslint no-underscore-dangle:0 */
-
 import {ObjectId} from 'mongodb'
 import {pick} from 'lodash'
-import gravatarUrl from 'gravatar-url'
 
 export default async (root, {id, token}, {Session, Theme, User}) => {
   const foundUser = await User.findOne({
@@ -12,13 +9,6 @@ export default async (root, {id, token}, {Session, Theme, User}) => {
   if (!foundUser) {
     throw new Error('No user found')
   }
-
-  foundUser.avatarUrl = gravatarUrl(foundUser.email, {
-    'size': 425
-  })
-  foundUser.smallAvatarUrl = gravatarUrl(foundUser.email, {
-    'size': 15
-  })
 
   const user = pick(foundUser, [
     '_id',

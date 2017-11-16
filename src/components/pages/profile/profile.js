@@ -37,28 +37,28 @@ export default {
   },
   'methods': {
     ...mapGetters([
-      'user',
-      'viewedUser'
+      'user'
     ]),
     isOnline (date) {
       return moment(this.time).diff(date) < 600000
     },
     viewedUserThemeCount () {
-      if (!this.viewedUser().themes) {
+      if (!this.viewedUser.themes) {
         return 0
       }
 
-      return this.viewedUser().themes.length
+      return this.viewedUser.themes.length
     }
   },
   data () {
     return {
-      'time': moment()
+      'time':       moment(),
+      'viewedUser': null
     }
   },
   'computed': {
     lastOnlineDisplay () {
-      return `Last seen ${this.viewedUser().lastSeenReason}, ${moment(this.time).to(this.viewedUser().lastSeen)}`
+      return `Last seen ${this.viewedUser.lastSeenReason}, ${moment(this.time).to(this.viewedUser.lastSeen)}`
     }
   }
 }

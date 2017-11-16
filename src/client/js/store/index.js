@@ -10,10 +10,10 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   'state': {
     'latestThemes': [],
-    'formData':     [],
     'testText':     '',
     'actionErrors': [],
-    'viewedUser':   {},
+    'users':        {},
+    'themes':       {},
     'session':      null,
     'loading':      false
   },

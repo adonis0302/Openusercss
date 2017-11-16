@@ -1,10 +1,21 @@
 import {Document} from 'camo'
 import moment from 'moment'
+import gravatarUrl from 'gravatar-url'
 
 import Theme from './theme'
 import validators from './validators'
 
 export default class User extends Document {
+  preSave () {
+    this.avatarUrl = gravatarUrl(this.email, {
+      'size': 425
+    })
+
+    this.smallAvatarUrl = gravatarUrl(this.email, {
+      'size': 15
+    })
+  }
+
   constructor () {
     super()
 
@@ -52,6 +63,14 @@ export default class User extends Document {
         'required': false,
         'default':  'registering',
         'validate': validators.length(64)
+      },
+      'avatarUrl': {
+        'type':     String,
+        'required': true
+      },
+      'smallAvatarUrl': {
+        'type':     String,
+        'required': true
       },
       'themes': [
         Theme

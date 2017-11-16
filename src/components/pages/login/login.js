@@ -8,6 +8,7 @@ import showcase from '../../components/theme-showcase/theme-showcase.vue'
 import icon from '../../components/icon/icon.vue'
 import notification from '../../components/notification/notification.vue'
 import button from '../../components/button/button.vue'
+import bInput from '../../components/b-input/b-input.vue'
 
 export default {
   'components': {
@@ -18,7 +19,6 @@ export default {
     'b-container': bulma('container', 'div'),
     'b-field':     bulma('field', 'div'),
     'b-label':     bulma('label', 'label'),
-    'b-input':     bulma('input', 'input'),
     'b-textarea':  bulma('textarea', 'textarea'),
     'b-select':    bulma('select', 'select'),
     'b-control':   bulma('control', 'div'),
@@ -32,7 +32,8 @@ export default {
     notification,
     attributor,
     showcase,
-    navbar
+    navbar,
+    bInput
   },
   'data': () => {
     return {
@@ -47,7 +48,6 @@ export default {
       const validated = await this.$validator.validateAll()
 
       if (validated) {
-        this.$store.dispatch('updateFormData', this.login)
         this.$store.dispatch('login', this.login)
       }
     }

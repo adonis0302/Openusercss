@@ -16,19 +16,19 @@ div
       navbar-menu(:class="['navbar-menu', 'is-primary', {'is-active': open}]")
         navbar-start
         navbar-end(@click="close")
-          router-link(v-if="user", :to="'/profile/' + user._id").navbar-item
+          router-link(v-if="session", :to="'/profile/' + session.user._id").navbar-item
             icon(icon="account")
-            | Welcome, {{user.displayname}}
-          a(v-if="user", @click.prevent="logout").navbar-item
+            | Welcome, {{session.user.displayname}}
+          a(v-if="session", @click.prevent="logout").navbar-item
             icon(icon="logout")
             | Log out
           router-link(to="/").navbar-item
             icon(icon="home")
             | Home
-          router-link(v-if="!user", to="/login").navbar-item
+          router-link(v-if="!session", to="/login").navbar-item
             icon(icon="login")
             | Log in
-          router-link(v-if="!user", to="/register").navbar-item
+          router-link(v-if="!session", to="/register").navbar-item
             icon(icon="account-plus")
             | Register
           router-link(to="/browse").navbar-item

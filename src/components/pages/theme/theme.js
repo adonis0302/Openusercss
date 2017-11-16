@@ -7,6 +7,7 @@ import themeCard from '../../components/theme-card/theme-card.vue'
 import flushImg from '../../components/flush-img/flush-img.vue'
 import attributor from '../../components/footer/footer.vue'
 import navbar from '../../components/navbar/navbar.vue'
+import notification from '../../components/notification/notification.vue'
 
 export default {
   'components': {
@@ -25,40 +26,26 @@ export default {
     navbar,
     themeCard,
     flushImg,
-    icon
+    icon,
+    notification
   },
   beforeMount () {
-    this.$store.dispatch('getFullUser', this.$route.params.id)
+    this.$store.dispatch('getFullTheme', this.$route.params.id)
   },
-  mounted () {
-    setInterval(() => {
-      this.time = moment()
-    }, 20000)
-  },
-  'methods': {
-    ...mapGetters([
-      'user',
-      'viewedUser'
-    ]),
-    isOnline (date) {
-      return moment(this.time).diff(date) < 600000
-    },
-    viewedUserThemeCount () {
-      if (!this.viewedUser().themes) {
-        return 0
-      }
-
-      return this.viewedUser().themes.length
-    }
-  },
+  'methods': mapGetters([
+    'viewedTheme'
+  ]),
   data () {
     return {
       'time': moment()
     }
   },
   'computed': {
+    ...mapGetters([
+      'actionErrors'
+    ]),
     lastOnlineDisplay () {
-      return `Last seen ${this.viewedUser().lastSeenReason}, ${moment(this.time).to(this.viewedUser().lastSeen)}`
+      return `Last seen ${this.viewedTheme().lastSeenReason}, ${moment(this.time).to(this.viewedTheme().lastSeen)}`
     }
   }
 }
