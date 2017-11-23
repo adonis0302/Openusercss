@@ -29,7 +29,7 @@ const sources = {
   'server': 'src/*.js'
 }
 
-gulp.task('server:prod', () => {
+gulp.task('server:prod', (done) => {
   const files = glob.sync(sources.server)
 
   const bundles = files.map((entry, index) => {
@@ -65,7 +65,7 @@ gulp.task('server:prod', () => {
   return merge(bundles)
 })
 
-gulp.task('server:fast', () => {
+gulp.task('server:fast', (done) => {
   const files = glob.sync(sources.server)
 
   const bundles = files.map((entry, index) => {
@@ -133,7 +133,7 @@ gulp.task('server:watch', () => {
       ])
     }
 
-    bify.on('update', () => {
+    bify.on('update', (filename) => {
       bundle()
       server.restart()
     })

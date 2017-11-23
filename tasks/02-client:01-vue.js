@@ -27,7 +27,7 @@ const sources = {
 }
 
 gulp.task('shared:components:prod', (done) => {
-  return pump([
+  pump([
     prettyError(),
     gulp.src(sources.components),
     manifold({
@@ -88,13 +88,11 @@ gulp.task('shared:components:prod', (done) => {
     }),
     vuemaker(),
     gulp.dest('.tmp/components')
-  ]).on('end', () => {
-    done()
-  })
+  ]).on('end', done)
 })
 
 gulp.task('shared:components:fast', (done) => {
-  return pump([
+  pump([
     prettyError(),
     gulp.src(sources.components),
     sourcemaps.init(),
@@ -123,13 +121,11 @@ gulp.task('shared:components:fast', (done) => {
     vuemaker(),
     sourcemaps.write(),
     gulp.dest('.tmp/components')
-  ]).on('end', () => {
-    done()
-  })
+  ]).on('end', done)
 })
 
 gulp.task('shared:pages:prod', (done) => {
-  return pump([
+  pump([
     prettyError(),
     gulp.src(sources.pages),
     manifold({
@@ -190,13 +186,11 @@ gulp.task('shared:pages:prod', (done) => {
     }),
     vuemaker(),
     gulp.dest('.tmp/pages')
-  ]).on('end', () => {
-    done()
-  })
+  ]).on('end', done)
 })
 
 gulp.task('shared:pages:fast', (done) => {
-  return pump([
+  pump([
     prettyError(),
     gulp.src(sources.pages),
     sourcemaps.init(),
@@ -225,7 +219,5 @@ gulp.task('shared:pages:fast', (done) => {
     vuemaker(),
     sourcemaps.write(),
     gulp.dest('.tmp/pages')
-  ]).on('end', () => {
-    done()
-  })
+  ]).on('end', done)
 })

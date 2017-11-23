@@ -19,17 +19,17 @@ const destination = (dest) => {
   return path.resolve('./build/', dest)
 }
 
-gulp.task('shared:fast', () => {
-  return pump([
+gulp.task('shared:fast', (done) => {
+  pump([
     prettyError(),
     gulp.src(sources.shared),
     babel(),
     gulp.dest(destination('shared'))
-  ])
+  ]).on('end', done)
 })
 
-gulp.task('shared:prod', () => {
-  return pump([
+gulp.task('shared:prod', (done) => {
+  pump([
     prettyError(),
     gulp.src(sources.shared),
     babel(),
@@ -43,5 +43,5 @@ gulp.task('shared:prod', () => {
       'compress': true
     }),
     gulp.dest(destination('shared'))
-  ])
+  ]).on('end', done)
 })

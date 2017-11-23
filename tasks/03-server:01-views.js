@@ -15,10 +15,10 @@ const sources = {
   'views': './src/views/**/*.pug'
 }
 
-gulp.task('server:views', () => {
-  return pump([
+gulp.task('server:views', (done) => {
+  pump([
     prettyError(),
     gulp.src(sources.views),
     gulp.dest(destination('views'))
-  ])
+  ]).on('end', done)
 })

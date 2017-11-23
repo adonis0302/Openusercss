@@ -23,7 +23,6 @@ import pleeease from 'gulp-pleeease'
 // OTHER
 import concat from 'gulp-concat'
 import webfont64 from 'gulp-base64-webfont-css'
-import del from 'del'
 import flatten from 'gulp-flatten'
 import {iconSizes, bgSizes, sizes, ourSassConfig, postCssPluginsProd, postCssPluginsFunctional} from './shared/css'
 
@@ -61,10 +60,7 @@ const destination = (dest) => {
   return path.resolve('./build/static/', dest)
 }
 
-gulp.task('client:media:prod', () => {
-  del.sync(destination('css'))
-  del.sync(destination('img'))
-
+gulp.task('client:media:prod', (done) => {
   const fontStream = pump([
     gulp.src(sources.fonts),
     webfont64(),
@@ -173,9 +169,6 @@ gulp.task('client:media:prod', () => {
 })
 
 gulp.task('client:media:fast', (done) => {
-  del.sync(destination('css'))
-  del.sync(destination('img'))
-
   const fontStream = pump([
     gulp.src(sources.fonts),
     webfont64(),
@@ -238,10 +231,5 @@ gulp.task('client:media:fast', (done) => {
     gulp.dest(destination('css'))
   ])
 
-  return pump([
-    prettyError(),
-    merge(finalCssStream, finalImageStream)
-  ]).on('end', () => {
-    done()
-  })
+  return merge(finalCssStream, finalImageStream)
 })
