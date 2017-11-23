@@ -15,6 +15,8 @@ import minify from 'gulp-minify'
 import optimize from 'gulp-optimize-js'
 import watchify from 'watchify'
 import hmr from 'browserify-hmr'
+
+import server from './shared/server'
 import {createBrowserify} from './shared/js'
 
 const sources = {
@@ -166,7 +168,10 @@ gulp.task('client:js:watch', () => {
       ])
     }
 
-    bify.on('update', bundle)
+    bify.on('update', () => {
+      bundle()
+      server.restart()
+    })
     bify.on('log', (content) => {
       gutil.log(`Client: ${content}`)
     })

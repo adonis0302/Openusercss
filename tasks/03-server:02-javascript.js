@@ -13,6 +13,8 @@ import minify from 'gulp-minify'
 import optimize from 'gulp-optimize-js'
 import watchify from 'watchify'
 import path from 'path'
+
+import server from './shared/server'
 import {createBrowserify} from './shared/js'
 
 const destination = (dest) => {
@@ -131,7 +133,10 @@ gulp.task('server:watch', () => {
       ])
     }
 
-    bify.on('update', bundle)
+    bify.on('update', () => {
+      bundle()
+      server.restart()
+    })
     bify.on('log', (content) => {
       gutil.log(`Server: ${content}`)
     })
