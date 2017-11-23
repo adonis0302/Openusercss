@@ -142,6 +142,7 @@
     "vue-no-ssr": "^0.2.0",
     "vueify": "^9",
     "vueify-extract-css": "https://github.com/DecentM/vueify-extract-css",
+    "walk": "^2.3.9",
     "watchify": "^3",
     "windowify": "^0.3.0"
   },

@@ -181,7 +181,9 @@ gulp.task('client:js:watch', () => {
 
       walker.on('end', () => {
         bundle()
-        server.restart()
+        if (options.target === 'node') {
+          server.restart()
+        }
       })
     })
     bify.on('log', (content) => {
