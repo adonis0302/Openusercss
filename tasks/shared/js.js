@@ -25,13 +25,21 @@ const babelOptions = {
 
 export default babelOptions
 
+export const processObject = (object, func) => {
+  for (const index in object) {
+    if (typeof object[index] === 'object') {
+      object[index] = processObject(object[index], func)
+    } else {
+      object[index] = func(index, object[index])
+    }
+  }
+
+  return object
+}
+
 export const browserifyOpts = (input) => {
   if (input.target === 'node') {
     input.bundleExternal = false
-    input.cache = {}
-  }
-  if (input.target === 'worker') {
-    input.cache = {}
   }
 
   const options = defaultsDeep(input, {
@@ -40,7 +48,7 @@ export const browserifyOpts = (input) => {
     ],
     'standalone':   input.entries[0].split('/')[input.entries[0].split('/').length - 1],
     'fullPaths':    false,
-    'cache':        false,
+    'cache':        {},
     'packageCache': {}
   })
 

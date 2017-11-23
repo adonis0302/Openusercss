@@ -168,7 +168,8 @@ gulp.task('client:js:watch', () => {
       ])
     }
 
-    bify.on('update', () => {
+    bify.on('update', (filename) => {
+      Reflect.deleteProperty(bify._options.cache, filename)
       bundle()
       server.restart()
     })

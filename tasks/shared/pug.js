@@ -1,4 +1,4 @@
-import {appConfig} from '../appshell'
+import {appConfig} from './config'
 import pugGlob from 'pug-include-glob'
 
 const pugOptions = {
@@ -15,6 +15,6 @@ const pugOptions = {
   ]
 }
 
-export default {
+export {
   pugOptions
 }

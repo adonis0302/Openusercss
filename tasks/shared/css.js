@@ -8,7 +8,8 @@ import ellipsis from 'postcss-ellipsis'
 
 import cssnano from 'cssnano'
 import advancedPreset from 'cssnano-preset-advanced'
-import {processObject, appConfig} from '../appshell'
+import {appConfig} from './config'
+import {processObject} from './js'
 
 const customPreset = advancedPreset({
   'discardComments':     false,
