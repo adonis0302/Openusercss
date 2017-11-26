@@ -1,5 +1,6 @@
 div
   b-container
+    p {{viewedUser}}
     div
       b-section
         b-level
@@ -30,7 +31,7 @@ div
                           b-tile(is-child, is-parent, is-vertical, is-paddingless)
                             h2 {{viewedUser.displayname}}
                             br
-                            p Themes: {{viewedUserThemeCount()}}
+                            p Themes: {{viewedUser.themes ? viewedUser.themes.length : 0}}
                             p Installs: {{viewedUser.installs}}
                             p Average rating: {{viewedUser.rating}}
               b-box
@@ -43,10 +44,10 @@ div
             b-box
               h2 About
               hr
-              p {{user.description}}
+              //- p {{viewedUser.description}}
           b-column(is-6)
             theme-card(v-for="(theme, index) in viewedUser.themes", :data-index="index", direction="horizontal", card-class="is-primary", :themeId="theme._id").has-bottom-margin
-              flush-img(slot="screenshot", :source="theme.screenshotUrl", height="135px")
+              //- flush-img(slot="screenshot", :source="theme.screenshots[0]", height="135px")
               h4(slot="title") {{theme.title}}
               p(slot="description") {{theme.description}}
               p(slot="author") by {{viewedUser.displayname}}

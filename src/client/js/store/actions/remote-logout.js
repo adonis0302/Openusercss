@@ -9,7 +9,7 @@ import {apolloClient} from '.'
 const {AuthenticationError} = expected
 
 const remoteLogout = async (token) => {
-  const logoutMutation = gql(`
+  const mutation = gql(`
     mutation {
       logout(token: "${token}")
     }
@@ -17,7 +17,7 @@ const remoteLogout = async (token) => {
 
   try {
     const result = await apolloClient.mutate({
-      'mutation': logoutMutation
+      mutation
     })
 
     if (!result.data.logout) {
@@ -32,7 +32,7 @@ const remoteLogout = async (token) => {
 }
 
 export default async (context) => {
-  await remoteLogout(context.getters.token)
+  await remoteLogout(context.getters.session.token)
   context.commit('logout')
   localStore.remove('session')
   router.push('/login')

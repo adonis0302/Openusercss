@@ -39,7 +39,7 @@ const startProcesses = (list) => {
 const stopProcesses = (processes) => {
   const stopped = []
 
-  forOwn(processes, async (child, key) => {
+  forOwn(processes, (child, key) => {
     log.info(`Manager stopping ${child.name}`)
     child.stop()
     stopped.push(child)

@@ -21,10 +21,6 @@ const customDictionary = {
   }
 }
 
-const getters = mapGetters([
-  'user'
-])
-
 export default {
   'components': {
     'b-columns':     bulma('columns', 'div'),
@@ -70,7 +66,6 @@ export default {
     this.$validator.updateDictionary(customDictionary)
   },
   'methods': {
-    'user': getters.user,
     async submit () {
       const validated = await this.$validator.validateAll()
 
@@ -82,12 +77,21 @@ export default {
             'scope':       this.theme.scope,
             'content':     this.theme.content
           },
-          'redirect': `/profile/${this.user()._id}`
+          'redirect': `/profile/${this.viewedUser._id}`
         })
       }
     }
   },
-  'computed': mapGetters([
-    'actionErrors'
-  ])
+  'computed': {
+    ...mapGetters([
+      'actionErrors',
+      'users'
+    ]),
+    viewedUser () {
+      if (!this.users[this.$route.params.id]) {
+        return {}
+      }
+      return this.users[this.$route.params.id]
+    }
+  }
 }

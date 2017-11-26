@@ -65,12 +65,10 @@ export default class User extends Document {
         'validate': validators.length(64)
       },
       'avatarUrl': {
-        'type':     String,
-        'required': true
+        'type': String
       },
       'smallAvatarUrl': {
-        'type':     String,
-        'required': true
+        'type': String
       },
       'themes': [
         Theme

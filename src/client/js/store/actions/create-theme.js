@@ -1,4 +1,5 @@
 import gql from 'graphql-tag'
+import log from 'chalk-console'
 import router from '../../router'
 import {ExpectedError} from '../../../../shared/custom-errors'
 import {apolloClient} from '.'
@@ -8,7 +9,7 @@ const createTheme = async (theme, token) => {
     throw new Error('No content')
   }
 
-  const themeMutation = gql(`
+  const mutation = gql(`
     mutation {
       theme(title: "${theme.title}", description: "${theme.description}", scope: "${theme.scope}", content: "${theme.content}", token: "${token}") {
         createdAt,
@@ -22,7 +23,7 @@ const createTheme = async (theme, token) => {
 
   try {
     await apolloClient.mutate({
-      'mutation': themeMutation
+      mutation
     })
   } catch (error) {
     throw new ExpectedError({
@@ -42,10 +43,11 @@ export default async ({commit, getters}, {theme, redirect}) => {
   theme.scope = `/${theme.scope}/gi`
 
   try {
-    await createTheme(theme, getters.token)
+    await createTheme(theme, getters.session.token)
     commit('actionError', null)
     router.push(redirect)
   } catch (error) {
+    log.error(error)
     const errors = JSON.parse(error.message)
 
     errors.forEach((message) => {

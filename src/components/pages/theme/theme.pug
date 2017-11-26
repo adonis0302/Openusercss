@@ -11,7 +11,7 @@ div
           b-level-right
             b-columns
               b-column
-                router-link(:to="'/theme/' + viewedTheme() + '/edit'")
+                router-link(:to="'/theme/' + theme($route.params.id) + '/edit'")
                   b-button(is-primary)
                     | Upload new theme
         b-columns
@@ -22,16 +22,15 @@ div
                   b-tile(is-parent, is-paddingless)
                     b-tile(is-4)
                       b-tile(is-child).ouc-user-avatar
-                        flush-img(:source="viewedTheme().screenshotUrl", :placeholder="viewedTheme().smallScreenshotUrl", height="185px", align="left")
+                        flush-img(:source="theme($route.params.id).screenshotUrl", :placeholder="theme($route.params.id).smallScreenshotUrl", height="185px", align="left")
                     b-tile(is-8)
                       b-tile(is-parent)
                         b-tile(is-parent)
                           b-tile(is-child, is-parent, is-vertical, is-paddingless)
-                            h2 {{viewedTheme().displayname}}
+                            h2 {{theme($route.params.id).displayname}}
                             br
-                            p Themes: {{viewedThemeThemeCount()}}
-                            p Installs: {{viewedTheme().installs}}
-                            p Average rating: {{viewedTheme().rating}}
+                            p Installs: {{theme($route.params.id).installs}}
+                            p Average rating: {{theme($route.params.id).rating}}
 
             hr
             b-box
@@ -39,10 +38,10 @@ div
               hr
               p {{user.description}}
           b-column(is-6)
-            theme-card(v-for="(theme, index) in viewedTheme().themes", :data-index="index", direction="horizontal", card-class="is-primary").has-bottom-margin
-              flush-img(slot="screenshot", :source="theme.screenshotUrl", height="135px")
+            theme-card(v-for="(theme, index) in theme($route.params.id).themes", :data-index="index", direction="horizontal", card-class="is-primary").has-bottom-margin
+              flush-img(slot="screenshot", :source="theme.screenshots[0]", height="135px")
               h4(slot="title") {{theme.title}}
               p(slot="description") {{theme.description}}
-              p(slot="author") by {{viewedTheme().displayname}}
+              p(slot="author") by {{theme($route.params.id).displayname}}
 
   attributor

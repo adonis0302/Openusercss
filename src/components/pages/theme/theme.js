@@ -1,6 +1,5 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import {mapGetters} from 'vuex'
-import moment from 'moment'
 
 import icon from '../../components/icon/icon.vue'
 import themeCard from '../../components/theme-card/theme-card.vue'
@@ -32,20 +31,15 @@ export default {
   beforeMount () {
     this.$store.dispatch('getFullTheme', this.$route.params.id)
   },
-  'methods': mapGetters([
-    'viewedTheme'
-  ]),
-  data () {
-    return {
-      'time': moment()
+  'methods': {
+    ...mapGetters([
+      'themes'
+    ]),
+    theme (id) {
+      return this.themes()[id]
     }
   },
-  'computed': {
-    ...mapGetters([
-      'actionErrors'
-    ]),
-    lastOnlineDisplay () {
-      return `Last seen ${this.viewedTheme().lastSeenReason}, ${moment(this.time).to(this.viewedTheme().lastSeen)}`
-    }
-  }
+  'computed': mapGetters([
+    'actionErrors'
+  ])
 }

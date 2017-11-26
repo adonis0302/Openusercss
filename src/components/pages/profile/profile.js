@@ -36,29 +36,29 @@ export default {
     }, 20000)
   },
   'methods': {
-    ...mapGetters([
-      'user'
-    ]),
     isOnline (date) {
       return moment(this.time).diff(date) < 600000
-    },
-    viewedUserThemeCount () {
-      if (!this.viewedUser.themes) {
-        return 0
-      }
-
-      return this.viewedUser.themes.length
     }
   },
   data () {
     return {
-      'time':       moment(),
-      'viewedUser': null
+      'time': moment()
     }
   },
   'computed': {
+    ...mapGetters([
+      'users'
+    ]),
+    viewedUser () {
+      if (!this.users[this.$route.params.id]) {
+        return {}
+      }
+      return this.users[this.$route.params.id]
+    },
     lastOnlineDisplay () {
-      return `Last seen ${this.viewedUser.lastSeenReason}, ${moment(this.time).to(this.viewedUser.lastSeen)}`
+      const user = this.viewedUser
+
+      return `Last seen ${user.lastSeenReason}, ${moment(this.time).to(user.lastSeen)}`
     }
   }
 }

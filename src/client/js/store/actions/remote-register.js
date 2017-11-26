@@ -5,7 +5,7 @@ import router from '../../router'
 import {apolloClient} from '.'
 
 const remoteRegister = async ({email, password, displayname}) => {
-  const registerMutation = gql(`
+  const mutation = gql(`
     mutation {
       register(displayname: "${displayname}", email: "${email}", password: "${password}") {
         username
@@ -16,7 +16,7 @@ const remoteRegister = async ({email, password, displayname}) => {
 
   try {
     token = await apolloClient.mutate({
-      'mutation': registerMutation
+      mutation
     })
   } catch (error) {
     log.error(error.message)
@@ -30,7 +30,7 @@ export default async ({getters, commit}, registerData) => {
   commit('loading', true)
 
   try {
-    await remoteRegister(getters.formData)
+    await remoteRegister(registerData)
     router.push('/login')
   } catch (error) {
     commit('actionError', error.message)

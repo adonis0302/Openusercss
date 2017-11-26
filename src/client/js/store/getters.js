@@ -1,10 +1,10 @@
 export default {
-  user (state, id) {
-    return state.users[id]
+  users (state) {
+    return state.users
   },
 
-  theme (state, id) {
-    return state.themes[id]
+  themes (state) {
+    return state.themes
   },
 
   latestThemes (state) {

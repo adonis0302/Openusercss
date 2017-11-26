@@ -1,8 +1,35 @@
-import {Document} from 'camo'
+import {Document, EmbeddedDocument} from 'camo'
 import moment from 'moment'
 
 import validators from './validators'
 import User from './user'
+
+class Screenshot extends EmbeddedDocument {
+  constructor () {
+    super()
+
+    this.schema({
+      'small': {
+        'type':  String,
+        'match': validators.regex({
+          'preset':    'url',
+          'validator': false
+        }),
+        'required': true,
+        'default':  ''
+      },
+      'large': {
+        'type':  String,
+        'match': validators.regex({
+          'preset':    'url',
+          'validator': false
+        }),
+        'required': true,
+        'default':  ''
+      }
+    })
+  }
+}
 
 export default class Theme extends Document {
   preSave () {
@@ -56,14 +83,7 @@ export default class Theme extends Document {
         'default': 0
       },
       'screenshots': [
-        {
-          'type':  String,
-          'match': validators.regex({
-            'preset':    'url',
-            'validator': false
-          }),
-          'default': ''
-        }
+        Screenshot
       ],
       'user': User
     })
