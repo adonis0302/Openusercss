@@ -16,7 +16,7 @@ div
                         name="email",
                         placeholder="E-mail",
                         v-validate="'required|email'",
-                        v-model.lazy="register.email",
+                        v-model="register.email",
                         :class="{'input': true, 'is-danger': errors.has('email') }",
                         data-vv-as="e-mail"
                       )
@@ -29,7 +29,7 @@ div
                         name="displayname",
                         placeholder="Username",
                         v-validate="'required|alpha_num'",
-                        v-model.lazy="register.displayname"
+                        v-model="register.displayname"
                         :class="{'input': true, 'is-danger': errors.has('displayname') }",
                         data-vv-as="displayname"
                       )
@@ -44,7 +44,7 @@ div
                             name="password",
                             placeholder="Passphrase",
                             v-validate="'required'",
-                            v-model.lazy="register.password"
+                            v-model="register.password",
                             :class="{'input': true, 'is-danger': errors.has('password') }",
                             data-vv-as="passphrase"
                           )
@@ -56,9 +56,10 @@ div
                             type="password",
                             name="passwordVerify",
                             placeholder="Verify passphrase",
-                            v-validate="'required|confirmed:password'"
+                            v-validate="'required|confirmed:password'",
+                            v-model="register.passwordVerify",
                             :class="{'input': true, 'is-danger': errors.has('passwordVerify') }",
-                            data-vv-as="passphrase"
+                            data-vv-as="passphrase verification"
                           )
                 b-tile(is-parent, is-vertical, is-paddingless)
                   big-button(icon="account-plus", :disabled="errors.any()").is-primary

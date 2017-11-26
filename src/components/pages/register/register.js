@@ -6,6 +6,7 @@ import flushImg from '../../components/flush-img/flush-img.vue'
 import icon from '../../components/icon/icon.vue'
 import notification from '../../components/notification/notification.vue'
 import button from '../../components/button/button.vue'
+import bInput from '../../components/b-input/b-input.vue'
 
 import attributor from '../../components/footer/footer.vue'
 import showcase from '../../components/theme-showcase/theme-showcase.vue'
@@ -20,7 +21,6 @@ export default {
     'b-container': bulma('container', 'div'),
     'b-field':     bulma('field', 'div'),
     'b-label':     bulma('label', 'label'),
-    'b-input':     bulma('input', 'input'),
     'b-textarea':  bulma('textarea', 'textarea'),
     'b-select':    bulma('select', 'select'),
     'b-control':   bulma('control', 'div'),
@@ -30,6 +30,7 @@ export default {
     'b-help':      bulma('help', 'p'),
     'b-tile':      bulma('tile', 'div'),
     'big-button':  button,
+    bInput,
     themeCard,
     flushImg,
     icon,
@@ -41,9 +42,10 @@ export default {
   data () {
     return {
       'register': {
-        'displayname': '',
-        'password':    '',
-        'email':       ''
+        'displayname':    '',
+        'password':       '',
+        'passwordVerify': '',
+        'email':          ''
       }
     }
   },
@@ -55,7 +57,6 @@ export default {
       const validated = await this.$validator.validateAll()
 
       if (validated) {
-        this.$store.dispatch('updateFormData', this.register)
         this.$store.dispatch('register', this.register)
       }
     }
