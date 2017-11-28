@@ -32,9 +32,10 @@ toolbox.precache([
   '/img/openusercss.icon-x16.png'
 ])
 
-toolbox.router.get(/https?:\/\/.*\/(js|img|css).*/, toolbox.cacheFirst)
-toolbox.router.get(/https?:\/\/localhost:312.\/.*/, toolbox.networkOnly)
+toolbox.router.get(/.*\.(js|json|png|jpg|txt|css|mp4|map)$/, toolbox.cacheFirst)
+
 toolbox.router.get(/https?:\/\/.*\/favicon.ico$/, toolbox.cacheFirst)
 toolbox.router.get(/https?:\/\/gravatar.com\/avatar/, toolbox.cacheFirst)
+toolbox.router.get(/https?:\/\/localhost:312.\/.*/, toolbox.networkOnly)
 
-toolbox.router.default = indexOnly
+toolbox.router.get(/^(?!.*\.(js|json|png|jpg|txt|css|mp4|map)$)/, indexOnly)
