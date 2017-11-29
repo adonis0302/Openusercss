@@ -4,10 +4,11 @@ import {ExpectedError} from '../../../../shared/custom-errors'
 import {apolloClient} from '.'
 
 const getFullTheme = async (id) => {
-  const themeQuery = gql(`
+  const query = gql(`
     query {
-      theme(id: "5a0d21e5e54325bf4f4e4cbd") {
+      theme(id: "${id}") {
         user {
+          _id,
           username,
           displayname,
           avatarUrl,
@@ -20,7 +21,8 @@ const getFullTheme = async (id) => {
         createdAt,
         lastUpdate,
         rating,
-        scope
+        scope,
+        version
       }
     }
   `)
@@ -28,7 +30,7 @@ const getFullTheme = async (id) => {
 
   try {
     user = await apolloClient.query({
-      'query': themeQuery
+      query
     })
   } catch (error) {
     throw new ExpectedError({
@@ -45,7 +47,7 @@ export default async ({commit, getters}, id) => {
   try {
     const result = await getFullTheme(id)
 
-    commit('viewedTheme', result.data.user)
+    commit('themes', result.data.theme)
     commit('actionError', null)
   } catch (error) {
     let errors = []

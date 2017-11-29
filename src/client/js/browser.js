@@ -34,3 +34,4 @@ const main = async () => {
 }
 
 main()
+window.process = process

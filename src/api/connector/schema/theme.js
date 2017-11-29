@@ -76,6 +76,11 @@ export default class Theme extends Document {
         }),
         'validate': validators.length(128)
       },
+      'version': {
+        'type':     String,
+        'required': true,
+        'validate': validators.isSemver
+      },
       'rating': {
         'type':    Number,
         'min':     0,

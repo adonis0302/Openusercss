@@ -16,6 +16,9 @@ div
                 b-level-left
                   h1 Create a new theme
                 b-level-right
+                  b-tile(is-parent)
+                    b-tile(is-child)
+                      p {{theme.version}}
                   b-button(type="submit", is-primary, :disabled="errors.any()")
                     div(slot="content") Save theme
 
@@ -58,8 +61,20 @@ div
                     br
                     a(href="https://www.w3schools.com/css/", target="_blank", rel="nofollow") CSS Tutorial (W3Schools - The W3C Consortium)
 
-            b-tile(is-parent, is-paddingless)
-              b-tile(is-child, is-11)
+            b-columns
+              b-column(is-3)
+                b-field
+                  b-control(has-icons-left)
+                    icon(icon="update")
+                    b-input(
+                      type="text",
+                      name="version",
+                      placeholder="Version",
+                      v-validate="'required|semver'",
+                      v-model="theme.version",
+                      :class="['input', {'is-danger': errors.has('version')}]"
+                    )
+              b-column(is-8)
                 b-field
                   b-control(has-icons-left)
                     icon(icon="code-parentheses")
@@ -67,15 +82,14 @@ div
                       type="text",
                       name="scope",
                       placeholder="Theme scope regex",
-                      v-validate="{'rules': {required: true, regex}}",
+                      v-validate="'required|regex'",
                       v-model="theme.scope",
                       :class="['input', {'is-danger': errors.has('scope')}]"
                     )
-              b-tile(is-child, is-1).ouc-icon-wrapper
+              b-column(is-1).ouc-icon-wrapper
                 router-link(to="/help")
                   icon(icon="help-circle", color="#FFB450")
 
-            hr
             b-tile.ouc-new-theme-editor(is-child)
               b-box(is-paddingless)
                 no-ssr

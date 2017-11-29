@@ -14,6 +14,10 @@
 
 $background: map-get($colors, 'background');
 
+.has-bottom-margin {
+  margin-bottom: 1rem;
+}
+
 .is-primary > .box {
   background-color: map-get($tones, 'brand-primary');
   color: text-for-bg(map-get($tones, 'brand-primary'));

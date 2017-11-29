@@ -11,7 +11,7 @@ const createTheme = async (theme, token) => {
 
   const mutation = gql(`
     mutation {
-      theme(title: "${theme.title}", description: "${theme.description}", scope: "${theme.scope}", content: "${theme.content}", token: "${token}") {
+      theme(title: "${theme.title}", description: "${theme.description}", scope: "${theme.scope}", content: "${theme.content}", version: "${theme.version}", token: "${token}") {
         createdAt,
         lastUpdate,
         user {

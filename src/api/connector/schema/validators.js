@@ -1,4 +1,5 @@
 import moment from 'moment'
+import semver from 'semver'
 import urlRegex from './url-regex'
 
 export default {
@@ -62,5 +63,7 @@ export default {
     }
 
     return true
-  }
+  },
+
+  'isSemver': (version) => !!semver.valid(version)
 }

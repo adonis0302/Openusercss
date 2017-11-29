@@ -13,10 +13,18 @@
 @import 'node_modules/bulma/sass/elements/box';
 @import 'node_modules/bulma/sass/elements/button';
 @import 'node_modules/bulma/sass/elements/container';
+@import 'node_modules/bulma/sass/elements/content';
 @import 'node_modules/bulma/sass/components/level';
+@import 'node_modules/bulma/sass/components/modal';
 
 .has-bottom-margin:not(:last-child) {
   margin-bottom: 16px;
+}
+
+code {
+  display: block;
+  padding: 1rem;
+  white-space: pre-wrap
 }
 
 @import '../../../client/scss/reboot';

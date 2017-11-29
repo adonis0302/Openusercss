@@ -7,41 +7,52 @@ div
             p(v-for="error in actionErrors") {{error}}
         b-level
           b-level-left
-            h1 Profile
+            h1 {{viewedTheme.title}} by {{viewedTheme.user.displayname}}
           b-level-right
-            b-columns
-              b-column
-                router-link(:to="'/theme/' + theme($route.params.id) + '/edit'")
-                  b-button(is-primary)
-                    | Upload new theme
+            b-button(@click="installTheme", is-primary) Install theme
+
         b-columns
           b-column(is-6)
             div
-              b-box(is-paddingless, is-marginless).ouc-user-card
-                b-column(is-paddingless)
+              b-box(is-paddingless, is-marginless).ouc-theme-card
+                flush-img(:source="viewedTheme.screenshotUrl", :placeholder="viewedTheme.smallScreenshotUrl", height="250px", align="left")
+                b-column
                   b-tile(is-parent, is-paddingless)
-                    b-tile(is-4)
-                      b-tile(is-child).ouc-user-avatar
-                        flush-img(:source="theme($route.params.id).screenshotUrl", :placeholder="theme($route.params.id).smallScreenshotUrl", height="185px", align="left")
-                    b-tile(is-8)
-                      b-tile(is-parent)
-                        b-tile(is-parent)
-                          b-tile(is-child, is-parent, is-vertical, is-paddingless)
-                            h2 {{theme($route.params.id).displayname}}
-                            br
-                            p Installs: {{theme($route.params.id).installs}}
-                            p Average rating: {{theme($route.params.id).rating}}
-
+                    b-tile(is-child, is-parent, is-vertical)
+                      b-level(is-marginless)
+                        b-level-left
+                          h2 {{viewedTheme.title}}
+                        b-level-right
+                          router-link(:to="'/profile/' + viewedTheme.user._id")
+                            b-button(is-primary) Visit {{viewedTheme.user.displayname}}'s profile
+                          b-button(
+                            is-primary,
+                            @click="viewSource"
+                          ) View source
+                      br
+                      b-modal(
+                        :class="['modal', {'is-active': viewingSource}]"
+                      )
+                        b-modal-background(@click="viewSource")
+                        b-modal-content
+                          b-box(is-paddingless)
+                            b-content
+                              code {{viewedTheme.content}}
+                        b-modal-close
+                      //- b-content
+                        pre {{viewedTheme.content}}
+                      //- p Average rating: {{viewedTheme.rating}}
+                      p Created at: {{formatMoment(viewedTheme.createdAt)}}
+                      p Last update: {{formatMoment(viewedTheme.lastUpdate)}}
+                      p Applies to: {{viewedTheme.scope}}
+                      p Version: {{viewedTheme.version}}
             hr
             b-box
               h2 About
-              hr
-              p {{user.description}}
+              br
+              p {{viewedTheme.description}}
           b-column(is-6)
-            theme-card(v-for="(theme, index) in theme($route.params.id).themes", :data-index="index", direction="horizontal", card-class="is-primary").has-bottom-margin
-              flush-img(slot="screenshot", :source="theme.screenshots[0]", height="135px")
-              h4(slot="title") {{theme.title}}
-              p(slot="description") {{theme.description}}
-              p(slot="author") by {{theme($route.params.id).displayname}}
+            b-box
+              p Theme options are not implemented yet.
 
   attributor

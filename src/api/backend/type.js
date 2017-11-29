@@ -30,6 +30,7 @@ const typeDefs = `
     lastUpdate: String!
     rating: Float!
     scope: String!
+    version: String!
   }
 
   type Query {
@@ -44,7 +45,7 @@ const typeDefs = `
     register(displayname: String!, email: String!, password: String!): User!
     login(email: String!, password: String!): Session!
     logout(token: String!): Boolean!
-    theme(token: String!, id: ID, title: String!, description: String!, content: String!, scope: String!): Theme!
+    theme(token: String!, id: ID, title: String!, description: String!, content: String!, scope: String!, version: String!): Theme!
   }
 `
 

@@ -3,7 +3,8 @@ import gulp from 'gulp'
 gulp.task('fs-watch', () => {
   gulp.watch('src/components/**/*', gulp.series(
     'shared:components:fast',
-    'shared:pages:fast'
+    'shared:pages:fast',
+    'client:media:fast'
   ))
 
   gulp.watch('src/views/**/*.pug', gulp.series('server:views'))

@@ -16,7 +16,7 @@ transition(
               slot(name="author")
 
   router-link(v-else="small", :class="cardClass", :to="'/theme/' + themeId")
-    b-box(is-paddingless).ouc-theme-card
+    b-box(is-paddingless).ouc-theme-card.has-bottom-margin
       b-tile(is-parent, is-paddingless)
         b-tile(is-4, is-child).ouc-theme-screenshot
           slot(name="screenshot", :height="height")

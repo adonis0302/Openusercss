@@ -21,5 +21,9 @@ export default {
 
   loading (state) {
     return state.loading
+  },
+
+  currentUser (state) {
+    return state.session.user
   }
 }

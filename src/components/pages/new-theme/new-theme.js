@@ -1,6 +1,7 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import noSSR from 'vue-no-ssr'
 import {mapGetters} from 'vuex'
+import semver from 'semver'
 
 import attributor from '../../components/footer/footer.vue'
 import navbar from '../../components/navbar/navbar.vue'
@@ -16,6 +17,9 @@ const customDictionary = {
     'custom': {
       'content': {
         'required': 'Theme code must not be empty.'
+      },
+      'version': {
+        'semver': 'Theme versioning must be semantic'
       }
     }
   }
@@ -56,11 +60,15 @@ export default {
         'title':       '',
         'description': '',
         'scope':       '',
-        'content':     ''
+        'content':     '',
+        'version':     '1.0.0'
       },
       // eslint-disable-next-line
       'regex': /((?![*+?])(?:[^\r\n\[\/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)/
     }
+  },
+  beforeMount () {
+    this.$validator.extend('semver', (value) => !!semver.valid(value))
   },
   mounted () {
     this.$validator.updateDictionary(customDictionary)
@@ -71,13 +79,8 @@ export default {
 
       if (validated) {
         this.$store.dispatch('createTheme', {
-          'theme': {
-            'title':       this.theme.title,
-            'description': this.theme.description,
-            'scope':       this.theme.scope,
-            'content':     this.theme.content
-          },
-          'redirect': `/profile/${this.viewedUser._id}`
+          'theme':    this.theme,
+          'redirect': `/profile/${this.currentUser._id}`
         })
       }
     }
@@ -85,13 +88,8 @@ export default {
   'computed': {
     ...mapGetters([
       'actionErrors',
-      'users'
-    ]),
-    viewedUser () {
-      if (!this.users[this.$route.params.id]) {
-        return {}
-      }
-      return this.users[this.$route.params.id]
-    }
+      'users',
+      'currentUser'
+    ])
   }
 }

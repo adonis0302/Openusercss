@@ -7,7 +7,7 @@ import {expected} from '../../../shared/custom-errors'
 
 const {LintError} = expected
 
-export default async (root, {token, title, description, content, scope}, {Session, Theme, User}) => {
+export default async (root, {token, title, description, content, scope, version}, {Session, Theme, User}) => {
   await mustAuthenticate(token, Session)
 
   const session = await Session.findOne({
@@ -35,6 +35,7 @@ export default async (root, {token, title, description, content, scope}, {Sessio
     'title':       escape(title),
     'description': escape(description),
     'user':        session.user,
+    'version':     escape(version),
     content,
     scope
   })
