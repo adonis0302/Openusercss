@@ -38,7 +38,7 @@ const setupRoutes = async () => {
       response = `${response}@author ${foundTheme.user.displayname} (https://openusercss.org/profile/${foundTheme.user._id})\n`
       response = `${response}==/userstyle== */\n`
       response = `${response}\n@-moz-document regexp("${foundTheme.scope}") {\n`
-      response = `${response}${foundTheme.content.replace(/^/gm, '\t')}\n}\n`
+      response = `${response}${foundTheme.content.replace(/^/gm, '\ \ ')}\n}\n`
 
       res.type('css')
       res.send(response)
