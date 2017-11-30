@@ -7,6 +7,7 @@ import themeCard from '../../components/theme-card/theme-card.vue'
 import flushImg from '../../components/flush-img/flush-img.vue'
 import attributor from '../../components/footer/footer.vue'
 import navbar from '../../components/navbar/navbar.vue'
+import notification from '../../components/notification/notification.vue'
 
 export default {
   'components': {
@@ -25,7 +26,8 @@ export default {
     navbar,
     themeCard,
     flushImg,
-    icon
+    icon,
+    notification
   },
   beforeMount () {
     this.$store.dispatch('getFullUser', this.$route.params.id)
@@ -47,13 +49,17 @@ export default {
   },
   'computed': {
     ...mapGetters([
+      'actionErrors',
       'users'
     ]),
-    viewedUser () {
-      if (!this.users[this.$route.params.id]) {
-        return {}
+    'viewedUser': {
+      'cache': false,
+      get () {
+        if (!this.users[this.$route.params.id]) {
+          return {}
+        }
+        return this.users[this.$route.params.id]
       }
-      return this.users[this.$route.params.id]
     },
     lastOnlineDisplay () {
       const user = this.viewedUser

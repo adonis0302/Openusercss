@@ -24,6 +24,9 @@ export default {
   },
 
   currentUser (state) {
+    if (!state.session) {
+      return {}
+    }
     return state.session.user
   }
 }
