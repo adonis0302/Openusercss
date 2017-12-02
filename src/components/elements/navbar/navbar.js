@@ -21,6 +21,11 @@ export default {
     icon,
     flushImg
   },
+  mounted () {
+    setInterval(() => {
+      this.fps = process.fps
+    }, 1000)
+  },
   'methods': {
     ...mapActions([
       'logout'
@@ -34,7 +39,8 @@ export default {
   },
   data () {
     return {
-      'open': false
+      'open': false,
+      'fps':  60
     }
   },
   'computed': mapGetters([
