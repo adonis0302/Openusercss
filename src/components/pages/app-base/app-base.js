@@ -1,13 +1,36 @@
+import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import navbar from '../../components/navbar/navbar.vue'
 import {LeftRight} from '../../../src/shared/animations'
+import {mapGetters} from 'vuex'
 
 export default {
   'components': {
+    'b-box':         bulma('box', 'div'),
+    'b-level':       bulma('level', 'div'),
+    'b-level-left':  bulma('level-left', 'div'),
+    'b-level-right': bulma('level-right', 'div'),
+    'b-tag':         bulma('tag', 'div'),
+    'b-container':   bulma('container', 'div'),
     navbar
   },
-  created () {
+  beforeMount () {
     this.$store.dispatch('getOfflineToken')
     this.$store.dispatch('verifyToken')
+
+    setInterval(() => {
+      this.process = process
+    }, 1000)
   },
-  'methods': new LeftRight()
+  'methods': new LeftRight(),
+  data () {
+    return {
+      process
+    }
+  },
+  'computed': mapGetters([
+    'themes',
+    'users',
+    'session',
+    'loading'
+  ])
 }

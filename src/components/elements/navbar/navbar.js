@@ -21,11 +21,6 @@ export default {
     icon,
     flushImg
   },
-  mounted () {
-    setInterval(() => {
-      this.fps = process.fps
-    }, 1000)
-  },
   'methods': {
     ...mapActions([
       'logout'
