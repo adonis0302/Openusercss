@@ -10,7 +10,7 @@ import themeRoute from '../../../../.tmp/pages/theme/theme.vue'
 
 import notFoundRoute from '../../../../.tmp/pages/not-found/not-found.vue'
 
-export default new VueRouter({
+const router = new VueRouter({
   'mode':   'history',
   'routes': [
     {
@@ -47,3 +47,25 @@ export default new VueRouter({
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (
+    process.browser
+    && 'serviceWorker' in navigator
+    && navigator.serviceWorker.controller
+    && 'MessageChannel' in window
+  ) {
+    const {port2} = new window.MessageChannel()
+
+    navigator.serviceWorker.controller.postMessage({
+      'action': 'cache-route',
+      'route':  to.path
+    }, [
+      port2
+    ])
+  }
+
+  next()
+})
+
+export default router
