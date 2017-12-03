@@ -15,6 +15,7 @@ class Screenshot extends EmbeddedDocument {
           'preset':    'url',
           'validator': false
         }),
+        'validate': validators.length(256),
         'required': true,
         'default':  ''
       },
@@ -24,6 +25,7 @@ class Screenshot extends EmbeddedDocument {
           'preset':    'url',
           'validator': false
         }),
+        'validate': validators.length(256),
         'required': true,
         'default':  ''
       }
@@ -70,11 +72,7 @@ export default class Theme extends Document {
       'scope': {
         'type':     String,
         'required': true,
-        'match':    validators.regex({
-          'preset':    'regex',
-          'validator': false
-        }),
-        'validate': validators.length(128)
+        'validate': validators.length(256)
       },
       'version': {
         'type':     String,

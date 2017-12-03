@@ -40,7 +40,7 @@ export default async ({commit, getters}, {theme, redirect}) => {
   theme.content = theme.content.replace(/[\n]/g, '\\n')
   theme.content = theme.content.replace(/[']/g, '\'')
   theme.content = theme.content.replace(/["]/g, '\\"')
-  theme.scope = `/${theme.scope}/gi`
+  theme.scope = theme.scope.replace(/\\/g, '\\\\')
 
   try {
     await createTheme(theme, getters.session.token)

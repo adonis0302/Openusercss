@@ -13,6 +13,7 @@ const getFullUser = async (id) => {
           description,
           createdAt,
           lastUpdate,
+          scope,
           rating
         },
         _id,

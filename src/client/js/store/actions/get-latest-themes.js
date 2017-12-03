@@ -15,7 +15,8 @@ const getLatestThemes = async (limit) => {
         title,
         description,
         lastUpdate,
-        createdAt
+        createdAt,
+        scope
       }
     }
   `)
