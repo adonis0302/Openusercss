@@ -63,6 +63,10 @@ class Animation {
 
     this.stageAll(async ({element, done}) => {
       process.animating.push(element)
+      element.dataset.speed = this.speeds.slow
+      if (process.browser && process.averageFps < 45) {
+        element.dataset.speed = 0
+      }
       return {element, done}
     })
 
@@ -76,11 +80,6 @@ class Animation {
 
       forOwn(self.stages, (stage, key) => {
         self[key] = async (element, done) => {
-          element.dataset.speed = this.speeds.slow
-          if (process.browser && process.averageFps < 45) {
-            element.dataset.speed = 0
-          }
-
           return waterfall(stage, {element, done})
         }
       })
