@@ -3,7 +3,6 @@ import {mapGetters} from 'vuex'
 
 import attributor from '../../components/footer/footer.vue'
 import navbar from '../../components/navbar/navbar.vue'
-import showcase from '../../components/theme-showcase/theme-showcase.vue'
 
 import icon from '../../components/icon/icon.vue'
 import notification from '../../components/notification/notification.vue'
@@ -31,7 +30,6 @@ export default {
     icon,
     notification,
     attributor,
-    showcase,
     navbar,
     bInput
   },

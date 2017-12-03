@@ -7,10 +7,6 @@ export default {
     return state.themes
   },
 
-  latestThemes (state) {
-    return state.latestThemes
-  },
-
   actionErrors (state) {
     return state.actionErrors
   },

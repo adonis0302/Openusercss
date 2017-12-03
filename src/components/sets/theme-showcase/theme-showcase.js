@@ -2,6 +2,8 @@ import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import themeCard from '../../components/theme-card/theme-card.vue'
 import flushImg from '../../components/flush-img/flush-img.vue'
 
+console.warn('Using sets is deprecated')
+
 export default {
   'components': {
     'b-columns': bulma('columns', 'div'),

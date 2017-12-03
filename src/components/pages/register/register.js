@@ -9,7 +9,6 @@ import button from '../../components/button/button.vue'
 import bInput from '../../components/b-input/b-input.vue'
 
 import attributor from '../../components/footer/footer.vue'
-import showcase from '../../components/theme-showcase/theme-showcase.vue'
 import navbar from '../../components/navbar/navbar.vue'
 
 export default {
@@ -36,7 +35,6 @@ export default {
     icon,
     notification,
     attributor,
-    showcase,
     navbar
   },
   data () {
