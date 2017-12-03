@@ -54,6 +54,16 @@ const init = async () => {
 
       res.end()
     })
+
+    appStream.on('error', (err) => {
+      res.status(err.code || 500)
+
+      res.write(pug.renderFile(templatePath, {
+        req,
+        appHTML
+      }))
+      res.end()
+    })
   })
 
   log.info(`Webserver environment: ${app.get('env')}`)

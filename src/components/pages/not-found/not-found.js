@@ -7,8 +7,8 @@ import icon from '../../components/icon/icon.vue'
 import themeCard from '../../components/theme-card/theme-card.vue'
 
 export default {
-  'responseCode': '404',
-  'components':   {
+  'errorStatus': 404,
+  'components':  {
     'b-section':   bulma('section', 'div'),
     'b-container': bulma('container', 'div'),
     'b-columns':   bulma('columns', 'div'),
