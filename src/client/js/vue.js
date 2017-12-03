@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import VeeValidate from 'vee-validate'
 import VueRouter from 'vue-router'
+import VueFilters from 'vue2-filters'
+import VueMoment from 'vue-moment'
 
 import router from './router'
 import store from './store'
@@ -21,6 +23,8 @@ Vue.use(VeeValidate, {
   'validity':      false,
   'aria':          true
 })
+Vue.use(VueFilters)
+Vue.use(VueMoment)
 
 export {router}
 

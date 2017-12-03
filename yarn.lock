@@ -7058,6 +7058,10 @@ moment@^2:
   version "2.19.2"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.2.tgz#8a7f774c95a64550b4c7ebd496683908f9419dbe"
 
+moment@^2.11.1:
+  version "2.19.3"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.3.tgz#bdb99d270d6d7fda78cc0fbace855e27fe7da69f"
+
 moment@~2.13.0:
   version "2.13.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.13.0.tgz#24162d99521e6d40f99ae6939e806d2139eaac52"
@@ -11536,6 +11540,12 @@ vue-hot-reload-api@^2.0.1:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/vue-hot-reload-api/-/vue-hot-reload-api-2.2.4.tgz#683bd1d026c0d3b3c937d5875679e9a87ec6cd8f"
 
+vue-moment@^3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/vue-moment/-/vue-moment-3.1.0.tgz#93ec4cc5909ca1e55b81d672dd7b6f2f103c939d"
+  dependencies:
+    moment "^2.11.1"
+
 vue-no-ssr@^0.2.0:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/vue-no-ssr/-/vue-no-ssr-0.2.2.tgz#e1a0ef0ba39fc54972edd71a2ae11a7988312b19"
@@ -11567,6 +11577,10 @@ vue-template-compiler@^2.0.0-alpha.8, vue-template-compiler@^2.5.2:
 vue-template-es2015-compiler@^1.2.2:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.6.0.tgz#dc42697133302ce3017524356a6c61b7b69b4a18"
+
+vue2-filters@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/vue2-filters/-/vue2-filters-0.2.2.tgz#4789d7f3bfd3c5f3985fcf5829d3d90d3996e298"
 
 vue@^2:
   version "2.5.8"
