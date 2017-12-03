@@ -32,11 +32,12 @@ export default {
   },
   beforeMount () {
     this.$store.dispatch('getFullUser', this.$route.params.id)
-  },
-  mounted () {
-    setInterval(() => {
+    this.timeInterval = setInterval(() => {
       this.time = moment()
     }, 20000)
+  },
+  beforeDestroy () {
+    clearInterval(this.timeInterval)
   },
   'methods': {
     isOnline (date) {

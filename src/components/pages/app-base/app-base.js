@@ -17,9 +17,12 @@ export default {
     this.$store.dispatch('getOfflineToken')
     this.$store.dispatch('verifyToken')
 
-    setInterval(() => {
+    this.processInterval = setInterval(() => {
       this.process = process
     }, 1000)
+  },
+  beforeDestroy () {
+    clearInterval(this.processInterval)
   },
   'methods': new LeftRight(),
   data () {
