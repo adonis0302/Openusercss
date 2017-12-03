@@ -1,5 +1,4 @@
 import ApolloClient, {createBatchingNetworkInterface} from 'apollo-client'
-import localStore from 'store2'
 
 import verifyToken from './verify-token'
 import logout from './remote-logout'
@@ -26,14 +25,6 @@ export const apolloClient = new ApolloClient({
 })
 
 export default {
-  async getOfflineToken ({commit}) {
-    commit('login', {
-      'data': {
-        'login': localStore.get('ouc-session')
-      }
-    })
-  },
-
   logout,
   login,
   register,

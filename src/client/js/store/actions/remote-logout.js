@@ -1,5 +1,4 @@
 import gql from 'graphql-tag'
-import localStore from 'store2'
 import log from 'chalk-console'
 
 import {expected} from '../../../../shared/custom-errors'
@@ -34,6 +33,5 @@ const remoteLogout = async (token) => {
 export default async (context) => {
   await remoteLogout(context.getters.session.token)
   context.commit('logout')
-  localStore.remove('ouc-session')
   router.push('/login')
 }

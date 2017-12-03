@@ -1,4 +1,3 @@
-import localStore from 'store2'
 import {union, pullAllBy} from 'lodash'
 import log from 'chalk-console'
 
@@ -35,7 +34,6 @@ export default {
       state.users[data.login.user._id] = data.login.user
     }
 
-    localStore.set('ouc-session', data.login)
     state.actionErrors = []
   },
 

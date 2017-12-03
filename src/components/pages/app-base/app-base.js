@@ -14,7 +14,6 @@ export default {
     navbar
   },
   beforeMount () {
-    this.$store.dispatch('getOfflineToken')
     this.$store.dispatch('verifyToken')
 
     this.processInterval = setInterval(() => {

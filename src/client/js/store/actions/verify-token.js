@@ -1,5 +1,4 @@
 import gql from 'graphql-tag'
-import localStore from 'store2'
 import log from 'chalk-console'
 
 import {apolloClient} from '.'
@@ -24,12 +23,11 @@ const verifyToken = async (token) => {
 }
 
 export default async (context) => {
-  const session = localStore.get('session')
+  const session = context.getters.session
 
   try {
     if (session && !await verifyToken(session.token)) {
       log.warn('Session token rejected by server, forcing logout')
-      localStore.remove('ouc-session')
       context.commit('logout')
 
       return false

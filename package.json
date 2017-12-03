@@ -135,7 +135,6 @@
     "sass-web-fonts": "^2",
     "scrollsnap-polyfill": "^0",
     "scss-lint": "^0",
-    "store2": "^2",
     "sw-toolbox": "^3",
     "vee-validate": "^2.0.0-rc.18",
     "vinyl-source-stream": "^1",
