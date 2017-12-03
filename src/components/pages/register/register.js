@@ -1,7 +1,6 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import {mapGetters} from 'vuex'
 
-import themeCard from '../../components/theme-card/theme-card.vue'
 import flushImg from '../../components/flush-img/flush-img.vue'
 import icon from '../../components/icon/icon.vue'
 import notification from '../../components/notification/notification.vue'
@@ -30,7 +29,6 @@ export default {
     'b-tile':      bulma('tile', 'div'),
     'big-button':  button,
     bInput,
-    themeCard,
     flushImg,
     icon,
     notification,

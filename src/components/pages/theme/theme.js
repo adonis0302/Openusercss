@@ -4,7 +4,6 @@ import {findIndex} from 'lodash'
 import {formatMoment} from '../../../src/shared/time'
 
 import icon from '../../components/icon/icon.vue'
-import themeCard from '../../components/theme-card/theme-card.vue'
 import flushImg from '../../components/flush-img/flush-img.vue'
 import attributor from '../../components/footer/footer.vue'
 import navbar from '../../components/navbar/navbar.vue'
@@ -30,7 +29,6 @@ export default {
     'b-modal-close':      bulma('modal-close', 'div'),
     attributor,
     navbar,
-    themeCard,
     flushImg,
     icon,
     notification

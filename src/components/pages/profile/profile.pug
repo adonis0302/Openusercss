@@ -48,10 +48,18 @@ div
               hr
               //- p {{viewedUser.description}}
           b-column(is-6)
-            theme-card(v-for="(theme, index) in viewedUser.themes", :data-index="index", direction="horizontal", card-class="is-primary", :themeId="theme._id").has-bottom-margin
-              //- flush-img(slot="screenshot", :source="theme.screenshots[0]", height="135px")
-              h4(slot="title") {{theme.title}}
-              p(slot="description") {{theme.description}}
-              p(slot="author") by {{viewedUser.displayname}}
+            b-columns(is-multiline)
+              b-column(is-6, v-for="(theme, index) in viewedUser.themes")
+                theme-card(:data-index="index", :small="true", direction="horizontal", card-class="is-primary", :themeId="theme._id").has-bottom-margin
+                  b-tile(slot="content", is-parent)
+                    b-columns
+                      b-column
+                        h4 {{theme.title}}
+                        br
+                        h6 For {{theme.scope}}
+                        h6 Created {{theme.createdAt | moment('from', 'now')}}
+                        h6(v-if="theme.createdAt !== theme.lastUpdate") Last updated {{theme.lastUpdate | moment('from', 'now')}}
+                        //- hr
+                        //- p {{theme.description}}
 
   attributor

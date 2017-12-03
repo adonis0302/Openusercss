@@ -8,18 +8,22 @@ div
         search-field.has-bottom-margin
         b-columns
           b-column
-            b-box
-              h2 Newest themes
-              hr
-              theme-card(v-if="themes.length !== 0", v-for="(theme, index) in limitBy(themes, 3)", :themeId="theme._id", :data-index="index", direction="horizontal", card-class="is-primary").has-bottom-margin
-                //- flush-img(slot="screenshot", :source="theme.screenshotUrl", placeholder="/img/main.bg-x128.png", height="154px")
-                h4(slot="title") {{theme.title}}
-                p(slot="description") {{theme.description}}
-                h6(slot="author") by {{theme.user.displayname}}, {{theme.createdAt | moment('from', 'now')}}
+            h2 Newest themes
+            hr
+            b-columns(is-multiline)
+              b-column(is-6, v-for="(theme, index) in limitBy(themes, 6)")
+                theme-card(v-if="themes.length !== 0", :small="true", :themeId="theme._id", :data-index="index", direction="horizontal", card-class="is-primary").has-bottom-margin
+                  b-tile(slot="content", is-parent)
+                    b-columns
+                      b-column
+                        h4 {{theme.title}}
+                        h6 by {{theme.user.displayname}}, for {{theme.scope}}
+                        h6 {{theme.createdAt | moment('from', 'now')}}
+                  //- flush-img(slot="screenshot", :source="theme.screenshotUrl", placeholder="/img/main.bg-x128.png", height="154px")
+                  //- p(slot="description") {{theme.description}}
 
           b-column
-            b-box
-              h2 Popular themes
-              hr
+            h2 Popular themes
+            hr
 
   attributor

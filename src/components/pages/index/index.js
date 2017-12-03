@@ -26,7 +26,7 @@ export default {
     notification
   },
   beforeMount () {
-    this.$store.dispatch('getLatestThemes', 3)
+    this.$store.dispatch('getLatestThemes', 6)
   },
   'computed': {
     ...mapGetters([
