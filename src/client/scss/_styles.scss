@@ -64,3 +64,7 @@ $secondary: map-get($colors, 'secondary');
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+.has-bottom-margin:not(:last-child) {
+  margin-bottom: 1.5rem;
+}

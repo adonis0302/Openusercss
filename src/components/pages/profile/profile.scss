@@ -15,8 +15,4 @@
 @import 'node_modules/bulma/sass/elements/container';
 @import 'node_modules/bulma/sass/components/level';
 
-.has-bottom-margin:not(:last-child) {
-  margin-bottom: 16px;
-}
-
 @import '../../../client/scss/reboot';
