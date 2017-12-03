@@ -1,29 +1,25 @@
 div
   b-container
-    b-section
-      b-columns
-        b-column
-          search-field
-          hr
-          b-box
-            h2 Themes by website
-            hr
-            chip(v-for="site in popularSites", :host="site.domain")
-              p(slot="content") {{site.domain}}
-          b-box
-            h2 Popular themes
-            hr
-            b-columns(is-multiline)
-              b-column(is-6, v-for="(theme, index) in popularThemes")
-                theme-card(small=true, :data-index="index", direction="horizontal", card-class="is-primary").has-bottom-margin
-                  flush-img(slot="screenshot", :source="theme.screenshotUrl", placeholder="/img/main.bg-x128.png", height="77px", width="100%")
-                  h5(slot="title") {{theme.title}}
-                  p(slot="author") by {{theme.author}}
-                  img(slot="author-avatar", src="https://en.gravatar.com/userimage/37343181/d66c2e13a3bf375f9e2bd96a9a9f9c54.png", width="40")
+    div
+      b-section
+        notification(v-show="actionErrors.length > 0", icon="alert", color="is-danger").is-danger
+          div(slot="content")
+            p(v-for="error in actionErrors") {{error}}
+        search-field.has-bottom-margin
+        b-columns
+          b-column
+            b-box
+              h2 Newest themes
+              hr
+              theme-card(v-if="themes.length !== 0", v-for="(theme, index) in limitBy(themes, 3)", :themeId="theme._id", :data-index="index", direction="horizontal", card-class="is-primary").has-bottom-margin
+                //- flush-img(slot="screenshot", :source="theme.screenshotUrl", placeholder="/img/main.bg-x128.png", height="154px")
+                h4(slot="title") {{theme.title}}
+                p(slot="description") {{theme.description}}
+                h6(slot="author") by {{theme.user.displayname}}, {{theme.createdAt | moment('from', 'now')}}
 
-        b-column
-          b-box
-            h2 Latest themes
-            hr
-            showcase
+          b-column
+            b-box
+              h2 Popular themes
+              hr
+
   attributor
