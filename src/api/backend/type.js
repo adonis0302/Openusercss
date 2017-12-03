@@ -38,7 +38,7 @@ const typeDefs = `
     theme(id: ID!): Theme!
     user(id: ID!): User!
     search(terms: String!, count: Int, offset: Int): [Theme]!
-    latestThemes(count: Int): [Theme]!
+    latestThemes(limit: Int): [Theme]!
   }
 
   type Mutation {

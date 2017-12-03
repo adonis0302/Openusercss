@@ -1,7 +1,11 @@
-import {clamp} from 'lodash'
+export default async (root, {limit}, {User, Theme}) => {
+  const upperLimit = 25
+  const lowerLimit = 1
 
-export default async (root, {count}, {User, Theme}) => {
-  const limit = clamp(count, 1, 10)
+  if (limit > upperLimit || limit < lowerLimit) {
+    throw new Error(`limit must be at most ${upperLimit} and at least ${lowerLimit}`)
+  }
+
   const result = await Theme.find({}, {
     limit,
     'populate': true,
