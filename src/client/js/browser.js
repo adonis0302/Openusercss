@@ -1,8 +1,8 @@
 /* eslint no-console:0 */
 import 'babel-polyfill'
-import log from 'chalk-console'
 import FpsEmitter from 'fps-emitter'
 import {app} from './vue'
+import {divide, sum} from 'lodash'
 
 import {runPolyfills} from './utils/features'
 
@@ -12,16 +12,31 @@ const polyfills = async () => {
 
 const main = async () => {
   const polyfillsResult = await polyfills()
-
-  app.$mount('app')
-  if (polyfillsResult.length !== 0) {
-    log.info(`Needed polyfills on this browser: ${JSON.stringify(polyfillsResult, null, 4)}`)
-  }
-
   const fps = new FpsEmitter(1000)
 
-  fps.on('update', (newFps) => {
-    process.fps = newFps
+  process.animating = []
+  process.averageFps = 0
+  process.fpsHistory = []
+  process.polyfills = polyfillsResult
+
+  process.nextTick(() => {
+    app.$mount('app')
+  })
+
+  window.addEventListener('load', () => {
+    process.nextTick(() => {
+      fps.on('update', (newFps) => {
+        if (process.animating.length > 0 || process.averageFps < 45) {
+          process.fpsHistory.unshift(newFps)
+        }
+
+        if (process.fpsHistory.length > 9) {
+          process.fpsHistory.splice(-1, 1)
+        }
+
+        process.averageFps = Math.floor(divide(sum(process.fpsHistory), process.fpsHistory.length))
+      })
+    })
   })
 
   if ('serviceWorker' in navigator) {
@@ -29,8 +44,6 @@ const main = async () => {
       navigator.serviceWorker.register('/worker.js')
     })
   }
-
-  process.animations = true
 }
 
 main()

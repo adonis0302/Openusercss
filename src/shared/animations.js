@@ -1,6 +1,6 @@
 import 'babel-polyfill'
 
-import {forOwn} from 'lodash'
+import {forOwn, findIndex} from 'lodash'
 import anime from 'animejs'
 import waterfall from 'p-waterfall'
 import delay from 'delay'
@@ -24,7 +24,13 @@ class Animation {
     }
 
     this.stage = (stageName, func) => {
-      this.stages[stageName].push(func)
+      self.stages[stageName].push(func)
+    }
+
+    this.stageAll = (func) => {
+      forOwn(self.stages, (stage, key) => {
+        stage.push(func)
+      })
     }
 
     this.speeds = {
@@ -55,15 +61,24 @@ class Animation {
       return null
     }
 
+    this.stageAll(async ({element, done}) => {
+      process.animating.push(element)
+      return {element, done}
+    })
+
     this.finalize = () => {
+      self.stageAll(async ({element, done}) => {
+        const animationIndex = findIndex(process.animating, (item) => item === element)
+
+        process.animating.splice(animationIndex, 1)
+        return {element, done}
+      })
+
       forOwn(self.stages, (stage, key) => {
         self[key] = async (element, done) => {
           element.dataset.speed = this.speeds.slow
-          if (process.browser) {
-            if (process.fps < 40 || !process.animations) {
-              process.animations = false
-              element.dataset.speed = 0
-            }
+          if (process.browser && process.averageFps < 45) {
+            element.dataset.speed = 0
           }
 
           return waterfall(stage, {element, done})
@@ -77,10 +92,10 @@ export class TopBottom extends Animation {
   constructor () {
     super()
 
-    this.stage('beforeAppear', async ({element}) => {
+    this.stage('beforeAppear', async ({element, done}) => {
       element.style.clipPath = 'polygon(-1px -1px, 101% -1%, 101% -1px, -1px -1px)'
 
-      return element
+      return {element, done}
     })
 
     this.stage('appear', async ({element, done}) => {
@@ -100,13 +115,13 @@ export class TopBottom extends Animation {
       if (done) {
         done()
       }
-      return element
+      return {element, done}
     })
 
-    this.stage('beforeLeave', async ({element}) => {
+    this.stage('beforeLeave', async ({element, done}) => {
       element.style.clipPath = 'polygon(-1px -1px, 101% -1%, 101% 101%, -1% 101%)'
 
-      return element
+      return {element, done}
     })
 
     this.stage('leave', async ({element, done}) => {
@@ -123,7 +138,7 @@ export class TopBottom extends Animation {
       if (done) {
         done()
       }
-      return element
+      return {element, done}
     })
 
     this.finalize()
@@ -134,10 +149,10 @@ export class LeftRight extends Animation {
   constructor () {
     super()
 
-    this.stage('beforeAppear', async ({element}) => {
+    this.stage('beforeAppear', async ({element, done}) => {
       element.style.clipPath = 'polygon(-1px -1px, -1px -1px, -1px 101%, -1px 101%)'
 
-      return element
+      return {element, done}
     })
 
     this.stage('appear', async ({element, done}) => {
@@ -157,13 +172,13 @@ export class LeftRight extends Animation {
       if (done) {
         done()
       }
-      return element
+      return {element, done}
     })
 
-    this.stage('beforeLeave', async ({element}) => {
+    this.stage('beforeLeave', async ({element, done}) => {
       element.style.clipPath = 'polygon(-1px -1px, 101% -1%, 101% 101%, -1% 101%)'
 
-      return element
+      return {element, done}
     })
 
     this.stage('leave', async ({element, done}) => {
@@ -180,7 +195,7 @@ export class LeftRight extends Animation {
       if (done) {
         done()
       }
-      return element
+      return {element, done}
     })
 
     this.finalize()
