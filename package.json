@@ -144,6 +144,7 @@
     "vue2-filters": "^0.2.2",
     "vueify": "^9",
     "vueify-extract-css": "https://github.com/DecentM/vueify-extract-css",
+    "vuex-persist": "^0.6.0",
     "walk": "^2.3.9",
     "watchify": "^3",
     "windowify": "^0.3.0"

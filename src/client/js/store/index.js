@@ -1,13 +1,12 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import VuexPersistence from 'vuex-persist'
 
 import getters from './getters'
 import mutations from './mutations'
 import actions from './actions'
 
-Vue.use(Vuex)
-
-export default new Vuex.Store({
+const storeOptions = {
   'state': {
     'actionErrors': [],
     'users':        [],
@@ -18,4 +17,19 @@ export default new Vuex.Store({
   getters,
   mutations,
   actions
-})
+}
+
+if (process.browser) {
+  const vuexLocal = new VuexPersistence({
+    'storage': window.localStorage,
+    'key':     'ouc-state'
+  })
+
+  storeOptions.plugins = [
+    vuexLocal.plugin
+  ]
+}
+
+Vue.use(Vuex)
+
+export default new Vuex.Store(storeOptions)
