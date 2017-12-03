@@ -166,7 +166,11 @@ gulp.task('client:js:watch', () => {
         }),
         flatten(),
         gulp.dest(destination())
-      ])
+      ]).on('end', () => {
+        if (options.target === 'node' && server.child) {
+          server.restart()
+        }
+      })
     }
 
     bify.on('update', (filename) => {
@@ -181,9 +185,6 @@ gulp.task('client:js:watch', () => {
 
       walker.on('end', () => {
         bundle()
-        if (options.target === 'node') {
-          server.restart()
-        }
       })
     })
     bify.on('log', (content) => {

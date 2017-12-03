@@ -14,6 +14,7 @@ import postcss from 'gulp-postcss'
 import pleeease from 'gulp-pleeease'
 import {pugOptions} from './shared/pug'
 import {ourSassConfig, postCssPluginsFunctional, postCssPluginsProdComponents} from './shared/css'
+import {remember, cached} from './shared/cache'
 
 const sources = {
   'components': [
@@ -95,6 +96,7 @@ gulp.task('shared:components:fast', (done) => {
   pump([
     prettyError(),
     gulp.src(sources.components),
+    cached('components'),
     sourcemaps.init(),
     manifold({
       '**/*.scss': (stream) => {
@@ -118,6 +120,7 @@ gulp.task('shared:components:fast', (done) => {
         ])
       }
     }),
+    remember('components'),
     vuemaker(),
     sourcemaps.write(),
     gulp.dest('.tmp/components')
@@ -193,6 +196,7 @@ gulp.task('shared:pages:fast', (done) => {
   pump([
     prettyError(),
     gulp.src(sources.pages),
+    cached('pages'),
     sourcemaps.init(),
     manifold({
       '**/*.scss': (stream) => {
@@ -216,6 +220,7 @@ gulp.task('shared:pages:fast', (done) => {
         ])
       }
     }),
+    remember('pages'),
     vuemaker(),
     sourcemaps.write(),
     gulp.dest('.tmp/pages')

@@ -4584,6 +4584,13 @@ gulp-buffer@^0:
   dependencies:
     through2 "~0.4.0"
 
+gulp-cached@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/gulp-cached/-/gulp-cached-1.1.1.tgz#fe7cd4f87f37601e6073cfedee5c2bdaf8b6acce"
+  dependencies:
+    lodash.defaults "^4.2.0"
+    through2 "^2.0.1"
+
 gulp-cli@^1, gulp-cli@^1.0.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/gulp-cli/-/gulp-cli-1.4.0.tgz#6f5bbe2cd0bdb4849d12cf9e1246a5861f8b4f88"
@@ -4764,6 +4771,13 @@ gulp-pug@^3:
     object-assign "^4.1.0"
     pug ">=2.0.0-alpha <3"
     through2 "^2.0.0"
+
+gulp-remember@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/gulp-remember/-/gulp-remember-0.3.1.tgz#5776b6f64c5a1c5c4d4555406723ec8e2b0407e7"
+  dependencies:
+    gulp-util "^3.0.1"
+    through2 "^0.5.0"
 
 gulp-rename@^1, gulp-rename@^1.2.0:
   version "1.2.2"
@@ -6433,6 +6447,10 @@ lodash.defaults@^3.1.2:
   dependencies:
     lodash.assign "^3.0.0"
     lodash.restparam "^3.0.0"
+
+lodash.defaults@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/lodash.defaults/-/lodash.defaults-4.2.0.tgz#d09178716ffea4dde9e5fb7b37f6f0802274580c"
 
 lodash.defaults@~2.4.1:
   version "2.4.1"

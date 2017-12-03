@@ -5,6 +5,7 @@ import buffer from 'gulp-buffer'
 import filter from 'gulp-filter'
 import prettyError from 'gulp-prettyerror'
 import path from 'path'
+import {remember, cached} from './shared/cache'
 
 // IMAGES
 import imagemin from 'gulp-imagemin'
@@ -35,7 +36,7 @@ const sources = {
     'src/client/scss/main.scss'
   ],
   'css': [
-    '.tmp/components.min.css'
+    '.tmp/*.min.css'
   ],
   'icons': [
     'src/client/img/*.icon.*'
@@ -171,6 +172,7 @@ gulp.task('client:media:prod', (done) => {
 gulp.task('client:media:fast', (done) => {
   const fontStream = pump([
     gulp.src(sources.fonts),
+    cached('fonts'),
     webfont64(),
     concat('fonts.scss')
   ])
@@ -182,6 +184,7 @@ gulp.task('client:media:fast', (done) => {
 
   const iconStream = pump([
     gulp.src(sources.icons),
+    cached('icons'),
     jimp({
       'sizes': iconSizes
     })
@@ -189,6 +192,7 @@ gulp.task('client:media:fast', (done) => {
 
   const elementStream = pump([
     gulp.src(sources.elements),
+    cached('elements'),
     filter([
       '**/*.{png,jpg,jpeg,gif}',
       '!**/*.bg*'
@@ -200,6 +204,7 @@ gulp.task('client:media:fast', (done) => {
 
   const backgroundsStream = pump([
     gulp.src(sources.backgrounds),
+    cached('backgrounds'),
     jimp({
       'sizes': bgSizes
     })
@@ -209,6 +214,11 @@ gulp.task('client:media:fast', (done) => {
     prettyError(),
     merge(backgroundsStream, iconStream, elementStream),
     flatten(),
+    merge(
+      remember('icons'),
+      remember('elements'),
+      remember('backgrounds')
+    ),
     gulp.dest(destination('img'))
   ])
 
@@ -220,6 +230,7 @@ gulp.task('client:media:fast', (done) => {
   const finalCssStream = pump([
     prettyError(),
     merge(fontStream, sassStream, componentCssStream),
+    remember('fonts'),
     sassVars(ourSassConfig, {
       'verbose': false
     }),

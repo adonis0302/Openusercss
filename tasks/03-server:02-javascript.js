@@ -130,13 +130,14 @@ gulp.task('server:watch', () => {
         }),
         flatten(),
         gulp.dest(destination())
-      ])
+      ]).on('end', () => {
+        if (server.child) {
+          server.restart()
+        }
+      })
     }
 
-    bify.on('update', (filename) => {
-      bundle()
-      server.restart()
-    })
+    bify.on('update', bundle)
     bify.on('log', (content) => {
       gutil.log(`Server: ${content}`)
     })

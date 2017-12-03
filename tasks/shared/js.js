@@ -82,14 +82,16 @@ export const createBrowserify = (opts) => {
         'stage-3'
       ]
     })
-    bify.plugin(extractCss, {
-      'out': path.resolve('.tmp/components.min.css')
-    })
+    if (process.env.NODE_ENV !== 'development') {
+      bify.plugin(extractCss, {
+        'out': path.resolve('.tmp/components.min.css')
+      })
+    }
     break
   case 'node':
     bify.transform(babelify)
     bify.plugin(extractCss, {
-      'out': path.resolve('.tmp/components.min.css')
+      'out': '/dev/null'
     })
     break
   case 'worker':
