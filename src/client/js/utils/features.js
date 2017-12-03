@@ -50,6 +50,7 @@ import flexibility from 'flexibility'
 
 import 'classlist-polyfill'
 import 'console-polyfill'
+import inertPolyfill from './inert-polyfill'
 
 // CUSTOM TESTS
 Modernizr.addTest('battery', () => {
@@ -73,6 +74,9 @@ Modernizr.addTest('fixedposition', () => {
 Modernizr.addTest('stickyposition', () => {
   return window.CSS.supports('(position: sticky)')
 })
+Modernizr.addTest('inert', () => {
+  return 'inert' in window.HTMLElement.prototype
+})
 
 export const runPolyfills = async () => {
   const ranPolyfills = []
@@ -91,6 +95,11 @@ export const runPolyfills = async () => {
     log.info('js/promise - support not found, polyfilling')
     promise.polyfill()
     ranPolyfills.push('promises')
+  }
+  if (!Modernizr.inert) {
+    log.info('html/inert - support not found, polyfilling')
+    inertPolyfill()
+    ranPolyfills.push('inert')
   }
 
   return ranPolyfills
