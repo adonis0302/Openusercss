@@ -9,11 +9,9 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   'state': {
-    'latestThemes': [],
-    'testText':     '',
     'actionErrors': [],
-    'users':        {},
-    'themes':       {},
+    'users':        [],
+    'themes':       [],
     'session':      null,
     'loading':      false
   },

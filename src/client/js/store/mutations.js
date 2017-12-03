@@ -1,9 +1,32 @@
 import localStore from 'store2'
-import {union} from 'lodash'
+import {union, pullAllBy} from 'lodash'
+import log from 'chalk-console'
 
 /*
  * All mutations are synchronous
  */
+
+class IterableMutation {
+  constructor (name, stateProperty) {
+    return (state, dataList) => {
+      if (!(dataList instanceof Array)) {
+        const error = new Error(`${name} mutation must be passed an array, got ${typeof dataList}:\n${JSON.stringify(dataList)}`)
+
+        log.error(error.stack)
+        throw error
+      }
+
+      state[stateProperty] = pullAllBy(state[stateProperty], dataList, '_id')
+      dataList.forEach((data) => {
+        state[stateProperty].unshift(data)
+      })
+
+      while (state[stateProperty].length > 25) {
+        state[stateProperty].splice(-1, 1)
+      }
+    }
+  }
+}
 
 export default {
   login (state, {data}) {
@@ -30,20 +53,36 @@ export default {
     }
   },
 
-  updateFormData (state, payload) {
-    state.actionErrors = []
-    state.formData = payload
-  },
-
   loading (state, isLoading) {
     state.loading = isLoading
   },
 
-  users (state, user) {
-    state.users[user._id] = user
+  'users':  new IterableMutation('Users', 'users'),
+  'themes': new IterableMutation('Themes', 'themes')
+
+  /* users (state, data) {
+    if (!(data instanceof Array)) {
+      const error = new Error(`Users mutation must be passed an array, got ${typeof data}:\n${JSON.stringify(data)}`)
+
+      log.error(error.stack)
+      throw error
+    }
+
+    data.forEach((user) => {
+      state.themes = uniqWith(flatten([state.themes, user]), isEqual)
+    })
   },
 
-  themes (state, theme) {
-    state.themes[theme._id] = theme
-  }
+  themes (state, data) {
+    if (!(data instanceof Array)) {
+      const error = new Error(`Themes mutation must be passed an array, got ${typeof data}:\n${JSON.stringify(data)}`)
+
+      log.error(error.stack)
+      throw error
+    }
+
+    data.forEach((theme) => {
+      state.themes = uniqWith(flatten([state.themes, theme]), isEqual)
+    })
+  } */
 }

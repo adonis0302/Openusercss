@@ -3,33 +3,26 @@ import log from 'chalk-console'
 import {ExpectedError} from '../../../../shared/custom-errors'
 import {apolloClient} from '.'
 
-const getFullTheme = async (id) => {
+const getLatestThemes = async (limit) => {
   const query = gql(`
     query {
-      theme(id: "${id}") {
+      latestThemes(limit: ${limit}) {
         user {
           _id,
-          username,
-          displayname,
-          avatarUrl,
-          smallAvatarUrl
+          displayname
         },
         _id,
         title,
         description,
-        content,
-        createdAt,
         lastUpdate,
-        rating,
-        scope,
-        version
+        createdAt
       }
     }
   `)
-  let user = null
+  let themes = null
 
   try {
-    user = await apolloClient.query({
+    themes = await apolloClient.query({
       query
     })
   } catch (error) {
@@ -38,18 +31,16 @@ const getFullTheme = async (id) => {
     })
   }
 
-  return user
+  return themes
 }
 
 export default async ({commit, getters}, id) => {
   commit('loading', true)
 
   try {
-    const result = await getFullTheme(id)
+    const result = await getLatestThemes(id)
 
-    commit('themes', [
-      result.data.theme
-    ])
+    commit('themes', result.data.latestThemes)
     commit('actionError', null)
   } catch (error) {
     let errors = []

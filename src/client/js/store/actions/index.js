@@ -9,6 +9,7 @@ import createTheme from './create-theme'
 import getThemes from './get-themes'
 import getFullUser from './get-full-user'
 import getFullTheme from './get-full-theme'
+import getLatestThemes from './get-latest-themes'
 
 let networkInterface = createBatchingNetworkInterface({
   'uri': 'https://api.openusercss.org'
@@ -40,5 +41,6 @@ export default {
   createTheme,
   getThemes,
   getFullUser,
-  getFullTheme
+  getFullTheme,
+  getLatestThemes
 }

@@ -1,6 +1,6 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import {mapGetters} from 'vuex'
-// import hljs from 'highlight.js'
+import {findIndex} from 'lodash'
 import {formatMoment} from '../../../src/shared/time'
 
 import icon from '../../components/icon/icon.vue'
@@ -64,12 +64,14 @@ export default {
     'viewedTheme': {
       'cache': false,
       get () {
-        if (!this.themes[this.$route.params.id]) {
+        const themeIndex = findIndex(this.themes, (theme) => theme._id === this.$route.params.id)
+
+        if (!this.themes[themeIndex]) {
           return {
             'user': {}
           }
         }
-        return this.themes[this.$route.params.id]
+        return this.themes[themeIndex]
       }
     }
   }

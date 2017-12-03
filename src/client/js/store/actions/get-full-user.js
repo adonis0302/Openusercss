@@ -46,7 +46,9 @@ export default async ({commit, getters}, id) => {
   try {
     const result = await getFullUser(id)
 
-    commit('users', result.data.user)
+    commit('users', [
+      result.data.user
+    ])
     commit('actionError', null)
   } catch (error) {
     let errors = []
