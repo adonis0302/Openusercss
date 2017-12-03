@@ -18,7 +18,8 @@ div
                         v-validate="'required|email'",
                         v-model="register.email",
                         :class="{'input': true, 'is-danger': errors.has('email') }",
-                        data-vv-as="e-mail"
+                        data-vv-as="e-mail",
+                        aria-label="registration e-mail"
                       )
                 b-tile(is-child)
                   b-field
@@ -31,7 +32,8 @@ div
                         v-validate="'required|alpha_num'",
                         v-model="register.displayname"
                         :class="{'input': true, 'is-danger': errors.has('displayname') }",
-                        data-vv-as="displayname"
+                        data-vv-as="displayname",
+                        aria-label="registration displayname"
                       )
                 b-tile(is-child)
                   b-columns
@@ -46,7 +48,8 @@ div
                             v-validate="'required'",
                             v-model="register.password",
                             :class="{'input': true, 'is-danger': errors.has('password') }",
-                            data-vv-as="passphrase"
+                            data-vv-as="passphrase",
+                            aria-label="registration passphrase"
                           )
                     b-column
                       b-field
@@ -59,7 +62,8 @@ div
                             v-validate="'required|confirmed:password'",
                             v-model="register.passwordVerify",
                             :class="{'input': true, 'is-danger': errors.has('passwordVerify') }",
-                            data-vv-as="passphrase verification"
+                            data-vv-as="passphrase verification",
+                            aria-label="registration passphrase, again"
                           )
                 b-tile(is-parent, is-vertical, is-paddingless)
                   big-button(icon="account-plus", :disabled="errors.any()").is-primary

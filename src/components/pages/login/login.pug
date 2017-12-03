@@ -18,7 +18,8 @@ div
                         v-validate="'required|email'",
                         v-model.lazy="login.email",
                         :class="{'input': true, 'is-danger': errors.has('email') }",
-                        data-vv-as="e-mail"
+                        data-vv-as="e-mail",
+                        aria-label="login e-mail"
                       )
                 b-tile(is-child)
                   b-columns
@@ -33,7 +34,8 @@ div
                             v-validate="'required'",
                             v-model.lazy="login.password"
                             :class="{'input': true, 'is-danger': errors.has('password') }",
-                            data-vv-as="passphrase"
+                            data-vv-as="passphrase",
+                            aria-label="login passphrase"
                           )
                 b-tile(is-parent, is-vertical, is-paddingless)
                   big-button(icon="account-plus", :disabled="errors.any()").is-primary
