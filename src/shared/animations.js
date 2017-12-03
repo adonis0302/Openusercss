@@ -23,20 +23,17 @@ class Animation {
       'leave':        []
     }
 
-    this.stage = (stageName, func) => {
+    this.stage = (stageName, func, skipCheck) => {
       self.stages[stageName].push(func)
     }
 
-    this.stageAll = (func) => {
-      forOwn(self.stages, (stage, key) => {
-        stage.push(func)
-      })
+    this.speeds = {
+      'large': 700,
+      'small': 400,
+      'none':  0
     }
 
-    this.speeds = {
-      'slow': 700,
-      'fast': 400
-    }
+    this.speed = this.speeds.large
 
     this.easings = {
       'leave': {
@@ -55,25 +52,31 @@ class Animation {
 
     this.none = async (element, done) => {
       element.style.zIndex = 0
-      await delay(element.dataset.speed)
+      await delay(this.speed)
 
       element.remove()
       return null
     }
 
-    this.stageAll(async ({element, done}) => {
+    const stageAll = (func) => {
+      forOwn(self.stages, (stage, key) => {
+        stage.push(func)
+      })
+    }
+
+    stageAll(async ({element, done}) => {
       process.animating.push(element)
-      element.dataset.speed = this.speeds.slow
-      if (process.browser && process.averageFps < 45) {
-        element.dataset.speed = 0
-      }
       return {element, done}
     })
 
     this.finalize = () => {
-      self.stageAll(async ({element, done}) => {
+      stageAll(async ({element, done}) => {
         const animationIndex = findIndex(process.animating, (item) => item === element)
 
+        this.speed = this.speeds.none
+        if (process.browser && process.averageFps > 44) {
+          this.speed = this.speeds.large
+        }
         process.animating.splice(animationIndex, 1)
         return {element, done}
       })
@@ -103,7 +106,7 @@ export class TopBottom extends Animation {
       const node = await anime({
         'targets':   element,
         'clip-path': 'polygon(-1px -1px, 101% -1%, 101% 101%, -1% 101%)',
-        'duration':  element.dataset.speed,
+        'duration':  this.speed,
         'delay':     100 + additionalDelay,
         'easing':    'easeInOutQuart'
       })
@@ -127,7 +130,7 @@ export class TopBottom extends Animation {
       const node = await anime({
         'targets':   element,
         'clip-path': 'polygon(-1px 101%, 101% 101%, 101% 101%, -1% 101%)',
-        'duration':  element.dataset.speed,
+        'duration':  this.speed,
         'easing':    'easeInOutQuart'
       })
 
@@ -160,7 +163,7 @@ export class LeftRight extends Animation {
       const node = await anime({
         'targets':   element,
         'clip-path': 'polygon(-1px -1px, 101% -1px, 101% 101%, -1px 101%)',
-        'duration':  element.dataset.speed,
+        'duration':  this.speed,
         'delay':     100 + additionalDelay,
         'easing':    'easeInOutQuart'
       })
@@ -184,7 +187,7 @@ export class LeftRight extends Animation {
       const node = await anime({
         'targets':   element,
         'clip-path': 'polygon(101% -1px, 101% -1%, 101% 101%, 101% 101%)',
-        'duration':  element.dataset.speed,
+        'duration':  this.speed,
         'easing':    'easeInOutQuart'
       })
 
