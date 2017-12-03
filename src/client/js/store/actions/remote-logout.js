@@ -34,6 +34,6 @@ const remoteLogout = async (token) => {
 export default async (context) => {
   await remoteLogout(context.getters.session.token)
   context.commit('logout')
-  localStore.remove('session')
+  localStore.remove('ouc-session')
   router.push('/login')
 }

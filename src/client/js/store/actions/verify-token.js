@@ -29,7 +29,7 @@ export default async (context) => {
   try {
     if (session && !await verifyToken(session.token)) {
       log.warn('Session token rejected by server, forcing logout')
-      localStore.remove('session')
+      localStore.remove('ouc-session')
       context.commit('logout')
 
       return false

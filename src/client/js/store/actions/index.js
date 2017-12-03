@@ -29,7 +29,7 @@ export default {
   async getOfflineToken ({commit}) {
     commit('login', {
       'data': {
-        'login': localStore.get('session')
+        'login': localStore.get('ouc-session')
       }
     })
   },

@@ -35,7 +35,7 @@ export default {
       state.users[data.login.user._id] = data.login.user
     }
 
-    localStore.set('session', data.login)
+    localStore.set('ouc-session', data.login)
     state.actionErrors = []
   },
 
@@ -59,30 +59,4 @@ export default {
 
   'users':  new IterableMutation('Users', 'users'),
   'themes': new IterableMutation('Themes', 'themes')
-
-  /* users (state, data) {
-    if (!(data instanceof Array)) {
-      const error = new Error(`Users mutation must be passed an array, got ${typeof data}:\n${JSON.stringify(data)}`)
-
-      log.error(error.stack)
-      throw error
-    }
-
-    data.forEach((user) => {
-      state.themes = uniqWith(flatten([state.themes, user]), isEqual)
-    })
-  },
-
-  themes (state, data) {
-    if (!(data instanceof Array)) {
-      const error = new Error(`Themes mutation must be passed an array, got ${typeof data}:\n${JSON.stringify(data)}`)
-
-      log.error(error.stack)
-      throw error
-    }
-
-    data.forEach((theme) => {
-      state.themes = uniqWith(flatten([state.themes, theme]), isEqual)
-    })
-  } */
 }
