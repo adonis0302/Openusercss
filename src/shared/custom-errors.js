@@ -2,9 +2,7 @@ export class ExpectedError {
   constructor ({prefix, message}) {
     this.message = message
 
-    if (typeof message === 'string') {
-      this.message = message.replace('GraphQL error: ', '')
-    } else if (typeof message === 'object') {
+    if (typeof message === 'object') {
       this.message = JSON.stringify(message)
     }
 
