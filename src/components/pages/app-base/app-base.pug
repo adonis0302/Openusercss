@@ -6,9 +6,9 @@ div
         b-level-left
           p Debug info:
           .spacer
-          b-tag FPS: {{process.fps}}
+          b-tag(v-if="process.polyfills") Polyfill count: {{process.polyfills.length}}
           .spacer
-          b-tag Animations: {{process.animations}}
+          b-tag Avg. FPS: {{process.averageFps}}
           .spacer
           b-tag Loading: {{loading}}
           .spacer
@@ -17,8 +17,6 @@ div
           b-tag State themes: {{themes.length}}
           .spacer
           b-tag State users: {{users.length}}
-          .spacer
-          b-tag State session: {{!!session}}
   transition(
     @before-enter="beforeAppear",
     @enter="appear",
