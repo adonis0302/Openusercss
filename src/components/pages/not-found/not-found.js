@@ -1,20 +1,32 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
+import {mapGetters} from 'vuex'
 
 import attributor from '../../components/footer/footer.vue'
-import showcase from '../../components/theme-showcase/theme-showcase.vue'
 import navbar from '../../components/navbar/navbar.vue'
 import icon from '../../components/icon/icon.vue'
+import themeCard from '../../components/theme-card/theme-card.vue'
 
 export default {
-  'components': {
+  'responseCode': '404',
+  'components':   {
     'b-section':   bulma('section', 'div'),
     'b-container': bulma('container', 'div'),
     'b-columns':   bulma('columns', 'div'),
     'b-column':    bulma('column', 'div'),
     'b-box':       bulma('box', 'div'),
+    'b-tile':      bulma('tile', 'div'),
     attributor,
-    showcase,
     navbar,
-    icon
+    icon,
+    themeCard
+  },
+  beforeMount () {
+    this.$store.dispatch('getLatestThemes', 3)
+  },
+  'computed': {
+    ...mapGetters([
+      'actionErrors',
+      'themes'
+    ])
   }
 }

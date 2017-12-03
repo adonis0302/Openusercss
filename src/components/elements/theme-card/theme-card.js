@@ -31,10 +31,6 @@ export default {
     'card-class': {
       'type': String
     },
-    'small': {
-      'type':    Boolean,
-      'default': false
-    },
     'tooltip': {
       'type':    String,
       'default': 'unknown'
