@@ -8,8 +8,7 @@ div
         b-columns
           b-column(is-10)
             b-content
-              router-link(:to="/profile/ + viewedTheme.user._id")
-                h1 {{viewedTheme.title}} by {{viewedTheme.user.displayname}}
+              h1 {{viewedTheme.title}}
           b-column(is-2)
             b-button(@click="installTheme", is-primary, is-pulled-right) Install theme
 
