@@ -1,10 +1,8 @@
 export default {
-  'props': {
-    'lazy': {
-      'type':    Boolean,
-      'default': false
-    }
-  },
+  'props': [
+    'lazy',
+    'value'
+  ],
   mounted () {
     if (this.lazy) {
       this.$el.onchange = () => {
