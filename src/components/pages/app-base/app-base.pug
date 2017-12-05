@@ -2,20 +2,20 @@ div
   navbar
   b-box(is-primary, is-marginless)
     b-container
-      b-level
-        b-level-left
-          p Debug info:
-          .spacer
+      b-columns
+        b-column(has-text-centered)
+          b-tag.button.is-secondary(@click="clearCache") Clear cache
+        b-column(has-text-centered)
           b-tag(v-if="process.polyfills") Polyfill count: {{process.polyfills.length}}
-          .spacer
+        b-column(has-text-centered)
           b-tag Avg. FPS: {{process.averageFps}}
-          .spacer
+        b-column(has-text-centered)
           b-tag Loading: {{loading}}
-          .spacer
+        b-column(has-text-centered)
           b-tag Client: {{process.browser ? 'browser' : 'server'}}
-          .spacer
+        b-column(has-text-centered)
           b-tag State themes: {{themes.length}}
-          .spacer
+        b-column(has-text-centered)
           b-tag State users: {{users.length}}
   transition(
     @before-enter="beforeAppear",

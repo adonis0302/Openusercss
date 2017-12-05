@@ -1,7 +1,7 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import navbar from '../../components/navbar/navbar.vue'
 import {LeftRight} from '../../../src/shared/animations'
-import {mapGetters} from 'vuex'
+import {mapGetters, mapMutations} from 'vuex'
 
 export default {
   'components': {
@@ -11,6 +11,8 @@ export default {
     'b-level-right': bulma('level-right', 'div'),
     'b-tag':         bulma('tag', 'div'),
     'b-container':   bulma('container', 'div'),
+    'b-columns':     bulma('columns', 'div'),
+    'b-column':      bulma('column', 'div'),
     navbar
   },
   beforeMount () {
@@ -23,11 +25,16 @@ export default {
   beforeDestroy () {
     clearInterval(this.processInterval)
   },
-  'methods': new LeftRight(),
   data () {
     return {
       process
     }
+  },
+  'methods': {
+    ...new LeftRight(),
+    ...mapMutations([
+      'clearCache'
+    ])
   },
   'computed': mapGetters([
     'themes',
