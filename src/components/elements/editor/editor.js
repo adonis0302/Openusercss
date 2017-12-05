@@ -25,6 +25,11 @@ export default {
       'default': ''
     }
   },
+  data () {
+    return {
+      'editor': null
+    }
+  },
   'methods': {
     setMode (editor) {
       const brace = require('brace')
@@ -42,25 +47,30 @@ export default {
   },
   mounted () {
     const brace = require('brace')
+    const self = this
 
     require('brace/ext/modelist')
     require('brace/ext/themelist')
     require('brace/mode/css')
-    const self = this
-    const editor = brace.edit('editor')
+    this.editor = brace.edit('editor')
 
-    this.setMode(editor)
+    this.setMode(this.editor)
+    this.$emit('init', this.editor)
+    this.editor.$blockScrolling = Infinity
 
-    this.$emit('init', editor)
-    editor.$blockScrolling = Infinity
-
-    editor.on('change', () => {
-      self.$emit('input', editor.getValue())
+    this.editor.on('change', () => {
+      self.$emit('input', self.editor.getValue())
     })
   },
   'watch': {
     theme () {
       this.setTheme()
+    },
+    value (data) {
+      if (this.editor.getValue() !== data) {
+        this.editor.setValue(data, 0)
+        this.editor.clearSelection()
+      }
     }
   }
 }
