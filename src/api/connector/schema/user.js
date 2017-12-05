@@ -7,6 +7,11 @@ import validators from './validators'
 
 export default class User extends Document {
   preSave () {
+    if (!this.createdAt) {
+      this.createdAt = moment().toJSON()
+    }
+    this.lastUpdate = moment().toJSON()
+
     this.avatarUrl = gravatarUrl(this.email, {
       'size': 425
     })
@@ -20,6 +25,18 @@ export default class User extends Document {
     super()
 
     this.schema({
+      'createdAt': {
+        'type':     String,
+        'default':  moment().toJSON(),
+        'required': true,
+        'validate': validators.isMomentJSON
+      },
+      'lastUpdate': {
+        'type':     String,
+        'default':  moment().toJSON(),
+        'required': true,
+        'validate': validators.isMomentJSON
+      },
       'displayname': {
         'type':     String,
         'unique':   true,

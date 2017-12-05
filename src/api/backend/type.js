@@ -10,27 +10,29 @@ const typeDefs = `
     smallAvatarUrl: String!
     lastSeen:       String!
     lastSeenReason: String!
+    createdAt:      String!
+    lastUpdate:     String!
   }
 
   type Session {
-    _id: ID!
-    user: User!
-    token: String!
+    _id:       ID!
+    user:      User!
+    token:     String!
     expiresAt: String!
     createdAt: String!
   }
 
   type Theme {
-    _id: ID!
-    user: User!
-    title: String!
+    _id:         ID!
+    user:        User!
+    title:       String!
     description: String!
-    content: String!
-    createdAt: String!
-    lastUpdate: String!
-    rating: Float!
-    scope: String!
-    version: String!
+    content:     String!
+    createdAt:   String!
+    lastUpdate:  String!
+    rating:      Float!
+    scope:       String!
+    version:     String!
   }
 
   type Query {
@@ -46,6 +48,7 @@ const typeDefs = `
     login(email: String!, password: String!): Session!
     logout(token: String!): Boolean!
     theme(token: String!, id: ID, title: String!, description: String!, content: String!, scope: String!, version: String!): Theme!
+    deleteTheme(token: String!, id: ID!): Boolean!
   }
 `
 

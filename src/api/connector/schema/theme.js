@@ -1,5 +1,6 @@
 import {Document, EmbeddedDocument} from 'camo'
 import moment from 'moment'
+import {pullAllBy} from 'lodash'
 
 import validators from './validators'
 import User from './user'
@@ -35,7 +36,21 @@ class Screenshot extends EmbeddedDocument {
 
 export default class Theme extends Document {
   preSave () {
+    if (!this.createdAt) {
+      this.createdAt = moment().toJSON()
+    }
     this.lastUpdate = moment().toJSON()
+  }
+
+  async preDelete () {
+    const user = await User.findOne({
+      '_id': this.user._id
+    })
+
+    user.themes = pullAllBy(user.themes, {
+      '_id': this._id
+    }, '_id')
+    user.save()
   }
 
   constructor () {

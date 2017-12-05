@@ -7,7 +7,8 @@ import latestThemesQuery from './queries/latest-themes'
 import registerMutation from './mutations/register'
 import loginMutation from './mutations/login'
 import logoutMutation from './mutations/logout'
-import createThemeMutation from './mutations/create-theme'
+import saveThemeMutation from './mutations/save-theme'
+import deleteThemeMutation from './mutations/delete-theme'
 
 export default {
   'Query': {
@@ -18,9 +19,10 @@ export default {
     'latestThemes': latestThemesQuery
   },
   'Mutation': {
-    'register': registerMutation,
-    'login':    loginMutation,
-    'logout':   logoutMutation,
-    'theme':    createThemeMutation
+    'register':    registerMutation,
+    'login':       loginMutation,
+    'logout':      logoutMutation,
+    'theme':       saveThemeMutation,
+    'deleteTheme': deleteThemeMutation
   }
 }

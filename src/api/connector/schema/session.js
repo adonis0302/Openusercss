@@ -5,6 +5,12 @@ import validators from './validators'
 import User from './user'
 
 export default class Session extends Document {
+  preSave () {
+    if (!this.createdAt) {
+      this.createdAt = moment().toJSON()
+    }
+  }
+
   constructor () {
     super()
 
