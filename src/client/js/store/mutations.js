@@ -51,6 +51,11 @@ export default {
     }
   },
 
+  clearCache (state) {
+    state.users = []
+    state.themes = []
+  },
+
   loading (state, isLoading) {
     state.loading = isLoading
   },
