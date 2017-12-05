@@ -65,6 +65,16 @@ $secondary: map-get($colors, 'secondary');
   text-overflow: ellipsis;
 }
 
+.is-unselectable {
+  user-select: none;
+}
+
+.is-fullbleed {
+  height: 100%;
+  margin: 0;
+  width: 100%;
+}
+
 .has-bottom-margin:not(:last-child) {
   margin-bottom: 1.5rem;
 }
