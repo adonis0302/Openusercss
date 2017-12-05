@@ -1,5 +1,4 @@
 import gql from 'graphql-tag'
-import log from 'chalk-console'
 import router from '../../router'
 import {ExpectedError} from '../../../../shared/custom-errors'
 import {apolloClient} from '.'
@@ -9,7 +8,8 @@ const createTheme = async (theme, token) => {
     throw new Error('No content')
   }
 
-  const mutation = gql(`
+  let mutation = null
+  const newMutation = gql(`
     mutation {
       theme(title: "${theme.title}", description: "${theme.description}", scope: "${theme.scope}", content: "${theme.content}", version: "${theme.version}", token: "${token}") {
         createdAt,
@@ -20,6 +20,22 @@ const createTheme = async (theme, token) => {
       }
     }
   `)
+  const existingMutation = gql(`
+    mutation {
+      theme(id: "${theme._id}", title: "${theme.title}", description: "${theme.description}", scope: "${theme.scope}", content: "${theme.content}", version: "${theme.version}", token: "${token}") {
+        createdAt,
+        lastUpdate,
+        user {
+          displayname
+        }
+      }
+    }
+  `)
+
+  mutation = newMutation
+  if (theme._id) {
+    mutation = existingMutation
+  }
 
   try {
     await apolloClient.mutate({
@@ -47,12 +63,7 @@ export default async ({commit, getters}, {theme, redirect}) => {
     commit('actionError', null)
     router.push(redirect)
   } catch (error) {
-    log.error(error)
-    const errors = JSON.parse(error.message)
-
-    errors.forEach((message) => {
-      commit('actionError', `${message.text} on line ${message.line}`)
-    })
+    commit('actionError', error.message)
   }
 
   commit('loading', false)

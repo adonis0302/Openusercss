@@ -1,5 +1,4 @@
 import gql from 'graphql-tag'
-import log from 'chalk-console'
 
 import {expected} from '../../../../shared/custom-errors'
 import router from '../../router'
@@ -23,15 +22,18 @@ const remoteLogout = async (token) => {
       throw new AuthenticationError('Failed to shred session')
     }
   } catch (error) {
-    log.error(error.message)
     throw new AuthenticationError(error.message)
   }
 
   return true
 }
 
-export default async (context) => {
-  await remoteLogout(context.getters.session.token)
-  context.commit('logout')
+export default async ({commit, getters}) => {
+  try {
+    await remoteLogout(getters.session.token)
+  } catch (error) {
+    commit('actionError', error.message)
+  }
+  commit('logout')
   router.push('/login')
 }

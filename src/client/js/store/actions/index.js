@@ -4,7 +4,8 @@ import verifyToken from './verify-token'
 import logout from './remote-logout'
 import login from './remote-login'
 import register from './remote-register'
-import createTheme from './create-theme'
+import saveTheme from './save-theme'
+import deleteTheme from './delete-theme'
 import getThemes from './get-themes'
 import getFullUser from './get-full-user'
 import getFullTheme from './get-full-theme'
@@ -29,7 +30,8 @@ export default {
   login,
   register,
   verifyToken,
-  createTheme,
+  saveTheme,
+  deleteTheme,
   getThemes,
   getFullUser,
   getFullTheme,

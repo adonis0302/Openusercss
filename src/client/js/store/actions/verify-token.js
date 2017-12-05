@@ -1,6 +1,4 @@
 import gql from 'graphql-tag'
-import log from 'chalk-console'
-
 import {apolloClient} from '.'
 
 const verifyToken = async (token) => {
@@ -22,23 +20,21 @@ const verifyToken = async (token) => {
   return result
 }
 
-export default async (context) => {
-  const session = context.getters.session
+export default async ({commit, getters}) => {
+  const session = getters.session
 
   try {
     if (session && !await verifyToken(session.token)) {
-      log.warn('Session token rejected by server, forcing logout')
-      context.commit('logout')
+      commit('logout')
 
       return false
     } else if (!session) {
       return false
     }
   } catch (error) {
-    log.error(error)
+    commit('actionError', error.message)
     return false
   }
 
-  log.info('Session token verified by server')
   return true
 }
