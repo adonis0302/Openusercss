@@ -1,16 +1,70 @@
 div
-  b-container
+  modal(name="delete-theme", :draggable="true", height="auto")
+    form(@submit.prevent="deleteTheme")
+      b-card
+        b-card-header
+          b-card-header-title
+            b-content
+              h3.is-marginless Confirm theme deletion
+        b-card-content
+          b-content
+            p.is-unselectable
+              | Title: {{viewedTheme.title}}
+              br
+              | Created: {{viewedTheme.createdAt | moment('MMMM DD, YYYY (ZZ)')}}
+              br
+              | Last updated: {{viewedTheme.lastUpdate | moment('MMMM DD, YYYY (ZZ)')}}
+            hr
+            p Please type your theme's title here to confirm:
+            b-control(has-icons-left)
+              icon(icon="delete")
+              b-input(
+                name="confirmTitle",
+                v-model="confirmTitle",
+                aria-label="confirm theme title",
+                :placeholder="viewedTheme.title"
+              )
+        b-card-footer
+          b-card-footer-item(is-paddingless)
+            b-button(type="submit", is-danger, is-fullbleed, :disabled="viewedTheme.title !== confirmTitle") Delete theme
+          b-card-footer-item(is-paddingless)
+            b-button(type="reset", @click="cancelDelete", is-fullbleed, is-borderless) Cancel
+
+  modal(name="source-viewer", :draggable="true", height="auto", :scrollable="true")
+    b-tile(is-parent, is-paddingless)
+      b-tile(is-child)
+        code {{viewedTheme.content}}
+
+  b-container(:inert="showingModal")
     div
       b-section
         notification(v-show="actionErrors.length > 0", icon="alert", color="is-danger").is-danger
           div(slot="content")
             p(v-for="error in actionErrors") {{error}}
-        b-columns
-          b-column(is-10)
-            b-content
-              h1 {{viewedTheme.title}}
-          b-column(is-2)
-            b-button(@click="installTheme", is-primary, is-pulled-right) Install theme
+        b-level
+          b-level-left(is-marginless)
+            h1 {{viewedTheme.title}}
+          b-level-right
+            b-tile(is-parent, is-paddingless)
+              b-tile(is-child)
+                b-content(is-marginless, is-pulled-right)
+                  b-button(is-danger, @click="confirmDeleteTheme") Delete theme
+              b-tile(is-child)
+                b-content(is-marginless, is-pulled-right)
+                  router-link.button.is-primary(:to="'/theme/edit/' + viewedTheme._id") Edit theme
+              b-tile(is-child)
+                b-content(is-marginless, is-pulled-right)
+                  b-button(@click="installTheme", is-primary) Install theme
+          //- b-columns(is-pulled-right)
+            b-column(v-if="currentUser._id === viewedTheme.user._id")
+              b-content(is-marginless)
+                b-button(is-danger, @click="confirmDeleteTheme") Delete theme
+            b-column(v-if="currentUser._id === viewedTheme.user._id")
+              b-content(is-marginless)
+                router-link.button.is-primary(:to="'/theme/edit/' + viewedTheme._id") Edit theme
+            b-column
+              b-content(is-marginless)
+                b-button(@click="installTheme", is-primary) Install theme
 
         b-columns
           b-column(is-6)
@@ -29,15 +83,6 @@ div
                             @click="viewSource"
                           ) View source
                       br
-                      b-modal(
-                        :class="['modal', {'is-active': viewingSource}]"
-                      )
-                        b-modal-background(@click="viewSource")
-                        b-modal-content
-                          b-box(is-paddingless)
-                            b-content
-                              code {{viewedTheme.content}}
-                        b-modal-close
                       //- b-content
                         pre {{viewedTheme.content}}
                       //- p Average rating: {{viewedTheme.rating}}
