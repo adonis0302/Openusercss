@@ -3,7 +3,6 @@ import VeeValidate from 'vee-validate'
 import VueRouter from 'vue-router'
 import VueFilters from 'vue2-filters'
 import VueMoment from 'vue-moment'
-import VModal from 'vue-js-modal'
 
 import router from './router'
 import store from './store'
@@ -26,7 +25,6 @@ Vue.use(VeeValidate, {
 })
 Vue.use(VueFilters)
 Vue.use(VueMoment)
-Vue.use(VModal)
 
 export {router}
 
