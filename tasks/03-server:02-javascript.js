@@ -4,7 +4,6 @@ import glob from 'glob'
 import source from 'vinyl-source-stream'
 import merge from 'merge-stream'
 import prettyError from 'gulp-prettyerror'
-import es3ify from 'gulp-es3ify'
 import gutil from 'gulp-util'
 import flatten from 'gulp-flatten'
 import buffer from 'gulp-buffer'
@@ -56,7 +55,6 @@ gulp.task('server:prod', (done) => {
         'mangle':   true,
         'compress': true
       }),
-      es3ify(),
       flatten(),
       gulp.dest(destination())
     ])
