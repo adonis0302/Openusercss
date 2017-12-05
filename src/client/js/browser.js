@@ -1,8 +1,16 @@
 /* eslint no-console:0 */
 import 'babel-polyfill'
 import FpsEmitter from 'fps-emitter'
-import {app} from './vue'
 import {divide, sum} from 'lodash'
+
+import VModal from 'vue-js-modal'
+import VeeValidate from 'vee-validate'
+import {
+  Vue,
+  store,
+  router,
+  appBase
+} from './vue'
 
 import {runPolyfills} from './utils/features'
 
@@ -18,6 +26,27 @@ const main = async () => {
   process.averageFps = 0
   process.fpsHistory = []
   process.polyfills = polyfillsResult
+
+  Vue.use(VeeValidate, {
+    'errorBagName':  'errors',
+    'fieldsBagName': 'fields',
+    'delay':         0,
+    'locale':        'en',
+    'dictionary':    null,
+    'classes':       true,
+    'strict':        true,
+    'events':        'input|blur',
+    'inject':        true,
+    'validity':      false,
+    'aria':          true
+  })
+  Vue.use(VModal)
+
+  const app = new Vue({
+    store,
+    router,
+    ...appBase
+  })
 
   process.nextTick(() => {
     app.$mount('app')

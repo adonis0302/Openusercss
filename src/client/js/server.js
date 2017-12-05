@@ -1,8 +1,19 @@
 import 'babel-polyfill'
-import {app, router} from './vue'
+import {
+  Vue,
+  store,
+  router,
+  appBase
+} from './vue'
 
 export default (context) => {
   return new Promise((resolve, reject) => {
+    const app = new Vue({
+      store,
+      router,
+      ...appBase
+    })
+
     router.push(context.url)
 
     router.onReady(() => {
