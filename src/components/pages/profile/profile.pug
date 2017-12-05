@@ -9,15 +9,11 @@ div
           b-level-left
             h1 Profile
           b-level-right
-            b-columns
-              b-column
-                router-link(to="/theme/new")
-                  b-button(is-primary)
-                    | Upload new theme
-              b-column
-                router-link(to="/account")
-                  b-button(is-primary)
-                    | Change account details
+            b-tile(is-parent, is-paddingless)
+              b-tile(is-child)
+                router-link.button.is-primary(to="/theme/edit/0") Upload new theme
+              b-tile(is-child)
+                router-link.button.is-primary(to="/account", disabled) Change account details
         b-columns
           b-column(is-6)
             div

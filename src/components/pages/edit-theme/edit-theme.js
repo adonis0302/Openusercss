@@ -2,6 +2,7 @@ import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import noSSR from 'vue-no-ssr'
 import {mapGetters} from 'vuex'
 import semver from 'semver'
+import {findIndex, cloneDeep} from 'lodash'
 
 import attributor from '../../components/footer/footer.vue'
 import navbar from '../../components/navbar/navbar.vue'
@@ -15,7 +16,7 @@ const customDictionary = {
   'en': {
     'custom': {
       'content': {
-        'required': 'Theme code must not be empty.'
+        'required': 'Theme code must not be empty'
       },
       'version': {
         'semver': 'Theme versioning must be semantic'
@@ -54,19 +55,17 @@ export default {
   },
   'data': () => {
     return {
-      'theme': {
-        'title':       '',
-        'description': '',
-        'scope':       '',
-        'content':     '',
-        'version':     '1.0.0'
-      },
+      'theme': {},
       // eslint-disable-next-line
       'regex': /((?![*+?])(?:[^\r\n\[\/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)/
     }
   },
-  beforeMount () {
+  async beforeMount () {
     this.$validator.extend('semver', (value) => !!semver.valid(value))
+    if (!this.isNew) {
+      await this.$store.dispatch('getFullTheme', this.$route.params.id)
+    }
+    this.theme = cloneDeep(this.editedTheme)
   },
   mounted () {
     this.$validator.updateDictionary(customDictionary)
@@ -76,7 +75,7 @@ export default {
       const validated = await this.$validator.validateAll()
 
       if (validated) {
-        this.$store.dispatch('createTheme', {
+        this.$store.dispatch('saveTheme', {
           'theme':    this.theme,
           'redirect': `/profile/${this.currentUser._id}`
         })
@@ -87,7 +86,30 @@ export default {
     ...mapGetters([
       'actionErrors',
       'users',
-      'currentUser'
-    ])
+      'currentUser',
+      'themes',
+      'loading'
+    ]),
+    isNew () {
+      return this.$route.params.id === '0'
+    },
+    'editedTheme': {
+      'cache': false,
+      get () {
+        const themeIndex = findIndex(this.themes, (theme) => theme._id === this.$route.params.id)
+
+        if (themeIndex === -1 || this.isNew) {
+          return {
+            'user':        {},
+            'title':       '',
+            'description': '',
+            'scope':       '',
+            'content':     '',
+            'version':     '1.0.0'
+          }
+        }
+        return this.themes[themeIndex]
+      }
+    }
   }
 }
