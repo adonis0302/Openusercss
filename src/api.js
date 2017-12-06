@@ -62,7 +62,7 @@ const init = async () => {
 })()
 
 process.on('unhandledRejection', (error) => {
-  log.error(`Unhandled promise rejection in webserver: ${error.message}`)
+  log.error(`Unhandled promise rejection in API: ${error.message}`)
   log.error(error.stack)
   process.exit(1)
 })
