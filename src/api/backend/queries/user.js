@@ -4,6 +4,8 @@ import {pick} from 'lodash'
 export default async (root, {id}, {Session, Theme, User}) => {
   const foundUser = await User.findOne({
     '_id': new ObjectId(id)
+  }, {
+    'populate': true
   })
 
   if (!foundUser) {
@@ -17,14 +19,15 @@ export default async (root, {id}, {Session, Theme, User}) => {
     'avatarUrl',
     'smallAvatarUrl',
     'lastSeen',
-    'lastSeenReason'
+    'lastSeenReason',
+    'themes'
   ])
 
-  user.themes = await Theme.find({
+  /* user.themes = await Theme.find({
     'user': new ObjectId(id)
   }, {
     'limit': 256
-  })
+  }) */
 
   return user
 }

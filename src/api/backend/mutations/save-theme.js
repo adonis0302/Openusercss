@@ -1,5 +1,4 @@
 import stylelint from 'stylelint'
-import moment from 'moment'
 
 import mustAuthenticate from '../../../shared/enforce-session'
 import {expected} from '../../../shared/custom-errors'
@@ -40,9 +39,7 @@ export default async (root, {token, title, description, content, scope, version,
     }
   } else {
     newTheme = Theme.create({
-      'createdAt':  moment().toJSON(),
-      'lastUpdate': moment().toJSON(),
-      'user':       session.user,
+      'user': session.user,
       title,
       description,
       version,
@@ -53,7 +50,7 @@ export default async (root, {token, title, description, content, scope, version,
 
   const savedTheme = await newTheme.save()
 
-  // user.themes.push(savedTheme)
+  user.themes.push(newTheme)
   await user.save()
 
   return savedTheme

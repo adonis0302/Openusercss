@@ -28,13 +28,13 @@ export default class User extends Document {
       'createdAt': {
         'type':     String,
         'default':  moment().toJSON(),
-        'required': true,
+        'required': false,
         'validate': validators.isMomentJSON
       },
       'lastUpdate': {
         'type':     String,
         'default':  moment().toJSON(),
-        'required': true,
+        'required': false,
         'validate': validators.isMomentJSON
       },
       'displayname': {

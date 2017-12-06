@@ -50,7 +50,7 @@ export default class Theme extends Document {
     user.themes = pullAllBy(user.themes, {
       '_id': this._id
     }, '_id')
-    user.save()
+    return user.save()
   }
 
   constructor () {
@@ -60,13 +60,13 @@ export default class Theme extends Document {
       'createdAt': {
         'type':     String,
         'default':  moment().toJSON(),
-        'required': true,
+        'required': false,
         'validate': validators.isMomentJSON
       },
       'lastUpdate': {
         'type':     String,
         'default':  moment().toJSON(),
-        'required': true,
+        'required': false,
         'validate': validators.isMomentJSON
       },
       'title': {
