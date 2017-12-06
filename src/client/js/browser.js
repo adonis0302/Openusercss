@@ -4,7 +4,6 @@ import FpsEmitter from 'fps-emitter'
 import {divide, sum} from 'lodash'
 
 import VModal from 'vue-js-modal'
-import VeeValidate from 'vee-validate'
 import {
   Vue,
   store,
@@ -27,19 +26,6 @@ const main = async () => {
   process.fpsHistory = []
   process.polyfills = polyfillsResult
 
-  Vue.use(VeeValidate, {
-    'errorBagName':  'errors',
-    'fieldsBagName': 'fields',
-    'delay':         0,
-    'locale':        'en',
-    'dictionary':    null,
-    'classes':       true,
-    'strict':        true,
-    'events':        'input|blur',
-    'inject':        true,
-    'validity':      false,
-    'aria':          true
-  })
   Vue.use(VModal)
 
   const app = new Vue({
