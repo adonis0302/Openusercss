@@ -4,7 +4,8 @@
   "description": "OpenUserCSS",
   "main": "src/app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "ava test/*.js",
+    "watch:test": "nodemon --delay 0.25 --watch package.json --watch test/**/*.js --watch test/*.js --exec 'npm t'",
     "clean": "rimraf build .tmp",
     "build:prod": "cross-env NODE_ENV=production gulp build:prod",
     "build:fast": "cross-env NODE_ENV=development gulp build:fast",
@@ -21,10 +22,16 @@
   ],
   "author": "DecentM",
   "license": "MIT",
+  "ava": {
+    "require": [
+      "babel-register"
+    ]
+  },
   "devDependencies": {
     "PubSub": "^3.4.0",
     "animejs": "^2",
     "apollo-client": "^1",
+    "ava": "^0.24.0",
     "babel-cli": "^6",
     "babel-core": "^6",
     "babel-eslint": "^8",
@@ -135,6 +142,7 @@
     "sass-web-fonts": "^2",
     "scrollsnap-polyfill": "^0",
     "scss-lint": "^0",
+    "superstruct": "^0.4.4",
     "sw-toolbox": "^3",
     "vee-validate": "^2.0.0-rc.18",
     "vinyl-source-stream": "^1",
