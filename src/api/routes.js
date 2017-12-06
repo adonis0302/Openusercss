@@ -4,11 +4,9 @@ import {graphqlExpress, graphiqlExpress} from 'apollo-server-express'
 import bodyParser from 'body-parser'
 import staticConfig from '../shared/config'
 
+import themeCdnHandler from './theme-cdn-handler'
 import schema from './backend'
 import connectMongo from './connector'
-import brute from './brute'
-
-import Theme from './connector/schema/theme'
 
 const expressRouter = express.Router
 const setupRoutes = async () => {
@@ -22,40 +20,9 @@ const setupRoutes = async () => {
     }))
   }
 
-  router.use('/theme/:id.user.css', brute.prevent, async (req, res, next) => {
-    const foundTheme = await Theme.findOne({
-      '_id': req.params.id
-    })
+  router.use('/theme/:id.user.css', themeCdnHandler)
 
-    if (foundTheme) {
-      let response = '/* ==userstyle==\n'
-
-      response = `${response}@name ${foundTheme.title}\n`
-      response = `${response}@description ${foundTheme.description}\n`
-      response = `${response}@version ${foundTheme.version}\n`
-      response = `${response}@namespace https://openusercss.org/theme/${foundTheme._id}\n`
-      response = `${response}@homepageURL https://openusercss.org/theme/${foundTheme._id}\n`
-      response = `${response}@author ${foundTheme.user.displayname} (https://openusercss.org/profile/${foundTheme.user._id})\n`
-      response = `${response}==/userstyle== */\n`
-      response = `${response}\n@-moz-document regexp("${foundTheme.scope}") {\n`
-      response = `${response}${foundTheme.content.replace(/^/gm, '\ \ ')}\n}\n`
-
-      res.type('css')
-      res.send(response)
-    } else {
-      res.type('json')
-      res.send({
-        'errors': [
-          {
-            'message': 'No theme found',
-            'id':      req.params.id
-          }
-        ]
-      })
-    }
-  })
-
-  router.use('/', brute.prevent, bodyParser.json(), graphqlExpress({
+  router.use('/', bodyParser.json(), graphqlExpress({
     context,
     schema
   }))

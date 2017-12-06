@@ -1,30 +1,22 @@
 import test from 'ava'
+import {pick} from 'lodash'
+
 import state from './shared/state-mock'
 import getters from '../src/client/js/store/getters'
 
 test('users - expands from themes', (t) => {
   const result = getters.users(state)
-  const expected = [
-    {
-      '__typename': 'User',
-      '_id':        '5a262a2c3835ee7627db2ef9',
-      'lastSeen':   '2017-12-06T02:21:12.373Z',
-      'username':   'decentm',
-      'themes':     [
-        {
-          '__typename': 'Theme',
-          '_id':        '5a275431707d23a322cff59f',
-          'rating':     0,
-          'title':      'asd',
-          'user':       {
-            '__typename': 'User',
-            '_id':        '5a262a2c3835ee7627db2ef9'
-          },
-          'version': '1.0.0'
-        }
-      ]
-    }
-  ]
+  const expected = []
+
+  expected.push(pick(state.users[0], [
+    '__typename',
+    '_id',
+    'lastSeen',
+    'username'
+  ]))
+
+  expected[0].themes = []
+  expected[0].themes.push(state.themes[0])
 
   t.deepEqual(result, expected)
 })
@@ -57,28 +49,19 @@ test('users - gives empty array with no themes', (t) => {
 
 test('themes - expands from users', (t) => {
   const result = getters.themes(state)
-  const expected = [
-    {
-      '__typename': 'Theme',
-      '_id':        '5a275431707d23a322cff59f',
-      'rating':     0,
-      'title':      'asd',
-      'user':       {
-        '__typename': 'User',
-        '_id':        '5a262a2c3835ee7627db2ef9',
-        'lastSeen':   '2017-12-06T02:21:12.373Z',
-        'username':   'decentm',
-        'themes':     [
-          {
-            '__typename': 'Theme',
-            '_id':        '5a275431707d23a322cff59f'
-          }
-        ]
-      },
-      'version': '1.0.0'
-    }
-  ]
+  const expected = []
 
+  expected.push(pick(state.themes[0], [
+    '__typename',
+    '_id',
+    'rating',
+    'title',
+    'description',
+    'content',
+    'version'
+  ]))
+
+  expected[0].user = state.users[0]
   t.deepEqual(result, expected)
 })
 

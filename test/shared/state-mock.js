@@ -27,12 +27,14 @@ export default {
   ],
   'themes': [
     {
-      '__typename': 'Theme',
-      '_id':        '5a275431707d23a322cff59f',
-      'rating':     0,
-      'title':      'asd',
-      'version':    '1.0.0',
-      'user':       {
+      '__typename':  'Theme',
+      '_id':         '5a275431707d23a322cff59f',
+      'rating':      0,
+      'title':       'asd',
+      'version':     '1.0.0',
+      'content':     'body {\n  content: \"yaeee\"\;\n}',
+      'description': 'test description',
+      'user':        {
         '__typename': 'User',
         '_id':        '5a262a2c3835ee7627db2ef9'
       }

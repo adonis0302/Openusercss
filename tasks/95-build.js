@@ -1,6 +1,7 @@
 import gulp from 'gulp'
 
 gulp.task('build:fast', gulp.series(
+  'test',
   'shared:components:fast',
   'shared:pages:fast',
   gulp.parallel(
@@ -12,6 +13,7 @@ gulp.task('build:fast', gulp.series(
 ))
 
 gulp.task('build:prod', gulp.series(
+  'test',
   'shared:components:prod',
   'shared:pages:prod',
   gulp.parallel(
