@@ -5,7 +5,7 @@
   "main": "src/app.js",
   "scripts": {
     "test": "ava test/*.js",
-    "watch:test": "nodemon --delay 0.25 --watch package.json --watch test/**/*.js --watch test/*.js --exec 'npm t'",
+    "watch:test": "nodemon --delay 0.25 --watch package.json --watch test --exec 'npm t'",
     "clean": "rimraf build .tmp",
     "build:prod": "cross-env NODE_ENV=production gulp build:prod",
     "build:fast": "cross-env NODE_ENV=development gulp build:fast",
@@ -18,7 +18,8 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore src"
   },
   "pre-commit": [
-    "lint"
+    "lint",
+    "test"
   ],
   "author": "DecentM",
   "license": "MIT",
