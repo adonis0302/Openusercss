@@ -6,17 +6,19 @@ test('users - expands from themes', (t) => {
   const result = getters.users(state)
   const expected = [
     {
-      '_id':      '5a262a2c3835ee7627db2ef9',
-      'lastSeen': '2017-12-06T02:21:12.373Z',
-      'username': 'decentm',
-      'themes':   [
+      '__typename': 'User',
+      '_id':        '5a262a2c3835ee7627db2ef9',
+      'lastSeen':   '2017-12-06T02:21:12.373Z',
+      'username':   'decentm',
+      'themes':     [
         {
           '__typename': 'Theme',
           '_id':        '5a275431707d23a322cff59f',
           'rating':     0,
           'title':      'asd',
           'user':       {
-            '_id': '5a262a2c3835ee7627db2ef9'
+            '__typename': 'User',
+            '_id':        '5a262a2c3835ee7627db2ef9'
           },
           'version': '1.0.0'
         }
@@ -45,12 +47,14 @@ test('themes - expands from users', (t) => {
       'rating':     0,
       'title':      'asd',
       'user':       {
-        '_id':      '5a262a2c3835ee7627db2ef9',
-        'lastSeen': '2017-12-06T02:21:12.373Z',
-        'username': 'decentm',
-        'themes':   [
+        '__typename': 'User',
+        '_id':        '5a262a2c3835ee7627db2ef9',
+        'lastSeen':   '2017-12-06T02:21:12.373Z',
+        'username':   'decentm',
+        'themes':     [
           {
-            '_id': '5a275431707d23a322cff59f'
+            '__typename': 'Theme',
+            '_id':        '5a275431707d23a322cff59f'
           }
         ]
       },
@@ -101,12 +105,14 @@ test('currentUser - returns empty object if session is missing', (t) => {
 test('currentUser - returns user from state', (t) => {
   const result = getters.currentUser(state)
   const expected = {
-    '_id':      '5a262a2c3835ee7627db2ef9',
-    'lastSeen': '2017-12-06T02:21:12.373Z',
-    'username': 'decentm',
-    'themes':   [
+    '__typename': 'User',
+    '_id':        '5a262a2c3835ee7627db2ef9',
+    'lastSeen':   '2017-12-06T02:21:12.373Z',
+    'username':   'decentm',
+    'themes':     [
       {
-        '_id': '5a275431707d23a322cff59f'
+        '__typename': 'Theme',
+        '_id':        '5a275431707d23a322cff59f'
       }
     ]
   }

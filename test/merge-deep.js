@@ -17,7 +17,8 @@ test('modifies existing objects', async (t) => {
       'rating':     1,
       'title':      'asd',
       'user':       {
-        '_id': '5a262a2c3835ee7627db2ef9'
+        '__typename': 'User',
+        '_id':        '5a262a2c3835ee7627db2ef9'
       },
       'version': '1.0.1'
     }
@@ -34,7 +35,8 @@ test('adds new objects', async (t) => {
       'rating':     3,
       'title':      'Hello',
       'user':       {
-        '_id': '5a262a2c3835ee7627db2ef9'
+        '__typename': 'User',
+        '_id':        '5a262a2c3835ee7627db2ef9'
       },
       'version': '2.0.0'
     }
@@ -46,7 +48,8 @@ test('adds new objects', async (t) => {
       'rating':     3,
       'title':      'Hello',
       'user':       {
-        '_id': '5a262a2c3835ee7627db2ef9'
+        '__typename': 'User',
+        '_id':        '5a262a2c3835ee7627db2ef9'
       },
       'version': '2.0.0'
     },
@@ -56,7 +59,8 @@ test('adds new objects', async (t) => {
       'rating':     0,
       'title':      'asd',
       'user':       {
-        '_id': '5a262a2c3835ee7627db2ef9'
+        '__typename': 'User',
+        '_id':        '5a262a2c3835ee7627db2ef9'
       },
       'version': '1.0.0'
     }
