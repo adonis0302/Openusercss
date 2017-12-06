@@ -76,8 +76,8 @@ export default {
 
       if (validated) {
         this.$store.dispatch('saveTheme', {
-          'theme':    this.theme,
-          'redirect': `/profile/${this.currentUser._id}`
+          'readyTheme': this.theme,
+          'redirect':   `/profile/${this.currentUser._id}`
         })
       }
     }
