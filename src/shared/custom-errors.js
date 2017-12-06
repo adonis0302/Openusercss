@@ -1,12 +1,20 @@
-export class ExpectedError {
+export class ExpectedError extends Error {
   constructor ({prefix, message}) {
-    this.message = message
+    let msg = message
 
-    if (typeof message === 'object') {
-      this.message = JSON.stringify(message)
+    if (message instanceof Object) {
+      msg = JSON.stringify(msg, null, 4)
     }
 
-    this.stack = null
+    const prefixRe = new RegExp(prefix, 'g')
+    const gqlRe = new RegExp('GraphQL error\: ', 'g')
+
+    let preparedMsg = ''
+
+    preparedMsg = msg.replace(prefixRe, '')
+    preparedMsg = msg.replace(gqlRe, '')
+
+    super(preparedMsg)
   }
 }
 
