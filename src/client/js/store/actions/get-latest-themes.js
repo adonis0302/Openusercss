@@ -1,4 +1,6 @@
 import gql from 'graphql-tag'
+import {pick} from 'lodash'
+
 import {ExpectedError} from '../../../../shared/custom-errors'
 import {apolloClient} from '.'
 
@@ -40,10 +42,29 @@ export default async ({commit, getters}, id) => {
   try {
     const result = await getLatestThemes(id)
 
-    commit('themes', result.data.latestThemes)
+    result.data.latestThemes.forEach((theme) => {
+      const savedTheme = pick(theme, [
+        '_id',
+        'title',
+        'description',
+        'lastUpdate',
+        'createdAt',
+        'scope'
+      ])
+
+      savedTheme.user = {
+        '_id': theme.user._id
+      }
+      commit('themes', [
+        savedTheme
+      ])
+      commit('users', [
+        theme.user
+      ])
+    })
     commit('actionError', null)
   } catch (error) {
-    commit('actionError', error.message)
+    commit('actionError', error)
   }
 
   commit('loading', false)

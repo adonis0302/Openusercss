@@ -33,7 +33,7 @@ export default async ({getters, commit}, registerData) => {
     await remoteRegister(registerData)
     router.push('/login')
   } catch (error) {
-    commit('actionError', error.message)
+    commit('actionError', error)
   }
 
   commit('loading', false)

@@ -32,7 +32,7 @@ export default async ({commit, getters}) => {
   try {
     await remoteLogout(getters.session.token)
   } catch (error) {
-    commit('actionError', error.message)
+    commit('actionError', error)
   }
   commit('logout')
   router.push('/login')

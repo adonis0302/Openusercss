@@ -7,11 +7,7 @@ const getFullTheme = async (id) => {
     query {
       theme(id: "${id}") {
         user {
-          _id,
-          username,
-          displayname,
-          avatarUrl,
-          smallAvatarUrl
+          _id
         },
         _id,
         title,
@@ -51,7 +47,7 @@ export default async ({commit, getters}, id) => {
     ])
     commit('actionError', null)
   } catch (error) {
-    commit('actionError', error.message)
+    commit('actionError', error)
   }
 
   commit('loading', false)

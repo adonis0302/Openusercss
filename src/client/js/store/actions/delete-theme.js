@@ -29,6 +29,7 @@ export default async ({commit, getters}, {id, redirect}) => {
 
   try {
     await deleteTheme(id, getters.session.token)
+    commit('deleteTheme', id)
     commit('actionError', null)
     router.push(redirect)
   } catch (error) {

@@ -3,12 +3,33 @@ import {cloneDeep} from 'lodash'
 import mutations, {IterableMutation} from '../src/client/js/store/mutations'
 import stateMock from './shared/state-mock'
 
-test('login - sets session in state', (t) => {
+test('login - sets session in state from null', (t) => {
   const state = cloneDeep(stateMock)
   const expected = cloneDeep(stateMock)
 
   // eslint-disable-next-line no-undefined
   state.session = undefined
+  expected.session = {
+    'token': 'viD4aigh1ke7eej7ow6Raogu8u',
+    'user':  {
+      '_id': '5a262a2c3835ee7627db2ef9'
+    }
+  }
+
+  mutations.login(state, {
+    'token': 'viD4aigh1ke7eej7ow6Raogu8u',
+    'user':  {
+      '_id': '5a262a2c3835ee7627db2ef9'
+    }
+  })
+  t.deepEqual(state, expected)
+})
+
+test('login - sets session in state from other', (t) => {
+  const state = cloneDeep(stateMock)
+  const expected = cloneDeep(stateMock)
+
+  state.session = []
   expected.session = {
     'token': 'viD4aigh1ke7eej7ow6Raogu8u',
     'user':  {
@@ -73,6 +94,15 @@ test('actionError - adds error to state', (t) => {
   t.true(state.actionErrors.length === originalState.actionErrors.length + 1)
 })
 
+test('actionError - does not add error to state if duplicate', (t) => {
+  const state = cloneDeep(stateMock)
+  const originalState = cloneDeep(stateMock)
+
+  mutations.actionError(state, new Error('Test'))
+  mutations.actionError(state, new Error('Test'))
+  t.true(state.actionErrors.length === originalState.actionErrors.length + 1)
+})
+
 test('actionError - throws if argument is not an error', (t) => {
   const state = cloneDeep(stateMock)
 
@@ -113,72 +143,14 @@ test('deleteTheme - removes theme from state', (t) => {
   t.deepEqual(state, expected)
 })
 
-test('saveTheme - modifies existing theme', (t) => {
+test('deleteTheme - throws if argument is not a string', (t) => {
   const state = cloneDeep(stateMock)
-  const expected = cloneDeep(stateMock)
 
-  expected.themes = [
-    {
-      '__typename': 'Theme',
-      '_id':        '5a275431707d23a322cff59f',
-      'rating':     0,
-      'title':      'My new title',
-      'user':       {
-        '__typename': 'User',
-        '_id':        '5a262a2c3835ee7627db2ef9'
-      },
-      'version': '1.0.2'
-    }
-  ]
-
-  mutations.saveTheme(state, {
-    '_id':     '5a275431707d23a322cff59f',
-    'version': '1.0.2',
-    'title':   'My new title',
-    'user':    {
-      '_id': '5a262a2c3835ee7627db2ef9'
-    }
+  t.throws(() => {
+    mutations.deleteTheme(state, {
+      '_id': '5a275431707d23a322cff59f'
+    })
   })
-
-  t.deepEqual(state, expected)
-})
-
-test('saveTheme - adds new theme', (t) => {
-  const state = cloneDeep(stateMock)
-  const expected = cloneDeep(stateMock)
-
-  expected.themes = [
-    {
-      '_id':     '5a275431707d23a322cff5a0',
-      'title':   'This brand new theme!',
-      'version': '1.1.6',
-      'user':    {
-        '_id': '5a262a2c3835ee7627db2ef9'
-      }
-    },
-    {
-      '__typename': 'Theme',
-      '_id':        '5a275431707d23a322cff59f',
-      'rating':     0,
-      'title':      'asd',
-      'user':       {
-        '__typename': 'User',
-        '_id':        '5a262a2c3835ee7627db2ef9'
-      },
-      'version': '1.0.0'
-    }
-  ]
-
-  mutations.saveTheme(state, {
-    '_id':     '5a275431707d23a322cff5a0',
-    'version': '1.1.6',
-    'title':   'This brand new theme!',
-    'user':    {
-      '_id': '5a262a2c3835ee7627db2ef9'
-    }
-  })
-
-  t.deepEqual(state, expected)
 })
 
 test('loading - sets to true', (t) => {
@@ -189,6 +161,14 @@ test('loading - sets to true', (t) => {
 
   mutations.loading(state, true)
   t.deepEqual(state, expected)
+})
+
+test('loading - throws if not boolean', (t) => {
+  const state = cloneDeep(stateMock)
+
+  t.throws(() => {
+    mutations.loading(state, 'unicorns')
+  })
 })
 
 test('iterable - adds to state', (t) => {

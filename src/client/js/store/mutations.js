@@ -1,4 +1,4 @@
-import {find, findIndex, defaultsDeep} from 'lodash'
+import {find, findIndex, defaultsDeep, uniq} from 'lodash'
 import {struct} from 'superstruct'
 
 /*
@@ -21,16 +21,17 @@ validators.reference = (typename) => {
 }
 
 validators.theme = struct({
-  '__typename': 'string?',
-  '_id':        'string',
-  'title':      'string?',
-  'scope':      'string?',
-  'version':    'string?',
-  'content':    'string?',
-  'createdAt':  'string?',
-  'lastUpdate': 'string?',
-  'rating':     'number?',
-  'user':       validators.reference('User')
+  '__typename':  'string?',
+  '_id':         'string',
+  'title':       'string?',
+  'scope':       'string?',
+  'version':     'string?',
+  'content':     'string?',
+  'createdAt':   'string?',
+  'lastUpdate':  'string?',
+  'rating':      'number?',
+  'description': 'string?',
+  'user':        validators.reference('User')
 }, {
   '__typename': 'Theme'
 })
@@ -62,7 +63,7 @@ validators.session = struct({
 export class IterableMutation {
   constructor (name, stateProperty) {
     return (state, dataList) => {
-      if (!(dataList instanceof Array)) {
+      if (!dataList || !(dataList instanceof Array)) {
         throw new Error(`${name} mutation must be passed an array, got ${typeof dataList}:\n${JSON.stringify(dataList)}`)
       }
       const validator = validators[name.toLowerCase()]
@@ -105,7 +106,12 @@ export default {
     }
 
     if (error) {
-      state.actionErrors.push(error)
+      state.actionErrors.push(error.message)
+      state.actionErrors = uniq(state.actionErrors)
+      if (process.browser) {
+        // eslint-disable-next-line no-console
+        console.error(error)
+      }
     } else {
       state.actionErrors = []
     }
@@ -119,6 +125,10 @@ export default {
   },
 
   deleteTheme (state, id) {
+    if (typeof id !== 'string') {
+      throw new Error('deleteTheme requires an ID string')
+    }
+
     const index = findIndex(state.themes, {
       '_id': id
     })
@@ -139,19 +149,29 @@ export default {
     state.users[userIndex].themes.splice(userThemeIndex, 1)
   },
 
-  saveTheme (state, rawTheme) {
-    state.themes.forEach((stateTheme, index) => {
-      const theme = validators.theme(rawTheme)
+  /* saveNewTheme (state, rawTheme) {
+    const theme = validators.theme(rawTheme)
 
+    state.themes.forEach((stateTheme, index) => {
       if (stateTheme._id === theme._id) {
         state.themes[index] = defaultsDeep(theme, state.themes[index])
       } else {
         state.themes.unshift(theme)
       }
     })
-  },
+
+    const userIndex = find(state.users, {
+      '_id': theme.user._id
+    })
+
+    state.users[userIndex].themes.push(theme)
+  }, */
 
   loading (state, isLoading) {
+    if (typeof isLoading !== 'boolean') {
+      throw new Error('loading takes only boolean')
+    }
+
     state.loading = isLoading
   },
 

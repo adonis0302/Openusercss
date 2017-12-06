@@ -6,7 +6,6 @@ import login from './remote-login'
 import register from './remote-register'
 import saveTheme from './save-theme'
 import deleteTheme from './delete-theme'
-import getThemes from './get-themes'
 import getFullUser from './get-full-user'
 import getFullTheme from './get-full-theme'
 import getLatestThemes from './get-latest-themes'
@@ -32,7 +31,6 @@ export default {
   verifyToken,
   saveTheme,
   deleteTheme,
-  getThemes,
   getFullUser,
   getFullTheme,
   getLatestThemes

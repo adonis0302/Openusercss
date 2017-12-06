@@ -3,14 +3,20 @@ import {find, cloneDeep} from 'lodash'
 const users = (state) => {
   const foundUsers = cloneDeep(state.users)
 
+  if (!foundUsers) {
+    return []
+  }
+
   foundUsers.forEach((user, index) => {
     const userThemes = []
 
-    user.themes.forEach((themeObj) => {
-      userThemes.push(find(state.themes, {
-        '_id': themeObj._id
-      }))
-    })
+    if (user.themes) {
+      user.themes.forEach((themeObj) => {
+        userThemes.push(find(state.themes, {
+          '_id': themeObj._id
+        }))
+      })
+    }
 
     user.themes = userThemes
   })
@@ -21,10 +27,20 @@ const users = (state) => {
 const themes = (state) => {
   const foundThemes = cloneDeep(state.themes)
 
+  if (!foundThemes) {
+    return []
+  }
+
   foundThemes.forEach((theme, index) => {
     theme.user = find(state.users, {
       '_id': theme.user._id
     })
+
+    if (!theme.user) {
+      theme.user = {
+        'themes': []
+      }
+    }
   })
 
   return foundThemes
@@ -51,7 +67,7 @@ const currentUser = (state) => {
     '_id': state.session.user._id
   })
 
-  return user
+  return user || {}
 }
 
 export default {

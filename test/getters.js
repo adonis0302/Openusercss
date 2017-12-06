@@ -38,6 +38,23 @@ test('users - gives empty object with empty state', (t) => {
   t.deepEqual(result, expected)
 })
 
+test('users - gives empty array with no themes', (t) => {
+  const result = getters.users({
+    'users': [
+      {
+        'themes': null
+      }
+    ]
+  })
+  const expected = [
+    {
+      'themes': []
+    }
+  ]
+
+  t.deepEqual(result, expected)
+})
+
 test('themes - expands from users', (t) => {
   const result = getters.themes(state)
   const expected = [
@@ -59,6 +76,31 @@ test('themes - expands from users', (t) => {
         ]
       },
       'version': '1.0.0'
+    }
+  ]
+
+  t.deepEqual(result, expected)
+})
+
+test('themes - creates user object even if none exists', (t) => {
+  const result = getters.themes({
+    'themes': [
+      {
+        '_id':   '5a275431707d23a322cff59f',
+        'title': 'asd',
+        'user':  {
+          '_id': '5a262a2c3835ee7627db2ef9'
+        }
+      }
+    ]
+  })
+  const expected = [
+    {
+      '_id':   '5a275431707d23a322cff59f',
+      'title': 'asd',
+      'user':  {
+        'themes': []
+      }
     }
   ]
 
