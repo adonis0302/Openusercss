@@ -16,7 +16,8 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore src",
     "test": "ava test/*.js",
     "watch:test": "nodemon --delay 0.25 --watch package.json --watch test --exec 'npm t'",
-    "precommit": "npm run lint",
+    "precommit": "git stash -k -u && npm run lint",
+    "postcommit": "git stash apply",
     "commitmsg": "commitlint -e $GIT_PARAMS",
     "commit": "git-cz"
   },
