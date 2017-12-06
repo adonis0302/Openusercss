@@ -1,5 +1,6 @@
 import test from 'ava'
-import {cloneDeep} from 'lodash'
+import {cloneDeep, defaultsDeep} from 'lodash'
+
 import mutations, {IterableMutation} from '../src/client/js/store/mutations'
 import stateMock from './shared/state-mock'
 
@@ -131,6 +132,7 @@ test('deleteTheme - removes theme from state', (t) => {
   expected.themes = []
   expected.users = [
     {
+      '_schema':    {},
       '__typename': 'User',
       '_id':        '5a262a2c3835ee7627db2ef9',
       'lastSeen':   '2017-12-06T02:21:12.373Z',
@@ -198,7 +200,7 @@ test('iterable - updates already existing', (t) => {
   const expected = cloneDeep(stateMock)
   const mutation = new IterableMutation('User', 'users')
 
-  expected.users = [
+  /* expected.users = [
     {
       '__typename':  'User',
       '_id':         '5a262a2c3835ee7627db2ef9',
@@ -212,7 +214,10 @@ test('iterable - updates already existing', (t) => {
         }
       ]
     }
-  ]
+  ] */
+  expected.users[0] = defaultsDeep({
+    'displayname': 'NotMyName'
+  }, expected.users[0])
 
   mutation(state, [
     {

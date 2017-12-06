@@ -9,6 +9,7 @@ test('users - expands from themes', (t) => {
   const expected = []
 
   expected.push(pick(state.users[0], [
+    '_schema',
     '__typename',
     '_id',
     'lastSeen',
@@ -52,6 +53,7 @@ test('themes - expands from users', (t) => {
   const expected = []
 
   expected.push(pick(state.themes[0], [
+    '_schema',
     '__typename',
     '_id',
     'rating',
@@ -130,12 +132,14 @@ test('currentUser - returns empty object if session is missing', (t) => {
 test('currentUser - returns user from state', (t) => {
   const result = getters.currentUser(state)
   const expected = {
+    '_schema':    {},
     '__typename': 'User',
     '_id':        '5a262a2c3835ee7627db2ef9',
     'lastSeen':   '2017-12-06T02:21:12.373Z',
     'username':   'decentm',
     'themes':     [
       {
+        '_schema':    {},
         '__typename': 'Theme',
         '_id':        '5a275431707d23a322cff59f'
       }

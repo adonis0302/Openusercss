@@ -1,4 +1,7 @@
 import {struct} from 'superstruct'
+import {pick} from 'lodash'
+import {ObjectID} from 'mongodb'
+
 import Theme from './connector/schema/theme'
 
 const validators = {}
@@ -9,16 +12,27 @@ validators.reference = (typename) => {
   }
 
   return struct({
+    '_schema':    'object',
     '__typename': 'string',
-    '_id':        'string'
+    '_id':        'object'
   }, {
     '__typename': typename
   })
 }
 
-validators.theme = struct({
+validators.user = struct({
+  '_schema':     'object',
   '__typename':  'string?',
-  '_id':         'string',
+  '_id':         'object',
+  'displayname': 'string'
+}, {
+  '__typename': 'Theme'
+})
+
+validators.theme = struct({
+  '_schema':     'object',
+  '__typename':  'string?',
+  '_id':         'object',
   'title':       'string?',
   'scope':       'string?',
   'version':     'string?',
@@ -27,13 +41,34 @@ validators.theme = struct({
   'lastUpdate':  'string?',
   'rating':      'number?',
   'description': 'string?',
-  'user':        validators.reference('User')
+  'screenshots': 'array?',
+  'user':        validators.user
 }, {
   '__typename': 'Theme'
 })
 
 export const buildTheme = async (rawTheme) => {
-  const theme = validators.theme(rawTheme)
+  const builtTheme = pick(rawTheme, [
+    '_schema',
+    '__typename',
+    'title',
+    'scope',
+    'version',
+    'content',
+    'createdAt',
+    'lastUpdate',
+    'description'
+  ])
+
+  builtTheme._id = new ObjectID(rawTheme._id)
+  builtTheme.user = pick(rawTheme.user, [
+    '_schema',
+    '__typename',
+    '_id',
+    'displayname'
+  ])
+
+  const theme = validators.theme(builtTheme)
 
   let response = '/* ==userstyle==\n'
 

@@ -1,5 +1,6 @@
 import test from 'ava'
 import {cloneDeep} from 'lodash'
+import {ObjectID} from 'mongodb'
 
 import {buildTheme} from '../src/api/theme-cdn-handler'
 import stateMock from './shared/state-mock'
@@ -16,7 +17,7 @@ test('buildTheme - correctly builds from theme object', async (t) => {
 @version 1.0.0
 @namespace https://openusercss.org/theme/5a275431707d23a322cff59f
 @homepageURL https://openusercss.org/theme/5a275431707d23a322cff59f
-@author undefined (https://openusercss.org/profile/5a262a2c3835ee7627db2ef9)
+@author DecentM (https://openusercss.org/profile/5a262a2c3835ee7627db2ef9)
 ==/userstyle== */
 
 @-moz-document regexp("undefined") {
@@ -25,7 +26,14 @@ test('buildTheme - correctly builds from theme object', async (t) => {
   }
 }
 `
-  const result = await buildTheme(state.themes[0])
+  const result = await buildTheme({
+    ...state.themes[0],
+    'user': {
+      '_schema':     {},
+      '_id':         new ObjectID('5a262a2c3835ee7627db2ef9'),
+      'displayname': 'DecentM'
+    }
+  })
 
   t.deepEqual(result, expected)
 })
