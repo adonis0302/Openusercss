@@ -46,25 +46,15 @@ div
             h1 {{viewedTheme.title}}
           b-level-right
             b-tile(is-parent, is-paddingless)
-              b-tile(is-child)
+              b-tile(is-child, v-if="currentUser && viewedTheme.user._id === currentUser._id")
                 b-content(is-marginless, is-pulled-right)
                   b-button(is-danger, @click="confirmDeleteTheme") Delete theme
-              b-tile(is-child)
+              b-tile(is-child, v-if="currentUser && viewedTheme.user._id === currentUser._id")
                 b-content(is-marginless, is-pulled-right)
                   router-link.button.is-primary(:to="'/theme/edit/' + viewedTheme._id") Edit theme
               b-tile(is-child)
                 b-content(is-marginless, is-pulled-right)
                   b-button(@click="installTheme", is-primary) Install theme
-          //- b-columns(is-pulled-right)
-            b-column(v-if="currentUser._id === viewedTheme.user._id")
-              b-content(is-marginless)
-                b-button(is-danger, @click="confirmDeleteTheme") Delete theme
-            b-column(v-if="currentUser._id === viewedTheme.user._id")
-              b-content(is-marginless)
-                router-link.button.is-primary(:to="'/theme/edit/' + viewedTheme._id") Edit theme
-            b-column
-              b-content(is-marginless)
-                b-button(@click="installTheme", is-primary) Install theme
 
         b-columns
           b-column(is-6)

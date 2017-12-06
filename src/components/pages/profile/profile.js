@@ -52,7 +52,8 @@ export default {
   'computed': {
     ...mapGetters([
       'actionErrors',
-      'users'
+      'users',
+      'themes'
     ]),
     'viewedUser': {
       'cache': false,

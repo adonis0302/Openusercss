@@ -46,7 +46,7 @@ export default {
       const validated = await this.$validator.validateAll()
 
       if (validated) {
-        this.$store.dispatch('login', this.login)
+        await this.$store.dispatch('login', this.login)
       }
     }
   },
