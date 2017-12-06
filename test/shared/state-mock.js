@@ -1,4 +1,14 @@
 export default {
+  'actionErrors': [
+    new Error('This is a test error')
+  ],
+  'loading': false,
+  'session': {
+    'token': 'kou7BueghaeHiehaetunahch8e',
+    'user':  {
+      '_id': '5a262a2c3835ee7627db2ef9'
+    }
+  },
   'users': [
     {
       '_id':      '5a262a2c3835ee7627db2ef9',

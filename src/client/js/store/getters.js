@@ -1,28 +1,64 @@
-export default {
-  users (state) {
-    return state.users
-  },
+import {find, cloneDeep} from 'lodash'
 
-  themes (state) {
-    return state.themes
-  },
+const users = (state) => {
+  const foundUsers = cloneDeep(state.users)
 
-  actionErrors (state) {
-    return state.actionErrors
-  },
+  foundUsers.forEach((user, index) => {
+    const userThemes = []
 
-  session (state) {
-    return state.session
-  },
+    user.themes.forEach((themeObj) => {
+      userThemes.push(find(state.themes, {
+        '_id': themeObj._id
+      }))
+    })
 
-  loading (state) {
-    return state.loading
-  },
+    user.themes = userThemes
+  })
 
-  currentUser (state) {
-    if (!state.session) {
-      return {}
-    }
-    return state.session.user
+  return foundUsers
+}
+
+const themes = (state) => {
+  const foundThemes = cloneDeep(state.themes)
+
+  foundThemes.forEach((theme, index) => {
+    theme.user = find(state.users, {
+      '_id': theme.user._id
+    })
+  })
+
+  return foundThemes
+}
+
+const actionErrors = (state) => {
+  return state.actionErrors
+}
+
+const session = (state) => {
+  return state.session
+}
+
+const loading = (state) => {
+  return state.loading
+}
+
+const currentUser = (state) => {
+  if (!state.session) {
+    return {}
   }
+
+  const user = find(state.users, {
+    '_id': state.session.user._id
+  })
+
+  return user
+}
+
+export default {
+  users,
+  themes,
+  actionErrors,
+  session,
+  loading,
+  currentUser
 }
