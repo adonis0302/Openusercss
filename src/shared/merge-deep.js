@@ -7,13 +7,22 @@ export default (source, key, ...newDataArgs) => {
   if (!(source instanceof Array)) {
     throw new Error(`Source must be of type Array, got ${typeof source}: ${JSON.stringify(source)}`)
   }
+  if (typeof key !== 'string') {
+    throw new Error(`Source must be of type String, got ${typeof key}: ${JSON.stringify(key)}`)
+  }
+  if (newDataArgs.length === 0) {
+    throw new Error(`No new data is provided, got ${typeof newDataArgs}: ${JSON.stringify(newDataArgs)}`)
+  }
   newDataArgs.forEach((newDatas) => {
     if (!(newDatas instanceof Array)) {
       throw new Error(`Each data argument must be of type Array, got ${typeof newDatas}: ${JSON.stringify(newDatas)}`)
     }
     newDatas.forEach((newData) => {
       if (!(newData instanceof Object)) {
-        throw new Error(`Each data must be of type Object, got ${typeof newDatas}: ${JSON.stringify(newData)}`)
+        throw new Error(`Each data must be of type Object, got ${typeof newData}: ${JSON.stringify(newData)}`)
+      }
+      if (Object.keys(newData).length === 0) {
+        throw new Error(`Each data must be non-empty, got ${JSON.stringify(newData)}`)
       }
     })
   })
