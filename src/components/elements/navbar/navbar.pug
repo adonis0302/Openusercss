@@ -16,9 +16,9 @@ div
       navbar-menu(:class="['navbar-menu', 'is-primary', {'is-active': open}]")
         navbar-start
         navbar-end(@click="close")
-          router-link(v-if="session", :to="'/profile/' + session.user._id").navbar-item
+          router-link(v-if="session", :to="'/profile/' + currentUser._id").navbar-item
             icon(icon="account")
-            | Welcome, {{session.user.displayname}}
+            | Welcome, {{currentUser.displayname}}
           a(v-if="session", @click.prevent="logout").navbar-item
             icon(icon="logout")
             | Log out

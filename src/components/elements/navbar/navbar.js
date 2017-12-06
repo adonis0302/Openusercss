@@ -34,11 +34,11 @@ export default {
   },
   data () {
     return {
-      'open': false,
-      'fps':  60
+      'open': false
     }
   },
   'computed': mapGetters([
-    'session'
+    'session',
+    'currentUser'
   ])
 }
