@@ -18,7 +18,8 @@
     "prod": "npm run clean && npm run build:prod",
     "fast": "npm run clean && npm run build:fast",
     "watch": "nodemon --delay 0.25 --watch package.json --watch tasks --watch gulpfile.babel.js --exec 'npm run clean && npm run watch:dirty'",
-    "release": "git stash -u && npm run prod && docker build .; git stash apply",
+    "buildpush": "npm run prod && docker build . -t decentm/openusercss && docker push decentm/openusercss",
+    "release": "git stash -u && npm run buildpush; git stash apply",
     "test": "ava test/*.js",
     "commit": "git-cz"
   },
