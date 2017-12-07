@@ -1,6 +1,6 @@
 import {Document, EmbeddedDocument} from 'camo'
 import moment from 'moment'
-import {pullAllBy} from 'lodash'
+import {findIndex} from 'lodash'
 
 import validators from './validators'
 import User from './user'
@@ -46,10 +46,11 @@ export default class Theme extends Document {
     const user = await User.findOne({
       '_id': this.user._id
     })
-
-    user.themes = pullAllBy(user.themes, {
+    const themeIndex = findIndex(user.themes, {
       '_id': this._id
-    }, '_id')
+    })
+
+    user.themes.pop(themeIndex, 1)
     return user.save()
   }
 

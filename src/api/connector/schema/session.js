@@ -33,6 +33,18 @@ export default class Session extends Document {
         'unique':   true,
         'valiade':  validators.regex('jwt')
       },
+      'ip': {
+        'type':     String,
+        'required': true,
+        'unique':   false,
+        'validate': validators.regex('ip')
+      },
+      'ua': {
+        'type':     String,
+        'required': true,
+        'unique':   false,
+        'validate': validators.length(512)
+      },
       'user': User
     })
   }

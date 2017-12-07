@@ -55,6 +55,8 @@ validators.user = struct({
 validators.session = struct({
   '__typename': 'string?',
   'token':      'string',
+  'ip':         'string',
+  'ua':         'string',
   'user':       validators.reference('User')
 }, {
   '__typename': 'Session'
@@ -145,27 +147,9 @@ export default {
       '_id': id
     })
 
-    state.themes.splice(index, 1)
-    state.users[userIndex].themes.splice(userThemeIndex, 1)
+    state.themes.pop(index, 1)
+    state.users[userIndex].themes.pop(userThemeIndex, 1)
   },
-
-  /* saveNewTheme (state, rawTheme) {
-    const theme = validators.theme(rawTheme)
-
-    state.themes.forEach((stateTheme, index) => {
-      if (stateTheme._id === theme._id) {
-        state.themes[index] = defaultsDeep(theme, state.themes[index])
-      } else {
-        state.themes.unshift(theme)
-      }
-    })
-
-    const userIndex = find(state.users, {
-      '_id': theme.user._id
-    })
-
-    state.users[userIndex].themes.push(theme)
-  }, */
 
   loading (state, isLoading) {
     if (typeof isLoading !== 'boolean') {

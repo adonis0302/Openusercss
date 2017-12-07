@@ -20,6 +20,8 @@ const typeDefs = `
     token:     String!
     expiresAt: String!
     createdAt: String!
+    ip:        String!
+    ua:        String!
   }
 
   type Theme {

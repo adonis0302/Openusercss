@@ -11,6 +11,8 @@ test('login - sets session in state from null', (t) => {
   // eslint-disable-next-line no-undefined
   state.session = undefined
   expected.session = {
+    'ip':    '172.16.22.12',
+    'ua':    'curl/5.0',
     'token': 'viD4aigh1ke7eej7ow6Raogu8u',
     'user':  {
       '_id': '5a262a2c3835ee7627db2ef9'
@@ -18,6 +20,8 @@ test('login - sets session in state from null', (t) => {
   }
 
   mutations.login(state, {
+    'ip':    '172.16.22.12',
+    'ua':    'curl/5.0',
     'token': 'viD4aigh1ke7eej7ow6Raogu8u',
     'user':  {
       '_id': '5a262a2c3835ee7627db2ef9'
@@ -32,6 +36,8 @@ test('login - sets session in state from other', (t) => {
 
   state.session = []
   expected.session = {
+    'ip':    '172.16.22.12',
+    'ua':    'curl/5.0',
     'token': 'viD4aigh1ke7eej7ow6Raogu8u',
     'user':  {
       '_id': '5a262a2c3835ee7627db2ef9'
@@ -39,6 +45,8 @@ test('login - sets session in state from other', (t) => {
   }
 
   mutations.login(state, {
+    'ip':    '172.16.22.12',
+    'ua':    'curl/5.0',
     'token': 'viD4aigh1ke7eej7ow6Raogu8u',
     'user':  {
       '_id': '5a262a2c3835ee7627db2ef9'
@@ -53,12 +61,16 @@ test('login - overrides session in state', (t) => {
 
   expected.session = {
     'token': 'viD4aigh1ke7eej7ow6Raogu8u',
+    'ip':    '172.16.22.12',
+    'ua':    'curl/5.0',
     'user':  {
       '_id': '5a262a2c3835ee7627db2ef9'
     }
   }
 
   mutations.login(state, {
+    'ip':    '172.16.22.12',
+    'ua':    'curl/5.0',
     'token': 'viD4aigh1ke7eej7ow6Raogu8u',
     'user':  {
       '_id': '5a262a2c3835ee7627db2ef9'

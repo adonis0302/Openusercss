@@ -7,7 +7,7 @@ import bcrypt from 'bcryptjs'
 const {AuthenticationError} = expected
 const invalidCreds = 'Invalid credentials'
 
-export default async (root, {email, password}, {User, Session}) => {
+export default async (root, {email, password}, {User, Session, headers, connection}) => {
   const config = await staticConfig()
   const requestedUser = await User.findOne({
     email
@@ -37,6 +37,8 @@ export default async (root, {email, password}, {User, Session}) => {
     'user':      requestedUser,
     'expiresAt': moment().add(60, 'days').toJSON(),
     'createdAt': moment().toJSON(),
+    'ua':        headers['user-agent'],
+    'ip':        headers['x-forwarded-for'] || connection.remoteAddress,
     token
   })
 

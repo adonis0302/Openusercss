@@ -12,7 +12,7 @@ const expressRouter = express.Router
 const setupRoutes = async () => {
   const config = await staticConfig()
   const router = expressRouter()
-  const context = await connectMongo()
+  const db = await connectMongo()
 
   if (config.get('env') === 'development') {
     router.use('/graphiql', graphiqlExpress({
@@ -22,10 +22,13 @@ const setupRoutes = async () => {
 
   router.use('/theme/:id.user.css', themeCdnHandler)
 
-  router.use('/', bodyParser.json(), graphqlExpress({
-    context,
+  router.use('/', bodyParser.json(), graphqlExpress((req, res, next) => ({
+    'context': {
+      ...req,
+      ...db
+    },
     schema
-  }))
+  })))
 
   return router
 }

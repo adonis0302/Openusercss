@@ -12,6 +12,8 @@ const remoteLogin = async ({email, password}) => {
     mutation {
       login(email: "${email}", password: "${password}") {
         token,
+        ip,
+        ua,
         user {
           themes {
             _id,
@@ -54,6 +56,8 @@ export default async ({commit}, authData) => {
 
     commit('login', {
       'token': login.token,
+      'ip':    login.ip,
+      'ua':    login.ua,
       'user':  {
         '_id': login.user._id
       }

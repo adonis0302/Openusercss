@@ -6,6 +6,8 @@ export default {
   'session': {
     '_schema':    {},
     '__typename': 'Session',
+    'ip':         '172.16.44.23',
+    'ua':         'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
     'token':      'kou7BueghaeHiehaetunahch8e',
     'user':       {
       '_schema':    {},
