@@ -8,7 +8,7 @@ div
           span OpenUserCSS
           .spacer
           b-tag(is-secondary)
-            | Pre-alpha!
+            | Alpha!
         navbar-burger(@click="toggleOpen")
           span
           span
@@ -31,7 +31,7 @@ div
           router-link(v-if="!session", to="/register").navbar-item
             icon(icon="account-plus")
             | Register
-          router-link(to="/browse").navbar-item
+          //- router-link(to="/browse").navbar-item
             icon(icon="folder-multiple")
             | Browse
           a(href="//forums.openusercss.org").navbar-item

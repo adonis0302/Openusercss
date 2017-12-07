@@ -27,16 +27,17 @@ export default async (root, {token, title, description, content, scope, version,
     newTheme = await Theme.findOne({
       '_id': id
     })
+    const userOwnsTheme = session.user._id.equals(newTheme.user._id)
+
+    if (!newTheme || !userOwnsTheme) {
+      throw new Error('No theme found')
+    }
 
     newTheme.title = title
     newTheme.description = description
     newTheme.version = version
     newTheme.scope = scope
     newTheme.content = content
-
-    if (!newTheme) {
-      throw new Error('No theme found')
-    }
   } else {
     newTheme = Theme.create({
       'user': session.user,
