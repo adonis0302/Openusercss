@@ -14,7 +14,7 @@ export const inProd = () => {
   return true
 }
 
-// Delete ourselve from the require cache, so that different processes
+// Delete ourselves from the require cache, so that different processes
 // can have different configs
 if (require.cache) {
   Reflect.deleteProperty(require.cache, __filename)
@@ -35,8 +35,8 @@ let defaultConfig = {
   'domain':     'openusercss.org',
   'saltRounds': 15,
   'database':   {
-    'main':  'mongodb://localhost:27017/openusercss-main',
-    'brute': 'mongodb://localhost:27017/openusercss-brute'
+    'main':  `mongodb://${process.env.MONGODB_HOST}:27017/openusercss-main`,
+    'brute': `mongodb://${process.env.MONGODB_HOST}:27017/openusercss-brute`
   }
 }
 
