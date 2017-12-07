@@ -1,20 +1,12 @@
-import gql from 'graphql-tag'
 import {apolloClient} from '.'
+import {verifyToken as query} from './queries'
 
 const verify = async (token) => {
-  const query = gql(`{
-    verifyToken(token: "${token}") {
-      user {
-        _id
-      },
-      token
-    }
-  }`)
   let result = null
 
   try {
     result = await apolloClient.query({
-      query
+      'query': query({token})
     })
   } catch (error) {
     result = false
@@ -40,10 +32,16 @@ export default async ({commit, getters}) => {
     if (!verifyToken) {
       commit('logout')
     } else {
-      commit('users', [
-        {
+      commit('login', {
+        'token': verifyToken.token,
+        'ip':    verifyToken.ip,
+        'ua':    verifyToken.ua,
+        'user':  {
           '_id': verifyToken.user._id
         }
+      })
+      commit('users', [
+        verifyToken.user
       ])
     }
   } catch (error) {

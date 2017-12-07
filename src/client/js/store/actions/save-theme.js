@@ -67,9 +67,6 @@ export default async ({commit, getters}, {readyTheme, redirect}) => {
     const {data} = await createTheme(readyTheme, getters.session.token)
     const {theme} = data
 
-    commit('themes', [
-      defaultsDeep(theme, readyTheme)
-    ])
     commit('users', [
       {
         '_id':    theme.user._id,
@@ -79,6 +76,10 @@ export default async ({commit, getters}, {readyTheme, redirect}) => {
           }
         ]
       }
+    ])
+    Reflect.deleteProperty(theme.user, 'themes')
+    commit('themes', [
+      defaultsDeep(theme, readyTheme)
     ])
     commit('actionError', null)
     router.push(redirect)
