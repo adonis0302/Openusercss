@@ -1,31 +1,14 @@
-import gql from 'graphql-tag'
+import {pick} from 'lodash'
 import {ExpectedError} from '../../../../shared/custom-errors'
 import {apolloClient} from '.'
+import {theme as query} from './queries'
 
 const getFullTheme = async (id) => {
-  const query = gql(`
-    query {
-      theme(id: "${id}") {
-        user {
-          _id
-        },
-        _id,
-        title,
-        description,
-        content,
-        createdAt,
-        lastUpdate,
-        rating,
-        scope,
-        version
-      }
-    }
-  `)
   let user = null
 
   try {
     user = await apolloClient.query({
-      query
+      'query': query({id})
     })
   } catch (error) {
     throw new ExpectedError({
@@ -40,10 +23,27 @@ export default async ({commit, getters}, id) => {
   commit('loading', true)
 
   try {
-    const result = await getFullTheme(id)
+    const {data} = await getFullTheme(id)
+    const {theme} = data
+    const user = pick(theme.user, [
+      '_id'
+    ])
+    const preparedTheme = pick(theme, [
+      '__typename',
+      '_id',
+      'content',
+      'createdAt',
+      'description',
+      'lastUpdate',
+      'rating',
+      'scope',
+      'title',
+      'version'
+    ])
 
+    preparedTheme.user = user
     commit('themes', [
-      result.data.theme
+      preparedTheme
     ])
     commit('actionError', null)
   } catch (error) {

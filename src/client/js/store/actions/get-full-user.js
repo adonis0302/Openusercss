@@ -1,36 +1,14 @@
-import gql from 'graphql-tag'
 import {cloneDeep} from 'lodash'
 import {ExpectedError} from '../../../../shared/custom-errors'
 import {apolloClient} from '.'
+import {user as query} from './queries'
 
 const getFullUser = async (id) => {
-  const userQuery = gql(`
-    query {
-      user(id: "${id}") {
-        themes {
-          _id,
-          title,
-          description,
-          createdAt,
-          lastUpdate,
-          scope,
-          rating
-        },
-        _id,
-        displayname,
-        username,
-        avatarUrl,
-        smallAvatarUrl,
-        lastSeen,
-        lastSeenReason
-      }
-    }
-  `)
   let user = null
 
   try {
     user = await apolloClient.query({
-      'query': userQuery
+      'query': query({id})
     })
   } catch (error) {
     throw new ExpectedError({

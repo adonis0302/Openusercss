@@ -1,31 +1,15 @@
-import gql from 'graphql-tag'
 import {pick} from 'lodash'
 
 import {ExpectedError} from '../../../../shared/custom-errors'
 import {apolloClient} from '.'
+import {latestThemes as query} from './queries'
 
 const getLatestThemes = async (limit) => {
-  const query = gql(`
-    query {
-      latestThemes(limit: ${limit}) {
-        user {
-          _id,
-          displayname
-        },
-        _id,
-        title,
-        description,
-        lastUpdate,
-        createdAt,
-        scope
-      }
-    }
-  `)
   let themes = null
 
   try {
     themes = await apolloClient.query({
-      query
+      'query': query({limit})
     })
   } catch (error) {
     throw new ExpectedError({
