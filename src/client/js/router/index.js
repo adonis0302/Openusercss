@@ -7,16 +7,13 @@ import registerRoute from '../../../../.tmp/pages/register/register.vue'
 import profileRoute from '../../../../.tmp/pages/profile/profile.vue'
 import themeEditorRoute from '../../../../.tmp/pages/edit-theme/edit-theme.vue'
 import themeRoute from '../../../../.tmp/pages/theme/theme.vue'
+import contactRoute from '../../../../.tmp/pages/contact/contact.vue'
 
 import notFoundRoute from '../../../../.tmp/pages/not-found/not-found.vue'
 
 const router = new VueRouter({
   'mode':   'history',
   'routes': [
-    {
-      'path':      '*',
-      'component': notFoundRoute
-    },
     {
       'path':      '/',
       'component': indexRoute
@@ -34,6 +31,10 @@ const router = new VueRouter({
       'component': browseRoute
     },
     {
+      'path':      '/contact',
+      'component': contactRoute
+    },
+    {
       'path':      '/profile/:id',
       'component': profileRoute
     },
@@ -44,6 +45,10 @@ const router = new VueRouter({
     {
       'path':      '/theme/:id',
       'component': themeRoute
+    },
+    {
+      'path':      '*',
+      'component': notFoundRoute
     }
   ]
 })
