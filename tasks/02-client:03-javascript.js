@@ -39,7 +39,7 @@ gulp.task('client:js:prod', () => {
       'entries': [
         entry
       ],
-      'debug':  true,
+      'debug':  false,
       'target': 'browser'
     }
 
