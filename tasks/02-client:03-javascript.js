@@ -5,7 +5,6 @@ import source from 'vinyl-source-stream'
 import pwaManifest from 'pwa-manifest'
 import path from 'path'
 import prettyError from 'gulp-prettyerror'
-import es3ify from 'gulp-es3ify'
 import gutil from 'gulp-util'
 import flatten from 'gulp-flatten'
 import buffer from 'gulp-buffer'
@@ -68,7 +67,6 @@ gulp.task('client:js:prod', () => {
         'mangle':   true,
         'compress': true
       }),
-      es3ify(),
       flatten(),
       gulp.dest(destination())
     ])
