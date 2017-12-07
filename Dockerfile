@@ -11,11 +11,11 @@ COPY ./entrypoint.sh /ouc/entrypoint.sh
 COPY ./.npmrc /ouc/.npmrc
 
 RUN chmod 555 /ouc/entrypoint.sh
-RUN "/ouc/entrypoint.sh install"
-
+RUN cd /ouc && npm i --only=production
 RUN apk del python make g++ krb5-dev
 
 EXPOSE 5001/tcp
 EXPOSE 5011/tcp
 
 CMD ["ash", "/ouc/entrypoint.sh"]
+

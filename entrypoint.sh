@@ -2,10 +2,5 @@
 set -e
 
 cd /ouc
+NODE_ENV=production node manager.js
 
-if [ $1 = "install" ]; then
-  npm i --only=production
-else
-  npm i --only=production
-  NODE_ENV=production node manager.js
-fi
