@@ -5,7 +5,6 @@ import vuemaker from 'gulp-vuemaker'
 import manifold from 'gulp-manifold'
 import sass from 'gulp-sass'
 import pug from 'gulp-pug'
-import emailEncoder from 'gulp-email-encoder'
 import sassGlob from 'gulp-sass-glob'
 import sassVars from 'gulp-sass-vars'
 import htmlmin from 'gulp-htmlmin'
@@ -76,7 +75,6 @@ gulp.task('shared:components:prod', (done) => {
           prettyError(),
           stream,
           pug(pugOptions),
-          emailEncoder(),
           htmlmin({
             'collapseWhitespace': true,
             'minifyCss':          true,
@@ -176,7 +174,6 @@ gulp.task('shared:pages:prod', (done) => {
           prettyError(),
           stream,
           pug(pugOptions),
-          emailEncoder(),
           htmlmin({
             'collapseWhitespace': true,
             'minifyCss':          true,
