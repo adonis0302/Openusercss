@@ -11,6 +11,8 @@ export default async (root, {email, password}, {User, Session, headers, connecti
   const config = await staticConfig()
   const requestedUser = await User.findOne({
     email
+  }, {
+    'populate': true
   })
 
   let authResult = null
@@ -44,7 +46,7 @@ export default async (root, {email, password}, {User, Session, headers, connecti
 
   requestedUser.lastSeen = moment().toJSON()
   requestedUser.lastSeenReason = 'logging in'
-  requestedUser.save()
 
+  await requestedUser.save()
   return newSession.save()
 }
