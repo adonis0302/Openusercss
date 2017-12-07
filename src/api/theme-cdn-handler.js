@@ -69,7 +69,6 @@ export const buildTheme = async (rawTheme) => {
   ])
 
   const theme = validators.theme(builtTheme)
-
   let response = '/* ==userstyle==\n'
 
   response = `${response}@name ${theme.title}\n`
@@ -97,9 +96,12 @@ export default async (req, res, next) => {
     res.send(theme)
   } else {
     res.type('json')
+    res.status('404')
     res.send({
+      'data':   null,
       'errors': [
         {
+          'code':    'ENOTFOUND',
           'message': 'No theme found',
           'id':      req.params.id
         }
