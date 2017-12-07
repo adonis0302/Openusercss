@@ -53,6 +53,10 @@ if (!inProd()) {
       'frontend': {
         'http': 5010
       }
+    },
+    'database': {
+      'main':  'mongodb://localhost:27017/openusercss-main',
+      'brute': 'mongodb://localhost:27017/openusercss-brute'
     }
   }, defaultConfig)
 }
