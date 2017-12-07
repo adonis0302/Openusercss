@@ -7,5 +7,5 @@ if [ $1 = "install" ]; then
   npm i --only=production
 else
   npm i --only=production
-  node manager.js
+  NODE_ENV=production node manager.js
 fi

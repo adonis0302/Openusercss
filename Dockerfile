@@ -11,7 +11,7 @@ COPY ./entrypoint.sh /ouc/entrypoint.sh
 COPY ./.npmrc /ouc/.npmrc
 
 RUN chmod 555 /ouc/entrypoint.sh
-RUN /ouc/entrypoint.sh install
+RUN "/ouc/entrypoint.sh install"
 
 RUN apk del python make g++ krb5-dev
 
