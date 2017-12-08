@@ -9,7 +9,11 @@ const verify = async (token) => {
       'query': query({token})
     })
   } catch (error) {
-    result = false
+    result = {
+      'data': {
+        'verifyToken': false
+      }
+    }
   }
 
   return result
