@@ -37,11 +37,16 @@ const typeDefs = `
     version:     String!
   }
 
+  type Results {
+    users:  [User]
+    themes: [Theme]
+  }
+
   type Query {
     verifyToken(token: String!): Session!
     theme(id: ID!): Theme!
     user(id: ID!): User!
-    search(terms: String!, count: Int, offset: Int): [Theme]!
+    search(terms: String!, limit: Int, skip: Int): Results!
     latestThemes(limit: Int): [Theme]!
   }
 
@@ -49,8 +54,16 @@ const typeDefs = `
     register(displayname: String!, email: String!, password: String!): User!
     login(email: String!, password: String!): Session!
     logout(token: String!): Boolean!
-    theme(token: String!, id: ID, title: String!, description: String!, content: String!, scope: String!, version: String!): Theme!
     deleteTheme(token: String!, id: ID!): Boolean!
+    theme(
+      token: String!,
+      id: ID,
+      title: String!,
+      description: String!,
+      content: String!,
+      scope: String!,
+      version: String!
+    ): Theme!
   }
 `
 
