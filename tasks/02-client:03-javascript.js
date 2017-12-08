@@ -38,7 +38,8 @@ gulp.task('client:js:prod', () => {
       'entries': [
         entry
       ],
-      'debug': false
+      'debug':  false,
+      'target': 'browser'
     }
 
     if (entry.indexOf('server') !== -1) {
