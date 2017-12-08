@@ -27,7 +27,7 @@ div
               a(href="//forums.openusercss.org/category/6/openusercss-org", target="_blank")
                 | https://forums.openusercss.org/category/6/openusercss-org
           li
-            p
+            p.is-inline
               | If you need to message me privately for other reasons, my email is&nbsp;
-              a(:href="'mailto:' + email") {{email}}
+              p.is-inline.is-unselectable(:class="[{'has-text-reversed': showing}]") {{email}}
   attributor
