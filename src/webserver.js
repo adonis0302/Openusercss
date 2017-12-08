@@ -22,6 +22,10 @@ const templatePath = path.join(basePath, '/views/index.template.pug')
 
 const init = async () => {
   const app = express()
+
+  app.enable('trust proxy')
+  app.set('trust proxy', true)
+
   const config = await staticConfig()
   const clientBuffer = await pify(fs.readFile)(clientPath)
   const client = clientBuffer.toString()

@@ -21,6 +21,9 @@ const init = async () => {
   const app = express()
   const config = await staticConfig()
 
+  app.enable('trust proxy')
+  app.set('trust proxy', true)
+
   app.set('env', config.get('env'))
   app.use(corser.create())
   app.use(await setupRoutes())

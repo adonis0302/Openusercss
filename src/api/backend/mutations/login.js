@@ -40,7 +40,7 @@ export default async (root, {email, password}, {User, Session, headers, connecti
     'expiresAt': moment().add(60, 'days').toJSON(),
     'createdAt': moment().toJSON(),
     'ua':        headers['user-agent'],
-    'ip':        headers['x-forwarded-for'] || connection.remoteAddress,
+    'ip':        connection.remoteAddress,
     token
   })
 
