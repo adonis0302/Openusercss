@@ -47,6 +47,7 @@ export default async ({commit, getters}, id) => {
     ])
     commit('actionError', null)
   } catch (error) {
+    commit('deleteTheme', id)
     commit('actionError', error)
   }
 
