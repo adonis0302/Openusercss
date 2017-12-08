@@ -11,10 +11,12 @@ const users = (state) => {
     const userThemes = []
 
     if (user.themes) {
-      user.themes.forEach((themeObj) => {
-        userThemes.push(find(state.themes, {
-          '_id': themeObj._id
-        }))
+      state.themes.forEach((themeObj) => {
+        user.themes.forEach((userTheme) => {
+          if (userTheme._id === themeObj._id) {
+            userThemes.push(themeObj)
+          }
+        })
       })
     }
 
