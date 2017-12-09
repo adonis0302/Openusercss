@@ -8,8 +8,6 @@ import gutil from 'gulp-util'
 import flatten from 'gulp-flatten'
 import buffer from 'gulp-buffer'
 import sourcemaps from 'gulp-sourcemaps'
-import minify from 'gulp-minify'
-import optimize from 'gulp-optimize-js'
 import watchify from 'watchify'
 import path from 'path'
 
