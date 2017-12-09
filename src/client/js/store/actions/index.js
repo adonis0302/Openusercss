@@ -12,12 +12,18 @@ import getLatestThemes from './get-latest-themes'
 import search from './search'
 
 let networkInterface = createBatchingNetworkInterface({
-  'uri': 'https://api.openusercss.org'
+  'uri': 'http://localhost:5000'
 })
 
-if (process.env.NODE_ENV === 'development') {
+if (process.browser && window.location.protocol === 'https:') {
   networkInterface = createBatchingNetworkInterface({
-    'uri': 'http://localhost:5000'
+    'uri': 'https://localhost:5001'
+  })
+}
+
+if (process.browser && window.location.host.match(/openusercss/g)) {
+  networkInterface = createBatchingNetworkInterface({
+    'uri': 'https://api.openusercss.org'
   })
 }
 
