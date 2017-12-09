@@ -8,7 +8,8 @@ export default async (root, {terms, limit = 10, skip = 0}, {Theme, User}) => {
       '$search': terms
     }
   }, {
-    'sort': '-score',
+    'populate': true,
+    'sort':     '-score',
     limit,
     skip
   })
@@ -17,7 +18,8 @@ export default async (root, {terms, limit = 10, skip = 0}, {Theme, User}) => {
       '$search': terms
     }
   }, {
-    'sort': '-score',
+    'populate': true,
+    'sort':     '-score',
     limit,
     skip
   })
