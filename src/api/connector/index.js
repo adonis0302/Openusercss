@@ -18,15 +18,13 @@ const init = async () => {
       {
         'title':       'text',
         'description': 'text',
-        'scope':       'text',
         'content':     'text'
       },
       {
         'weights': {
-          'title':       10,
-          'description': 6,
-          'scope':       4,
-          'content':     2
+          'title':       3,
+          'description': 2,
+          'content':     1
         }
       }
     ],
@@ -37,22 +35,20 @@ const init = async () => {
       },
       {
         'weights': {
-          'displayname': 1,
+          'displayname': 2,
           'username':    1
         }
       }
     ]
   }
 
-  try {
-    forOwn(indexes, (value, key) => {
-      camo.getClient().driver().ensureIndex(key, value[0], value[1])
-    })
-  } catch (error) {
-    forOwn(indexes, (value, key) => {
-      camo.getClient().driver().createIndex(key, value[0], value[1])
-    })
-  }
+  forOwn(await camo.getClient().driver().collections(), (value) => {
+    value.dropIndexes()
+  })
+
+  forOwn(indexes, (value, key) => {
+    camo.getClient().driver().ensureIndex(key, value[0], value[1])
+  })
 
   log.info('API database connection established')
 }
