@@ -9,7 +9,7 @@ toolbox.precache([
   '/',
   '/login',
   '/register',
-  '/browse',
+  '/search',
   '/img/image-error-x128.png',
   '/img/main.bg-x128.png',
   '/img/openusercss.icon-x16.png'
