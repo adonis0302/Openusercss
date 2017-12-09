@@ -45,14 +45,6 @@ gulp.task('server:prod', (done) => {
       bify.bundle(),
       source(entry),
       buffer(),
-      minify({
-        'ext': {
-          'src': '.js',
-          'min': '.js'
-        },
-        'noSource': true,
-        'mangle':   false
-      }),
       flatten(),
       gulp.dest(destination())
     ])
