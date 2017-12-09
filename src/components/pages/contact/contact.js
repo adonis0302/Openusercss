@@ -16,14 +16,14 @@ export default {
   mounted () {
     setTimeout(() => {
       this.showing = true
-      this.email = decode(this.encodedEmail).split('').reverse().join('')
+      this.email = decode(this.encodedEmail)
     }, 2500)
   },
   data () {
     return {
       'showing':      false,
       'email':        '(please wait...)',
-      'encodedEmail': '&#x64;&#x65;&#x63;&#x65;&#x6E;&#x74;&#x6D;&#x40;&#x64;&#x65;&#x63;&#x65;&#x6E;&#x74;&#x6D;&#x2E;&#x63;&#x6F;&#x6D;'
+      'encodedEmail': '&#x6D;&#x6F;&#x63;&#x2E;&#x6D;&#x74;&#x6E;&#x65;&#x63;&#x65;&#x64;&#x40;&#x6D;&#x74;&#x6E;&#x65;&#x63;&#x65;&#x64;'
     }
   }
 }
