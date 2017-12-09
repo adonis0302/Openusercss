@@ -9,6 +9,7 @@ import deleteTheme from './delete-theme'
 import getFullUser from './get-full-user'
 import getFullTheme from './get-full-theme'
 import getLatestThemes from './get-latest-themes'
+import search from './search'
 
 let networkInterface = createBatchingNetworkInterface({
   'uri': 'https://api.openusercss.org'
@@ -33,5 +34,6 @@ export default {
   deleteTheme,
   getFullUser,
   getFullTheme,
-  getLatestThemes
+  getLatestThemes,
+  search
 }

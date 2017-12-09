@@ -1,23 +1,5 @@
 import {pick} from 'lodash'
-import {ExpectedError} from '../../../../shared/custom-errors'
-import {apolloClient} from '.'
-import {theme as query} from './queries'
-
-const getFullTheme = async (id) => {
-  let user = null
-
-  try {
-    user = await apolloClient.query({
-      'query': query({id})
-    })
-  } catch (error) {
-    throw new ExpectedError({
-      'message': error.message
-    })
-  }
-
-  return user
-}
+import {getFullTheme} from './helpers/remotes/queries'
 
 export default async ({commit, getters}, id) => {
   commit('loading', true)

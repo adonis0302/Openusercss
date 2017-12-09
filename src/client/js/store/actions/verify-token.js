@@ -1,23 +1,4 @@
-import {apolloClient} from '.'
-import {verifyToken as query} from './queries'
-
-const verify = async (token) => {
-  let result = null
-
-  try {
-    result = await apolloClient.query({
-      'query': query({token})
-    })
-  } catch (error) {
-    result = {
-      'data': {
-        'verifyToken': false
-      }
-    }
-  }
-
-  return result
-}
+import {verifyToken as verifyTokenRemote} from './helpers/remotes/queries'
 
 export default async ({commit, getters}) => {
   commit('loading', true)
@@ -30,7 +11,7 @@ export default async ({commit, getters}) => {
       return false
     }
 
-    const {data} = await verify(session.token)
+    const {data} = await verifyTokenRemote(session.token)
     const {verifyToken} = data
 
     if (!verifyToken) {

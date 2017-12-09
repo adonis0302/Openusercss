@@ -1,51 +1,6 @@
-import gql from 'graphql-tag'
 import {cloneDeep} from 'lodash'
-
 import router from '../../router'
-import {expected} from '../../../../shared/custom-errors'
-import {apolloClient} from '.'
-
-const {AuthenticationError} = expected
-
-const remoteLogin = async ({email, password}) => {
-  const mutation = gql(`
-    mutation {
-      login(email: "${email}", password: "${password}") {
-        token,
-        ip,
-        ua,
-        user {
-          themes {
-            _id,
-            title,
-            description,
-            createdAt,
-            lastUpdate,
-            rating
-          },
-          _id,
-          displayname,
-          username,
-          avatarUrl,
-          smallAvatarUrl,
-          lastSeen,
-          lastSeenReason
-        }
-      }
-    }
-  `)
-  let session = null
-
-  try {
-    session = await apolloClient.mutate({
-      mutation
-    })
-  } catch (error) {
-    throw new AuthenticationError(error.message)
-  }
-
-  return session
-}
+import {remoteLogin} from './helpers/remotes/mutations'
 
 export default async ({commit}, authData) => {
   commit('loading', true)
@@ -96,24 +51,6 @@ export default async ({commit}, authData) => {
       }
     ])
 
-    /* const user = pick(login.user, [
-      '_id',
-      'displayname',
-      'username',
-      'avatarUrl',
-      'smallAvatarUrl',
-      'lastSeen',
-      'lastSeenReason'
-    ])
-
-    user.themes = []
-    login.user.themes.forEach((theme) => {
-      user.themes.push(theme._id)
-    })
-
-    commit('users', [
-      user
-    ]) */
     commit('actionError', null)
     router.push('/')
   } catch (error) {

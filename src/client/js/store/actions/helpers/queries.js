@@ -66,3 +66,22 @@ export const latestThemes = ({limit}) => gql(`
     }
   }
 `)
+
+export const search = ({terms, limit, skip}) => gql(`
+  query {
+    search(terms: "${terms}", limit: ${limit}, skip: ${skip}) {
+      users {
+        ${userPropList}
+        themes {
+          ${themePropList}
+        }
+      },
+      themes {
+        ${themePropList}
+        user {
+          ${userPropList}
+        }
+      }
+    }
+  }
+`)

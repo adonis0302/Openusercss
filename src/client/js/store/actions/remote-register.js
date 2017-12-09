@@ -1,30 +1,5 @@
-import gql from 'graphql-tag'
-import log from 'chalk-console'
-
 import router from '../../router'
-import {apolloClient} from '.'
-
-const remoteRegister = async ({email, password, displayname}) => {
-  const mutation = gql(`
-    mutation {
-      register(displayname: "${displayname}", email: "${email}", password: "${password}") {
-        username
-      }
-    }
-  `)
-  let token = null
-
-  try {
-    token = await apolloClient.mutate({
-      mutation
-    })
-  } catch (error) {
-    log.error(error.message)
-    throw new Error(error.message)
-  }
-
-  return token
-}
+import {remoteRegister} from './helpers/remotes/mutations'
 
 export default async ({getters, commit}, registerData) => {
   commit('loading', true)

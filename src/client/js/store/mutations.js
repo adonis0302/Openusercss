@@ -72,21 +72,18 @@ export class IterableMutation {
 
       dataList.forEach((rawData, index) => {
         const data = validator(rawData)
+        const existing = find(state[stateProperty], {
+          '_id': data._id
+        })
 
-        if (data._id) {
-          const existing = find(state[stateProperty], {
+        if (!existing) {
+          state[stateProperty].unshift(data)
+        } else {
+          const existingIndex = findIndex(state[stateProperty], {
             '_id': data._id
           })
 
-          if (!existing) {
-            state[stateProperty].unshift(data)
-          } else {
-            const existingIndex = findIndex(state[stateProperty], {
-              '_id': data._id
-            })
-
-            state[stateProperty][existingIndex] = defaultsDeep(data, state[stateProperty][existingIndex])
-          }
+          state[stateProperty][existingIndex] = defaultsDeep(data, state[stateProperty][existingIndex])
         }
       })
     }
