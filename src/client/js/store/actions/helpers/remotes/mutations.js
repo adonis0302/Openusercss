@@ -1,5 +1,6 @@
 import gql from 'graphql-tag'
-import apolloClient from '../../'
+import {userPropList, themePropList} from '../queries'
+import {apolloClient} from '../../'
 import {expected} from '../../../../../../shared/custom-errors'
 
 const {AuthenticationError} = expected
@@ -13,20 +14,9 @@ export const remoteLogin = async ({email, password}) => {
         ua,
         user {
           themes {
-            _id,
-            title,
-            description,
-            createdAt,
-            lastUpdate,
-            rating
+            ${themePropList}
           },
-          _id,
-          displayname,
-          username,
-          avatarUrl,
-          smallAvatarUrl,
-          lastSeen,
-          lastSeenReason
+          ${userPropList}
         }
       }
     }

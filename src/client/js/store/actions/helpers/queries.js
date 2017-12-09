@@ -1,6 +1,6 @@
 import gql from 'graphql-tag'
 
-const themePropList = `
+export const themePropList = `
   _id,
   title,
   description,
@@ -12,7 +12,7 @@ const themePropList = `
   version
 `
 
-const userPropList = `
+export const userPropList = `
   _id,
   displayname,
   username,
