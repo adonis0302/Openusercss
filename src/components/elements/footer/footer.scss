@@ -14,7 +14,10 @@
 @import 'node_modules/bulma/sass/elements/content';
 
 .footer {
+  bottom: 0;
+  position: absolute;
   padding-bottom: 48px;
+  width: 100%;
 }
 
 @import '../../../client/scss/reboot';
