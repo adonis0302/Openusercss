@@ -14,6 +14,7 @@ import optimize from 'gulp-optimize-js'
 import watchify from 'watchify'
 import hmr from 'browserify-hmr'
 import merge from 'merge-stream'
+import walk from 'walk'
 
 import server from './shared/server'
 import {createBrowserify} from './shared/js'
@@ -170,7 +171,21 @@ gulp.task('client:js:watch', () => {
       })
     }
 
-    bify.on('update', bundle)
+    bify.on('update', (filename) => {
+      const walker = walk.walk(path.resolve(process.mainModule.paths[0], '../../../../.tmp'), {
+        'followLinks': false
+      })
+
+      walker.on('file', (root, stat, next) => {
+        Reflect.deleteProperty(bify._options.cache, `${root}/${stat.name}`)
+        next()
+      })
+
+      walker.on('end', () => {
+        bundle()
+      })
+    })
+
     bify.on('log', (content) => {
       gutil.log(`Client: ${content}`)
     })
