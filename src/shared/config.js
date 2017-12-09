@@ -4,7 +4,7 @@ import log from 'chalk-console'
 import cp from 'node-cp'
 import path from 'path'
 import selfsigned from 'selfsigned'
-import {defaultsDeep} from 'lodash'
+import {defaultsDeep, forOwn} from 'lodash'
 
 export const inProd = () => {
   if (process.env.NODE_ENV !== 'production') {
@@ -20,8 +20,13 @@ if (require.cache) {
   Reflect.deleteProperty(require.cache, __filename)
 }
 
-const appPath = path.resolve(process.mainModule.paths[0], '..')
+let mongodbHost = 'localhost'
 
+if (process.env.MONGODB_HOST) {
+  mongodbHost = process.env.MONGODB_HOST
+}
+
+const appPath = path.resolve(process.mainModule.paths[0], '..')
 let defaultConfig = {
   'env':   'production',
   'ports': {
@@ -35,10 +40,51 @@ let defaultConfig = {
   'domain':     'openusercss.org',
   'saltRounds': 15,
   'database':   {
-    'main':  `mongodb://${process.env.MONGODB_HOST}:27017/openusercss-main`,
-    'brute': `mongodb://${process.env.MONGODB_HOST}:27017/openusercss-brute`
+    'main': `mongodb://${mongodbHost}:27017/openusercss-main`
   }
 }
+
+const formatToJsonType = (data, toType) => {
+  const toArray = toType instanceof Array
+  let converted = null
+
+  switch (toArray || typeof toType) {
+  case 'string':
+    converted = String(data)
+    break
+  case 'object':
+    converted = JSON.parse(data) || Object(data)
+    break
+  case true:
+    converted = Array(data)
+    break
+  default:
+    break
+  }
+
+  return converted
+}
+
+forOwn(process.env, (envValue, envName) => {
+  const regexp = /^OUC(.*)/g
+  let found = envName.match(regexp)
+
+  if (found) {
+    let arrayValue = null
+
+    if (envValue.includes(',')) {
+      arrayValue = envValue.split(',')
+    }
+
+    found = found[0].split('_')[1]
+
+    forOwn(defaultConfig, (defaultValue, defaultName) => {
+      if (found === defaultName) {
+        config.set(defaultName, formatToJsonType(arrayValue || envValue, defaultConfig[defaultName]))
+      }
+    })
+  }
+})
 
 if (!inProd()) {
   log.warn('App in development mode, configuration is set to low security!')
@@ -53,10 +99,6 @@ if (!inProd()) {
       'frontend': {
         'http': 5010
       }
-    },
-    'database': {
-      'main':  'mongodb://localhost:27017/openusercss-main',
-      'brute': 'mongodb://localhost:27017/openusercss-brute'
     }
   }, defaultConfig)
 }
@@ -109,7 +151,7 @@ const initConfig = () => {
    */
 
   const secretsConfig = new Conf({
-    'cwd':         appPath,
+    'cwd':         path.join(appPath, 'data'),
     'configName':  'secrets',
     'projectName': 'opensuercss.org'
   })
@@ -136,7 +178,7 @@ const initConfig = () => {
 
   const conf = new Conf({
     'configName':    'config',
-    'cwd':           appPath,
+    'cwd':           path.join(appPath, 'data'),
     'encryptionKey': secretsConfig.get('configKey'),
     'defaults':      defaultConfig
   })
