@@ -20,6 +20,7 @@
     "watch": "nodemon --delay 0.25 --watch package.json --watch tasks --watch gulpfile.babel.js --exec 'npm run clean && npm run watch:dirty'",
     "buildpush": "npm run prod && docker build . -t decentm/openusercss && docker push decentm/openusercss",
     "release": "git stash -u && npm run buildpush; git stash apply",
+    "release:test": "npm run fast && docker build . -t decentm/openusercss",
     "test": "ava test/*.js",
     "commit": "git-cz"
   },
