@@ -114,9 +114,7 @@ export const remoteSaveTheme = async (theme, token) => {
       mutation
     })
   } catch (error) {
-    throw new AuthenticationError({
-      'message': error.message
-    })
+    throw new AuthenticationError(error.message)
   }
 
   return savedTheme
