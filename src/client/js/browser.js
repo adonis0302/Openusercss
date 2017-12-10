@@ -2,6 +2,7 @@
 import 'babel-polyfill'
 import FpsEmitter from 'fps-emitter'
 import {divide, sum} from 'lodash'
+import log from 'chalk-console'
 
 import VModal from 'vue-js-modal'
 import {
@@ -55,8 +56,12 @@ const main = async () => {
   })
 
   if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/worker.js')
+    await window.addEventListener('load', async () => {
+      try {
+        await navigator.serviceWorker.register('/worker.js')
+      } catch (error) {
+        log.error(error)
+      }
     })
   }
 }
