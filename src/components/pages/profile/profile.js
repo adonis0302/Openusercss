@@ -51,6 +51,7 @@ export default {
   },
   'computed': {
     ...mapGetters([
+      'currentUser',
       'actionErrors',
       'users',
       'themes'

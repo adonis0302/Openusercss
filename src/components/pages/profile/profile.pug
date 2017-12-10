@@ -8,7 +8,7 @@ div
         b-level
           b-level-left
             h1 Profile
-          b-level-right
+          b-level-right(v-if="currentUser && currentUser._id === viewedUser._id")
             b-tile(is-parent, is-paddingless)
               b-tile(is-child)
                 router-link.button.is-primary(to="/theme/edit/0") Upload new theme
@@ -52,7 +52,6 @@ div
                       b-column
                         h4 {{theme.title}}
                         br
-                        h6 For {{theme.scope}}
                         h6 Created {{theme.createdAt | moment('from', 'now')}}
                         h6(v-if="theme.createdAt !== theme.lastUpdate") Last updated {{theme.lastUpdate | moment('from', 'now')}}
                         //- hr
