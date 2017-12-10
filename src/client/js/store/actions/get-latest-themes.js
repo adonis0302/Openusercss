@@ -1,4 +1,4 @@
-import {pick} from 'lodash'
+import {cloneDeep} from 'lodash'
 import {getLatestThemes} from './helpers/remotes/queries'
 
 export default async ({commit, getters}, id) => {
@@ -8,13 +8,7 @@ export default async ({commit, getters}, id) => {
     const result = await getLatestThemes(id)
 
     result.data.latestThemes.forEach((theme) => {
-      const savedTheme = pick(theme, [
-        '_id',
-        'title',
-        'description',
-        'lastUpdate',
-        'createdAt'
-      ])
+      const savedTheme = cloneDeep(theme)
 
       savedTheme.user = {
         '_id': theme.user._id

@@ -36,8 +36,7 @@ export const theme = ({id}) => gql(`
   query {
     theme(id: "${id}") {
       user {
-        _id,
-        displayname
+        ${userPropList}
       },
       ${themePropList}
     }
