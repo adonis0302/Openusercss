@@ -8,7 +8,6 @@ export default async ({commit, getters}, {readyTheme, redirect}) => {
   readyTheme.content = readyTheme.content.replace(/[\n]/g, '\\n')
   readyTheme.content = readyTheme.content.replace(/[']/g, '\'')
   readyTheme.content = readyTheme.content.replace(/["]/g, '\\"')
-  readyTheme.scope = readyTheme.scope.replace(/\\/g, '\\\\')
 
   try {
     const {data} = await remoteSaveTheme(readyTheme, getters.session.token)

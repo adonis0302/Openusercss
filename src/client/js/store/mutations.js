@@ -1,4 +1,4 @@
-import {find, findIndex, defaultsDeep, uniq} from 'lodash'
+import {find, findIndex, uniq, mergeWith, uniqBy, forOwn} from 'lodash'
 import {struct} from 'superstruct'
 
 /*
@@ -24,7 +24,6 @@ validators.theme = struct({
   '__typename':  'string?',
   '_id':         'string',
   'title':       'string?',
-  'scope':       'string?',
   'version':     'string?',
   'content':     'string?',
   'createdAt':   'string?',
@@ -63,7 +62,10 @@ validators.session = struct({
 })
 
 export class IterableMutation {
-  constructor (name, stateProperty) {
+  constructor (name, stateProperty, key) {
+    if (!(typeof key === 'string')) {
+      throw new Error('IterableMutation must be passed a key')
+    }
     return (state, dataList) => {
       if (!dataList || !(dataList instanceof Array)) {
         throw new Error(`${name} mutation must be passed an array, got ${typeof dataList}:\n${JSON.stringify(dataList)}`)
@@ -72,19 +74,27 @@ export class IterableMutation {
 
       dataList.forEach((rawData, index) => {
         const data = validator(rawData)
-        const existing = find(state[stateProperty], {
+        const existingIndex = findIndex(state[stateProperty], {
           '_id': data._id
         })
+        const existing = existingIndex !== -1
 
-        if (!existing) {
-          state[stateProperty].unshift(data)
-        } else {
-          const existingIndex = findIndex(state[stateProperty], {
-            '_id': data._id
+        // console.log(existing, data._id, state[stateProperty][existingIndex])
+        if (existing) {
+          state[stateProperty][index] = mergeWith(data, state[stateProperty][index], (objValue, srcValue) => {
+            if (objValue instanceof Array) {
+              return objValue.concat(srcValue)
+            }
           })
-
-          state[stateProperty][existingIndex] = defaultsDeep(data, state[stateProperty][existingIndex])
+        } else {
+          state[stateProperty].unshift(data)
         }
+
+        forOwn(data, (dataValue, dataKey) => {
+          if (dataValue instanceof Array) {
+            data[dataKey] = uniqBy(dataValue, key)
+          }
+        })
       })
     }
   }
@@ -144,8 +154,8 @@ export default {
       '_id': id
     })
 
-    state.themes.pop(index, 1)
-    state.users[userIndex].themes.pop(userThemeIndex, 1)
+    state.themes.splice(index, 1)
+    state.users[userIndex].themes.splice(userThemeIndex, 1)
   },
 
   loading (state, isLoading) {
@@ -156,6 +166,6 @@ export default {
     state.loading = isLoading
   },
 
-  'users':  new IterableMutation('User', 'users'),
-  'themes': new IterableMutation('Theme', 'themes')
+  'users':  new IterableMutation('User', 'users', '_id'),
+  'themes': new IterableMutation('Theme', 'themes', '_id')
 }

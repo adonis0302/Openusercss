@@ -20,11 +20,7 @@ test('buildTheme - correctly builds from theme object', async (t) => {
 @author DecentM (https://openusercss.org/profile/5a262a2c3835ee7627db2ef9)
 ==/userstyle== */
 
-@-moz-document regexp("undefined") {
-  body {
-    content: "yaeee";
-  }
-}
+@-moz-document regexp(".*openusercss.org.*") {body {content: "yaeee";}}
 `
   const result = await buildTheme({
     ...state.themes[0],

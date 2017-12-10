@@ -13,8 +13,7 @@ export default async ({commit, getters}, id) => {
         'title',
         'description',
         'lastUpdate',
-        'createdAt',
-        'scope'
+        'createdAt'
       ])
 
       savedTheme.user = {

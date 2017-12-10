@@ -194,7 +194,7 @@ test('iterable - adds to state', (t) => {
     'lastSeen': '2017-12-06T02:21:12.373Z',
     'username': 'decentm'
   })
-  const mutation = new IterableMutation('User', 'users')
+  const mutation = new IterableMutation('User', 'users', '_id')
 
   mutation(state, [
     {
@@ -210,23 +210,8 @@ test('iterable - adds to state', (t) => {
 test('iterable - updates already existing', (t) => {
   const state = cloneDeep(stateMock)
   const expected = cloneDeep(stateMock)
-  const mutation = new IterableMutation('User', 'users')
+  const mutation = new IterableMutation('User', 'users', '_id')
 
-  /* expected.users = [
-    {
-      '__typename':  'User',
-      '_id':         '5a262a2c3835ee7627db2ef9',
-      'lastSeen':    '2017-12-06T02:21:12.373Z',
-      'username':    'decentm',
-      'displayname': 'NotMyName',
-      'themes':      [
-        {
-          '__typename': 'Theme',
-          '_id':        '5a275431707d23a322cff59f'
-        }
-      ]
-    }
-  ] */
   expected.users[0] = defaultsDeep({
     'displayname': 'NotMyName'
   }, expected.users[0])
@@ -241,10 +226,73 @@ test('iterable - updates already existing', (t) => {
   t.deepEqual(state, expected)
 })
 
+test('iterable - does not overwrite existing with different id', (t) => {
+  const state = cloneDeep(stateMock)
+  const expected = cloneDeep(stateMock)
+  const mutation = new IterableMutation('User', 'users', '_id')
+
+  expected.users[0].themes = [
+    {
+      '__typename': 'Theme',
+      '_id':        '5a275431707d23a322cff6ed'
+    },
+    {
+      '_schema':    {},
+      '__typename': 'Theme',
+      '_id':        '5a275431707d23a322cff59f'
+    }
+  ]
+
+  mutation(state, [
+    {
+      '_id':    '5a262a2c3835ee7627db2ef9',
+      'themes': [
+        {
+          '__typename': 'Theme',
+          '_id':        '5a275431707d23a322cff6ed'
+        }
+      ]
+    }
+  ])
+
+  t.deepEqual(state, expected)
+})
+
+test('iterable - does not create duplicates', (t) => {
+  const state = cloneDeep(stateMock)
+  const expected = cloneDeep(stateMock)
+  const mutation = new IterableMutation('User', 'users', '_id')
+
+  expected.users[0].themes = [
+    {
+      '__typename': 'Theme',
+      '_id':        '5a275431707d23a322cff59f'
+    }
+  ]
+
+  mutation(state, [
+    {
+      '_id':    '5a262a2c3835ee7627db2ef9',
+      'themes': [
+        {
+          '__typename': 'Theme',
+          '_id':        '5a275431707d23a322cff59f'
+        },
+        {
+          '__typename': 'Theme',
+          '_id':        '5a275431707d23a322cff59f'
+        }
+      ]
+    }
+  ])
+
+  t.deepEqual(state, expected)
+})
+
 test('iterable - does not touch state with empty argument', (t) => {
   const state = cloneDeep(stateMock)
   const expected = cloneDeep(stateMock)
-  const mutation = new IterableMutation('User', 'users')
+  const mutation = new IterableMutation('User', 'users', '_id')
 
   mutation(state, [])
 
@@ -253,7 +301,7 @@ test('iterable - does not touch state with empty argument', (t) => {
 
 test('iterable - throws with empty object in argument', (t) => {
   const state = cloneDeep(stateMock)
-  const mutation = new IterableMutation('User', 'users')
+  const mutation = new IterableMutation('User', 'users', '_id')
 
   t.throws(() => {
     mutation(state, [
@@ -264,7 +312,7 @@ test('iterable - throws with empty object in argument', (t) => {
 
 test('iterable - throws with empty objects in argument', (t) => {
   const state = cloneDeep(stateMock)
-  const mutation = new IterableMutation('User', 'users')
+  const mutation = new IterableMutation('User', 'users', '_id')
 
   t.throws(() => {
     mutation(state, [

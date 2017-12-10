@@ -12,7 +12,6 @@ export default async ({commit, getters}, {terms, limit, skip}) => {
       const savedTheme = pick(theme, [
         '_id',
         'title',
-        'scope',
         'version',
         'content',
         'createdAt',
@@ -32,7 +31,6 @@ export default async ({commit, getters}, {terms, limit, skip}) => {
       const savedUser = pick(user, [
         '_id',
         'title',
-        'scope',
         'version',
         'content',
         'createdAt',

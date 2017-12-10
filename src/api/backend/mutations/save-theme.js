@@ -5,7 +5,7 @@ import {expected} from '../../../shared/custom-errors'
 
 const {LintError} = expected
 
-export default async (root, {token, title, description, content, scope, version, id}, {Session, Theme, User}) => {
+export default async (root, {token, title, description, content, version, id}, {Session, Theme, User}) => {
   const session = await mustAuthenticate(token, Session)
   const user = await User.findOne({
     '_id': session.user._id
@@ -36,7 +36,6 @@ export default async (root, {token, title, description, content, scope, version,
     newTheme.title = title
     newTheme.description = description
     newTheme.version = version
-    newTheme.scope = scope
     newTheme.content = content
   } else {
     newTheme = Theme.create({
@@ -44,7 +43,6 @@ export default async (root, {token, title, description, content, scope, version,
       title,
       description,
       version,
-      scope,
       content
     })
   }

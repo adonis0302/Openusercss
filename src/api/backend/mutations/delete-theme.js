@@ -1,6 +1,6 @@
 import mustAuthenticate from '../../../shared/enforce-session'
 
-export default async (root, {token, title, description, content, scope, version, id}, {Session, Theme, User}) => {
+export default async (root, {token, id}, {Session, Theme}) => {
   const session = await mustAuthenticate(token, Session)
   const theme = await Theme.findOne({
     '_id': id

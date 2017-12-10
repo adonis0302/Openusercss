@@ -18,7 +18,6 @@ export default async ({commit, getters}, id) => {
       'description',
       'lastUpdate',
       'rating',
-      'scope',
       'title',
       'version'
     ])

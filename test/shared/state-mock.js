@@ -39,7 +39,7 @@ export default {
       'rating':      0,
       'title':       'asd',
       'version':     '1.0.0',
-      'content':     'body {\n  content: \"yaeee\"\;\n}',
+      'content':     '@-moz-document regexp(".*openusercss.org.*") {body {content: "yaeee";}}',
       'description': 'test description',
       'user':        {
         '_schema':    {},

@@ -33,7 +33,6 @@ const typeDefs = `
     createdAt:   String!
     lastUpdate:  String!
     rating:      Float!
-    scope:       String!
     version:     String!
   }
 
@@ -61,7 +60,6 @@ const typeDefs = `
       title: String!,
       description: String!,
       content: String!,
-      scope: String!,
       version: String!
     ): Theme!
   }

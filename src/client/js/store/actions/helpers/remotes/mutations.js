@@ -79,7 +79,7 @@ export const remoteSaveTheme = async (theme, token) => {
   let mutation = null
   const newMutation = gql(`
     mutation {
-      theme(title: "${theme.title}", description: "${theme.description}", scope: "${theme.scope}", content: "${theme.content}", version: "${theme.version}", token: "${token}") {
+      theme(title: "${theme.title}", description: "${theme.description}", content: "${theme.content}", version: "${theme.version}", token: "${token}") {
         _id,
         createdAt,
         lastUpdate,
@@ -91,7 +91,7 @@ export const remoteSaveTheme = async (theme, token) => {
   `)
   const existingMutation = gql(`
     mutation {
-      theme(id: "${theme._id}", title: "${theme.title}", description: "${theme.description}", scope: "${theme.scope}", content: "${theme.content}", version: "${theme.version}", token: "${token}") {
+      theme(id: "${theme._id}", title: "${theme.title}", description: "${theme.description}", content: "${theme.content}", version: "${theme.version}", token: "${token}") {
         _id,
         createdAt,
         lastUpdate,
@@ -118,4 +118,23 @@ export const remoteSaveTheme = async (theme, token) => {
   }
 
   return savedTheme
+}
+
+export const deleteTheme = async (id, token) => {
+  const mutation = gql(`
+    mutation {
+      deleteTheme(id: "${id}", token: "${token}")
+    }
+  `)
+  let success = null
+
+  try {
+    success = await apolloClient.mutate({
+      mutation
+    })
+  } catch (error) {
+    throw new AuthenticationError(error.message)
+  }
+
+  return success
 }

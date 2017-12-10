@@ -8,7 +8,6 @@ export const themePropList = `
   createdAt,
   lastUpdate,
   rating,
-  scope,
   version
 `
 

@@ -85,11 +85,6 @@ export default class Theme extends Document {
         'validate': validators.length(102400),
         'required': true
       },
-      'scope': {
-        'type':     String,
-        'required': true,
-        'validate': validators.length(256)
-      },
       'version': {
         'type':     String,
         'required': true,

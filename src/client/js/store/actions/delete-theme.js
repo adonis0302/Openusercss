@@ -10,7 +10,7 @@ export default async ({commit, getters}, {id, redirect}) => {
     commit('actionError', null)
     router.push(redirect)
   } catch (error) {
-    commit('actionError', error.message)
+    commit('actionError', error)
   }
 
   commit('loading', false)
