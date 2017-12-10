@@ -103,7 +103,6 @@ export default {
             'user':        {},
             'title':       '',
             'description': '',
-            'scope':       '',
             'content':     '',
             'version':     '1.0.0'
           }

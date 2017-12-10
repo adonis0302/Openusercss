@@ -59,7 +59,7 @@ div
                     a(href="https://www.w3schools.com/css/", target="_blank", rel="nofollow") CSS Tutorial (W3Schools - The W3C Consortium)
 
             b-columns
-              b-column(is-3)
+              b-column
                 b-field
                   b-control(has-icons-left)
                     icon(icon="update")
@@ -70,18 +70,6 @@ div
                       v-validate="'required|semver'",
                       v-model="theme.version",
                       :class="['input', {'is-danger': errors.has('version')}]"
-                    )
-              b-column(is-8)
-                b-field
-                  b-control(has-icons-left)
-                    icon(icon="code-parentheses")
-                    b-input(
-                      type="text",
-                      name="scope",
-                      placeholder="Theme scope regex",
-                      v-validate="'required|regex'",
-                      v-model="theme.scope",
-                      :class="['input', {'is-danger': errors.has('scope')}]"
                     )
               b-column(is-1).ouc-icon-wrapper
                 router-link(to="/help")
