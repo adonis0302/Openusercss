@@ -16,9 +16,9 @@
 
 .ouc-app-root {
   background-color: $white;
+  min-height: calc(100vh - #{$navbar-height});
   position: absolute;
   width: 100%;
-  min-height: calc(100vh - #{$navbar-height})
 }
 
 .spacer {

@@ -23,6 +23,15 @@ $secondary: map-get($colors, 'secondary');
   user-select: none !important;
 }
 
+.route-root {
+  display: flex;
+  flex-direction: column;
+
+  > *:not(:last-child) {
+    flex: 1
+  }
+}
+
 .shadow-floating {
   box-shadow: 0 10px 70px -30px rgba(0, 0, 0, .65) !important;
 }
