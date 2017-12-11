@@ -32,13 +32,7 @@ export default {
   },
   'methods': {
     setMode (editor) {
-      const brace = require('brace')
       const editorSession = editor.getSession()
-      const modelist = brace.acequire('ace/ext/modelist')
-      const {mode} = modelist.modesByName.css
-
-      require('brace/mode/css')
-      editorSession.setMode(mode)
 
       editorSession.setOptions({
         'tabSize': 2
