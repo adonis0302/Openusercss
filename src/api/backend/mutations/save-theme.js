@@ -20,14 +20,14 @@ export default async (root, {token, title, description, content, version, id}, {
     newTheme.title = title
     newTheme.description = description
     newTheme.version = version
-    newTheme.content = content
+    newTheme.content = decodeURIComponent(content)
   } else {
     newTheme = Theme.create({
-      'user': session.user,
+      'user':    session.user,
+      'content': decodeURIComponent(content),
       title,
       description,
-      version,
-      content
+      version
     })
   }
 

@@ -76,7 +76,7 @@ export const buildTheme = async (rawTheme) => {
   response = `${response}@homepageURL https://openusercss.org/theme/${theme._id}\n`
   response = `${response}@author ${theme.user.displayname} (https://openusercss.org/profile/${theme.user._id})\n`
   response = `${response}==/userstyle== */\n\n`
-  response = `${response}${theme.content}\n`
+  response = `${response}${decodeURIComponent(theme.content)}\n`
 
   return response
 }

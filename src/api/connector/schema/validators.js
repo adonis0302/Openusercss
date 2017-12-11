@@ -9,6 +9,16 @@ export default {
     }
   },
 
+  'urlEncoded': (value) => {
+    const encoded = () => {
+      const result = encodeURIComponent(value)
+
+      return result === value
+    }
+
+    return encoded
+  },
+
   'regex': ({preset, validator}) => {
     let match = null
 
