@@ -23,11 +23,5 @@ export default async (root, {id}, {Session, Theme, User}) => {
     'themes'
   ])
 
-  /* user.themes = await Theme.find({
-    'user': new ObjectId(id)
-  }, {
-    'limit': 256
-  }) */
-
   return user
 }

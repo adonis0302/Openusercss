@@ -34,6 +34,7 @@ const typeDefs = `
     lastUpdate:  String!
     rating:      Float!
     version:     String!
+    scope:       String! @deprecated
   }
 
   type Results {

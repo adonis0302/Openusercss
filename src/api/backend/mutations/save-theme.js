@@ -49,6 +49,12 @@ export default async (root, {token, title, description, content, version, id}, {
 
   const savedTheme = await newTheme.save()
 
+  user.themes.forEach((theme, index) => {
+    if (!theme) {
+      user.themes.splice(index, 1)
+    }
+  })
+
   user.themes.push(newTheme)
   await user.save()
 

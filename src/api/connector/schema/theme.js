@@ -46,11 +46,24 @@ export default class Theme extends Document {
     const user = await User.findOne({
       '_id': this.user._id
     })
-    const themeIndex = findIndex(user.themes, {
-      '_id': this._id
+
+    user.themes.forEach((theme, index) => {
+      if (!theme) {
+        user.themes.splice(index, 1)
+      }
     })
 
-    user.themes.pop(themeIndex, 1)
+    const themeIndex = findIndex(user.themes, (item) => {
+      let result = false
+
+      if (item) {
+        result = item._id.equals(this._id)
+      }
+
+      return result
+    })
+
+    user.themes.splice(themeIndex, 1)
     return user.save()
   }
 

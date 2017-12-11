@@ -47,6 +47,12 @@ export default async (root, {email, password}, {User, Session, headers, connecti
   requestedUser.lastSeen = moment().toJSON()
   requestedUser.lastSeenReason = 'logging in'
 
+  requestedUser.themes.forEach((theme, index) => {
+    if (!theme) {
+      requestedUser.themes.splice(index, 1)
+    }
+  })
+
   await requestedUser.save()
   return newSession.save()
 }
