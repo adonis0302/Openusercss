@@ -1,4 +1,5 @@
 import gql from 'graphql-tag'
+import {cloneDeep} from 'lodash'
 import {userPropList, themePropList} from '../queries'
 import {apolloClient} from '../../'
 import {expected} from '../../../../../../shared/custom-errors'
@@ -76,10 +77,13 @@ export const remoteSaveTheme = async (theme, token) => {
     throw new Error('No content')
   }
 
+  const preparedTheme = cloneDeep(theme)
+
+  preparedTheme.content = encodeURIComponent(preparedTheme.content)
   let mutation = null
   const newMutation = gql(`
     mutation {
-      theme(title: "${theme.title}", description: "${theme.description}", content: "${theme.content}", version: "${theme.version}", token: "${token}") {
+      theme(title: "${preparedTheme.title}", description: "${preparedTheme.description}", content: "${preparedTheme.content}", version: "${preparedTheme.version}", token: "${token}") {
         _id,
         createdAt,
         lastUpdate,
@@ -91,7 +95,7 @@ export const remoteSaveTheme = async (theme, token) => {
   `)
   const existingMutation = gql(`
     mutation {
-      theme(id: "${theme._id}", title: "${theme.title}", description: "${theme.description}", content: "${theme.content}", version: "${theme.version}", token: "${token}") {
+      theme(id: "${preparedTheme._id}", title: "${preparedTheme.title}", description: "${preparedTheme.description}", content: "${preparedTheme.content}", version: "${preparedTheme.version}", token: "${token}") {
         _id,
         createdAt,
         lastUpdate,

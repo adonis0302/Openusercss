@@ -7,10 +7,6 @@ export default async ({commit, getters}, {readyTheme, redirect}) => {
 
   const preparedTheme = cloneDeep(readyTheme)
 
-  preparedTheme.content = preparedTheme.content.replace(/[\n]/g, '\\n')
-  preparedTheme.content = preparedTheme.content.replace(/[']/g, '\'')
-  preparedTheme.content = preparedTheme.content.replace(/["]/g, '\\"')
-
   try {
     const {data} = await remoteSaveTheme(preparedTheme, getters.session.token)
     const {theme} = data
