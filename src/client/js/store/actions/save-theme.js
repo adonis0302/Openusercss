@@ -1,16 +1,18 @@
-import {defaultsDeep} from 'lodash'
+import {defaultsDeep, cloneDeep} from 'lodash'
 import router from '../../router'
 import {remoteSaveTheme} from './helpers/remotes/mutations'
 
 export default async ({commit, getters}, {readyTheme, redirect}) => {
   commit('loading', true)
 
-  readyTheme.content = readyTheme.content.replace(/[\n]/g, '\\n')
-  readyTheme.content = readyTheme.content.replace(/[']/g, '\'')
-  readyTheme.content = readyTheme.content.replace(/["]/g, '\\"')
+  const preparedTheme = cloneDeep(readyTheme)
+
+  preparedTheme.content = preparedTheme.content.replace(/[\n]/g, '\\n')
+  preparedTheme.content = preparedTheme.content.replace(/[']/g, '\'')
+  preparedTheme.content = preparedTheme.content.replace(/["]/g, '\\"')
 
   try {
-    const {data} = await remoteSaveTheme(readyTheme, getters.session.token)
+    const {data} = await remoteSaveTheme(preparedTheme, getters.session.token)
     const {theme} = data
 
     commit('users', [
@@ -25,7 +27,7 @@ export default async ({commit, getters}, {readyTheme, redirect}) => {
     ])
     Reflect.deleteProperty(theme.user, 'themes')
     commit('themes', [
-      defaultsDeep(theme, readyTheme)
+      defaultsDeep(theme, preparedTheme)
     ])
     commit('actionError', null)
     router.push(redirect)
