@@ -1,10 +1,10 @@
 div.route-root
   b-container
     b-section
-      notification(v-show="actionErrors.length > 0", icon="alert", color="is-danger").is-danger
-        div(slot="content")
-          p(v-for="error in actionErrors") {{error}}
       form(slot="form", @submit.prevent="submit").ouc-new-theme-form
+        notification(v-if="concat(actionErrors, errors.all()).length > 0", icon="alert", color="is-danger").is-danger
+          div(slot="content")
+            p(v-for="error in concat(actionErrors, errors.all())") {{error}}
         b-tile(is-ancestor)
           b-tile(is-parent, is-vertical)
             b-tile.ouc-new-theme-header(is-child)

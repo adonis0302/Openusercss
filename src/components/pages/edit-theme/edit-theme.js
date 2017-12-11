@@ -2,7 +2,7 @@ import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import noSSR from 'vue-no-ssr'
 import {mapGetters} from 'vuex'
 import semver from 'semver'
-import {findIndex, cloneDeep} from 'lodash'
+import {findIndex, cloneDeep, concat} from 'lodash'
 
 import attributor from '../../components/footer/footer.vue'
 import navbar from '../../components/navbar/navbar.vue'
@@ -71,6 +71,7 @@ export default {
     this.$validator.updateDictionary(customDictionary)
   },
   'methods': {
+    concat,
     async submit () {
       const validated = await this.$validator.validateAll()
 
