@@ -46,7 +46,7 @@ div.route-root
           b-column(is-6)
             b-columns(is-multiline)
               b-column(is-6, v-for="(theme, index) in viewedUser.themes")
-                theme-card(:data-index="index", :small="true", direction="horizontal", card-class="is-primary", :themeId="theme._id").has-bottom-margin
+                theme-card(:data-index="index", :small="true", direction="horizontal", card-class="is-primary", :theme-id="theme._id").has-bottom-margin
                   b-tile(slot="content", is-parent)
                     b-columns
                       b-column

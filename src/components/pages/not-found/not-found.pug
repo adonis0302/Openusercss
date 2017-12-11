@@ -14,7 +14,7 @@ div.route-root
             icon(icon="sword")
         b-column
           b-column(v-for="(theme, index) in limitBy(themes, 3)")
-            theme-card(:data-index="index", direction="horizontal", card-class="is-primary", :themeId="theme._id").has-bottom-margin
+            theme-card(:data-index="index", direction="horizontal", card-class="is-primary", :theme-id="theme._id").has-bottom-margin
               b-tile(slot="content", is-parent)
                 b-tile(is-child)
                   b-columns

@@ -38,7 +38,7 @@ div.route-root
             div(v-if="!results.themes.length")
               p No themes found
             div(v-for="theme in results.themes").has-bottom-margin
-              theme-card(:data-index="index", :small="true", direction="horizontal", card-class="is-primary", :themeId="theme._id")
+              theme-card(:data-index="index", :small="true", direction="horizontal", card-class="is-primary", :theme-id="theme._id")
                 b-tile(slot="content", is-parent)
                   b-columns
                     b-column

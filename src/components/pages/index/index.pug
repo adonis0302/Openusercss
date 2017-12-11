@@ -11,7 +11,7 @@ div.route-root
             h2.has-bottom-margin Newest themes
             b-columns(is-multiline)
               b-column(is-6, v-for="(theme, index) in limitBy(themes, 6)")
-                theme-card(v-if="themes.length !== 0", :small="true", :themeId="theme._id", :data-index="index", direction="horizontal", card-class="is-primary").has-bottom-margin
+                theme-card(v-if="themes.length !== 0", :small="true", :theme-id="theme._id", :data-index="index", direction="horizontal", card-class="is-primary").has-bottom-margin
                   b-tile(slot="content", is-parent)
                     b-columns
                       b-column
