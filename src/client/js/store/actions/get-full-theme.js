@@ -26,6 +26,9 @@ export default async ({commit, getters}, id) => {
     commit('themes', [
       preparedTheme
     ])
+    commit('users', [
+      theme.user
+    ])
     commit('actionError', null)
   } catch (error) {
     commit('deleteTheme', id)
