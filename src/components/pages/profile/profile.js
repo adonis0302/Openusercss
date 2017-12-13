@@ -59,7 +59,7 @@ export default {
     'viewedUser': {
       'cache': false,
       get () {
-        const userIndex = findIndex(this.users, (theme) => theme._id === this.$route.params.id)
+        const userIndex = findIndex(this.users, (user) => user._id === this.$route.params.id)
 
         if (!this.users[userIndex]) {
           return {
