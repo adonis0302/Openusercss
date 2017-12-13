@@ -75,6 +75,14 @@ div.route-root
                 router-link(to="/help")
                   icon(icon="help-circle", color="#FFB450")
 
+            list-creator(
+              icon="earth",
+              :max-items="10",
+              item-name="screenshot",
+              v-model="theme.screenshots",
+              placeholder="Paste a URL to your image here"
+            ).has-bottom-margin
+
             b-tile.ouc-new-theme-editor(is-child)
               b-box(is-paddingless)
                 no-ssr

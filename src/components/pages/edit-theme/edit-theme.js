@@ -11,6 +11,7 @@ import notification from '../../components/notification/notification.vue'
 import editor from '../../components/editor/editor.vue'
 import bInput from '../../components/b-input/b-input.vue'
 import bTextarea from '../../components/b-textarea/b-textarea.vue'
+import listCreator from '../../components/list-creator/list-creator.vue'
 
 const customDictionary = {
   'en': {
@@ -51,7 +52,8 @@ export default {
     notification,
     editor,
     bInput,
-    bTextarea
+    bTextarea,
+    listCreator
   },
   'data': () => {
     return {
