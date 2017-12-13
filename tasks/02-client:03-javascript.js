@@ -15,6 +15,7 @@ import watchify from 'watchify'
 import hmr from 'browserify-hmr'
 import merge from 'merge-stream'
 import walk from 'walk'
+import comment from 'gulp-header-comment'
 
 import server from './shared/server'
 import {createBrowserify} from './shared/js'
@@ -68,6 +69,7 @@ gulp.task('client:js:prod', () => {
         'compress': true
       }),
       flatten(),
+      comment(`Built at ${Date.now()}`),
       gulp.dest(destination())
     ])
   })

@@ -2571,6 +2571,10 @@ commander@2.8.x, commander@~2.8.1:
   dependencies:
     graceful-readlink ">= 1.0.0"
 
+commenting@1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/commenting/-/commenting-1.0.4.tgz#d140af32634fcbdee4d71396934c1fcdac147e50"
+
 common-path-prefix@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/common-path-prefix/-/common-path-prefix-1.0.0.tgz#cd52f6f0712e0baab97d6f9732874f22f47752c0"
@@ -3392,6 +3396,10 @@ des.js@^1.0.0:
     inherits "^2.0.1"
     minimalistic-assert "^1.0.0"
 
+desandro-matches-selector@^2.0.0:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/desandro-matches-selector/-/desandro-matches-selector-2.0.2.tgz#717beed4dc13e7d8f3762f707a6d58a6774218e1"
+
 destroy@~1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/destroy/-/destroy-1.0.4.tgz#978857442c44749e4206613e37946205826abd80"
@@ -4144,6 +4152,10 @@ etag@~1.8.1:
   version "1.8.1"
   resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
 
+ev-emitter@^1.0.1, ev-emitter@^1.0.2:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/ev-emitter/-/ev-emitter-1.1.1.tgz#8f18b0ce5c76a5d18017f71c0a795c65b9138f2a"
+
 event-emitter@^0.3.5, event-emitter@~0.3.5:
   version "0.3.5"
   resolved "https://registry.yarnpkg.com/event-emitter/-/event-emitter-0.3.5.tgz#df8c69eef1647923c7157b9ce83840610b02cc39"
@@ -4517,6 +4529,12 @@ first-chunk-stream@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/first-chunk-stream/-/first-chunk-stream-1.0.0.tgz#59bfb50cd905f60d7c394cd3d9acaab4e6ad934e"
 
+fizzy-ui-utils@^2.0.0:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/fizzy-ui-utils/-/fizzy-ui-utils-2.0.5.tgz#d72debc74d2c9d272dbcbb7b001707897f6c3210"
+  dependencies:
+    desandro-matches-selector "^2.0.0"
+
 flagged-respawn@^0.3.2:
   version "0.3.2"
   resolved "https://registry.yarnpkg.com/flagged-respawn/-/flagged-respawn-0.3.2.tgz#ff191eddcd7088a675b2610fffc976be9b8074b5"
@@ -4537,6 +4555,17 @@ flatten@^1.0.2:
 flexibility@^2:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/flexibility/-/flexibility-2.0.1.tgz#ad323aafc40f469ce624286518fc4d7cd72b7c77"
+
+flickity@^2.0.5:
+  version "2.0.10"
+  resolved "https://registry.yarnpkg.com/flickity/-/flickity-2.0.10.tgz#ddbd7800006df44ae0e89b4feba4ce3b9cf67b64"
+  dependencies:
+    desandro-matches-selector "^2.0.0"
+    ev-emitter "^1.0.2"
+    fizzy-ui-utils "^2.0.0"
+    get-size "^2.0.0"
+    tap-listener "^2.0.0"
+    unidragger "^2.2.3"
 
 fn-name@^2.0.0:
   version "2.0.1"
@@ -4771,6 +4800,10 @@ get-proxy@^1.0.1:
   resolved "https://registry.yarnpkg.com/get-proxy/-/get-proxy-1.1.0.tgz#894854491bc591b0f147d7ae570f5c678b7256eb"
   dependencies:
     rc "^1.1.2"
+
+get-size@^2.0.0:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/get-size/-/get-size-2.0.2.tgz#555ea98ab8732e0c021e9e23e2219adcbe398e98"
 
 get-stdin@5.0.1, get-stdin@^5.0.1:
   version "5.0.1"
@@ -5244,6 +5277,17 @@ gulp-flatten@^0:
     gulp-util "^3.0.7"
     through2 "^2.0.0"
 
+gulp-header-comment@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/gulp-header-comment/-/gulp-header-comment-0.2.1.tgz#28db792d6dccf9e1327b88d5bfdee1bfc58e84da"
+  dependencies:
+    commenting "1.0.4"
+    gulp-util "3.0.8"
+    lodash "4.17.4"
+    moment "2.18.1"
+    q "1.5.0"
+    through2 "2.0.3"
+
 gulp-htmlmin@^3:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/gulp-htmlmin/-/gulp-htmlmin-3.0.0.tgz#19ea8002d1231d6b1f18a12d20f2a66a77770fb3"
@@ -5420,20 +5464,7 @@ gulp-sourcemaps@^2:
     through2 "2.X"
     vinyl "1.X"
 
-gulp-util@^2.2.14:
-  version "2.2.20"
-  resolved "https://registry.yarnpkg.com/gulp-util/-/gulp-util-2.2.20.tgz#d7146e5728910bd8f047a6b0b1e549bc22dbd64c"
-  dependencies:
-    chalk "^0.5.0"
-    dateformat "^1.0.7-1.2.3"
-    lodash._reinterpolate "^2.4.1"
-    lodash.template "^2.4.1"
-    minimist "^0.2.0"
-    multipipe "^0.1.0"
-    through2 "^0.5.0"
-    vinyl "^0.2.1"
-
-gulp-util@^3, gulp-util@^3.0, gulp-util@^3.0.0, gulp-util@^3.0.1, gulp-util@^3.0.2, gulp-util@^3.0.3, gulp-util@^3.0.4, gulp-util@^3.0.6, gulp-util@^3.0.7, gulp-util@^3.0.8:
+gulp-util@3.0.8, gulp-util@^3, gulp-util@^3.0, gulp-util@^3.0.0, gulp-util@^3.0.1, gulp-util@^3.0.2, gulp-util@^3.0.3, gulp-util@^3.0.4, gulp-util@^3.0.6, gulp-util@^3.0.7, gulp-util@^3.0.8:
   version "3.0.8"
   resolved "https://registry.yarnpkg.com/gulp-util/-/gulp-util-3.0.8.tgz#0054e1e744502e27c04c187c3ecc505dd54bbb4f"
   dependencies:
@@ -5455,6 +5486,19 @@ gulp-util@^3, gulp-util@^3.0, gulp-util@^3.0.0, gulp-util@^3.0.1, gulp-util@^3.0
     replace-ext "0.0.1"
     through2 "^2.0.0"
     vinyl "^0.5.0"
+
+gulp-util@^2.2.14:
+  version "2.2.20"
+  resolved "https://registry.yarnpkg.com/gulp-util/-/gulp-util-2.2.20.tgz#d7146e5728910bd8f047a6b0b1e549bc22dbd64c"
+  dependencies:
+    chalk "^0.5.0"
+    dateformat "^1.0.7-1.2.3"
+    lodash._reinterpolate "^2.4.1"
+    lodash.template "^2.4.1"
+    minimist "^0.2.0"
+    multipipe "^0.1.0"
+    through2 "^0.5.0"
+    vinyl "^0.2.1"
 
 "gulp-vuemaker@https://github.com/thierrymichel/gulp-vuemaker":
   version "1.0.1"
@@ -7794,6 +7838,10 @@ module-deps@^4.0.8:
     through2 "^2.0.0"
     xtend "^4.0.0"
 
+moment@2.18.1:
+  version "2.18.1"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
+
 moment@^2, moment@^2.11.1, moment@^2.18.1:
   version "2.19.3"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.3.tgz#bdb99d270d6d7fda78cc0fbace855e27fe7da69f"
@@ -10021,6 +10069,10 @@ pwa-manifest@^0:
     url-regex "^3.1.0"
     write-json-file "^1.2.0"
 
+q@1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/q/-/q-1.5.0.tgz#dd01bac9d06d30e6f219aecb8253ee9ebdc308f1"
+
 q@^1.1.2, q@^1.4.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
@@ -11685,6 +11737,12 @@ table@^4.0.1:
     slice-ansi "1.0.0"
     string-width "^2.1.1"
 
+tap-listener@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/tap-listener/-/tap-listener-2.0.0.tgz#d2e11d0d8e7c92b26a56ae4f35538a248b44ad63"
+  dependencies:
+    unipointer "^2.1.0"
+
 tapable@^0.2.7:
   version "0.2.8"
   resolved "https://registry.yarnpkg.com/tapable/-/tapable-0.2.8.tgz#99372a5c999bf2df160afc0d74bed4f47948cd22"
@@ -11772,7 +11830,7 @@ through2-filter@^2.0.0:
     through2 "~2.0.0"
     xtend "~4.0.0"
 
-through2@2.X, through2@^2, through2@^2.0.0, through2@^2.0.1, through2@^2.0.2, through2@^2.0.3, through2@~2.0.0:
+through2@2.0.3, through2@2.X, through2@^2, through2@^2.0.0, through2@^2.0.1, through2@^2.0.2, through2@^2.0.3, through2@~2.0.0:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/through2/-/through2-2.0.3.tgz#0004569b37c7c74ba39c43f3ced78d1ad94140be"
   dependencies:
@@ -12119,6 +12177,12 @@ unherit@^1.0.4:
     inherits "^2.0.1"
     xtend "^4.0.1"
 
+unidragger@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/unidragger/-/unidragger-2.2.3.tgz#a618801b9b629e1045e3d3793713e7add0a1e16b"
+  dependencies:
+    unipointer "^2.2.0"
+
 unified@^6.0.0:
   version "6.1.6"
   resolved "https://registry.yarnpkg.com/unified/-/unified-6.1.6.tgz#5ea7f807a0898f1f8acdeefe5f25faa010cc42b1"
@@ -12130,6 +12194,12 @@ unified@^6.0.0:
     vfile "^2.0.0"
     x-is-function "^1.0.4"
     x-is-string "^0.1.0"
+
+unipointer@^2.1.0, unipointer@^2.2.0:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/unipointer/-/unipointer-2.2.1.tgz#05f9adaac92c0e6e6ed41ce85adab26166b03ee6"
+  dependencies:
+    ev-emitter "^1.0.1"
 
 uniq@^1.0.1:
   version "1.0.1"
@@ -12482,6 +12552,12 @@ vue-codemirror-lite@^1.0.2:
   resolved "https://registry.yarnpkg.com/vue-codemirror-lite/-/vue-codemirror-lite-1.0.3.tgz#41313265fe92e62646aab22f3c991dd6f84f4807"
   dependencies:
     codemirror "^5.22.0"
+
+vue-flickity@^1.0.9:
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/vue-flickity/-/vue-flickity-1.0.9.tgz#b344e9ec66a1db08c3c9aac64170fa412793e623"
+  dependencies:
+    flickity "^2.0.5"
 
 vue-hot-reload-api@^2.0.1:
   version "2.2.4"

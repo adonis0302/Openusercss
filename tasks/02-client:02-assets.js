@@ -25,6 +25,7 @@ import pleeease from 'gulp-pleeease'
 import concat from 'gulp-concat'
 import webfont64 from 'gulp-base64-webfont-css'
 import flatten from 'gulp-flatten'
+import comment from 'gulp-header-comment'
 import {iconSizes, bgSizes, sizes, ourSassConfig, postCssPluginsProd, postCssPluginsFunctional} from './shared/css'
 
 const sources = {
@@ -163,6 +164,7 @@ gulp.task('client:media:prod', (done) => {
     }),
     postcss(postCssPluginsProd),
     flatten(),
+    comment(`Built at ${Date.now()}`),
     gulp.dest(destination('css'))
   ])
 
