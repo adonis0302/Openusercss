@@ -1,38 +1,9 @@
-import {Document, EmbeddedDocument} from 'camo'
+import {Document} from 'camo'
 import moment from 'moment'
 import {findIndex} from 'lodash'
 
 import validators from './validators'
 import User from './user'
-
-class Screenshot extends EmbeddedDocument {
-  constructor () {
-    super()
-
-    this.schema({
-      'small': {
-        'type':  String,
-        'match': validators.regex({
-          'preset':    'url',
-          'validator': false
-        }),
-        'validate': validators.length(256),
-        'required': true,
-        'default':  ''
-      },
-      'large': {
-        'type':  String,
-        'match': validators.regex({
-          'preset':    'url',
-          'validator': false
-        }),
-        'validate': validators.length(256),
-        'required': true,
-        'default':  ''
-      }
-    })
-  }
-}
 
 export default class Theme extends Document {
   preSave () {
@@ -109,9 +80,13 @@ export default class Theme extends Document {
         'max':     5,
         'default': 0
       },
-      'screenshots': [
-        Screenshot
-      ],
+      'screenshots': {
+        'type': [
+          String
+        ],
+        'required': false,
+        'validate': validators.length(10)
+      },
       'user': User
     })
   }

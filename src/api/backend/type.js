@@ -34,6 +34,7 @@ const typeDefs = `
     lastUpdate:  String!
     rating:      Float!
     version:     String!
+    screenshots: [String]
     scope:       String! @deprecated
   }
 
@@ -61,7 +62,8 @@ const typeDefs = `
       title: String!,
       description: String!,
       content: String!,
-      version: String!
+      version: String!,
+      screenshots: [String]
     ): Theme!
   }
 `
