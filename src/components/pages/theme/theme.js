@@ -49,13 +49,25 @@ export default {
   },
   data () {
     return {
-      'viewingSource': false,
-      'confirmTitle':  '',
-      'showingModal':  false
+      'viewingSource':   false,
+      'confirmTitle':    '',
+      'showingModal':    false,
+      'flickityOptions': {
+        'wrapAround':      true,
+        'prevNextButtons': false,
+        'pageDots':        false,
+        'cellAlign':       'left'
+      }
     }
   },
   'methods': {
     formatMoment,
+    proxyImage (original) {
+      return {
+        'large': `https://imageproxy.openusercss.org/none/${encodeURIComponent(original)}`,
+        'small': `https://imageproxy.openusercss.org/blurred/${encodeURIComponent(original)}`
+      }
+    },
     confirmDeleteTheme () {
       this.confirmTitle = ''
       this.$modal.show('delete-theme')

@@ -60,7 +60,20 @@ div.route-root
           b-column(is-6)
             div
               b-box(is-paddingless, is-marginless).ouc-theme-card
-                flush-img(:source="viewedTheme.screenshotUrl", :placeholder="viewedTheme.smallScreenshotUrl", height="250px", align="left")
+                flickity.carousel(ref="flickity", :options="flickityOptions")
+                  flush-img(
+                    v-if="viewedTheme.screenshots && viewedTheme.screenshots.length",
+                    v-for="screenshot in viewedTheme.screenshots",
+                    :source="proxyImage(screenshot).large",
+                    height="250px",
+                    :placeholder="proxyImage(screenshot).small",
+                    align="center"
+                  ).carousel-cell
+                  flush-img(
+                    v-if="!viewedTheme.screenshots || !viewedTheme.screenshots.length",
+                    height="250px",
+                    align="center"
+                  ).carousel-cell
                 b-column
                   b-tile(is-parent, is-paddingless)
                     b-tile(is-child, is-parent, is-vertical)
