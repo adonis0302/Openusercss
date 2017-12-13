@@ -61,7 +61,7 @@ export const remoteRegister = async ({email, password, displayname}) => {
   const mutation = gql(`
     mutation {
       register(displayname: "${displayname}", email: "${email}", password: "${password}") {
-        username
+        ${userPropList}
       }
     }
   `)
@@ -76,31 +76,42 @@ export const remoteSaveTheme = async (theme, token) => {
   if (!theme || !theme.content) {
     throw new Error('No content')
   }
-
   const preparedTheme = cloneDeep(theme)
+  let mutation = null
 
   preparedTheme.content = encodeURIComponent(preparedTheme.content)
-  let mutation = null
+  preparedTheme.screenshots = JSON.stringify(preparedTheme.screenshots)
   const newMutation = gql(`
     mutation {
-      theme(title: "${preparedTheme.title}", description: "${preparedTheme.description}", content: "${preparedTheme.content}", version: "${preparedTheme.version}", token: "${token}") {
-        _id,
-        createdAt,
-        lastUpdate,
+      theme(
+        title: "${preparedTheme.title}",
+        description: "${preparedTheme.description}",
+        content: "${preparedTheme.content}",
+        version: "${preparedTheme.version}",
+        screenshots: ${preparedTheme.screenshots},
+        token: "${token}"
+      ) {
+        ${themePropList}
         user {
-          _id
+          ${userPropList}
         }
       }
     }
   `)
   const existingMutation = gql(`
     mutation {
-      theme(id: "${preparedTheme._id}", title: "${preparedTheme.title}", description: "${preparedTheme.description}", content: "${preparedTheme.content}", version: "${preparedTheme.version}", token: "${token}") {
-        _id,
-        createdAt,
-        lastUpdate,
+      theme(
+        id: "${preparedTheme._id}",
+        title: "${preparedTheme.title}",
+        description: "${preparedTheme.description}",
+        content: "${preparedTheme.content}",
+        version: "${preparedTheme.version}",
+        screenshots: ${preparedTheme.screenshots},
+        token: "${token}"
+      ) {
+        ${themePropList}
         user {
-          _id
+          ${userPropList}
         }
       }
     }

@@ -8,7 +8,8 @@ export const themePropList = `
   createdAt,
   lastUpdate,
   rating,
-  version
+  version,
+  screenshots
 `
 
 export const userPropList = `

@@ -30,7 +30,10 @@ validators.theme = struct({
   'lastUpdate':  'string?',
   'rating':      'number?',
   'description': 'string?',
-  'user':        validators.reference('User')
+  'screenshots': struct.optional([
+    'string'
+  ]),
+  'user': validators.reference('User')
 }, {
   '__typename': 'Theme'
 })
@@ -79,7 +82,6 @@ export class IterableMutation {
         })
         const existing = existingIndex !== -1
 
-        // console.log(existing, data._id, state[stateProperty][existingIndex])
         if (existing) {
           state[stateProperty][index] = mergeWith(data, state[stateProperty][index], (objValue, srcValue) => {
             if (objValue instanceof Array) {
@@ -91,7 +93,7 @@ export class IterableMutation {
         }
 
         forOwn(data, (dataValue, dataKey) => {
-          if (dataValue instanceof Array) {
+          if (dataValue instanceof Array && typeof dataValue[0] === 'object') {
             data[dataKey] = uniqBy(dataValue, key)
           }
         })
