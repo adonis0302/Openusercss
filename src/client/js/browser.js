@@ -5,6 +5,7 @@ import {divide, sum} from 'lodash'
 import log from 'chalk-console'
 
 import VModal from 'vue-js-modal'
+import VFlickity from 'vue-flickity'
 import {
   Vue,
   store,
@@ -28,6 +29,7 @@ const main = async () => {
   process.polyfills = polyfillsResult
 
   Vue.use(VModal)
+  Vue.component('flickity', VFlickity)
 
   const app = new Vue({
     store,
