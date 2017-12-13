@@ -2,16 +2,23 @@ div(:style="\
   'width: ' + width + ';\
   height: ' + height + ';'\
 ").ouc-flush-img-root
+  spinner(
+    v-show="loading",
+    :spinning="loading",
+    :size="30"
+  )
   div(
+    v-show="!loading",
     :style="\
       'background-image: url(' + smallsrc + ');\
       background-position: ' + align + ';\
       background-size: ' + mode + ';'\
-  ").ouc-flush-img-cover
+  ").ouc-flush-img-cover.img-container
   div(
+    v-show="!loading",
     :style="\
       'background-image: url(' + originalsrc + ');\
       background-position: ' + align + ';\
       background-size: ' + mode + ';\
       margin-top: -' + height + ';'\
-  ").ouc-flush-img-real
+  ").ouc-flush-img-real.img-container

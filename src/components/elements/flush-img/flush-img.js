@@ -1,3 +1,5 @@
+import spinner from '../spinner/spinner.vue'
+
 const loadImage = (url, Image) => {
   return new Promise((resolve, reject) => {
     if (process.browser) {
@@ -27,7 +29,8 @@ const unloaded = (elements) => {
 }
 
 const updateImage = async (self, Image) => {
-  const $images = self.$el.querySelectorAll('.ouc-flush-img-root > *')
+  self.loading = true
+  const $images = self.$el.querySelectorAll('.ouc-flush-img-root > .img-container')
 
   unloaded($images)
   self.smallsrc = self.placeholder
@@ -35,12 +38,14 @@ const updateImage = async (self, Image) => {
 
   try {
     await loadImage(self.smallsrc, Image)
+    self.loading = false
     await loadImage(self.originalsrc, Image)
     loaded($images)
   } catch (error) {
     self.smallsrc = '/img/image-error-x128.png'
     self.originalsrc = '/img/image-error-x960.png'
     await loadImage(self.smallsrc, Image)
+    self.loading = false
     await loadImage(self.originalsrc, Image)
     loaded($images)
   }
@@ -49,8 +54,12 @@ const updateImage = async (self, Image) => {
 }
 
 export default {
+  'components': {
+    spinner
+  },
   data () {
     return {
+      'loading':     true,
       'smallsrc':    this.placeholder,
       'originalsrc': this.source
     }
