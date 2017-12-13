@@ -8,6 +8,7 @@ import profileRoute from '../../../../.tmp/pages/profile/profile.vue'
 import themeEditorRoute from '../../../../.tmp/pages/edit-theme/edit-theme.vue'
 import themeRoute from '../../../../.tmp/pages/theme/theme.vue'
 import contactRoute from '../../../../.tmp/pages/contact/contact.vue'
+import testRoute from '../../../../.tmp/pages/test/test.vue'
 
 import notFoundRoute from '../../../../.tmp/pages/not-found/not-found.vue'
 
@@ -49,6 +50,10 @@ const router = new VueRouter({
     {
       'path':      '/theme/:id',
       'component': themeRoute
+    },
+    {
+      'path':      '/test',
+      'component': testRoute
     },
     {
       'path':      '*',

@@ -1,0 +1,18 @@
+div.route-root
+  b-container
+    b-section
+      b-columns(is-multiline)
+        b-column(is-2)
+          div
+            p Spinner:
+            spinner(:size="50", :spinning="spinning")
+            div(style="background-color: black")
+              spinner(:size="50", :spinning="spinning")
+
+        b-column(is-6)
+          flush-img(
+            source="https://blog.decentm.com/wp-content/uploads/2017/09/sao-0203-520x245.jpg",
+            height="300px"
+          )
+
+  attributor
