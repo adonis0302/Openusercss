@@ -289,6 +289,32 @@ test('iterable - does not create duplicates', (t) => {
   t.deepEqual(state, expected)
 })
 
+test('iterable - correctly deep mutates arrays', (t) => {
+  const state = cloneDeep(stateMock)
+  const expected = cloneDeep(stateMock)
+  const mutation = new IterableMutation('Theme', 'themes', '_id')
+
+  expected.themes[0].screenshots = [
+    'a',
+    'b'
+  ]
+
+  mutation(state, [
+    {
+      '_id':  '5a275431707d23a322cff59f',
+      'user': {
+        '_id': '5a262a2c3835ee7627db2ef9'
+      },
+      'screenshots': [
+        'a',
+        'b'
+      ]
+    }
+  ])
+
+  t.deepEqual(state, expected)
+})
+
 test('iterable - does not touch state with empty argument', (t) => {
   const state = cloneDeep(stateMock)
   const expected = cloneDeep(stateMock)
