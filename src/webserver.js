@@ -28,6 +28,12 @@ const cspOptions = {
       'openusercss.org',
       'openusercss.com'
     ],
+    'styleSrc': [
+      "'self'",
+      "'unsafe-inline'",
+      'openusercss.org',
+      'openusercss.com'
+    ],
     'imgSrc': [
       "'self'",
       'data:',
@@ -36,6 +42,8 @@ const cspOptions = {
       'gravatar.com'
     ],
     'connectSrc': [
+      'openusercss.org',
+      'openusercss.com',
       'api.openusercss.org',
       'api.openusercss.com'
     ],
@@ -51,10 +59,6 @@ if (process.env.NODE_ENV === 'development') {
   cspOptions.directives.connectSrc.push('localhost:*')
   cspOptions.directives.connectSrc.push('ws://localhost:*')
   cspOptions.directives.scriptSrc = [
-    ...cspOptions.directives.defaultSrc,
-    "'unsafe-inline'"
-  ]
-  cspOptions.directives.styleSrc = [
     ...cspOptions.directives.defaultSrc,
     "'unsafe-inline'"
   ]
