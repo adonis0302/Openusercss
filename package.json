@@ -84,7 +84,6 @@
     "glob": "^7",
     "graphql-tag": "^2",
     "gulp": "https://github.com/gulpjs/gulp#4.0",
-    "gulp-ava": "^0.18.0",
     "gulp-babel": "^7",
     "gulp-base64-webfont-css": "^0",
     "gulp-buffer": "^0",

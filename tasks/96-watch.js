@@ -12,7 +12,6 @@ gulp.task('fs-watch', () => {
 })
 
 gulp.task('watch', gulp.series(
-  'test',
   'shared:components:fast',
   'shared:pages:fast',
   gulp.parallel(
@@ -24,7 +23,6 @@ gulp.task('watch', gulp.series(
   ),
   gulp.parallel(
     'server:run',
-    'test:watch',
     'fs-watch'
   ))
 )
