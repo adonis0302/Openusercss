@@ -3,19 +3,17 @@ div(:style="\
   height: ' + height + ';'\
 ").ouc-flush-img-root
   spinner(
-    v-show="loading",
+    v-if="loading",
     :spinning="loading",
     :size="30"
   )
   div(
-    v-show="!loading",
     :style="\
       'background-image: url(' + smallsrc + ');\
       background-position: ' + align + ';\
       background-size: ' + mode + ';'\
   ").ouc-flush-img-cover.img-container
   div(
-    v-show="!loading",
     :style="\
       'background-image: url(' + originalsrc + ');\
       background-position: ' + align + ';\
