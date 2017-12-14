@@ -12,6 +12,7 @@ import https from 'https'
 import pify from 'pify'
 import fs from 'fs'
 import pug from 'pug'
+import helmet from 'helmet'
 
 import staticConfig from './shared/config'
 
@@ -20,8 +21,63 @@ const basePath = path.resolve(process.mainModule.paths[0], '..')
 const clientPath = path.join(basePath, '/static/server.js')
 const templatePath = path.join(basePath, '/views/index.template.pug')
 
+const cspOptions = {
+  'directives': {
+    'defaultSrc': [
+      "'self'",
+      'openusercss.org',
+      'openusercss.com'
+    ],
+    'imgSrc': [
+      "'self'",
+      'data:',
+      'imageproxy.openusercss.org',
+      'imageproxy.openusercss.com',
+      'gravatar.com'
+    ],
+    'connectSrc': [
+      'api.openusercss.org',
+      'api.openusercss.com'
+    ],
+    'fontSrc': [
+      'data:'
+    ]
+  }
+}
+
+if (process.env.NODE_ENV === 'development') {
+  cspOptions.directives.defaultSrc.push('localhost')
+  cspOptions.directives.imgSrc.push('localhost')
+  cspOptions.directives.connectSrc.push('localhost:*')
+  cspOptions.directives.connectSrc.push('ws://localhost:*')
+  cspOptions.directives.scriptSrc = [
+    ...cspOptions.directives.defaultSrc,
+    "'unsafe-inline'"
+  ]
+  cspOptions.directives.styleSrc = [
+    ...cspOptions.directives.defaultSrc,
+    "'unsafe-inline'"
+  ]
+}
+
 const init = async () => {
   const app = express()
+
+  app.use(helmet({
+    'contentSecurityPolicy': cspOptions,
+    'dnsPrefetchControl':    {
+      'allow': true
+    },
+    'frameguard': {
+      'action': 'deny'
+    },
+    'hsts': {
+      'maxAge': 60 * 60 * 24 * 60
+    },
+    'referrerPolicy': {
+      'policy': 'strict-origin-when-cross-origin'
+    }
+  }))
 
   app.enable('trust proxy')
   app.set('trust proxy', true)
@@ -51,6 +107,7 @@ const init = async () => {
     })
 
     appStream.on('end', () => {
+      res.type('html')
       res.write(pug.renderFile(templatePath, {
         req,
         appHTML
@@ -60,6 +117,8 @@ const init = async () => {
     })
 
     appStream.on('error', (err) => {
+      log.error('Failed to render client, sending shell HTML:')
+      log.error(err)
       res.status(err.code || 500)
 
       res.write(pug.renderFile(templatePath, {

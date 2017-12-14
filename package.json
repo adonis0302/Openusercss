@@ -178,6 +178,7 @@
     "graphql-tools": "^2",
     "gravatar-url": "^2",
     "hat": "^0",
+    "helmet": "^3.9.0",
     "html-escaper": "^1",
     "jsonwebtoken": "^8",
     "lodash": "^4",

@@ -12,13 +12,52 @@ import {auto} from './shared/error-handler'
 
 import http from 'http'
 import https from 'https'
+import helmet from 'helmet'
+
+const cspOptions = {
+  'directives': {
+    'defaultSrc': [
+      "'self'"
+    ]
+  }
+}
+
+if (process.env.NODE_ENV === 'development') {
+  cspOptions.directives.defaultSrc.push('localhost')
+  cspOptions.directives.scriptSrc = [
+    ...cspOptions.directives.defaultSrc,
+    "'unsafe-inline'",
+    'unpkg.com',
+    'cdn.jsdelivr.net'
+  ]
+  cspOptions.directives.styleSrc = [
+    ...cspOptions.directives.defaultSrc,
+    "'unsafe-inline'",
+    'unpkg.com'
+  ]
+}
 
 const servers = []
-
 const init = async () => {
   await auto()
-
   const app = express()
+
+  app.use(helmet({
+    'contentSecurityPolicy': cspOptions,
+    'dnsPrefetchControl':    {
+      'allow': false
+    },
+    'frameguard': {
+      'action': 'deny'
+    },
+    'hsts': {
+      'maxAge': 60 * 60 * 24 * 60
+    },
+    'referrerPolicy': {
+      'policy': 'no-referrer'
+    }
+  }))
+
   const config = await staticConfig()
 
   app.enable('trust proxy')
