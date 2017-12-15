@@ -31,6 +31,7 @@ $colors: (
 $primary: map-get($colors, 'primary');
 $info: map-get($colors, 'secondary');
 $success: map-get($colors, 'highlight');
+$danger: map-get($colors, 'danger');
 
 $body-background-color: $white;
 $text: text-for-bg($body-background-color);
