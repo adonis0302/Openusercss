@@ -1,0 +1,52 @@
+extends ../../views/layouts/email
+
+block page
+  .container
+    .section
+      .logo
+        img(src="https://openusercss.org/img/openusercss.icon-x64.png")
+    .section
+      .has-text-centered
+        p
+          span.size-h2 Welcome to OpenUserCSS,
+          br
+          span.size-h1.break-word #{displayname}
+    .section
+      .has-text-centered
+        p
+          | Your account has been created, but you must confirm
+          | this e-mail before being able to upload themes.
+        p All you need to do now is verify your address by clicking here:
+    .section
+      a.button(href=link)
+        .card.has-text-centered.md-shadow--3.is-primary
+          p.size-h2 Verify
+      br
+      .columns
+        a.button(href="https://openusercss.org/search")
+          .card.has-text-centered.md-shadow--2.is-primary
+            p.size-h3 Search themes
+        a.button(href="https://forums.openusercss.org")
+          .card.has-text-centered.md-shadow--2.is-primary
+            p.size-h3 Ask questions
+    .section
+      .has-text-right
+        p See you soon on the Internet!
+
+    hr
+    .section
+      .has-text-centered
+        p
+          | In case you can't see the link to click on, copy and paste
+          | this into your browser's URL bar: #{link}
+    .section
+      .has-text-centered
+        p
+          | You've received this e-mail because someone registered
+          | your e-mail address on&nbsp;
+          a(href="https://openusercss.org") OpenUserCSS
+          | .
+        p
+          | To write a message, visit&nbsp;
+          a(href="https://openusercss.org/contact") the contact page
+          | !

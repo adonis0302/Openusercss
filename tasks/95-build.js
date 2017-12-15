@@ -8,6 +8,7 @@ gulp.task('build:fast', gulp.series(
     'client:fast',
   ),
   'server:views',
+  'server:email-templates',
   'server:fast'
 ))
 
@@ -19,5 +20,6 @@ gulp.task('build:prod', gulp.series(
     'client:prod',
   ),
   'server:views',
+  'server:email-templates',
   'server:prod'
 ))

@@ -36,6 +36,9 @@ const sources = {
   'scss': [
     'src/client/scss/main.scss'
   ],
+  'email': [
+    'src/client/scss/email.scss'
+  ],
   'css': [
     '.tmp/*.min.css'
   ],
@@ -245,4 +248,20 @@ gulp.task('client:media:fast', (done) => {
   ])
 
   return merge(finalCssStream, finalImageStream)
+})
+
+gulp.task('client:media:email', (done) => {
+  return pump([
+    prettyError(),
+    gulp.src(sources.email),
+    sassVars(ourSassConfig, {
+      'verbose': false
+    }),
+    sass(),
+    buffer(),
+    concat('email.min.css'),
+    postcss(postCssPluginsProd),
+    flatten(),
+    gulp.dest(destination('css'))
+  ])
 })

@@ -222,11 +222,13 @@ gulp.task('client:manifest', (done) => {
 })
 
 gulp.task('client:fast', gulp.parallel(
+  'client:media:email',
   gulp.series('client:js:fast', 'client:media:fast'),
   'client:manifest'
 ))
 
 gulp.task('client:prod', gulp.parallel(
+  'client:media:email',
   gulp.series('client:js:prod', 'client:media:prod'),
   'client:manifest'
 ))

@@ -3,6 +3,7 @@
 .sass-cache
 .tmp
 .ignored
+.env.json
 
 docker-compose.yml
 bfg.jar

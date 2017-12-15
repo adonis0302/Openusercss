@@ -1,0 +1,102 @@
+@charset 'UTF-8';
+
+@import './autocolor';
+@import './variables';
+@import 'node_modules/css-reset-and-normalize-sass/scss/flavored-reset-and-normalize';
+@import 'node_modules/md-shadows/md-shadows';
+
+@import './compat';
+@import './styles';
+@import './reboot';
+
+$background: map-get($colors, 'background');
+
+html {
+  background-color: nth($background, 1);
+  color: nth($background, 2);
+  line-height: 2rem;
+
+  a:not(.button) {
+    color: nth($background, 2);
+    text-decoration: underline;
+  }
+}
+
+.break-word {
+  word-wrap: break-word;
+}
+
+.container {
+  padding: .6rem;
+  margin: .6rem;
+  width: 100%;
+
+  > * {
+    max-width: 400px;
+  }
+}
+
+.section {
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+  margin: 0 auto;
+}
+
+.logo {
+  height: 64px;
+  margin: 0 auto;
+  width: 64px;
+
+  > * {
+    height: 64px;
+    width: 64px;
+  }
+}
+
+.card {
+  padding: 1rem;
+}
+
+.size-h1 {
+  font-size: 2.25rem;
+  line-height: 3rem;
+}
+
+.size-h2 {
+  font-size: 1.5rem;
+  line-height: 2rem;
+}
+
+.size-h3 {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.has-text-centered {
+  text-align: center;
+}
+
+.has-text-right {
+  text-align: right;
+}
+
+.is-primary {
+  background-color: nth($primary, 1);
+  color: nth($primary, 2);
+}
+
+.columns {
+  display: inline;
+
+  > * {
+    display: inline-block;
+    width: 47%;
+
+    &:first-child {
+      margin-right: 3%
+    }
+    &:last-child {
+      margin-left: 3%
+    }
+  }
+}
