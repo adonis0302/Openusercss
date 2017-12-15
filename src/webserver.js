@@ -45,7 +45,10 @@ const cspOptions = {
       'openusercss.org',
       'openusercss.com',
       'api.openusercss.org',
-      'api.openusercss.com'
+      'api.openusercss.com',
+      'imageproxy.openusercss.org',
+      'imageproxy.openusercss.com',
+      'gravatar.com'
     ],
     'fontSrc': [
       'data:'
