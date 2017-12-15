@@ -63,7 +63,8 @@ if (process.env.NODE_ENV === 'development') {
   cspOptions.directives.connectSrc.push('ws://localhost:*')
   cspOptions.directives.scriptSrc = [
     ...cspOptions.directives.defaultSrc,
-    "'unsafe-inline'"
+    "'unsafe-inline'",
+    "'unsafe-eval'"
   ]
 }
 
@@ -125,9 +126,10 @@ const init = async () => {
 
     appStream.on('error', (err) => {
       log.error('Failed to render client, sending shell HTML:')
-      log.error(err)
+      log.error(JSON.stringify(err, null, 4))
       res.status(err.code || 500)
 
+      res.type('html')
       res.write(pug.renderFile(templatePath, {
         req,
         appHTML
