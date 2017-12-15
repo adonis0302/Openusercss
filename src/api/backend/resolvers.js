@@ -10,6 +10,7 @@ import loginMutation from './mutations/login'
 import logoutMutation from './mutations/logout'
 import saveThemeMutation from './mutations/save-theme'
 import deleteThemeMutation from './mutations/delete-theme'
+import resendVerificationMutation from './mutations/resend-email-verify'
 
 export default {
   'Query': {
@@ -21,10 +22,11 @@ export default {
     'latestThemes': latestThemesQuery
   },
   'Mutation': {
-    'register':    registerMutation,
-    'login':       loginMutation,
-    'logout':      logoutMutation,
-    'theme':       saveThemeMutation,
-    'deleteTheme': deleteThemeMutation
+    'register':           registerMutation,
+    'login':              loginMutation,
+    'logout':             logoutMutation,
+    'theme':              saveThemeMutation,
+    'deleteTheme':        deleteThemeMutation,
+    'resendVerification': resendVerificationMutation
   }
 }

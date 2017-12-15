@@ -57,6 +57,7 @@ const typeDefs = `
     login(email: String!, password: String!): Session!
     logout(token: String!): Boolean!
     deleteTheme(token: String!, id: ID!): Boolean!
+    resendVerification(token: String!): Boolean!
     theme(
       token: String!,
       id: ID,
