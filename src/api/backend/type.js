@@ -45,6 +45,7 @@ const typeDefs = `
 
   type Query {
     verifyToken(token: String!): Session!
+    verifyEmail(token: String!): Boolean!
     theme(id: ID!): Theme!
     user(id: ID!): User!
     search(terms: String!, limit: Int, skip: Int): Results!

@@ -7,6 +7,10 @@ export default async (root, {token, title, description, content, version, id, sc
   })
   let newTheme = null
 
+  if (!user.emailVerified) {
+    throw new Error('You must verify your e-mail address before uploading themes.')
+  }
+
   if (id) {
     newTheme = await Theme.findOne({
       '_id': id

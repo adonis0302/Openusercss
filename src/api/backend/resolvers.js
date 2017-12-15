@@ -1,4 +1,5 @@
 import verifyTokenQuery from './queries/verify-token'
+import verifyEmailQuery from './queries/verify-email'
 import searchQuery from './queries/search'
 import themeQuery from './queries/theme'
 import userQuery from './queries/user'
@@ -13,6 +14,7 @@ import deleteThemeMutation from './mutations/delete-theme'
 export default {
   'Query': {
     'verifyToken':  verifyTokenQuery,
+    'verifyEmail':  verifyEmailQuery,
     'search':       searchQuery,
     'theme':        themeQuery,
     'user':         userQuery,

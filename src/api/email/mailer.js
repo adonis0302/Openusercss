@@ -2,6 +2,7 @@ import Email from 'email-templates'
 import nodemailer from 'nodemailer'
 import pify from 'pify'
 import path from 'path'
+import account from '../.env'
 
 export const createTestAccount = async () => {
   const testAccount = await pify(nodemailer.createTestAccount)
@@ -31,14 +32,14 @@ export const createTransport = async (transportOpts) => {
 }
 
 export const createTestTransport = async () => {
-  const account = await createTestAccount()
+  const testAccount = await createTestAccount()
   const transport = nodemailer.createTransport({
-    'host':   account.smtp.host,
-    'port':   account.smtp.port,
-    'secure': account.smtp.secure,
+    'host':   testAccount.smtp.host,
+    'port':   testAccount.smtp.port,
+    'secure': testAccount.smtp.secure,
     'auth':   {
-      'user': account.user,
-      'pass': account.pass
+      'user': testAccount.user,
+      'pass': testAccount.pass
     }
   })
 
@@ -46,7 +47,18 @@ export const createTestTransport = async () => {
   return transport
 }
 
-export const sendEmail = async (transport, {to, template, locals}) => {
+export const sendEmail = async ({to, template, locals}) => {
+  const transportOptions = {
+    'host':       account.smtp.host,
+    'port':       account.smtp.port,
+    'secure':     account.smtp.secure,
+    'requireTls': true,
+    'auth':       {
+      'user': account.user,
+      'pass': account.pass
+    }
+  }
+  const transport = await createTransport(transportOptions)
   const resourcePath = path.resolve('./static')
   const email = new Email({
     'juice':          true,

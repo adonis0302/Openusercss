@@ -1,30 +1,34 @@
 import bcrypt from 'bcryptjs'
 import log from 'chalk-console'
+import jwt from 'jsonwebtoken'
 import {
-  createTransport,
   sendEmail
 } from '../../email/mailer'
-import account from '../../.env'
 
-const createSendEmail = async (user) => {
-  const transportOptions = {
-    'host':       account.smtp.host,
-    'port':       account.smtp.port,
-    'secure':     account.smtp.secure,
-    'requireTls': true,
-    'auth':       {
-      'user': account.user,
-      'pass': account.pass
-    }
+import staticConfig from '../../../shared/config'
+
+const createSendEmail = async ({email, displayname}) => {
+  const config = await staticConfig()
+  const token = jwt.sign({
+    email
+  }, config.get('keypair.clientprivate'), {
+    'expiresIn': '1d',
+    'issuer':    config.get('domain'),
+    'algorithm': 'HS256'
+  })
+
+  let link = `https://openusercss.org/verify-email/${token}`
+
+  if (process.env.NODE_ENV === 'development') {
+    link = `http://localhost:5010/verify-email/${token}`
   }
-  const transport = await createTransport(transportOptions)
-  const result = await sendEmail(transport, {
-    'to':       user.email,
+
+  const result = await sendEmail({
+    'to':       email,
     'template': 'registration',
     'locals':   {
-      'displayname': user.displayname,
-      // TODO Token
-      'link':        'https://openusercss.org/verify-email/#token'
+      displayname,
+      link
     }
   })
 
@@ -42,8 +46,6 @@ export default async (root, {displayname, email, password}, {User}) => {
     email
   })
   const savedUser = await newUser.save()
-
-  await newUser.delete()
 
   createSendEmail(savedUser)
   .catch(log.error)
