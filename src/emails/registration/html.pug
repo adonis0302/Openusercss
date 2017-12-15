@@ -16,9 +16,8 @@ block page
         p
           | Your account has been created, but you must confirm
           | this e-mail before being able to upload themes.
-        p All you need to do now is verify your address by clicking here:
     .section
-      a.button(href=link)
+      a.button.has-bottom-margin(href=link)
         .card.has-text-centered.md-shadow--3.is-primary
           p.size-h2 Verify
       br
@@ -35,17 +34,18 @@ block page
 
     hr
     .section
-      .has-text-centered
+      .has-text-centered.has-text-small
         p
           | In case you can't see the link to click on, copy and paste
           | this into your browser's URL bar: #{link}
     .section
-      .has-text-centered
+      .has-text-centered.has-text-small
         p
           | You've received this e-mail because someone registered
           | your e-mail address on&nbsp;
           a(href="https://openusercss.org") OpenUserCSS
           | .
+        br
         p
           | To write a message, visit&nbsp;
           a(href="https://openusercss.org/contact") the contact page

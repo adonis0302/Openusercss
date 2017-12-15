@@ -9,8 +9,41 @@ export const createTestAccount = async () => {
   return testAccount()
 }
 
+export const verifyConnection = (transport) => {
+  return new Promise((resolve, reject) => {
+    transport.verify((error, success) => {
+      if (error) {
+        reject(error)
+      } else if (!success) {
+        reject(`Success is not truthy: ${JSON.stringify(success, null, 4)}`)
+      } else {
+        resolve(success)
+      }
+    })
+  })
+}
+
 export const createTransport = async (transportOpts) => {
-  return pify(nodemailer.createTransport)(transportOpts)
+  const transport = nodemailer.createTransport(transportOpts)
+
+  await verifyConnection(transport)
+  return transport
+}
+
+export const createTestTransport = async () => {
+  const account = await createTestAccount()
+  const transport = nodemailer.createTransport({
+    'host':   account.smtp.host,
+    'port':   account.smtp.port,
+    'secure': account.smtp.secure,
+    'auth':   {
+      'user': account.user,
+      'pass': account.pass
+    }
+  })
+
+  await verifyConnection(transport)
+  return transport
 }
 
 export const sendEmail = async (transport, {to, template, locals}) => {
@@ -18,11 +51,12 @@ export const sendEmail = async (transport, {to, template, locals}) => {
   const email = new Email({
     'juice':          true,
     'juiceResources': {
-      'preserveImportant': false,
+      'preserveImportant': true,
       'webResources':      {
         'relativeTo': resourcePath
       }
     },
+    'send':    true,
     'message': {
       'from': 'notifications@openusercss.org'
     },
@@ -30,8 +64,10 @@ export const sendEmail = async (transport, {to, template, locals}) => {
   })
 
   return email.send({
-    to,
     template,
-    locals
+    locals,
+    'message': {
+      to
+    }
   })
 }

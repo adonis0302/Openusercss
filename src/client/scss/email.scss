@@ -11,15 +11,38 @@
 
 $background: map-get($colors, 'background');
 
-html {
+*:not(.button) {
   background-color: nth($background, 1);
   color: nth($background, 2);
+  background-color: nth($background, 1) !important;
+  color: nth($background, 2) !important;
+}
+
+body {
+  overflow-x: hidden !important;
+}
+
+.button,
+.button * {
+  background-color: nth($primary, 1);
+  color: nth($primary, 2);
+  background-color: nth($primary, 1) !important;
+  color: nth($primary, 2) !important;
+}
+
+html,
+.container {
   line-height: 2rem;
 
   a:not(.button) {
-    color: nth($background, 2);
-    text-decoration: underline;
+    text-decoration: underline !important;
   }
+}
+
+.has-text-small,
+.has-text-small * {
+  line-height: 1.2rem !important;
+  font-size: 14px !important;
 }
 
 .break-word {
@@ -40,6 +63,10 @@ html {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
   margin: 0 auto;
+
+  > a {
+    width: 100%;
+  }
 }
 
 .logo {
