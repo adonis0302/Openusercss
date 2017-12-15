@@ -1,0 +1,21 @@
+div.route-root
+  b-container
+    b-section
+      notification(v-show="actionErrors.length > 0", icon="alert", color="is-danger").is-danger
+        div(slot="content")
+          p(v-for="error in actionErrors") {{error}}
+      b-columns(v-show="currentUser._id")
+        b-column(is-6)
+          b-button(:class="['button', 'is-primary', {'is-loading': loading}]", @click="resendVerification") Resend verification e-mail
+          div(v-show="verifyResult")
+            p Check your inbox!
+        b-column(is-6)
+      div(v-show="!currentUser._id")
+        p
+          | This page allows you to edit account details,
+          | but you're not logged in.
+        br
+        p
+          router-link.button.is-primary(to="/login") Click here to do so
+
+  attributor

@@ -10,6 +10,7 @@ import themeEditorRoute from '../../../../.tmp/pages/edit-theme/edit-theme.vue'
 import themeRoute from '../../../../.tmp/pages/theme/theme.vue'
 import contactRoute from '../../../../.tmp/pages/contact/contact.vue'
 import testRoute from '../../../../.tmp/pages/test/test.vue'
+import accountRoute from '../../../../.tmp/pages/account/account.vue'
 
 import notFoundRoute from '../../../../.tmp/pages/not-found/not-found.vue'
 
@@ -27,6 +28,10 @@ const router = new VueRouter({
     {
       'path':      '/register',
       'component': registerRoute
+    },
+    {
+      'path':      '/account',
+      'component': accountRoute
     },
     {
       'path':      '/verify-email/:token',

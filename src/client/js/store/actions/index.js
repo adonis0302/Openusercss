@@ -11,6 +11,7 @@ import getFullTheme from './get-full-theme'
 import getLatestThemes from './get-latest-themes'
 import search from './search'
 import verifyEmail from './verify-email'
+import sendVerify from './remote-send-verify'
 
 let networkInterface = createBatchingNetworkInterface({
   'uri': 'http://localhost:5000'
@@ -43,5 +44,6 @@ export default {
   getFullTheme,
   getLatestThemes,
   search,
-  verifyEmail
+  verifyEmail,
+  sendVerify
 }
