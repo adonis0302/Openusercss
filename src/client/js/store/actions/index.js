@@ -10,6 +10,7 @@ import getFullUser from './get-full-user'
 import getFullTheme from './get-full-theme'
 import getLatestThemes from './get-latest-themes'
 import search from './search'
+import verifyEmail from './verify-email'
 
 let networkInterface = createBatchingNetworkInterface({
   'uri': 'http://localhost:5000'
@@ -41,5 +42,6 @@ export default {
   getFullUser,
   getFullTheme,
   getLatestThemes,
-  search
+  search,
+  verifyEmail
 }

@@ -8,7 +8,8 @@ import {
   theme as themeQuery,
   user as userQuery,
   latestThemes as latestThemesQuery,
-  search as searchQuery
+  search as searchQuery,
+  verifyEmail as verifyEmailQuery
 } from '../queries'
 
 export const deleteTheme = async (id, token) => {
@@ -43,6 +44,24 @@ export const verifyToken = async (token) => {
     result = {
       'data': {
         'verifyToken': false
+      }
+    }
+  }
+
+  return result
+}
+
+export const verifyEmail = async (token) => {
+  let result = null
+
+  try {
+    result = await apolloClient.query({
+      'query': verifyEmailQuery({token})
+    })
+  } catch (error) {
+    result = {
+      'data': {
+        'verifyEmail': false
       }
     }
   }

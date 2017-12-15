@@ -4,6 +4,7 @@ import indexRoute from '../../../../.tmp/pages/index/index.vue'
 import searchRoute from '../../../../.tmp/pages/search/search.vue'
 import loginRoute from '../../../../.tmp/pages/login/login.vue'
 import registerRoute from '../../../../.tmp/pages/register/register.vue'
+import verifyEmailRoute from '../../../../.tmp/pages/verify-email/verify-email.vue'
 import profileRoute from '../../../../.tmp/pages/profile/profile.vue'
 import themeEditorRoute from '../../../../.tmp/pages/edit-theme/edit-theme.vue'
 import themeRoute from '../../../../.tmp/pages/theme/theme.vue'
@@ -26,6 +27,10 @@ const router = new VueRouter({
     {
       'path':      '/register',
       'component': registerRoute
+    },
+    {
+      'path':      '/verify-email/:token',
+      'component': verifyEmailRoute
     },
     {
       'path':      '/search',

@@ -33,6 +33,10 @@ export const verifyToken = ({token}) => gql(`{
   }
 }`)
 
+export const verifyEmail = ({token}) => gql(`{
+  verifyEmail(token: "${token}")
+}`)
+
 export const theme = ({id}) => gql(`
   query {
     theme(id: "${id}") {
