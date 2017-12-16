@@ -9,10 +9,11 @@ div.route-root
             div(style="background-color: black")
               spinner(:size="50", :spinning="spinning")
 
-        b-column(is-6)
-          flush-img(
-            source="https://blog.decentm.com/wp-content/uploads/2017/09/sao-0203-520x245.jpg",
-            height="300px"
-          )
+        b-column(is-2)
+          p Notifications:
+          b-button(@click="showInfo") Info
+          b-button(@click="showSuccess") Success
+          b-button(@click="showWarning") Warning
+          b-button(@click="showError") Error
 
   attributor

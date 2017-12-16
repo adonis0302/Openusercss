@@ -25,12 +25,14 @@ $colors: (
   'secondary':  (map-get($tones, 'brand-secondary'), text-for-bg(map-get($tones, 'brand-secondary'))),
   'background': (map-get($tones, 'brand-background'), text-for-bg(map-get($tones, 'brand-background'))),
   'highlight':  (map-get($tones, 'brand-highlight'), text-for-bg(map-get($tones, 'brand-highlight'))),
-  'danger':     (map-get($tones, 'red'), text-for-bg(map-get($tones, 'red')))
+  'danger':     (map-get($tones, 'red'), text-for-bg(map-get($tones, 'red'))),
+  'success':    ($green, text-for-bg($green))
 );
 
 $primary: map-get($colors, 'primary');
+$secondary: map-get($colors, 'secondary');
 $info: map-get($colors, 'secondary');
-$success: map-get($colors, 'highlight');
+$success: map-get($colors, 'success');
 $danger: map-get($colors, 'danger');
 
 $body-background-color: $white;

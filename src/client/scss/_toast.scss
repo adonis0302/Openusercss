@@ -1,0 +1,54 @@
+.iziToast-theme-ouc {
+  &.iziToast {
+    &:after {
+      box-shadow: none;
+    }
+
+    border-radius: 0;
+  }
+
+  &.iziToast-color-blue {
+    background-color: nth($primary, 1);
+
+    .iziToast-body {
+      i,
+      p,
+      strong {
+        color: nth($primary, 2);
+      }
+    }
+  }
+  &.iziToast-color-green {
+    background-color: nth($success, 1);
+
+    .iziToast-body {
+      i,
+      p,
+      strong {
+        color: nth($success, 2);
+      }
+    }
+  }
+  &.iziToast-color-orange {
+    background-color: nth($secondary, 1);
+
+    .iziToast-body {
+      i,
+      p,
+      strong {
+        color: nth($secondary, 2);
+      }
+    }
+  }
+  &.iziToast-color-red {
+    background-color: nth($danger, 1);
+
+    .iziToast-body {
+      i,
+      p,
+      strong {
+        color: nth($danger, 2);
+      }
+    }
+  }
+}

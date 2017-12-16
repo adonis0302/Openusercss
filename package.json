@@ -117,6 +117,7 @@
     "gulp-vuemaker": "https://github.com/thierrymichel/gulp-vuemaker",
     "he": "^1.1.1",
     "imagemin-jpeg-recompress": "^5",
+    "izitoast": "^1.2.0",
     "james-browser-launcher": "^1",
     "legal-eagle": "^0",
     "lighthouse": "git+https://github.com/GoogleChrome/lighthouse.git#v2.0.0",

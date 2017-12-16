@@ -3,10 +3,12 @@
 @import 'node_modules/css-reset-and-normalize-sass/scss/flavored-reset-and-normalize';
 @import 'node_modules/md-shadows/md-shadows';
 @import 'node_modules/flickity/css/flickity';
+@import 'node_modules/izitoast/dist/css/iziToast';
 
 @import './autocolor';
 @import './variables';
 
 @import './compat';
 @import './styles';
+@import './toast';
 @import './reboot';

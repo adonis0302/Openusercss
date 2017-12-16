@@ -18,6 +18,7 @@ addEventListener('message', (event) => {
 })
 
 addEventListener('install', (event) => {
+  caches.delete('ouc-assets')
   toolbox.precache([
     '/',
     '/login',
@@ -25,6 +26,9 @@ addEventListener('install', (event) => {
     '/search',
     '/img/image-error-x128.png',
     '/img/main.bg-x128.png',
-    '/img/openusercss.icon-x16.png'
+    '/img/openusercss.icon-x16.png',
+    '/browser.js',
+    '/css/bundle.min.css',
+    '/manifest.json'
   ])
 })

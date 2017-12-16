@@ -28,7 +28,7 @@ class Animation {
     }
 
     this.speeds = {
-      'large': 700,
+      'large': 600,
       'small': 400,
       'none':  0
     }
@@ -91,7 +91,7 @@ class Animation {
 }
 
 export class TopBottom extends Animation {
-  constructor () {
+  constructor (interpolation) {
     super()
 
     this.stage('beforeAppear', async ({element, done}) => {
@@ -108,7 +108,7 @@ export class TopBottom extends Animation {
         'clip-path': 'polygon(-1px -1px, 101% -1%, 101% 101%, -1% 101%)',
         'duration':  this.speed,
         'delay':     100 + additionalDelay,
-        'easing':    'easeInOutQuart'
+        'easing':    interpolation || 'easeInOutQuart'
       })
 
       await node.finished
@@ -131,7 +131,7 @@ export class TopBottom extends Animation {
         'targets':   element,
         'clip-path': 'polygon(-1px 101%, 101% 101%, 101% 101%, -1% 101%)',
         'duration':  this.speed,
-        'easing':    'easeInOutQuart'
+        'easing':    interpolation || 'easeInOutQuart'
       })
 
       // Wait for the animejs animation to finish
@@ -148,7 +148,7 @@ export class TopBottom extends Animation {
 }
 
 export class LeftRight extends Animation {
-  constructor () {
+  constructor (interpolation) {
     super()
 
     this.stage('beforeAppear', async ({element, done}) => {
@@ -165,7 +165,7 @@ export class LeftRight extends Animation {
         'clip-path': 'polygon(-1px -1px, 101% -1px, 101% 101%, -1px 101%)',
         'duration':  this.speed,
         'delay':     100 + additionalDelay,
-        'easing':    'easeInOutQuart'
+        'easing':    interpolation || 'easeInOutQuart'
       })
 
       await node.finished
@@ -188,7 +188,7 @@ export class LeftRight extends Animation {
         'targets':   element,
         'clip-path': 'polygon(101% -1px, 101% -1%, 101% 101%, 101% 101%)',
         'duration':  this.speed,
-        'easing':    'easeInOutQuart'
+        'easing':    interpolation || 'easeInOutQuart'
       })
 
       // Wait for the animejs animation to finish

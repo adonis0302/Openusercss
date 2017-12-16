@@ -69,6 +69,7 @@ export const sendEmail = async ({to, template, locals}) => {
       }
     },
     'send':    true,
+    'preview': false,
     'message': {
       'from': 'notifications@openusercss.org'
     },

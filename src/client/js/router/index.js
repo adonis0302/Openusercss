@@ -14,7 +14,7 @@ import accountRoute from '../../../../.tmp/pages/account/account.vue'
 
 import notFoundRoute from '../../../../.tmp/pages/not-found/not-found.vue'
 
-const router = new VueRouter({
+export const routerOptions = {
   'mode':   'history',
   'routes': [
     {
@@ -70,7 +70,8 @@ const router = new VueRouter({
       'component': notFoundRoute
     }
   ]
-})
+}
+const router = new VueRouter(routerOptions)
 
 router.beforeEach((to, from, next) => {
   if (

@@ -19,17 +19,19 @@ export default {
     spinner,
     notification
   },
-  data () {
-    return {
-      'verifyResult': null
-    }
-  },
   'methods': {
     async resendVerification () {
       const {data} = await this.$store.dispatch('sendVerify', this.session.token)
       const {resendVerification} = data
 
-      this.verifyResult = resendVerification
+      if (resendVerification) {
+        this.$toast.success({
+          'title':   'Sent',
+          'message': 'Check your inbox!',
+          'theme':   'ouc',
+          'layout':  2
+        })
+      }
     }
   },
   'computed': mapGetters([

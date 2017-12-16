@@ -18,12 +18,7 @@ export default {
   beforeMount () {
     this.$store.dispatch('verifyToken')
 
-    this.processInterval = setInterval(() => {
-      this.process = process
-    }, 1000)
-  },
-  beforeDestroy () {
-    clearInterval(this.processInterval)
+    this.process = process
   },
   data () {
     return {
@@ -31,7 +26,7 @@ export default {
     }
   },
   'methods': {
-    ...new LeftRight(),
+    ...new LeftRight('easeOutCubic'),
     ...mapMutations([
       'clearCache'
     ])

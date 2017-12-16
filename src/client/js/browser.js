@@ -3,8 +3,9 @@ import 'babel-polyfill'
 import FpsEmitter from 'fps-emitter'
 import {divide, sum} from 'lodash'
 import log from 'chalk-console'
+import iziToast from 'izitoast'
 
-import VModal from 'vue-js-modal'
+import VueModal from 'vue-js-modal'
 import VFlickity from 'vue-flickity'
 import {
   Vue,
@@ -19,6 +20,8 @@ const polyfills = async () => {
   return runPolyfills()
 }
 
+Vue.prototype.$toast = iziToast
+
 const main = async () => {
   const polyfillsResult = await polyfills()
   const fps = new FpsEmitter(1000)
@@ -28,7 +31,7 @@ const main = async () => {
   process.fpsHistory = []
   process.polyfills = polyfillsResult
 
-  Vue.use(VModal)
+  Vue.use(VueModal)
   Vue.component('flickity', VFlickity)
 
   const app = new Vue({
@@ -37,6 +40,7 @@ const main = async () => {
     ...appBase
   })
 
+  process.toast = iziToast
   process.nextTick(() => {
     app.$mount('app')
   })

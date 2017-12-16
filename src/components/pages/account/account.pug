@@ -7,8 +7,6 @@ div.route-root
       b-columns(v-show="currentUser._id")
         b-column(is-6)
           b-button(:class="['button', 'is-primary', {'is-loading': loading}]", @click="resendVerification") Resend verification e-mail
-          div(v-show="verifyResult")
-            p Check your inbox!
         b-column(is-6)
       div(v-show="!currentUser._id")
         p
