@@ -13,6 +13,7 @@ import pify from 'pify'
 import fs from 'fs'
 import pug from 'pug'
 import helmet from 'helmet'
+import {auto} from './shared/error-handler'
 
 import staticConfig from './shared/config'
 
@@ -69,6 +70,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const init = async () => {
+  await auto()
   const app = express()
 
   app.use(helmet({
@@ -126,7 +128,7 @@ const init = async () => {
 
     appStream.on('error', (err) => {
       log.error('Failed to render client, sending shell HTML:')
-      log.error(JSON.stringify(err, null, 4))
+      log.error(err)
       res.status(err.code || 500)
 
       res.type('html')
