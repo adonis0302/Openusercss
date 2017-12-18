@@ -1,51 +1,48 @@
-import {find, cloneDeep} from 'lodash'
+import db from './db'
 
 const users = (state) => {
-  const foundUsers = cloneDeep(state.users)
+  try {
+    const usersCol = db.getCollection('users')
+    const themesCol = db.getCollection('themes')
+    const dbUsers = usersCol.find({})
+    const processedUsers = []
 
-  if (!foundUsers) {
-    return []
-  }
-
-  foundUsers.forEach((user, index) => {
-    const userThemes = []
-
-    if (user.themes) {
-      state.themes.forEach((themeObj) => {
-        user.themes.forEach((userTheme) => {
-          if (userTheme._id === themeObj._id) {
-            userThemes.push(themeObj)
-          }
+    dbUsers.forEach((user, userIndex) => {
+      user.themes.forEach((theme, themeIndex) => {
+        user.themes[themeIndex] = themesCol.findOne({
+          '_id': theme._id
         })
       })
-    }
 
-    user.themes = userThemes
-  })
+      processedUsers.push(user)
+    })
 
-  return foundUsers
+    return processedUsers
+  } catch (error) {
+    return []
+  }
 }
 
 const themes = (state) => {
-  const foundThemes = cloneDeep(state.themes)
+  try {
+    const usersCol = db.getCollection('users')
+    const themesCol = db.getCollection('themes')
+    const dbThemes = themesCol.find({})
+    const processedThemes = []
 
-  if (!foundThemes) {
-    return []
-  }
+    // return dbThemes.find({})
+    dbThemes.forEach((theme, themeIndex) => {
+      theme.user = usersCol.findOne({
+        '_id': theme.user._id
+      })
 
-  foundThemes.forEach((theme, index) => {
-    theme.user = find(state.users, {
-      '_id': theme.user._id
+      processedThemes.push(theme)
     })
 
-    if (!theme.user) {
-      theme.user = {
-        'themes': []
-      }
-    }
-  })
-
-  return foundThemes
+    return processedThemes
+  } catch (error) {
+    return []
+  }
 }
 
 const actionErrors = (state) => {
@@ -61,11 +58,13 @@ const loading = (state) => {
 }
 
 const currentUser = (state) => {
+  const dbUsers = db.getCollection('users')
+
   if (!state.session) {
     return {}
   }
 
-  const user = find(state.users, {
+  const user = dbUsers.findOne({
     '_id': state.session.user._id
   })
 

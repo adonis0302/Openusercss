@@ -1,4 +1,6 @@
 import {verifyToken as verifyTokenRemote} from './helpers/remotes/queries'
+import db, {upsert} from '../db'
+import {cloneDeep} from 'lodash'
 
 export default async ({commit, getters}) => {
   commit('loading', true)
@@ -11,8 +13,9 @@ export default async ({commit, getters}) => {
       return false
     }
 
+    const users = db.getCollection('users')
     const {data} = await verifyTokenRemote(session.token)
-    const {verifyToken} = data
+    const {verifyToken} = cloneDeep(data)
 
     if (!verifyToken) {
       commit('logout')
@@ -25,13 +28,13 @@ export default async ({commit, getters}) => {
           '_id': verifyToken.user._id
         }
       })
-      commit('users', [
-        verifyToken.user
-      ])
+      upsert(users, verifyToken.user)
     }
+    return true
   } catch (error) {
     commit('actionError', error)
   }
 
   commit('loading', false)
+  return false
 }

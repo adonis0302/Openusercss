@@ -1,10 +1,13 @@
 import {cloneDeep} from 'lodash'
 import {getFullUser} from './helpers/remotes/queries'
+import db, {upsert} from '../db'
 
 export default async ({commit, getters}, id) => {
   commit('loading', true)
 
   try {
+    const themes = db.getCollection('themes')
+    const users = db.getCollection('users')
     const {data} = await getFullUser(id)
     const {user} = cloneDeep(data)
 
@@ -18,9 +21,7 @@ export default async ({commit, getters}, id) => {
             }
           }
 
-          commit('themes', [
-            constructedTheme
-          ])
+          upsert(themes, constructedTheme)
         }
       })
     }
@@ -35,12 +36,10 @@ export default async ({commit, getters}, id) => {
       }
     })
 
-    commit('users', [
-      {
-        ...user,
-        'themes': userThemeRefs
-      }
-    ])
+    upsert(users, {
+      ...user,
+      'themes': userThemeRefs
+    })
     commit('actionError', null)
   } catch (error) {
     commit('actionError', error)

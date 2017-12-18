@@ -1,11 +1,14 @@
 import {cloneDeep} from 'lodash'
 import router from '../../router'
 import {remoteLogin} from './helpers/remotes/mutations'
+import db, {upsert} from '../db'
 
 export default async ({commit}, authData) => {
   commit('loading', true)
 
   try {
+    const themes = db.getCollection('themes')
+    const users = db.getCollection('users')
     const {data} = await remoteLogin(authData)
     const {login} = data
 
@@ -19,19 +22,16 @@ export default async ({commit}, authData) => {
     })
 
     const {user} = cloneDeep(login)
-    const userThemes = []
 
     if (user.themes.length) {
       user.themes.forEach((theme) => {
-        userThemes.push({
+        upsert(themes, {
           ...theme,
           'user': {
             '_id': user._id
           }
         })
       })
-
-      commit('themes', userThemes)
     }
 
     const userThemeRefs = []
@@ -44,12 +44,10 @@ export default async ({commit}, authData) => {
       })
     }
 
-    commit('users', [
-      {
-        ...user,
-        'themes': userThemeRefs
-      }
-    ])
+    upsert(users, {
+      ...user,
+      'themes': userThemeRefs
+    })
 
     commit('actionError', null)
     router.push('/')

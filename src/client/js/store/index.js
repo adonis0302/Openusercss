@@ -9,8 +9,6 @@ import actions from './actions'
 const storeOptions = {
   'state': {
     'actionErrors': [],
-    'users':        [],
-    'themes':       [],
     'session':      null,
     'loading':      false
   },

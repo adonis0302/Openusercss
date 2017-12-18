@@ -13,14 +13,12 @@ import {
   router,
   appBase
 } from './vue'
-
+import db from './store/db'
 import {runPolyfills} from './utils/features'
 
 const polyfills = async () => {
   return runPolyfills()
 }
-
-Vue.prototype.$toast = iziToast
 
 const main = async () => {
   const polyfillsResult = await polyfills()
@@ -30,6 +28,10 @@ const main = async () => {
   process.averageFps = 0
   process.fpsHistory = []
   process.polyfills = polyfillsResult
+  process.db = db
+
+  Vue.prototype.$toast = iziToast
+  Vue.prototype.$db = db
 
   Vue.use(VueModal)
   Vue.component('flickity', VFlickity)
