@@ -121,6 +121,7 @@
     "james-browser-launcher": "^1",
     "legal-eagle": "^0",
     "lighthouse": "git+https://github.com/GoogleChrome/lighthouse.git#v2.0.0",
+    "lokijs": "^1.5.1",
     "loose-envify": "^1",
     "md-shadows": "^1",
     "mdi": "^2",
@@ -153,6 +154,7 @@
     "vue-flickity": "^1.0.9",
     "vueify": "^9",
     "vueify-extract-css": "https://github.com/DecentM/vueify-extract-css",
+    "vuex": "^3",
     "walk": "^2.3.9",
     "watchify": "^3",
     "windowify": "^0.3.0"
@@ -213,7 +215,6 @@
     "vue-server-renderer": "^2",
     "vue-template-compiler": "^2.5.2",
     "vue2-filters": "^0.2.2",
-    "vuex": "^2",
     "vuex-persist": "^0.6.0"
   }
 }
