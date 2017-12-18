@@ -1,6 +1,5 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import {mapGetters} from 'vuex'
-import {findIndex} from 'lodash'
 import {formatMoment} from '../../../src/shared/time'
 
 import icon from '../../components/icon/icon.vue'
@@ -64,9 +63,12 @@ export default {
     formatMoment,
     proxyImage (original) {
       return {
-        'large': `https://imageproxy.openusercss.org/none/${encodeURIComponent(original)}`,
-        'small': `https://imageproxy.openusercss.org/blurred/${encodeURIComponent(original)}`
+        'large': `https://imageproxy.openusercss.org/${original}`,
+        'small': `https://imageproxy.openusercss.org/50x/${original}`
       }
+    },
+    hasScreenshots (theme) {
+      return !!theme.screenshots && !!theme.screenshots.length && theme.screenshots[0] !== ''
     },
     confirmDeleteTheme () {
       this.confirmTitle = ''
@@ -101,14 +103,23 @@ export default {
     'viewedTheme': {
       'cache': false,
       get () {
-        const themeIndex = findIndex(this.themes, (theme) => theme._id === this.$route.params.id)
+        const theme = this.$db.getCollection('themes').findOne({
+          '_id': this.$route.params.id
+        }) || {}
+        let userId = 0
 
-        if (!this.themes[themeIndex]) {
-          return {
-            'user': {}
-          }
+        if (theme.user && theme.user._id) {
+          userId = theme.user._id
         }
-        return this.themes[themeIndex]
+
+        const user = this.$db.getCollection('users').findOne({
+          '_id': userId
+        }) || {}
+
+        return {
+          ...theme,
+          user
+        }
       }
     }
   }

@@ -38,6 +38,7 @@ div.route-root
   b-container(:inert="showingModal")
     div
       b-section
+        p {{viewedUser}}
         notification(v-show="actionErrors.length > 0", icon="alert", color="is-danger").is-danger
           div(slot="content")
             p(v-for="error in actionErrors") {{error}}
@@ -62,7 +63,7 @@ div.route-root
               b-box(is-paddingless, is-marginless).ouc-theme-card
                 flickity.carousel(ref="flickity", :options="flickityOptions")
                   flush-img(
-                    v-if="viewedTheme.screenshots && viewedTheme.screenshots.length",
+                    v-if="hasScreenshots(viewedTheme)",
                     v-for="screenshot in viewedTheme.screenshots",
                     :source="proxyImage(screenshot).large",
                     height="250px",
@@ -70,7 +71,7 @@ div.route-root
                     align="center"
                   ).carousel-cell
                   flush-img(
-                    v-if="!viewedTheme.screenshots || !viewedTheme.screenshots.length",
+                    v-if="!hasScreenshots(viewedTheme)",
                     height="250px",
                     align="center"
                   ).carousel-cell

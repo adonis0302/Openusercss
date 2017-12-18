@@ -32,8 +32,6 @@ export default {
     ])
   },
   'computed': mapGetters([
-    'themes',
-    'users',
     'session',
     'loading'
   ])

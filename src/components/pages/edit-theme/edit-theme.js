@@ -90,11 +90,12 @@ export default {
       'actionErrors',
       'users',
       'currentUser',
-      'themes',
       'loading'
     ]),
     isNew () {
       return this.$route.params.id === '0'
+    },
+    themes () {
     },
     'editedTheme': {
       'cache': false,

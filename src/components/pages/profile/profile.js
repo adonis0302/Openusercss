@@ -1,7 +1,6 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import {mapGetters} from 'vuex'
 import moment from 'moment'
-import {findIndex} from 'lodash'
 
 import icon from '../../components/icon/icon.vue'
 import themeCard from '../../components/theme-card/theme-card.vue'
@@ -53,20 +52,32 @@ export default {
     ...mapGetters([
       'currentUser',
       'actionErrors',
-      'users',
       'themes'
     ]),
     'viewedUser': {
       'cache': false,
       get () {
-        const userIndex = findIndex(this.users, (user) => user._id === this.$route.params.id)
+        const user = this.$db.getCollection('users').findOne({
+          '_id': this.$route.params.id
+        })
+        const userThemes = []
 
-        if (!this.users[userIndex]) {
-          return {
-            'user': {}
-          }
+        if (user && user.themes) {
+          user.themes.forEach((theme) => {
+            if (theme) {
+              const userTheme = this.$db.getCollection('themes').findOne({
+                '_id': theme._id
+              })
+
+              userThemes.push(userTheme)
+            }
+          })
         }
-        return this.users[userIndex]
+
+        return {
+          ...user,
+          'themes': userThemes
+        }
       }
     },
     lastOnlineDisplay () {
