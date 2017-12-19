@@ -1,5 +1,9 @@
 $secondary: map-get($colors, 'secondary');
 
+modal {
+  display: none
+}
+
 .vue-tooltip-theme {
   background-color: nth($secondary, 1);
   color: nth($secondary, 2);
