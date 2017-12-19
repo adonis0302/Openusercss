@@ -117,17 +117,19 @@ const init = async () => {
       appHTML = `${appHTML}${data.toString()}`
     })
 
-    appStream.on('end', () => {
+    appStream.on('end', async () => {
       res.type('html')
-      res.write(pug.renderFile(templatePath, {
+      const pugHTML = pug.renderFile(templatePath, {
         req,
         appHTML
-      }))
+      })
+      const {html} = await schemas.process(pugHTML)
 
+      res.write(html)
       res.end()
     })
 
-    appStream.on('error', (err) => {
+    appStream.on('error', async (err) => {
       log.error('Failed to render client, sending shell HTML:')
       log.error(err)
       res.status(err.code || 500)
@@ -137,8 +139,9 @@ const init = async () => {
         req,
         appHTML
       })
+      const {html} = await schemas.process(pugHTML)
 
-      res.write(schemas.process(pugHTML))
+      res.write(html)
       res.end()
     })
   })
