@@ -1,4 +1,8 @@
-div.route-root
+div.route-root(itemtype="Person")
+  meta(itemprop="name", :value="viewedUser.displayname")
+  div(v-for="theme in viewedUser.themes", itemtype="SoftwareApplication")
+    meta(itemprop="name", :value="theme.title")
+
   b-container
     div
       b-section
@@ -54,7 +58,5 @@ div.route-root
                         br
                         h6 Created {{theme.createdAt | moment('from', 'now')}}
                         h6(v-if="theme.createdAt !== theme.lastUpdate") Last updated {{theme.lastUpdate | moment('from', 'now')}}
-                        //- hr
-                        //- p {{theme.description}}
 
   attributor

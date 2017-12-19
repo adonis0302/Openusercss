@@ -1,4 +1,14 @@
-div.route-root
+div.route-root(itemtype="SoftwareApplication")
+  meta(itemprop="text", :value="viewedTheme.content")
+  meta(itemprop="name", :value="viewedTheme.title")
+  meta(itemprop="dateCreated", :value="viewedTheme.createdAt")
+  meta(itemprop="dateModified", :value="viewedTheme.lastUpdate")
+  meta(itemprop="version", :value="viewedTheme.version")
+  meta(itemprop="description", :value="viewedTheme.description")
+  //- meta(itemprop="aggregateRating", :value="viewedTheme.rating")
+  div(itemprop="author", itemtype="Person")
+    meta(itemprop="name", :value="viewedTheme.user.displayname")
+
   modal(name="delete-theme", :draggable="true", height="auto")
     form(@submit.prevent="deleteTheme")
       b-card(is-unselectable)
@@ -38,7 +48,6 @@ div.route-root
   b-container(:inert="showingModal")
     div
       b-section
-        p {{viewedUser}}
         notification(v-show="actionErrors.length > 0", icon="alert", color="is-danger").is-danger
           div(slot="content")
             p(v-for="error in actionErrors") {{error}}
@@ -81,17 +90,16 @@ div.route-root
                       b-level(is-marginless)
                         b-level-left
                           router-link(:to="'/profile/' + viewedTheme.user._id")
-                            b-button(is-primary) Visit {{viewedTheme.user.displayname}}'s profile
+                            b-button(is-primary)
+                              p Visit {{viewedTheme.user.displayname}}'s profile
                           b-button(
                             is-primary,
                             @click="viewSource"
                           ) View source
                       br
-                      //- b-content
-                        pre {{viewedTheme.content}}
                       //- p Average rating: {{viewedTheme.rating}}
-                      p Created at: {{formatMoment(viewedTheme.createdAt)}}
-                      p Last update: {{formatMoment(viewedTheme.lastUpdate)}}
+                      p Created: {{formatMoment(viewedTheme.createdAt)}}
+                      p Last updated: {{formatMoment(viewedTheme.lastUpdate)}}
                       p Version: {{viewedTheme.version}}
 
             b-box
