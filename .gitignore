@@ -4,6 +4,7 @@
 .tmp
 .ignored
 .env.json
+.prod.env
 
 docker-compose.yml
 bfg.jar

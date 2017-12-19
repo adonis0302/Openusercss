@@ -4,15 +4,7 @@ import log from 'chalk-console'
 import cp from 'node-cp'
 import path from 'path'
 import selfsigned from 'selfsigned'
-import {defaultsDeep, forOwn} from 'lodash'
-
-export const inProd = () => {
-  if (process.env.NODE_ENV !== 'production') {
-    return false
-  }
-
-  return true
-}
+import {defaultsDeep, forOwn, isEqual} from 'lodash'
 
 // Delete ourselves from the require cache, so that different processes
 // can have different configs
@@ -20,96 +12,50 @@ if (require.cache) {
   Reflect.deleteProperty(require.cache, __filename)
 }
 
-let mongodbHost = 'localhost'
-
-if (process.env.MONGODB_HOST) {
-  mongodbHost = process.env.MONGODB_HOST
-}
-
 const appPath = path.resolve(process.mainModule.paths[0], '..')
-let defaultConfig = {
+const defaultConfig = {
   'env':   'production',
   'ports': {
     'api': {
-      'https': 5001
+      'https': 5001,
+      'http':  5000
     },
     'frontend': {
-      'https': 5011
+      'https': 5011,
+      'http':  5010
     }
   },
   'domain':     'openusercss.org',
   'saltRounds': 15,
   'database':   {
-    'main': `mongodb://${mongodbHost}:27017/openusercss-main`
+    'main': 'mongodb://localhost:27017/openusercss-main'
   }
 }
 
-const formatToJsonType = (data, toType) => {
-  const toArray = toType instanceof Array
-  let converted = null
-
-  switch (toArray || typeof toType) {
-  case 'string':
-    converted = String(data)
-    break
-  case 'object':
-    converted = JSON.parse(data) || Object(data)
-    break
-  case true:
-    converted = Array(data)
-    break
-  default:
-    break
-  }
-
-  return converted
-}
-
-forOwn(process.env, (envValue, envName) => {
-  const regexp = /^OUC(.*)/g
-  let found = envName.match(regexp)
-
-  if (found) {
-    let arrayValue = null
-
-    if (envValue.includes(',')) {
-      arrayValue = envValue.split(',')
+const envConfig = {
+  'env':   process.env.NODE_ENV,
+  'ports': {
+    'api': {
+      'https': process.env.API_HTTPS_PORT,
+      'http':  process.env.API_HTTP_PORT
+    },
+    'frontend': {
+      'https': process.env.FRONTEND_HTTPS_PORT,
+      'http':  process.env.FRONTEND_HTTP_PORT
     }
-
-    found = found[0].split('_')[1]
-
-    forOwn(defaultConfig, (defaultValue, defaultName) => {
-      if (found === defaultName) {
-        config.set(defaultName, formatToJsonType(arrayValue || envValue, defaultConfig[defaultName]))
-      }
-    })
+  },
+  'domain':     process.env.DOMAIN,
+  'saltRounds': process.env.SALT_ROUNDS,
+  'database':   {
+    'main': process.env.MONGODB_STRING
   }
-})
-
-if (!inProd()) {
-  log.warn('App in development mode, configuration is set to low security!')
-
-  defaultConfig = defaultsDeep({
-    'env':        'development',
-    'saltRounds': 11,
-    'ports':      {
-      'api': {
-        'http': 5000
-      },
-      'frontend': {
-        'http': 5010
-      }
-    }
-  }, defaultConfig)
 }
 
 const genKeypair = () => {
   log.warn('A new keypair is being generated. All users will be logged out when the app starts.')
-
-  const generationStart = Date.now()
   let pem = null
 
-  if (inProd()) {
+  if (process.env.NODE_ENV !== 'development') {
     pem = selfsigned.generate(null, {
       'keySize':    4096,
       'algorithm':  'sha256',
@@ -120,7 +66,6 @@ const genKeypair = () => {
       'clientCertificateCN': '*'
     })
   } else {
-    log.warn('App in development mode, the new keypair is very weak!')
     pem = selfsigned.generate(null, {
       'keySize':    512,
       'algorithm':  'sha256',
@@ -132,7 +77,6 @@ const genKeypair = () => {
     })
   }
 
-  log.info(`Keypair generated in ${Date.now() - generationStart}ms`)
   return pem
 }
 
@@ -141,12 +85,11 @@ const initConfig = () => {
    * WARNING
    * While the configKey does encrypt the contents of our config.json,
    * it musn't be relied on for security, as said key is written to disk
-   * in plain text.
+   * in plain text, right next to the encrypted data.
    *
-   * It's only useful for deterring users from editing the file
-   * and for checking integrity!
+   * It's only useful for for checking config file integrity.
    *
-   * Nevertheless, we can write our keys into it, because we expect the
+   * Nevertheless, we can write our keys down, because we expect the
    * system administrator to properly secure the runtime environment.
    */
 
@@ -158,51 +101,66 @@ const initConfig = () => {
   const configKey = secretsConfig.get('configKey')
   const newVersion = `${Date.now()}.${hat(8)}`
 
-  if (!secretsConfig.get('version')) {
-    secretsConfig.set('version', newVersion)
-  }
-  if (!configKey) {
+  if (!configKey || !secretsConfig.get('version')) {
     cp(path.join(__dirname, 'secrets.json'), path.join(__dirname, `bkup.${newVersion}.secrets`))
     cp(path.join(__dirname, 'config.json'), path.join(__dirname, `bkup.${newVersion}.config`))
 
-    log.error('Unable to decrypt config.json, because our secrets.json is either missing or corrupt!')
-    log.warn('Your configuration options have been reset to defaults')
-    log.warn('A backup of your previous config has been made, just in case')
-    log.warn(`You can find your backups here:
-  ${path.join(appPath, `bkup.${newVersion}`)}
-    `)
+    log.warn([
+      'Invalid config',
+      'Unable to decrypt config.json, because our secrets.json is either missing or corrupt!',
+      'Your configuration options have been reset to defaults',
+      'A backup of your previous config has been made, just in case',
+      'You can find your backups here:',
+      path.join(appPath, `bkup.${newVersion}`)
+    ].join('\n\t'))
 
     secretsConfig.set('configKey', hat(256))
     secretsConfig.set('version', newVersion)
   }
 
-  const conf = new Conf({
+  const config = new Conf({
     'configName':    'config',
     'cwd':           path.join(appPath, 'data'),
     'encryptionKey': secretsConfig.get('configKey'),
     'defaults':      defaultConfig
   })
 
-  if (!conf.get('version')) {
-    conf.set('version', newVersion)
+  if (!config.get('version') || !config.get('keypair')) {
+    config.set('env', envConfig.environment || defaultConfig.environment)
+    config.set('keypair', genKeypair())
+    config.set('version', newVersion)
   }
-  if (!conf.get('keypair')) {
-    conf.set('keypair', genKeypair())
-  }
-  conf.set('env', process.env.NODE_ENV || 'development')
 
-  return conf
-}
-
-const config = initConfig()
-const staticConfig = async () => {
   return config
 }
 
-(async () => {
-  if (config.get('env') !== process.env.NODE_ENV) {
-    throw new Error('Your configuration doesn\'t match your environment')
-  }
-})()
+const ourConfig = initConfig()
+const finalizedConfig = defaultsDeep(envConfig, ourConfig.get(), defaultConfig)
 
-export default staticConfig
+export default async () => {
+  if (!isEqual(ourConfig.get(), finalizedConfig)) {
+    log.warn([
+      'Environment descrepancy',
+      'Your configuration doesn\'t match your environment',
+      'Resetting to new value based on environment'
+    ].join('\n\t'))
+    ourConfig.set(finalizedConfig)
+
+    forOwn(process.env, (envValue, envName) => {
+      const valid = !!envName.match('_')
+
+      if (valid) {
+        const ours = !!envName.split('_')[0] === 'OUC'
+
+        if (ours) {
+          const nameArray = envName.toLowerCase().split('_')
+
+          nameArray.splice(0, 1)
+          ourConfig.set(nameArray.join('.'), envValue)
+        }
+      }
+    })
+  }
+
+  return ourConfig
+}
