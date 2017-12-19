@@ -1,4 +1,5 @@
 import ApolloClient, {createBatchingNetworkInterface} from 'apollo-client'
+import {createHttpLink} from 'apollo-link-http'
 
 import verifyToken from './verify-token'
 import logout from './remote-logout'
@@ -12,27 +13,49 @@ import getLatestThemes from './get-latest-themes'
 import search from './search'
 import verifyEmail from './verify-email'
 import sendVerify from './remote-send-verify'
+import 'isomorphic-fetch'
 
-let networkInterface = createBatchingNetworkInterface({
-  'uri': 'http://localhost:5000'
-})
+const ssrMode = process.title === 'node'
+const inDev = process.env.NODE_ENV === 'development'
+let networkInterface = null
+let apolloClient = null
 
-if (process.browser && window.location.protocol === 'https:') {
+if (!ssrMode && inDev) {
   networkInterface = createBatchingNetworkInterface({
-    'uri': 'https://localhost:5001'
+    'uri': 'http://localhost:5000'
+  })
+
+  apolloClient = new ApolloClient({
+    networkInterface
   })
 }
 
-if (process.browser && window.location.host.match(/openusercss/g)) {
+if (!ssrMode && !inDev) {
   networkInterface = createBatchingNetworkInterface({
     'uri': 'https://api.openusercss.org'
   })
+
+  apolloClient = new ApolloClient({
+    networkInterface
+  })
 }
 
-export const apolloClient = new ApolloClient({
-  networkInterface
-})
+if (ssrMode) {
+  networkInterface = createBatchingNetworkInterface({
+    'uri': 'http://localhost:5000'
+  })
 
+  apolloClient = new ApolloClient({
+    'cache': false,
+    'link':  createHttpLink({
+      'uri': 'http://localhost:5000'
+    }),
+    ssrMode,
+    networkInterface
+  })
+}
+
+export {apolloClient}
 export default {
   logout,
   login,

@@ -2,9 +2,7 @@ import Loki from 'lokijs'
 import {defaultsDeep} from 'lodash'
 import {struct} from 'superstruct'
 
-const Adapter = Loki.persistenceAdapters.localStorage
 let db = null
-
 const initialize = () => {
   if (!db) {
     throw new Error('The database does not exist')
@@ -17,6 +15,25 @@ const initialize = () => {
     db.addCollection('themes')
   }
 }
+
+if (process.browser) {
+  const Adapter = Loki.persistenceAdapters.localStorage
+
+  db = new Loki('ouc-db', {
+    'adapter':          new Adapter(),
+    'autoload':         true,
+    'autoloadCallback': initialize,
+    'autosave':         true,
+    'autosaveInterval': 10000
+  })
+} else {
+  db = new Loki('ouc-db', {
+    'autoload':         true,
+    'autoloadCallback': initialize,
+    'autosave':         false
+  })
+}
+
 const validators = {}
 
 validators.reference = (typename) => {
@@ -64,16 +81,11 @@ validators.users = struct({
   '__typename': 'User'
 })
 
-db = new Loki('ouc-db', {
-  'adapter':          new Adapter(),
-  'autoload':         true,
-  'autoloadCallback': initialize,
-  'autosave':         true,
-  'autosaveInterval': 10000
-})
+if (!db.collections.length) {
+  initialize()
+}
 
 export default db
-
 export const upsert = (collection, object) => {
   const validate = validators[collection.name]
   let item = null
@@ -101,3 +113,8 @@ export const upsert = (collection, object) => {
 
   return object
 }
+export const createBogusDB = () => new Loki('ouc-request-db', {
+  'autoload':         true,
+  'autoloadCallback': initialize,
+  'autosave':         false
+})

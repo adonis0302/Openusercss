@@ -18,7 +18,7 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore src",
     "prod": "npm run clean && npm run build:prod",
     "fast": "npm run clean && npm run build:fast",
-    "watch": "nodemon --delay 0.25 --watch package.json --watch tasks --watch gulpfile.babel.js --exec 'npm run clean && npm run watch:dirty'",
+    "watch": "nodemon -q --delay 0.25 -w tasks -w gulpfile.babel.js --exec 'npm run clean && npm run watch:dirty'",
     "buildpush": "npm run prod && docker build . -t decentm/openusercss && docker push decentm/openusercss",
     "release": "git stash -u && npm run buildpush; git stash apply",
     "release:test": "npm run fast && docker build . -t decentm/openusercss",
@@ -67,6 +67,7 @@
     "cz-conventional-changelog": "^2.1.0",
     "del": "^3",
     "endpoint-utils": "^1",
+    "env-cmd": "^7.0.0",
     "env-name": "^1",
     "eslint": "^4",
     "eslint-config-nodesecurity": "^1",
@@ -161,6 +162,7 @@
   "dependencies": {
     "animejs": "^2",
     "apollo-client": "^1",
+    "apollo-link-http": "^1.3.2",
     "apollo-server-express": "^1",
     "babel-polyfill": "^6",
     "bcryptjs": "^2",
@@ -183,6 +185,7 @@
     "hat": "^0",
     "helmet": "^3.9.0",
     "html-escaper": "^1",
+    "isomorphic-fetch": "^2.2.1",
     "jsonwebtoken": "^8",
     "lodash": "^4",
     "lokijs": "^1",
@@ -195,6 +198,7 @@
     "passport-http": "^0",
     "passport-local": "^1",
     "pify": "^3",
+    "posthtml-schemas": "^1.0.0",
     "pretty-error": "^2",
     "pug": "^2.0.0-rc.4",
     "respawn": "^2.5.0",
@@ -207,7 +211,6 @@
     "superstruct": "^0.4.4",
     "vee-validate": "^2.0.0-rc.18",
     "vue": "^2",
-    "vuex": "^3",
     "vue-bulma-components": "^1",
     "vue-js-modal": "^1.3.6",
     "vue-moment": "^3.1.0",
@@ -216,6 +219,7 @@
     "vue-server-renderer": "^2",
     "vue-template-compiler": "^2.5.2",
     "vue2-filters": "^0.2.2",
+    "vuex": "^3",
     "vuex-persist": "^0.6.0"
   }
 }

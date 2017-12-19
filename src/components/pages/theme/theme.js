@@ -43,12 +43,11 @@ export default {
     notification,
     bInput
   },
-  beforeMount () {
-    this.$store.dispatch('getFullTheme', this.$route.params.id)
-  },
   data () {
     return {
-      'viewingSource':   false,
+      'options': {
+        'viewingSource': false
+      },
       'confirmTitle':    '',
       'showingModal':    false,
       'flickityOptions': {
@@ -57,6 +56,16 @@ export default {
         'pageDots':        false,
         'cellAlign':       'left'
       }
+    }
+  },
+  created () {
+    if (this.$route.params.options) {
+      this.options = JSON.parse(decodeURIComponent(this.$route.params.options))
+    }
+  },
+  mounted () {
+    if (this.options.viewingSource) {
+      this.viewSource()
     }
   },
   'methods': {
@@ -85,6 +94,14 @@ export default {
     },
     viewSource () {
       this.$modal.show('source-viewer')
+      this.$router.replace(`/theme/${this.$route.params.id}/${encodeURIComponent(JSON.stringify({
+        'viewingSource': true
+      }))}`)
+    },
+    closeSource () {
+      this.$router.replace(`/theme/${this.$route.params.id}/${encodeURIComponent(JSON.stringify({
+        'viewingSource': false
+      }))}`)
     },
     installTheme () {
       if (process.env.NODE_ENV === 'development') {

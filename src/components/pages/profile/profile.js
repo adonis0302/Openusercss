@@ -30,7 +30,6 @@ export default {
     notification
   },
   beforeMount () {
-    this.$store.dispatch('getFullUser', this.$route.params.id)
     this.timeInterval = setInterval(() => {
       this.time = moment()
     }, 20000)

@@ -8,21 +8,26 @@ export default async ({commit, getters}, id) => {
   try {
     const themes = db.getCollection('themes')
     const users = db.getCollection('users')
-    const result = await getLatestThemes(id)
+    const {data} = await getLatestThemes(id)
+    const {latestThemes} = data
+    const savedThemes = []
 
-    result.data.latestThemes.forEach((theme) => {
+    latestThemes.forEach((theme) => {
       const savedTheme = cloneDeep(theme)
 
       upsert(users, savedTheme.user)
       savedTheme.user = {
         '_id': theme.user._id
       }
+      savedThemes.push(savedTheme)
       upsert(themes, savedTheme)
     })
     commit('actionError', null)
+    commit('loading', false)
+    return savedThemes
   } catch (error) {
     commit('actionError', error)
+    commit('loading', false)
+    throw error
   }
-
-  commit('loading', false)
 }

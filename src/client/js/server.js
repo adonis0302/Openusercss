@@ -5,20 +5,9 @@ import {
   router,
   appBase
 } from './vue'
+import db from './store/db'
 
-Vue.prototype.$db = {
-  getCollection () {
-    return {
-      find () {
-        return []
-      },
-
-      findOne () {
-        return {}
-      }
-    }
-  }
-}
+Vue.prototype.$db = db
 
 export default (context) => {
   return new Promise((resolve, reject) => {

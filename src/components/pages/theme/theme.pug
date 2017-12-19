@@ -30,7 +30,7 @@ div.route-root
           b-card-footer-item(is-paddingless)
             b-button(type="reset", @click="cancelDelete", is-fullbleed, is-borderless) Cancel
 
-  modal(name="source-viewer", height="auto", :scrollable="true")
+  modal(name="source-viewer", height="auto", :scrollable="true", @closed="closeSource")
     b-tile(is-parent, is-paddingless)
       b-tile(is-child)
         code {{viewedTheme.content}}

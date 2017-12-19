@@ -13,6 +13,7 @@ import pify from 'pify'
 import fs from 'fs'
 import pug from 'pug'
 import helmet from 'helmet'
+import schemas from 'posthtml-schemas'
 import {auto} from './shared/error-handler'
 
 import staticConfig from './shared/config'
@@ -132,10 +133,12 @@ const init = async () => {
       res.status(err.code || 500)
 
       res.type('html')
-      res.write(pug.renderFile(templatePath, {
+      const pugHTML = pug.renderFile(templatePath, {
         req,
         appHTML
-      }))
+      })
+
+      res.write(schemas.process(pugHTML))
       res.end()
     })
   })

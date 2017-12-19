@@ -20,6 +20,8 @@ export default async ({commit, getters}, id) => {
 
     upsert(themes, theme)
     commit('actionError', null)
+    commit('loading', false)
+    return theme
   } catch (error) {
     themes.findAndRemove({
       '_id': id
@@ -28,6 +30,4 @@ export default async ({commit, getters}, id) => {
     commit('loading', false)
     throw error
   }
-
-  commit('loading', false)
 }

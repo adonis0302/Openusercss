@@ -1,4 +1,5 @@
 import VueRouter from 'vue-router'
+import store from '../store'
 
 import indexRoute from '../../../../.tmp/pages/index/index.vue'
 import searchRoute from '../../../../.tmp/pages/search/search.vue'
@@ -38,11 +39,7 @@ export const routerOptions = {
       'component': verifyEmailRoute
     },
     {
-      'path':      '/search',
-      'component': searchRoute
-    },
-    {
-      'path':      '/search/:terms',
+      'path':      '/search/:terms?',
       'component': searchRoute
     },
     {
@@ -51,15 +48,25 @@ export const routerOptions = {
     },
     {
       'path':      '/profile/:id',
-      'component': profileRoute
+      'component': profileRoute,
+      beforeEnter (to, from, next) {
+        store.dispatch('getFullUser', to.params.id)
+        .then(next)
+        .catch(next)
+      }
     },
     {
       'path':      '/theme/edit/:id',
       'component': themeEditorRoute
     },
     {
-      'path':      '/theme/:id',
-      'component': themeRoute
+      'path':      '/theme/:id/:options?',
+      'component': themeRoute,
+      beforeEnter (to, from, next) {
+        store.dispatch('getFullTheme', to.params.id)
+        .then(next)
+        .catch(next)
+      }
     },
     {
       'path':      '/test',
