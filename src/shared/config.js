@@ -140,7 +140,7 @@ const finalizedConfig = defaultsDeep(envConfig, ourConfig.get(), defaultConfig)
 export default async () => {
   if (!isEqual(ourConfig.get(), finalizedConfig)) {
     log.warn([
-      'Environment descrepancy',
+      'Environment discrepancy',
       'Your configuration doesn\'t match your environment',
       'Resetting to new value based on environment'
     ].join('\n\t'))
