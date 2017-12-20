@@ -40,7 +40,7 @@ if (!ssrMode && !inDev) {
   })
 }
 
-if (ssrMode) {
+if (ssrMode && inDev) {
   networkInterface = createBatchingNetworkInterface({
     'uri': 'http://localhost:5000'
   })
@@ -49,6 +49,21 @@ if (ssrMode) {
     'cache': false,
     'link':  createHttpLink({
       'uri': 'http://localhost:5000'
+    }),
+    ssrMode,
+    networkInterface
+  })
+}
+
+if (ssrMode && !inDev) {
+  networkInterface = createBatchingNetworkInterface({
+    'uri': 'https://api.openusercss.org'
+  })
+
+  apolloClient = new ApolloClient({
+    'cache': false,
+    'link':  createHttpLink({
+      'uri': 'https://api.openusercss.org'
     }),
     ssrMode,
     networkInterface
