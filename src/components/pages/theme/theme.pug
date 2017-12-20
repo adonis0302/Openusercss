@@ -1,10 +1,11 @@
 div.route-root(itemtype="SoftwareApplication")
-  meta(itemprop="text", :value="viewedTheme.content")
   meta(itemprop="name", :value="viewedTheme.title")
   meta(itemprop="dateCreated", :value="viewedTheme.createdAt")
   meta(itemprop="dateModified", :value="viewedTheme.lastUpdate")
   meta(itemprop="version", :value="viewedTheme.version")
   meta(itemprop="description", :value="viewedTheme.description")
+  meta(itemprop="operatingSystem", value="Windows, Mac OS X, Linux")
+  meta(itemprop="applicationCategory", value="Theme")
   //- meta(itemprop="aggregateRating", :value="viewedTheme.rating")
   div(itemprop="author", itemtype="Person")
     meta(itemprop="name", :value="viewedTheme.user.displayname")
@@ -43,7 +44,7 @@ div.route-root(itemtype="SoftwareApplication")
   modal(name="source-viewer", height="auto", :scrollable="true", @closed="closeSource")
     b-tile(is-parent, is-paddingless)
       b-tile(is-child)
-        code {{viewedTheme.content}}
+        code(itemprop="text") {{viewedTheme.content}}
 
   b-container(:inert="showingModal")
     div
