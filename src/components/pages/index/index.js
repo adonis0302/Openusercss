@@ -26,9 +26,6 @@ export default {
     chip,
     notification
   },
-  beforeMount () {
-    this.$store.dispatch('getLatestThemes', 6)
-  },
   'computed': {
     ...mapGetters([
       'actionErrors',

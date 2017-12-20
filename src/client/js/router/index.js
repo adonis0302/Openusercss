@@ -20,7 +20,12 @@ export const routerOptions = {
   'routes': [
     {
       'path':      '/',
-      'component': indexRoute
+      'component': indexRoute,
+      beforeEnter (to, from, next) {
+        store.dispatch('getLatestThemes', 6)
+        .then(next)
+        .catch(next)
+      }
     },
     {
       'path':      '/login',
