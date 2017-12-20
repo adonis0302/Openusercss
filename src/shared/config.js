@@ -145,22 +145,22 @@ export default async () => {
       'Resetting to new value based on environment'
     ].join('\n\t'))
     ourConfig.set(finalizedConfig)
-
-    forOwn(process.env, (envValue, envName) => {
-      const valid = !!envName.match('_')
-
-      if (valid) {
-        const ours = !!envName.split('_')[0] === 'OUC'
-
-        if (ours) {
-          const nameArray = envName.toLowerCase().split('_')
-
-          nameArray.splice(0, 1)
-          ourConfig.set(nameArray.join('.'), envValue)
-        }
-      }
-    })
   }
+
+  forOwn(process.env, (envValue, envName) => {
+    const valid = !!envName.match('_')
+
+    if (valid) {
+      const ours = envName.split('_')[0] === 'OUC'
+
+      if (ours) {
+        const nameArray = envName.toLowerCase().split('_')
+
+        nameArray.splice(0, 1)
+        ourConfig.set(nameArray.join('.'), envValue)
+      }
+    }
+  })
 
   return ourConfig
 }
