@@ -9,7 +9,6 @@
 
 docker-compose.yml
 bfg.jar
-build
 build.zip
 secrets.json
 bkup.*
