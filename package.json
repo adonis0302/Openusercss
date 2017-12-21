@@ -104,6 +104,7 @@
     "gulp-manifold": "https://github.com/tniswong/gulp-manifold",
     "gulp-minify": "^1.0.0",
     "gulp-optimize-js": "^1.1.0",
+    "gulp-penthouse": "^0.2.0",
     "gulp-pleeease": "^2",
     "gulp-postcss": "^7",
     "gulp-prettyerror": "^1",

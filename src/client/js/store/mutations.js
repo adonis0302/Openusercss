@@ -13,21 +13,15 @@ validators.reference = (typename) => {
   }
 
   return struct({
-    '__typename': 'string',
-    '_id':        'string'
-  }, {
-    '__typename': typename
+    '_id': 'string'
   })
 }
 
 validators.session = struct({
-  '__typename': 'string?',
-  'token':      'string',
-  'ip':         'string',
-  'ua':         'string',
-  'user':       validators.reference('User')
-}, {
-  '__typename': 'Session'
+  'token': 'string',
+  'ip':    'string',
+  'ua':    'string',
+  'user':  validators.reference('User')
 })
 
 export default {
