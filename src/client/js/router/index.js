@@ -68,7 +68,7 @@ export const routerOptions = {
           return next()
         }
 
-        return store.dispatch('getFullTheme', to.params.id)
+        store.dispatch('getFullTheme', to.params.id)
         .then(next)
         .catch(next)
       }
