@@ -1,4 +1,4 @@
-import {cloneDeep} from 'lodash'
+import {cloneDeep, uniqBy} from 'lodash'
 import router from '../../router'
 import {remoteSaveTheme} from './helpers/remotes/mutations'
 import db, {upsert} from '../db'
@@ -11,15 +11,18 @@ export default async ({commit, getters}, {readyTheme, redirect}) => {
     const users = db.getCollection('users')
     const {data} = await remoteSaveTheme(readyTheme, getters.session.token)
     const {theme} = cloneDeep(data)
-
-    upsert(users, {
-      '_id':    theme.user._id,
-      'themes': [
-        {
-          '_id': theme._id
-        }
-      ]
+    const user = users.findOne({
+      '_id': theme.user._id
     })
+
+    users.findAndRemove({
+      '_id': theme.user._id
+    })
+    user.themes = uniqBy([
+      ...user.themes,
+      theme
+    ], '_id')
+    users.insert(user)
 
     theme.user = {
       '_id': theme.user._id

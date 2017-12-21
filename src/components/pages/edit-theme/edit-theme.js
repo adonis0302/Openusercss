@@ -2,7 +2,7 @@ import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import noSSR from 'vue-no-ssr'
 import {mapGetters} from 'vuex'
 import semver from 'semver'
-import {findIndex, cloneDeep, concat} from 'lodash'
+import {cloneDeep, concat} from 'lodash'
 
 import attributor from '../../components/footer/footer.vue'
 import navbar from '../../components/navbar/navbar.vue'
@@ -57,19 +57,12 @@ export default {
   },
   'data': () => {
     return {
-      'theme': {},
       // eslint-disable-next-line
       'regex': /((?![*+?])(?:[^\r\n\[\/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)/
     }
   },
-  async beforeMount () {
+  beforeMount () {
     this.$validator.extend('semver', (value) => !!semver.valid(value))
-    if (!this.isNew) {
-      await this.$store.dispatch('getFullTheme', this.$route.params.id)
-    }
-    this.theme = cloneDeep(this.editedTheme)
-  },
-  mounted () {
     this.$validator.updateDictionary(customDictionary)
   },
   'methods': {
@@ -79,7 +72,7 @@ export default {
 
       if (validated) {
         this.$store.dispatch('saveTheme', {
-          'readyTheme': this.theme,
+          'readyTheme': cloneDeep(this.theme),
           'redirect':   `/profile/${this.currentUser._id}`
         })
       }
@@ -88,31 +81,17 @@ export default {
   'computed': {
     ...mapGetters([
       'actionErrors',
-      'users',
       'currentUser',
       'loading'
     ]),
-    isNew () {
-      return this.$route.params.id === '0'
-    },
-    themes () {
-    },
-    'editedTheme': {
-      'cache': false,
-      get () {
-        const themeIndex = findIndex(this.themes, (theme) => theme._id === this.$route.params.id)
-
-        if (themeIndex === -1 || this.isNew) {
-          return {
-            'user':        {},
-            'title':       '',
-            'description': '',
-            'content':     '',
-            'version':     '1.0.0'
-          }
-        }
-        return this.themes[themeIndex]
+    theme () {
+      if (!this.$route.params.id) {
+        return {}
       }
+
+      return this.$db.getCollection('themes').findOne({
+        '_id': this.$route.params.id
+      })
     }
   }
 }

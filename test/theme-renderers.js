@@ -2,7 +2,7 @@ import test from 'ava'
 import {cloneDeep} from 'lodash'
 import {ObjectID} from 'mongodb'
 
-import {buildTheme} from '../src/api/theme-cdn-handler'
+import {buildTheme} from '../src/api/usercss-renderer'
 import stateMock from './shared/state-mock'
 
 test('buildTheme - throws when nothing is passed', async (t) => {

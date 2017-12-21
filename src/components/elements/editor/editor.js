@@ -55,6 +55,9 @@ export default {
     this.editor.on('change', () => {
       self.$emit('input', self.editor.getValue())
     })
+
+    this.editor.setValue(this.value, 0)
+    this.editor.clearSelection()
   },
   'watch': {
     theme () {

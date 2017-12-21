@@ -61,8 +61,17 @@ export const routerOptions = {
       }
     },
     {
-      'path':      '/theme/edit/:id',
-      'component': themeEditorRoute
+      'path':      '/theme/edit/:id?',
+      'component': themeEditorRoute,
+      beforeEnter (to, from, next) {
+        if (!to.params.id) {
+          return next()
+        }
+
+        return store.dispatch('getFullTheme', to.params.id)
+        .then(next)
+        .catch(next)
+      }
     },
     {
       'path':      '/theme/:id/:options?',

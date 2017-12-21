@@ -15,7 +15,7 @@ div.route-root(itemtype="Person")
           b-level-right(v-if="currentUser && currentUser._id === viewedUser._id")
             b-tile(is-parent, is-paddingless)
               b-tile(is-child)
-                router-link.button.is-primary(to="/theme/edit/0") Upload new theme
+                router-link.button.is-primary(to="/theme/edit") Upload new theme
               b-tile(is-child)
                 router-link.button.is-primary(to="/account") Account
         b-columns
