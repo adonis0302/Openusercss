@@ -1,3 +1,4 @@
+import {findIndex} from 'lodash'
 import mustAuthenticate from '../../../shared/enforce-session'
 
 export default async (root, {token, title, description, content, version, id, screenshots}, {Session, Theme, User}) => {
@@ -26,6 +27,12 @@ export default async (root, {token, title, description, content, version, id, sc
     newTheme.version = version
     newTheme.content = decodeURIComponent(content)
     newTheme.screenshots = screenshots
+
+    const userThemeIndex = findIndex(user.themes, {
+      '_id': id
+    })
+
+    user.themes[userThemeIndex] = newTheme
   } else {
     newTheme = Theme.create({
       'user':    session.user,
@@ -35,18 +42,9 @@ export default async (root, {token, title, description, content, version, id, sc
       version,
       screenshots
     })
+    user.themes.push(newTheme)
   }
 
-  const savedTheme = await newTheme.save()
-
-  user.themes.forEach((theme, index) => {
-    if (!theme) {
-      user.themes.splice(index, 1)
-    }
-  })
-
-  user.themes.push(newTheme)
   await user.save()
-
-  return savedTheme
+  return newTheme.save()
 }

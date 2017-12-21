@@ -4,7 +4,7 @@ import {graphqlExpress, graphiqlExpress} from 'apollo-server-express'
 import bodyParser from 'body-parser'
 import staticConfig from '../shared/config'
 
-import themeCdnHandler from './theme-cdn-handler'
+import usercsssRenderer from './usercss-renderer'
 import schema from './backend'
 import connectMongo from './connector'
 
@@ -20,7 +20,7 @@ const setupRoutes = async () => {
     }))
   }
 
-  router.use('/theme/:id.user.css', themeCdnHandler)
+  router.use('/theme/:id.user.css', usercsssRenderer)
 
   router.use('/', bodyParser.json(), graphqlExpress((req, res, next) => ({
     'context': {
