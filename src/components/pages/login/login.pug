@@ -1,5 +1,5 @@
 div.route-root
-  b-section(slot="form").ouc-form-section
+  .section(slot="form").ouc-form-section
       b-container(style="max-width: 500px;").ouc-centered
         b-box.ouc-form-box
           form(@submit.prevent="submitLogin")
@@ -38,7 +38,7 @@ div.route-root
                             aria-label="login passphrase"
                           )
                 b-tile(is-parent, is-vertical, is-paddingless)
-                  big-button(icon="account-plus", :disabled="errors.any()").is-primary
+                  ouc-button(icon="account-plus", :disabled="errors.any()").is-primary
                     p(slot="content") Login
                   notification(v-show="errors.any()", icon="alert", color="is-danger").is-danger
                     div(slot="content")
@@ -48,4 +48,4 @@ div.route-root
                     div(slot="content")
                       p(v-for="error in actionErrors") {{error}}
 
-  attributor
+  ouc-footer

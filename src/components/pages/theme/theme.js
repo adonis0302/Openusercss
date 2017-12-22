@@ -4,7 +4,7 @@ import {formatMoment} from '../../../src/shared/time'
 
 import icon from '../../components/icon/icon.vue'
 import flushImg from '../../components/flush-img/flush-img.vue'
-import attributor from '../../components/footer/footer.vue'
+import oucFooter from '../../components/ouc-footer/ouc-footer.vue'
 import navbar from '../../components/navbar/navbar.vue'
 import notification from '../../components/notification/notification.vue'
 import bInput from '../../components/b-input/b-input.vue'
@@ -20,9 +20,6 @@ export default {
     'b-level':             bulma('level', 'div'),
     'b-level-left':        bulma('level-left', 'div'),
     'b-level-right':       bulma('level-right', 'div'),
-    'b-section':           bulma('section', 'div'),
-    'b-button':            bulma('button', 'button'),
-    'b-content':           bulma('content', 'div'),
     'b-modal':             bulma('modal', 'div'),
     'b-modal-background':  bulma('modal-background', 'div'),
     'b-modal-content':     bulma('modal-content', 'div'),
@@ -36,7 +33,7 @@ export default {
     'b-card-content':      bulma('card-content', 'div'),
     'b-card-footer':       bulma('card-footer', 'div'),
     'b-card-footer-item':  bulma('card-footer-item', 'div'),
-    attributor,
+    oucFooter,
     navbar,
     flushImg,
     icon,
@@ -62,6 +59,9 @@ export default {
     if (this.$route.params.options) {
       this.options = JSON.parse(decodeURIComponent(this.$route.params.options))
     }
+  },
+  beforeMount () {
+    this.$store.dispatch('getFullTheme', this.$route.params.id)
   },
   mounted () {
     if (this.options.viewingSource) {

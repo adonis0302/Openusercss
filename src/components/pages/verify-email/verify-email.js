@@ -2,7 +2,7 @@ import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import {mapGetters} from 'vuex'
 
 import spinner from '../../components/spinner/spinner.vue'
-import attributor from '../../components/footer/footer.vue'
+import oucFooter from '../../components/ouc-footer/ouc-footer.vue'
 import notification from '../../components/notification/notification.vue'
 
 export default {
@@ -15,7 +15,7 @@ export default {
     'b-box':       bulma('box', 'div'),
     'b-content':   bulma('content', 'div'),
     'b-button':    bulma('button', 'button'),
-    attributor,
+    oucFooter,
     notification,
     spinner
   },

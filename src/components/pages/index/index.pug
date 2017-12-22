@@ -1,7 +1,7 @@
 div.route-root
   b-container
     div
-      b-section
+      .section
         notification(v-show="actionErrors.length > 0", icon="alert", color="is-danger").is-danger
           div(slot="content")
             p(v-for="error in actionErrors") {{error}}
@@ -21,7 +21,6 @@ div.route-root
           b-column
             h2.has-bottom-margin Popular themes
             b-box
-              b-content
-                p Popular themes are not implemented yet
+              p Popular themes are not implemented yet
 
-  attributor
+  ouc-footer

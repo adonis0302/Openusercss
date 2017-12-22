@@ -15,10 +15,10 @@ div.route-root(itemtype="SoftwareApplication")
       b-card(is-unselectable)
         b-card-header
           b-card-header-title
-            b-content
+            .content
               h3.is-marginless Confirm theme deletion
         b-card-content
-          b-content
+          .content
             p
               | Title: {{viewedTheme.title}}
               br
@@ -37,9 +37,9 @@ div.route-root(itemtype="SoftwareApplication")
               )
         b-card-footer
           b-card-footer-item(is-paddingless)
-            b-button(type="submit", is-danger, is-fullbleed, :disabled="viewedTheme.title !== confirmTitle") Delete theme
+            button.button(type="submit", is-danger, is-fullbleed, :disabled="viewedTheme.title !== confirmTitle") Delete theme
           b-card-footer-item(is-paddingless)
-            b-button(type="reset", @click="cancelDelete", is-fullbleed, is-borderless) Cancel
+            button.button(type="reset", @click="cancelDelete", is-fullbleed, is-borderless) Cancel
 
   modal(name="source-viewer", height="auto", :scrollable="true", @closed="closeSource")
     b-tile(is-parent, is-paddingless)
@@ -48,7 +48,7 @@ div.route-root(itemtype="SoftwareApplication")
 
   b-container(:inert="showingModal")
     div
-      b-section
+      .section
         notification(v-show="actionErrors.length > 0", icon="alert", color="is-danger").is-danger
           div(slot="content")
             p(v-for="error in actionErrors") {{error}}
@@ -58,14 +58,14 @@ div.route-root(itemtype="SoftwareApplication")
           b-level-right
             b-tile(is-parent, is-paddingless)
               b-tile(is-child, v-if="currentUser && viewedTheme.user._id === currentUser._id")
-                b-content(is-marginless, is-pulled-right)
-                  b-button(is-danger, @click="confirmDeleteTheme") Delete theme
+                .content(is-marginless, is-pulled-right)
+                  button.button.is-danger(@click="confirmDeleteTheme") Delete theme
               b-tile(is-child, v-if="currentUser && viewedTheme.user._id === currentUser._id")
-                b-content(is-marginless, is-pulled-right)
+                .content.is-marginless(is-pulled-right)
                   router-link.button.is-primary(:to="'/theme/edit/' + viewedTheme._id") Edit theme
               b-tile(is-child)
-                b-content(is-marginless, is-pulled-right)
-                  b-button(@click="installTheme", is-primary) Install theme
+                .content.is-marginless(is-pulled-right)
+                  button.button.is-primary(@click="installTheme") Install theme
 
         b-columns
           b-column(is-6)
@@ -91,10 +91,9 @@ div.route-root(itemtype="SoftwareApplication")
                       b-level(is-marginless)
                         b-level-left
                           router-link(:to="'/profile/' + viewedTheme.user._id")
-                            b-button(is-primary)
+                            button.button.is-primary
                               p Visit {{viewedTheme.user.displayname}}'s profile
-                          b-button(
-                            is-primary,
+                          button.button.is-primary(
                             @click="viewSource"
                           ) View source
                       br
@@ -111,4 +110,4 @@ div.route-root(itemtype="SoftwareApplication")
             b-box
               p Theme options are not implemented yet.
 
-  attributor
+  ouc-footer

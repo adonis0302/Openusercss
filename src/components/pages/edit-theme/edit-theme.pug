@@ -1,6 +1,6 @@
 div.route-root
   b-container
-    b-section
+    .section
       form(slot="form", @submit.prevent="submit").ouc-new-theme-form
         notification(v-if="concat(actionErrors, errors.all()).length > 0", icon="alert", color="is-danger").is-danger
           div(slot="content")
@@ -16,7 +16,7 @@ div.route-root
                   b-tile(is-parent)
                     b-tile(is-child)
                       p {{theme.version}}
-                  b-button(type="submit", is-primary, :disabled="errors.any()", :class="['button', 'is-primary', {'is-loading': loading}]")
+                  button.button(type="submit", is-primary, :disabled="errors.any()", :class="['button', 'is-primary', {'is-loading': loading}]")
                     div(slot="content") Save theme
 
             b-tile.ouc-new-theme-title(is-child)
@@ -93,4 +93,4 @@ div.route-root
                     :class="{'is-danger': errors.has('content')}"
                   )
 
-  attributor
+  ouc-footer

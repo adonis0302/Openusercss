@@ -10,5 +10,5 @@ div
             :placeholder="placeholder"
           )
       b-tile(is-child, is-1)
-        b-button(is-pulled-right, is-danger, @click="removeItem(index)", type="button") X
-  b-button(v-if="!listFull", is-primary, @click="addItem", type="button") Add {{itemName}}
+        button.button.is-pulled-right.is-danger(@click="removeItem(index)", type="button") X
+  button.button.is-primary(v-if="!listFull", @click="addItem", type="button") Add {{itemName}}

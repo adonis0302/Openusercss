@@ -5,7 +5,6 @@ import icon from '../icon/icon.vue'
 export default {
   'components': {
     'b-tile':    bulma('tile', 'div'),
-    'b-button':  bulma('button', 'button'),
     'b-control': bulma('control', 'div'),
     bInput,
     icon

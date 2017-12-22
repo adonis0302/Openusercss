@@ -4,10 +4,10 @@ import {mapGetters} from 'vuex'
 import flushImg from '../../components/flush-img/flush-img.vue'
 import icon from '../../components/icon/icon.vue'
 import notification from '../../components/notification/notification.vue'
-import button from '../../components/button/button.vue'
+import oucButton from '../../components/ouc-button/ouc-button.vue'
 import bInput from '../../components/b-input/b-input.vue'
 
-import attributor from '../../components/footer/footer.vue'
+import oucFooter from '../../components/ouc-footer/ouc-footer.vue'
 import navbar from '../../components/navbar/navbar.vue'
 
 export default {
@@ -15,7 +15,6 @@ export default {
     'b-columns':   bulma('columns', 'div'),
     'b-column':    bulma('column', 'div'),
     'b-box':       bulma('box', 'div'),
-    'b-section':   bulma('section', 'div'),
     'b-container': bulma('container', 'div'),
     'b-field':     bulma('field', 'div'),
     'b-label':     bulma('label', 'label'),
@@ -24,15 +23,14 @@ export default {
     'b-control':   bulma('control', 'div'),
     'b-checkbox':  bulma('checkbox', 'checkbox'),
     'b-radio':     bulma('radio', 'radio'),
-    'b-button':    bulma('button', 'button'),
     'b-help':      bulma('help', 'p'),
     'b-tile':      bulma('tile', 'div'),
-    'big-button':  button,
+    oucButton,
     bInput,
     flushImg,
     icon,
     notification,
-    attributor,
+    oucFooter,
     navbar
   },
   data () {

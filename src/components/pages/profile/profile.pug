@@ -5,7 +5,7 @@ div.route-root(itemtype="Person")
 
   b-container
     div
-      b-section
+      .section
         notification(v-show="actionErrors.length > 0", icon="alert", color="is-danger").is-danger
           div(slot="content")
             p(v-for="error in actionErrors") {{error}}
@@ -59,4 +59,4 @@ div.route-root(itemtype="Person")
                         h6 Created {{theme.createdAt | moment('from', 'now')}}
                         h6(v-if="theme.createdAt !== theme.lastUpdate") Last updated {{theme.lastUpdate | moment('from', 'now')}}
 
-  attributor
+  ouc-footer

@@ -4,7 +4,7 @@ import {mapGetters} from 'vuex'
 import semver from 'semver'
 import {cloneDeep, concat} from 'lodash'
 
-import attributor from '../../components/footer/footer.vue'
+import oucFooter from '../../components/ouc-footer/ouc-footer.vue'
 import navbar from '../../components/navbar/navbar.vue'
 import icon from '../../components/icon/icon.vue'
 import notification from '../../components/notification/notification.vue'
@@ -31,7 +31,6 @@ export default {
     'b-columns':     bulma('columns', 'div'),
     'b-column':      bulma('column', 'div'),
     'b-box':         bulma('box', 'div'),
-    'b-section':     bulma('section', 'div'),
     'b-container':   bulma('container', 'div'),
     'b-field':       bulma('field', 'div'),
     'b-label':       bulma('label', 'label'),
@@ -39,14 +38,13 @@ export default {
     'b-control':     bulma('control', 'div'),
     'b-checkbox':    bulma('checkbox', 'checkbox'),
     'b-radio':       bulma('radio', 'radio'),
-    'b-button':      bulma('button', 'button'),
     'b-help':        bulma('help', 'p'),
     'b-tile':        bulma('tile', 'div'),
     'b-level':       bulma('level', 'div'),
     'b-level-left':  bulma('level-left', 'div'),
     'b-level-right': bulma('level-right', 'div'),
     'no-ssr':        noSSR,
-    attributor,
+    oucFooter,
     navbar,
     icon,
     notification,
@@ -62,8 +60,11 @@ export default {
     }
   },
   beforeMount () {
+    if (this.$route.params.id) {
+      this.$store.dispatch('getFullTheme', this.$route.params.id)
+    }
     this.$validator.extend('semver', (value) => !!semver.valid(value))
-    this.$validator.updateDictionary(customDictionary)
+    this.$validator.localize(customDictionary)
   },
   'methods': {
     concat,

@@ -1,6 +1,6 @@
 div.route-root
   b-container
-    b-section
+    .section
       b-columns(is-multiline)
         b-column(is-2)
           div
@@ -11,9 +11,9 @@ div.route-root
 
         b-column(is-2)
           p Notifications:
-          b-button(@click="showInfo") Info
-          b-button(@click="showSuccess") Success
-          b-button(@click="showWarning") Warning
-          b-button(@click="showError") Error
+          button.button(@click="showInfo") Info
+          button.button(@click="showSuccess") Success
+          button.button(@click="showWarning") Warning
+          button.button(@click="showError") Error
 
-  attributor
+  ouc-footer

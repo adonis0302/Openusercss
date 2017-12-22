@@ -1,6 +1,6 @@
 div.route-root
   b-container
-    b-section
+    .section
       p {{testquery}}
       notification(v-show="actionErrors.length > 0", icon="alert", color="is-danger").is-danger
         div(slot="content")
@@ -14,7 +14,7 @@ div.route-root
               @input="queryChange"
             )
           b-column(is-1)
-            b-button(type="submit", :class="['button', 'is-primary', 'is-pulled-right', {'is-loading': loading}]") Search
+            button.button(type="submit", :class="['button', 'is-primary', 'is-pulled-right', {'is-loading': loading}]") Search
       div(v-if="results")
         b-columns
           b-column(is-4)
@@ -46,4 +46,4 @@ div.route-root
                       br
                       h6 Created {{theme.createdAt | moment('from', 'now')}}
                       h6(v-if="theme.createdAt !== theme.lastUpdate") Last updated {{theme.lastUpdate | moment('from', 'now')}}
-  attributor
+  ouc-footer
