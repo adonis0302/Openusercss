@@ -45,6 +45,8 @@ export default async (root, {token, title, description, content, version, id, sc
     user.themes.push(newTheme)
   }
 
+  const savedTheme = await newTheme.save()
+
   await user.save()
-  return newTheme.save()
+  return savedTheme
 }
