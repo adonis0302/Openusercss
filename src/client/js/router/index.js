@@ -22,9 +22,13 @@ export const routerOptions = {
       'path':      '/',
       'component': indexRoute,
       beforeEnter (to, from, next) {
-        store.dispatch('getLatestThemes', 6)
-        .then(next)
-        .catch(next)
+        if (process.title === 'node') {
+          store.dispatch('getLatestThemes', 6)
+          .then(next)
+          .catch(next)
+        } else {
+          return next()
+        }
       }
     },
     {
@@ -55,9 +59,13 @@ export const routerOptions = {
       'path':      '/profile/:id',
       'component': profileRoute,
       beforeEnter (to, from, next) {
-        store.dispatch('getFullUser', to.params.id)
-        .then(next)
-        .catch(next)
+        if (process.title === 'node') {
+          store.dispatch('getFullUser', to.params.id)
+          .then(next)
+          .catch(next)
+        } else {
+          return next()
+        }
       }
     },
     {
@@ -68,18 +76,26 @@ export const routerOptions = {
           return next()
         }
 
-        store.dispatch('getFullTheme', to.params.id)
-        .then(next)
-        .catch(next)
+        if (process.title === 'node') {
+          store.dispatch('getFullTheme', to.params.id)
+          .then(next)
+          .catch(next)
+        } else {
+          return next()
+        }
       }
     },
     {
       'path':      '/theme/:id/:options?',
       'component': themeRoute,
       beforeEnter (to, from, next) {
-        store.dispatch('getFullTheme', to.params.id)
-        .then(next)
-        .catch(next)
+        if (process.title === 'node') {
+          store.dispatch('getFullTheme', to.params.id)
+          .then(next)
+          .catch(next)
+        } else {
+          return next()
+        }
       }
     },
     {
