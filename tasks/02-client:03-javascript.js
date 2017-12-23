@@ -189,7 +189,7 @@ gulp.task('client:js:watch', () => {
     })
 
     bify.on('log', (content) => {
-      gutil.log(`Client: ${content}`)
+      gutil.log(`Client (${entry}): ${content}`)
     })
 
     return bundle()

@@ -125,7 +125,7 @@ gulp.task('server:watch', () => {
 
     bify.on('update', bundle)
     bify.on('log', (content) => {
-      gutil.log(`Server: ${content}`)
+      gutil.log(`Server (${entry}): ${content}`)
     })
 
     return bundle()
