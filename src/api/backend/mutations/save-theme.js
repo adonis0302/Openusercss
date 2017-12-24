@@ -1,7 +1,16 @@
 import {findIndex} from 'lodash'
 import mustAuthenticate from '../../../shared/enforce-session'
 
-export default async (root, {token, title, description, content, version, id, screenshots}, {Session, Theme, User}) => {
+export default async (root, {
+  token,
+  title,
+  description,
+  content,
+  version,
+  id,
+  screenshots,
+  options
+}, {Session, Theme, User, Option}) => {
   const session = await mustAuthenticate(token, Session)
   const user = await User.findOne({
     '_id': session.user._id
@@ -27,6 +36,13 @@ export default async (root, {token, title, description, content, version, id, sc
     newTheme.version = version
     newTheme.content = decodeURIComponent(content)
     newTheme.screenshots = screenshots
+    newTheme.options = []
+
+    options.forEach((option) => {
+      const savedOption = Option.create(option)
+
+      newTheme.options.push(savedOption)
+    })
 
     const userThemeIndex = findIndex(user.themes, {
       '_id': id
@@ -37,6 +53,7 @@ export default async (root, {token, title, description, content, version, id, sc
     newTheme = Theme.create({
       'user':    session.user,
       'content': decodeURIComponent(content),
+      options,
       title,
       description,
       version,

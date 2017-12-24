@@ -24,6 +24,22 @@ const typeDefs = `
     ua:        String!
   }
 
+  type Option {
+    type: String!
+    title: String!
+    varname: String!
+    default: String!
+    possibleValues: String
+  }
+
+  input OptionInput {
+    type: String!
+    title: String!
+    varname: String!
+    default: String!
+    possibleValues: [String]
+  }
+
   type Theme {
     _id:         ID!
     user:        User!
@@ -35,7 +51,7 @@ const typeDefs = `
     rating:      Float!
     version:     String!
     screenshots: [String]
-    scope:       String! @deprecated
+    options:     [Option]!
   }
 
   type Results {
@@ -53,19 +69,34 @@ const typeDefs = `
   }
 
   type Mutation {
-    register(displayname: String!, email: String!, password: String!): User!
-    login(email: String!, password: String!): Session!
-    logout(token: String!): Boolean!
-    deleteTheme(token: String!, id: ID!): Boolean!
-    resendVerification(token: String!): Boolean!
+    register(
+      displayname: String!
+      email: String!
+      password: String!
+    ): User!
+    login(
+      email: String!
+      password: String!
+    ): Session!
+    logout(
+      token: String!
+    ): Boolean!
+    deleteTheme(
+      token: String!
+      id: ID!
+    ): Boolean!
+    resendVerification(
+      token: String!
+    ): Boolean!
     theme(
-      token: String!,
-      id: ID,
-      title: String!,
-      description: String!,
-      content: String!,
-      version: String!,
+      token: String!
+      id: ID
+      title: String!
+      description: String!
+      content: String!
+      version: String!
       screenshots: [String]
+      options: [OptionInput]!
     ): Theme!
   }
 `

@@ -3,6 +3,10 @@ import semver from 'semver'
 import urlRegex from './url-regex'
 
 export default {
+  'isOneOf': (array) => {
+    return (data) => array.indexOf(data) !== -1
+  },
+
   'length': (max) => {
     return (data) => {
       return data.length <= max

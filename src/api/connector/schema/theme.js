@@ -1,9 +1,51 @@
-import {Document} from 'camo'
+import {Document, EmbeddedDocument} from 'camo'
 import moment from 'moment'
 import {findIndex} from 'lodash'
 
 import validators from './validators'
 import User from './user'
+
+export class Option extends EmbeddedDocument {
+  constructor () {
+    super()
+
+    this.schema({
+      'type': {
+        'type':     String,
+        'required': true,
+        'validate': validators.isOneOf([
+          'text',
+          'color',
+          'dropdown',
+          'checkbox'
+        ])
+      },
+      'title': {
+        'type':     String,
+        'required': true,
+        'validate': validators.length(64)
+      },
+      'varname': {
+        'type':     String,
+        'required': true,
+        'validate': validators.length(64)
+      },
+      'default': {
+        'type':     String,
+        'required': true,
+        'validate': validators.length(64)
+      },
+      'possibleValues': {
+        'type': [
+          String
+        ],
+        'required': false,
+        'default':  [],
+        'validate': validators.length(64)
+      }
+    })
+  }
+}
 
 export default class Theme extends Document {
   preSave () {
@@ -86,6 +128,12 @@ export default class Theme extends Document {
         ],
         'required': false,
         'validate': validators.length(10)
+      },
+      'options': {
+        'type':     Array,
+        'required': false,
+        'default':  [],
+        'validate': validators.length(64)
       },
       'user': User
     })

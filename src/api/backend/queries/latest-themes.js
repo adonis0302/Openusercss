@@ -22,8 +22,5 @@ export default async (root, {limit}, {User, Theme}) => {
     throw new Error('No theme found')
   }
 
-  // Return an empty scope, in case an old version is running on the client
-  result.scope = ''
-
   return result
 }
