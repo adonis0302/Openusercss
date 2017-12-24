@@ -43,7 +43,6 @@ import 'browsernizr/test/serviceworker'
 import 'browsernizr/test/url/data-uri'
 
 import Modernizr from 'browsernizr'
-import log from 'chalk-console'
 import supports from 'css-supports'
 import promise from 'es6-promise'
 import flexibility from 'flexibility'
@@ -82,26 +81,21 @@ export const runPolyfills = async () => {
   const ranPolyfills = []
 
   if (!Modernizr.supports) {
-    log.info('css/supports - support not found, shimming')
     supports.shim()
     ranPolyfills.push('supports')
   }
   if (!(Modernizr.flexbox && Modernizr.flexbox)) {
-    log.info('css/flexbox - support not found, polyfilling')
     flexibility(document.documentElement)
     ranPolyfills.push('flexibility')
   }
   if (!Modernizr.promises) {
-    log.info('js/promise - support not found, polyfilling')
     promise.polyfill()
     ranPolyfills.push('promises')
   }
   if (!Modernizr.inert) {
-    log.info('html/inert - support not found, polyfilling')
     inertPolyfill()
     ranPolyfills.push('inert')
   }
-
   return ranPolyfills
 }
 
