@@ -9,7 +9,14 @@ export const themePropList = `
   lastUpdate,
   rating,
   version,
-  screenshots
+  screenshots,
+  options {
+    type,
+    title,
+    varname,
+    default,
+    possibleValues
+  }
 `
 
 export const userPropList = `

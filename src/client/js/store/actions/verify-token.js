@@ -30,11 +30,12 @@ export default async ({commit, getters}) => {
       })
       upsert(users, verifyToken.user)
     }
+    commit('loading', false)
     return true
   } catch (error) {
+    commit('loading', false)
     commit('actionError', error)
   }
 
-  commit('loading', false)
   return false
 }

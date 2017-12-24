@@ -7,10 +7,11 @@ export default async ({getters, commit}, token) => {
 
   try {
     result = await verifyEmail(token)
+    commit('loading', false)
   } catch (error) {
+    commit('loading', false)
     commit('actionError', error)
   }
 
-  commit('loading', false)
   return result
 }

@@ -49,12 +49,11 @@ export default async ({commit, getters}, {terms, limit, skip}) => {
       savedUser.themes = userThemes
       upsert(users, savedUser)
     })
-    commit('actionError', null)
     commit('loading', false)
+    commit('actionError', null)
     return search
   } catch (error) {
+    commit('loading', false)
     commit('actionError', error)
   }
-
-  commit('loading', false)
 }

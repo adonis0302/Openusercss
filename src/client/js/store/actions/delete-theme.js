@@ -11,11 +11,11 @@ export default async ({commit, getters}, {id, redirect}) => {
     themes.findAndRemove({
       '_id': id
     })
+    commit('loading', false)
     commit('actionError', null)
     router.push(redirect)
   } catch (error) {
+    commit('loading', false)
     commit('actionError', error)
   }
-
-  commit('loading', false)
 }

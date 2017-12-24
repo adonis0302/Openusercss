@@ -6,11 +6,11 @@ export default async ({commit, getters}, token) => {
 
   try {
     result = await remoteSendVerify({token})
+    commit('loading', false)
   } catch (error) {
     commit('loading', false)
     commit('actionError', error)
   }
 
-  commit('loading', false)
   return result
 }

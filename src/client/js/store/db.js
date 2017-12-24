@@ -51,13 +51,16 @@ validators.reference = (typename) => {
 validators.themes = struct({
   '__typename':  'string?',
   '_id':         'string',
-  'title':       'string?',
-  'version':     'string?',
-  'content':     'string?',
-  'createdAt':   'string?',
-  'lastUpdate':  'string?',
-  'rating':      'number?',
-  'description': 'string?',
+  'title':       'string',
+  'version':     'string',
+  'content':     'string',
+  'createdAt':   'string',
+  'lastUpdate':  'string',
+  'rating':      'number',
+  'description': 'string',
+  'options':     [
+    'object'
+  ],
   'screenshots': struct.optional([
     'string'
   ]),
@@ -68,12 +71,12 @@ validators.themes = struct({
 validators.users = struct({
   '__typename':     'string?',
   '_id':            'string',
-  'username':       'string?',
-  'displayname':    'string?',
-  'lastSeen':       'string?',
-  'lastSeenReason': 'string?',
-  'avatarUrl':      'string?',
-  'smallAvatarUrl': 'string?',
+  'username':       'string',
+  'displayname':    'string',
+  'lastSeen':       'string',
+  'lastSeenReason': 'string',
+  'avatarUrl':      'string',
+  'smallAvatarUrl': 'string',
   'themes':         struct.optional([
     validators.reference('Theme')
   ])

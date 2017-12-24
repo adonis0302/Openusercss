@@ -29,10 +29,10 @@ export default async ({commit, getters}, {readyTheme, redirect}) => {
     }
     upsert(themes, theme)
     commit('actionError', null)
+    commit('loading', false)
     router.push(redirect)
   } catch (error) {
+    commit('loading', false)
     commit('actionError', error)
   }
-
-  commit('loading', false)
 }

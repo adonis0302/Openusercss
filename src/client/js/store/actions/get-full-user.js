@@ -40,15 +40,15 @@ export default async ({commit, getters}, id) => {
       ...user,
       'themes': userThemeRefs
     })
-    commit('actionError', null)
     commit('loading', false)
+    commit('actionError', null)
     return {
       ...user,
       'themes': userThemeRefs
     }
   } catch (error) {
-    commit('actionError', error)
     commit('loading', false)
+    commit('actionError', error)
     throw error
   }
 }

@@ -6,10 +6,10 @@ export default async ({getters, commit}, registerData) => {
 
   try {
     await remoteRegister(registerData)
+    commit('loading', false)
     router.push('/login')
   } catch (error) {
+    commit('loading', false)
     commit('actionError', error)
   }
-
-  commit('loading', false)
 }

@@ -1,4 +1,4 @@
-import {pick, cloneDeep} from 'lodash'
+import {cloneDeep} from 'lodash'
 import {getFullTheme} from './helpers/remotes/queries'
 import db, {upsert} from '../db'
 
@@ -10,13 +10,11 @@ export default async ({commit, getters}, id) => {
   try {
     const {data} = await getFullTheme(id)
     const {theme} = cloneDeep(data)
-    const user = pick(theme.user, [
-      '_id'
-    ])
 
     upsert(users, theme.user)
-    Reflect.deleteProperty(theme, 'user')
-    theme.user = user
+    theme.user = {
+      '_id': theme.user._id
+    }
 
     upsert(themes, theme)
     commit('actionError', null)

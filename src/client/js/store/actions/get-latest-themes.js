@@ -22,12 +22,12 @@ export default async ({commit, getters}, id) => {
       savedThemes.push(savedTheme)
       upsert(themes, savedTheme)
     })
-    commit('actionError', null)
     commit('loading', false)
+    commit('actionError', null)
     return savedThemes
   } catch (error) {
-    commit('actionError', error)
     commit('loading', false)
+    commit('actionError', error)
     throw error
   }
 }

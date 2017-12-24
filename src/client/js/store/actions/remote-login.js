@@ -49,11 +49,11 @@ export default async ({commit}, authData) => {
       'themes': userThemeRefs
     })
 
+    commit('loading', false)
     commit('actionError', null)
     router.push('/')
   } catch (error) {
+    commit('loading', false)
     commit('actionError', error)
   }
-
-  commit('loading', false)
 }

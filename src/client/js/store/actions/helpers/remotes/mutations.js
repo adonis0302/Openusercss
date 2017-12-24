@@ -95,7 +95,8 @@ export const remoteSaveTheme = async (theme, token) => {
   let mutation = null
 
   preparedTheme.content = encodeURIComponent(preparedTheme.content)
-  preparedTheme.screenshots = JSON.stringify(preparedTheme.screenshots)
+  preparedTheme.screenshots = JSON.stringify(preparedTheme.screenshots || [])
+  preparedTheme.options = JSON.stringify(preparedTheme.options || []).replace(/\"([^(\")"]+)\":/g, '$1:')
   const newMutation = gql(`
     mutation {
       theme(
@@ -104,6 +105,7 @@ export const remoteSaveTheme = async (theme, token) => {
         content: "${preparedTheme.content}",
         version: "${preparedTheme.version}",
         screenshots: ${preparedTheme.screenshots},
+        options: ${preparedTheme.options},
         token: "${token}"
       ) {
         ${themePropList}
@@ -122,6 +124,7 @@ export const remoteSaveTheme = async (theme, token) => {
         content: "${preparedTheme.content}",
         version: "${preparedTheme.version}",
         screenshots: ${preparedTheme.screenshots},
+        options: ${preparedTheme.options},
         token: "${token}"
       ) {
         ${themePropList}
