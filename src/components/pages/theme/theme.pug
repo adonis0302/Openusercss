@@ -107,7 +107,15 @@ div.route-root(itemtype="SoftwareApplication")
               br
               p {{viewedTheme.description}}
           b-column(is-6)
-            b-box
-              p Theme options are not implemented yet.
+            h3 Theme options
+            p A preview of options you can set in your extension
+            hr
+            b-columns(is-multiline)
+              b-column(is-6, v-for="option in viewedTheme.options")
+                b-box
+                  b {{option.title}}
+                  p Type: {{option.type}}
+                  p Default: {{option.default}}
+                  p(v-if="option.possibleValues && option.possibleValues.length") {{option.possibleValues}}
 
   ouc-footer
