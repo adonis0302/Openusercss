@@ -3,6 +3,7 @@ import noSSR from 'vue-no-ssr'
 import {mapGetters} from 'vuex'
 import semver from 'semver'
 import {cloneDeep, concat} from 'lodash'
+import {Chrome as colorPicker} from 'vue-color'
 
 import oucFooter from '../../components/ouc-footer/ouc-footer.vue'
 import navbar from '../../components/navbar/navbar.vue'
@@ -51,18 +52,51 @@ export default {
     editor,
     bInput,
     bTextarea,
-    listCreator
+    listCreator,
+    colorPicker
   },
   'data': () => {
     return {
       // eslint-disable-next-line
-      'regex': /((?![*+?])(?:[^\r\n\[\/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)/
+      'regex': /((?![*+?])(?:[^\r\n\[\/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)/,
+      'editedTheme': {
+        'title':       '',
+        'description': '',
+        'version':     '',
+        'screenshots': [],
+        'content':     '',
+        'options':     []
+      },
+      'colors': {
+        'hex': '#ffffff'
+      }
     }
   },
-  beforeMount () {
-    if (this.$route.params.id) {
+  created () {
+    const self = this
+
+    if (!this.theme) {
       this.$store.dispatch('getFullTheme', this.$route.params.id)
+      .then((theme) => {
+        theme.user = {
+          '_id': theme.user._id
+        }
+        self.editedTheme = theme
+      })
+    } else {
+      self.editedTheme = this.$db.getCollection('themes').findOne({
+        '_id': this.$route.params.id
+      })
     }
+
+    this.editedTheme.options.forEach((option, index) => {
+      const cleanOption = cloneDeep(option)
+
+      Reflect.deleteProperty(cleanOption, '__typename')
+      this.editedTheme.options[index] = cleanOption
+    })
+  },
+  beforeMount () {
     this.$validator.extend('semver', (value) => !!semver.valid(value))
     this.$validator.localize(customDictionary)
   },
@@ -72,11 +106,27 @@ export default {
       const validated = await this.$validator.validateAll()
 
       if (validated) {
+        const readyTheme = cloneDeep(this.theme)
+
         this.$store.dispatch('saveTheme', {
-          'readyTheme': cloneDeep(this.theme),
-          'redirect':   `/profile/${this.currentUser._id}`
+          'redirect': `/profile/${this.currentUser._id}`,
+          readyTheme
         })
       }
+    },
+    addOption (type) {
+      this.editedTheme.options.push({
+        type
+      })
+    },
+    removeOption (index) {
+      this.editedTheme.options.splice(index, 1)
+    },
+    properCase (string) {
+      return string.charAt(0).toUpperCase() + string.slice(1)
+    },
+    updateColor (colorObj, index) {
+      this.editedTheme.options[index].default = colorObj.hex
     }
   },
   'computed': {

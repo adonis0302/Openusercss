@@ -1,65 +1,48 @@
 div.route-root
   b-container
     .section
+      notification(v-if="concat(actionErrors, errors.all()).length > 0", icon="alert", color="is-danger").is-danger
+        div(slot="content")
+          p(v-for="error in concat(actionErrors, errors.all())") {{error}}
+
       form(slot="form", @submit.prevent="submit").ouc-new-theme-form
-        notification(v-if="concat(actionErrors, errors.all()).length > 0", icon="alert", color="is-danger").is-danger
-          div(slot="content")
-            p(v-for="error in concat(actionErrors, errors.all())") {{error}}
-        b-tile(is-ancestor)
-          b-tile(is-parent, is-vertical)
-            b-tile.ouc-new-theme-header(is-child)
-              b-level
-                b-level-left
-                  h1(v-if="isNew") Create a new theme
-                  h1(v-else="isNew") Editing {{theme.title}}
-                b-level-right
-                  b-tile(is-parent)
-                    b-tile(is-child)
-                      p {{theme.version}}
-                  button.button(type="submit", is-primary, :disabled="errors.any()", :class="['button', 'is-primary', {'is-loading': loading}]")
-                    div(slot="content") Save theme
+        b-tile.ouc-new-theme-header(is-parent)
+          b-tile(is-6, is-child)
+            h1.is-inline(v-if="$route.params.id") Editing:&nbsp;
+            h1.is-inline(v-else="$route.params.id") Creating:&nbsp;
+            b-input.is-inline(
+              type="text",
+              name="title",
+              placeholder="Theme title",
+              v-validate="'required'",
+              v-model="editedTheme.title",
+              :class="['input', {'is-danger': errors.has('title')}]"
+            )
 
-            b-tile.ouc-new-theme-title(is-child)
-              b-field
-                b-control(has-icons-left)
-                  icon(icon="tag")
-                  b-input(
-                    type="text",
-                    name="title",
-                    placeholder="Theme title",
-                    v-validate="'required'",
-                    v-model="theme.title",
-                    :class="['input', {'is-danger': errors.has('title')}]"
-                  )
+          b-tile(is-6, is-child)
+            button.button.is-pulled-right(
+              type="submit",
+              is-primary,
+              :disabled="errors.any()",
+              :class="['button', 'is-primary', {'is-loading': loading}]"
+            ) Save theme
 
-            b-tile(is-child, is-paddingless)
-              b-columns
-                b-column.ouc-new-theme-description(is-child, is-7)
-                  b-field
-                    b-control
-                      b-textarea(
-                        type="text",
-                        name="description",
-                        placeholder="Theme description",
-                        v-validate="'required'",
-                        v-model="theme.description",
-                        :class="['input', {'is-danger': errors.has('description')}]"
-                      )
-                b-column.ouc-new-theme-help(is-child, is-5)
-                  b-box(is-primary)
-                    p(is-primary)
-                      icon(icon="information")
-                      | To make writing CSS even easier, you can look through these
-                      | resources:
-                    hr
-                    a(href="http://www.htmldog.com/guides/css/beginner/selectors/", target="_blank", rel="nofollow") Selectors, Properties, and Values (HTML Dog)
-                    br
-                    a(href="https://learn.shayhowe.com/html-css/getting-to-know-css/", target="_blank", rel="nofollow") Getting to Know CSS (Shay Howe)
-                    br
-                    a(href="https://www.w3schools.com/css/", target="_blank", rel="nofollow") CSS Tutorial (W3Schools - The W3C Consortium)
+        b-columns
+          b-column(is-7)
+            b-tile(is-parent, is-vertical)
+              b-tile(is-child)
+                b-field
+                  b-control
+                    b-textarea(
+                      type="text",
+                      name="description",
+                      placeholder="Theme description",
+                      v-validate="'required'",
+                      v-model="editedTheme.description",
+                      :class="['input', {'is-danger': errors.has('description')}]"
+                    )
 
-            b-columns
-              b-column
+              b-tile(is-child)
                 b-field
                   b-control(has-icons-left)
                     icon(icon="update")
@@ -68,29 +51,121 @@ div.route-root
                       name="version",
                       placeholder="Version",
                       v-validate="'required|semver'",
-                      v-model="theme.version",
+                      v-model="editedTheme.version",
                       :class="['input', {'is-danger': errors.has('version')}]"
                     )
-              b-column(is-1).ouc-icon-wrapper
-                router-link(to="/help")
-                  icon(icon="help-circle", color="#FFB450")
 
-            list-creator(
-              icon="earth",
-              :max-items="10",
-              item-name="screenshot",
-              v-model="theme.screenshots",
-              placeholder="Paste a URL to your image here"
-            ).has-bottom-margin
+              b-tile(is-child)
+                list-creator(
+                  icon="earth",
+                  :max-items="10",
+                  item-name="screenshot",
+                  v-model="editedTheme.screenshots",
+                  placeholder="Paste a URL to your image here"
+                ).has-bottom-margin
 
-            b-tile.ouc-new-theme-editor(is-child)
-              b-box(is-paddingless)
-                no-ssr
-                  editor(
-                    v-model="theme.content",
-                    name="content",
-                    v-validate="'required'",
-                    :class="{'is-danger': errors.has('content')}"
-                  )
+              b-tile.ouc-new-theme-editor(is-child)
+                b-box(is-paddingless)
+                  no-ssr
+                    editor(
+                      v-model="editedTheme.content",
+                      name="content",
+                      v-validate="'required'",
+                      :class="{'is-danger': errors.has('content')}"
+                    )
+
+          b-column(is-5)
+            b-tile(is-parent, is-vertical)
+              b-tile
+                b-tile(is-child, is-6)
+                  button.button.is-primary.is-fullwidth(
+                    type="button",
+                    @click="addOption('text')"
+                  ) Add text option
+                b-tile(is-child, is-6)
+                  button.button.is-primary.is-fullwidth(
+                    type="button",
+                    @click="addOption('color')"
+                  ) Add color option
+              b-tile
+                b-tile(is-child, is-6)
+                  button.button.is-primary.is-fullwidth(
+                    type="button",
+                    @click="addOption('checkbox')"
+                  ) Add checkbox option
+                b-tile(is-child, is-6)
+                  button.button.is-primary.is-fullwidth(
+                    type="button",
+                    @click="addOption('dropdown')"
+                  ) Add dropdown option
+
+              br
+              b-tile(is-parent, is-paddingless, is-vertical)
+                b-tile(v-for="(option, index) in editedTheme.options", is-child)
+                  b-box(is-fullwidth)
+                    b-level(is-marginless)
+                      b-level-left
+                        p {{properCase(option.type)}} option
+                      b-level-right
+                        button.button.is-danger(
+                          type="button",
+                          @click="removeOption(index)"
+                        )
+                          icon(icon="close")
+                    br
+                    b-tile(is-parent, is-paddingless)
+                      b-tile(is-child)
+                        b-input(
+                          type="text",
+                          :name="option.type + '-' + index + '-' + 'title'",
+                          placeholder="Option title",
+                          v-model="editedTheme.options[index].title"
+                        )
+                      b-tile(is-child)
+                        b-input(
+                          type="text",
+                          :name="option.type + '-' + index + '-' + 'varname'",
+                          placeholder="Variable name",
+                          v-model="editedTheme.options[index].varname"
+                        )
+                      b-tile(is-child, v-if="option.type === 'text'")
+                        b-input(
+                          type="text",
+                          :name="option.type + '-' + index + '-' + 'default'",
+                          placeholder="Default value",
+                          v-model="editedTheme.options[index].default"
+                        )
+                      b-tile(is-child, v-if="option.type === 'dropdown'")
+                        .select.is-fullwidth
+                          select(v-model="editedTheme.options[index].default")
+                            option(v-for="value in option.possibleValues") {{value}}
+                      b-tile(has-text-centered, is-child, v-if="option.type === 'checkbox'")
+                        //- label.checkbox
+                          input(type="checkbox", v-model="editedTheme.options[index].default")
+                          | &nbsp;Default
+                        .select.is-fullwidth
+                          select(v-model="editedTheme.options[index].default")
+                            option(value="checked") Checked
+                            option(value="unchecked") Unchecked
+
+                    b-tile(is-parent, is-paddingless, is-vertical, v-if="option.type === 'color'")
+                      hr
+                      b-tile(is-child)
+                        p Default:
+                      b-tile(is-child)
+                        color-picker.is-fullwidth(
+                          :value="colors",
+                          @input="(event) => updateColor(event, index)"
+                        )
+
+                    b-tile(is-parent, is-paddingless, is-vertical, v-if="option.type === 'dropdown'")
+                      hr
+                      list-creator(
+                        v-model="editedTheme.options[index].possibleValues",
+                        item-name="value option",
+                        max-items=64,
+                        placeholder="Value",
+                        icon="view-list"
+                      )
 
   ouc-footer

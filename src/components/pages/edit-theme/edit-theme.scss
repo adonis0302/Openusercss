@@ -38,4 +38,12 @@ textarea[name="description"] {
   justify-content: center;
 }
 
+.is-half-width {
+  width: 50%
+}
+
+.is-fullwidth {
+  width: 100%
+}
+
 @import '../../../client/scss/reboot';
