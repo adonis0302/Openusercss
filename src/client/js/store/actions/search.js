@@ -1,4 +1,4 @@
-import {pick} from 'lodash'
+import {cloneDeep} from 'lodash'
 import {search as remoteSearch} from './helpers/remotes/queries'
 import db, {upsert} from '../db'
 
@@ -12,16 +12,7 @@ export default async ({commit, getters}, {terms, limit, skip}) => {
     const {search} = data
 
     search.themes.forEach((theme) => {
-      const savedTheme = pick(theme, [
-        '_id',
-        'title',
-        'version',
-        'content',
-        'createdAt',
-        'lastUpdate',
-        'rating',
-        'description'
-      ])
+      const savedTheme = cloneDeep(theme)
 
       savedTheme.user = {
         '_id': theme.user._id
@@ -29,16 +20,7 @@ export default async ({commit, getters}, {terms, limit, skip}) => {
       upsert(themes, savedTheme)
     })
     search.users.forEach((user) => {
-      const savedUser = pick(user, [
-        '_id',
-        'title',
-        'version',
-        'content',
-        'createdAt',
-        'lastUpdate',
-        'rating',
-        'description'
-      ])
+      const savedUser = cloneDeep(user)
       const userThemes = []
 
       user.themes.forEach((theme) => {
