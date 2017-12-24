@@ -11,7 +11,7 @@ import appBase from '../../../.tmp/pages/app-base/app-base.vue'
 
 Vue.use(VeeValidate, {
   'errorBagName':  'errors',
-  'fieldsBagName': 'fields',
+  'fieldsBagName': 'vee-fields',
   'delay':         0,
   'locale':        'en',
   'dictionary':    null,
