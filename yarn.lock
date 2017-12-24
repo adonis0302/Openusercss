@@ -13583,9 +13583,9 @@ vueify@^9:
     vue-template-compiler "^2.0.0-alpha.8"
     vue-template-es2015-compiler "^1.2.2"
 
-vuex-persist@^0.6.0:
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/vuex-persist/-/vuex-persist-0.6.0.tgz#fe7baf4a209731d6610d8d500953a285d04226ed"
+vuex-persist@^1:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/vuex-persist/-/vuex-persist-1.1.0.tgz#25d76e723aae707cf127706dd51e70e93371147a"
   dependencies:
     lodash.merge "^4.6.0"
 
