@@ -1,5 +1,5 @@
 import {struct} from 'superstruct'
-import {pick} from 'lodash'
+import {pick, cloneDeep} from 'lodash'
 import {ObjectID} from 'mongodb'
 
 import Theme from './connector/schema/theme'
@@ -41,22 +41,14 @@ validators.theme = struct({
   'rating':      'number?',
   'description': 'string?',
   'screenshots': 'array?',
+  'options':     'array?',
   'user':        validators.user
 }, {
   '__typename': 'Theme'
 })
 
 export const buildTheme = async (rawTheme) => {
-  const builtTheme = pick(rawTheme, [
-    '_schema',
-    '__typename',
-    'title',
-    'version',
-    'content',
-    'createdAt',
-    'lastUpdate',
-    'description'
-  ])
+  const builtTheme = cloneDeep(rawTheme)
 
   builtTheme._id = new ObjectID(rawTheme._id)
   builtTheme.user = pick(rawTheme.user, [
@@ -67,18 +59,52 @@ export const buildTheme = async (rawTheme) => {
   ])
 
   const theme = validators.theme(builtTheme)
-  let response = '/* ==userstyle==\n'
 
-  response = `${response}@name ${theme.title}\n`
-  response = `${response}@description ${theme.description}\n`
-  response = `${response}@version ${theme.version}\n`
-  response = `${response}@namespace https://openusercss.org/theme/${theme._id}\n`
-  response = `${response}@homepageURL https://openusercss.org/theme/${theme._id}\n`
-  response = `${response}@author ${theme.user.displayname} (https://openusercss.org/profile/${theme.user._id})\n`
-  response = `${response}==/userstyle== */\n\n`
-  response = `${response}${theme.content}\n`
+  const header = [
+    '/* ==userstyle==',
+    `@name ${theme.title}`,
+    `@description ${theme.description}`,
+    `@version ${theme.version}`,
+    `@namespace https://openusercss.org/theme/${theme._id}`,
+    `@homepageURL https://openusercss.org/theme/${theme._id}`,
+    `@author ${theme.user.displayname} (https://openusercss.org/profile/${theme.user._id})`
+  ].join('\n')
 
-  return response
+  const rawVars = []
+
+  theme.options.forEach((option) => {
+    switch (option.type) {
+    case 'checkbox':
+      let defaultOption = 0
+
+      if (option.default === 'checked') {
+        defaultOption = 1
+      }
+
+      rawVars.push(`@var ${option.type} ${option.varname} "${option.title}" ${defaultOption}`)
+      break
+    case 'dropdown':
+      rawVars.push(`@var select ${option.varname} "${option.title}" ${JSON.stringify(option.possibleValues)}`)
+      break
+    default:
+      rawVars.push(`@var ${option.type} ${option.varname} "${option.title}" ${option.default}`)
+      break
+    }
+  })
+  const vars = [
+    rawVars.join('\n'),
+    '==/userstyle== */'
+  ].join('\n')
+
+  const body = [
+    theme.content
+  ]
+
+  return [
+    header,
+    vars,
+    body
+  ].join('\n\n')
 }
 
 export default async (req, res, next) => {

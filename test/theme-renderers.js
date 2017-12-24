@@ -18,17 +18,27 @@ test('buildTheme - correctly builds from theme object', async (t) => {
 @namespace https://openusercss.org/theme/5a275431707d23a322cff59f
 @homepageURL https://openusercss.org/theme/5a275431707d23a322cff59f
 @author DecentM (https://openusercss.org/profile/5a262a2c3835ee7627db2ef9)
+
+@var text thing "My Title" hello
 ==/userstyle== */
 
-@-moz-document regexp(".*openusercss.org.*") {body {content: "yaeee";}}
-`
+@-moz-document regexp(".*openusercss.org.*") {body {content: "yaeee";}}`
+
   const result = await buildTheme({
     ...state.themes[0],
     'user': {
       '_schema':     {},
       '_id':         new ObjectID('5a262a2c3835ee7627db2ef9'),
       'displayname': 'DecentM'
-    }
+    },
+    'options': [
+      {
+        'type':    'text',
+        'default': 'hello',
+        'varname': 'thing',
+        'title':   'My Title'
+      }
+    ]
   })
 
   t.deepEqual(result, expected)
