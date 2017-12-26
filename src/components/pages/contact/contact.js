@@ -22,7 +22,7 @@ export default {
     return {
       'showing':      false,
       'email':        '(please wait...)',
-      'encodedEmail': '&#x6D;&#x6F;&#x63;&#x2E;&#x6D;&#x74;&#x6E;&#x65;&#x63;&#x65;&#x64;&#x40;&#x6D;&#x74;&#x6E;&#x65;&#x63;&#x65;&#x64;'
+      'encodedEmail': '&#x67;&#x72;&#x6F;&#x2E;&#x73;&#x73;&#x63;&#x72;&#x65;&#x73;&#x75;&#x6E;&#x65;&#x70;&#x6F;&#x40;&#x6D;&#x74;&#x6E;&#x65;&#x63;&#x65;&#x64;'
     }
   }
 }
