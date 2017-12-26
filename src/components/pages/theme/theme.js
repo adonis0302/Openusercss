@@ -68,6 +68,10 @@ export default {
       this.viewSource()
     }
   },
+  beforeDestroy () {
+    this.$modal.hide('delete-theme')
+    this.$modal.hide('source-viewer')
+  },
   'methods': {
     formatMoment,
     proxyImage (original) {
