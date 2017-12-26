@@ -26,3 +26,9 @@ body {
 .dropdown-toggle.clearfix {
   border-radius: 0
 }
+
+body.v--modal-block-scroll {
+  overflow: auto !important;
+  position: initial !important;
+  width: initial !important;
+}
