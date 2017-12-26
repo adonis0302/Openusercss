@@ -20,9 +20,18 @@ const polyfills = async () => {
   return runPolyfills()
 }
 
+const mountApp = async () => {
+  const app = new Vue({
+    store,
+    router,
+    ...appBase
+  })
+
+  app.$mount('app')
+}
+
 const main = async () => {
   const polyfillsResult = await polyfills()
-  const fps = new FpsEmitter(1000)
 
   process.animating = []
   process.averageFps = 0
@@ -36,40 +45,28 @@ const main = async () => {
   Vue.use(VueModal)
   Vue.component('flickity', VFlickity)
 
-  const app = new Vue({
-    store,
-    router,
-    ...appBase
-  })
-
-  process.toast = iziToast
-  process.nextTick(() => {
-    app.$mount('app')
-  })
+  mountApp()
+  .catch(log.error)
+  const fps = new FpsEmitter(1000)
 
   window.addEventListener('load', () => {
-    process.nextTick(() => {
-      fps.on('update', (newFps) => {
-        if (process.animating.length > 0 || process.averageFps < 45) {
-          process.fpsHistory.unshift(newFps)
-        }
+    fps.on('update', (newFps) => {
+      if (process.animating.length > 0 || process.averageFps < 45) {
+        process.fpsHistory.unshift(newFps)
+      }
 
-        if (process.fpsHistory.length > 9) {
-          process.fpsHistory.splice(-1, 1)
-        }
+      if (process.fpsHistory.length > 9) {
+        process.fpsHistory.splice(-1, 1)
+      }
 
-        process.averageFps = Math.floor(divide(sum(process.fpsHistory), process.fpsHistory.length))
-      })
+      process.averageFps = Math.floor(divide(sum(process.fpsHistory), process.fpsHistory.length))
     })
   })
 
   if ('serviceWorker' in navigator) {
-    await window.addEventListener('load', async () => {
-      try {
-        await navigator.serviceWorker.register('/worker.js')
-      } catch (error) {
-        log.error(error)
-      }
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/worker.js')
+      .catch(log.error)
     })
   }
 }
