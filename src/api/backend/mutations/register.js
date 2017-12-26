@@ -25,7 +25,7 @@ const createSendEmail = async ({email, displayname}) => {
 
   const result = await sendEmail({
     'to':       email,
-    'template': 'registration',
+    'template': 'verification',
     'locals':   {
       displayname,
       link
@@ -36,8 +36,8 @@ const createSendEmail = async ({email, displayname}) => {
 }
 
 export default async (root, {displayname, email, password}, {User}) => {
-  const saltRounds = 14
-  const salt = await bcrypt.genSalt(saltRounds)
+  const config = await staticConfig()
+  const salt = await bcrypt.genSalt(config.get('saltRounds'))
   const hash = await bcrypt.hash(password, salt)
   const newUser = User.create({
     'password': hash,

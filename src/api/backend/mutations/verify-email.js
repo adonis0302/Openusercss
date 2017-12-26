@@ -8,9 +8,16 @@ export default async (root, {token}, {User}) => {
   let result = false
 
   if (decoded.email) {
-    const user = await User.findOne({
+    let user = null
+
+    const existingEmailUser = await User.findOne({
       'email': decoded.email
     })
+    const pendingEmailUser = await User.findOne({
+      'pendingEmail': decoded.email
+    })
+
+    user = existingEmailUser || pendingEmailUser
 
     if (!user) {
       // Just in case we made an error by sending a verification link
@@ -19,8 +26,12 @@ export default async (root, {token}, {User}) => {
       throw new Error('\nThis address does not exist.\nTo fix it, you must persist')
     }
 
+    if (user.pendingEmail && user.pendingEmail !== '') {
+      user.email = user.pendingEmail
+      user.pendingEmail = ''
+    }
     user.emailVerified = true
-    user.save()
+    await user.save()
 
     result = true
   }

@@ -59,16 +59,26 @@ const typeDefs = `
     themes: [Theme]
   }
 
+  type Version {
+    revisionLong:   String!
+    revisionShort:  String!
+    revisionTag:    String!
+    revisionBranch: String!
+  }
+
   type Query {
     verifyToken(token: String!): Session!
-    verifyEmail(token: String!): Boolean!
     theme(id: ID!): Theme!
     user(id: ID!): User!
     search(terms: String!, limit: Int, skip: Int): Results!
     latestThemes(limit: Int): [Theme]!
+    version: Version!
   }
 
   type Mutation {
+    verifyEmail(
+      token: String!
+    ): Boolean!
     register(
       displayname: String!
       email: String!
@@ -98,6 +108,12 @@ const typeDefs = `
       screenshots: [String]
       options: [OptionInput]!
     ): Theme!
+    account(
+      token: String!
+      password: String
+      displayname: String
+      email: String
+    ): User!
   }
 `
 

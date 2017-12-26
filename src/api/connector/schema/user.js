@@ -65,6 +65,12 @@ export default class User extends Document {
         }),
         'validate': validators.length(254)
       },
+      'pendingEmail': {
+        'type':     String,
+        'unique':   false,
+        'required': false,
+        'validate': validators.length(254)
+      },
       'emailVerified': {
         'type':     Boolean,
         'required': true,
@@ -86,6 +92,12 @@ export default class User extends Document {
         'required': false,
         'default':  'registering',
         'validate': validators.length(64)
+      },
+      'bio': {
+        'type':     String,
+        'required': false,
+        'default':  '',
+        'validate': validators.length(768)
       },
       'avatarUrl': {
         'type': String

@@ -1,5 +1,4 @@
 import {ObjectId} from 'mongodb'
-import {pick} from 'lodash'
 
 export default async (root, {id}, {Session, Theme, User}) => {
   const foundUser = await User.findOne({
@@ -12,16 +11,5 @@ export default async (root, {id}, {Session, Theme, User}) => {
     throw new Error('No user found')
   }
 
-  const user = pick(foundUser, [
-    '_id',
-    'username',
-    'displayname',
-    'avatarUrl',
-    'smallAvatarUrl',
-    'lastSeen',
-    'lastSeenReason',
-    'themes'
-  ])
-
-  return user
+  return foundUser
 }
