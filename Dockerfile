@@ -2,7 +2,7 @@ FROM mhart/alpine-node:9.2.0
 LABEL maintainer="DecentM <decentm@decentm.com>"
 
 RUN apk update
-RUN apk add python make g++ krb5-dev
+RUN apk add python make g++ krb5-dev git
 
 RUN mkdir /ouc
 COPY ./build/ /ouc/
@@ -18,4 +18,3 @@ EXPOSE 5001/tcp
 EXPOSE 5011/tcp
 
 CMD ["ash", "/ouc/entrypoint.sh"]
-
