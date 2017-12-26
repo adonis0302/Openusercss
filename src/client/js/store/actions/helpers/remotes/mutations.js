@@ -21,6 +21,29 @@ export const remoteSendVerify = async ({token}) => {
   return result
 }
 
+export const verifyEmail = async (token) => {
+  const mutation = gql(`
+    mutation {
+      verifyEmail(token: "${token}")
+    }
+  `)
+  let result = null
+
+  try {
+    result = await apolloClient.mutate({
+      mutation
+    })
+  } catch (error) {
+    result = {
+      'data': {
+        'verifyEmail': false
+      }
+    }
+  }
+
+  return result
+}
+
 export const remoteLogin = async ({email, password}) => {
   const mutation = gql(`
     mutation {
