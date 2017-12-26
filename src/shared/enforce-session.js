@@ -2,9 +2,7 @@
 
 import staticConfig from './config'
 import jwt from 'jsonwebtoken'
-import {expected} from './custom-errors'
-
-const {AuthenticationError} = expected
+import log from 'chalk-console'
 
 export default async (token: String, Session) => {
   const config = await staticConfig()
@@ -26,7 +24,8 @@ export default async (token: String, Session) => {
       ]
     })
   } catch (error) {
-    throw new AuthenticationError(error.message)
+    log.error(error)
+    throw new Error('Invalid session')
   }
 
   return session
