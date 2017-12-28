@@ -76,7 +76,7 @@ export default {
     const self = this
 
     if (this.$route.params.id) {
-      if (!this.theme) {
+      if (this.editedTheme && !this.editedTheme._id) {
         this.$store.dispatch('getFullTheme', this.$route.params.id)
         .then((theme) => {
           theme.user = {
@@ -108,7 +108,7 @@ export default {
       const validated = await this.$validator.validateAll()
 
       if (validated) {
-        const readyTheme = cloneDeep(this.theme)
+        const readyTheme = cloneDeep(this.editedTheme)
 
         this.$store.dispatch('saveTheme', {
           'redirect': `/profile/${this.currentUser._id}`,
