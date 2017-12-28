@@ -75,18 +75,20 @@ export default {
   created () {
     const self = this
 
-    if (!this.theme) {
-      this.$store.dispatch('getFullTheme', this.$route.params.id)
-      .then((theme) => {
-        theme.user = {
-          '_id': theme.user._id
-        }
-        self.editedTheme = theme
-      })
-    } else {
-      self.editedTheme = this.$db.getCollection('themes').findOne({
-        '_id': this.$route.params.id
-      })
+    if (this.$route.params.id) {
+      if (!this.theme) {
+        this.$store.dispatch('getFullTheme', this.$route.params.id)
+        .then((theme) => {
+          theme.user = {
+            '_id': theme.user._id
+          }
+          self.editedTheme = theme
+        })
+      } else {
+        self.editedTheme = this.$db.getCollection('themes').findOne({
+          '_id': this.$route.params.id
+        })
+      }
     }
 
     this.editedTheme.options.forEach((option, index) => {
