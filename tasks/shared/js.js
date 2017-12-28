@@ -59,9 +59,7 @@ export const createBrowserify = (opts) => {
   const bify = browserify(browserifyOpts(opts))
 
   bify.transform(vueify)
-  bify.transform(envify, {
-    'NODE_ENV': process.env.NODE_ENV || 'production'
-  })
+  bify.transform(envify, process.env)
 
   switch (opts.target) {
   case 'browser':

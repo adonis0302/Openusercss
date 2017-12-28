@@ -40,7 +40,7 @@ gulp.task('client:js:prod', () => {
       'entries': [
         entry
       ],
-      'debug':  false,
+      'debug':  true,
       'target': 'browser'
     }
 
@@ -59,6 +59,14 @@ gulp.task('client:js:prod', () => {
       source(entry),
       buffer(),
       optimize(),
+      sourcemaps.init({
+        'loadMaps': true
+      }),
+      sourcemaps.write(destination(), {
+        'sourceMappingURL': (file) => {
+          return `/${file.relative}.map`
+        }
+      }),
       minify({
         'ext': {
           'src': '.js',
