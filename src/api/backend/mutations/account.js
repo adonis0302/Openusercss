@@ -7,7 +7,6 @@ import {
   sendEmail as transportEmail
 } from '../../email/mailer'
 import mustAuthenticate from '../../../shared/enforce-session'
-
 import staticConfig from '../../../shared/config'
 
 const sendEmail = async (locals, {template}) => {
@@ -56,9 +55,9 @@ const sendEmail = async (locals, {template}) => {
 export default async (root, {token, email, password, displayname, bio}, {User, Session}) => {
   const session = await mustAuthenticate(token, Session)
   const config = await staticConfig()
-  const {user} = session
-  const oldUser = cloneDeep(user)
   const saltRounds = parseInt(config.get('saltRounds'), 10)
+  const user = session.user
+  const oldUser = cloneDeep(user)
 
   // Password resets
   if (password) {
