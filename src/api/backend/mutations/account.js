@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs'
 import log from 'chalk-console'
 import jwt from 'jsonwebtoken'
-// import {cloneDeep} from 'lodash'
+import {cloneDeep} from 'lodash'
 import moment from 'moment'
 import {
   sendEmail as transportEmail
@@ -11,6 +11,13 @@ import mustAuthenticate from '../../../shared/enforce-session'
 import staticConfig from '../../../shared/config'
 
 const sendEmail = async (locals, {template}) => {
+  if (!locals.email) {
+    throw new Error('No email address defined in locals')
+  }
+  if (!locals.user || !locals.oldUser) {
+    throw new Error('Locals must include an oldUser and a user object')
+  }
+
   const config = await staticConfig()
   const token = jwt.sign({
     'email': locals.email
@@ -46,11 +53,11 @@ const sendEmail = async (locals, {template}) => {
  *   Changing bio
  */
 
-export default async (root, {token, email, password, displayname}, {User, Session}) => {
+export default async (root, {token, email, password, displayname, bio}, {User, Session}) => {
   const session = await mustAuthenticate(token, Session)
   const config = await staticConfig()
   const {user} = session
-  // const oldUser = cloneDeep(user)
+  const oldUser = cloneDeep(user)
   const saltRounds = parseInt(config.get('saltRounds'), 10)
 
   // Password resets
@@ -60,7 +67,11 @@ export default async (root, {token, email, password, displayname}, {User, Sessio
 
     user.password = hash
 
-    sendEmail(user, {
+    sendEmail({
+      user,
+      oldUser,
+      'email': user.email
+    }, {
       'template': 'password-changed'
     })
     .catch(log.error)
@@ -77,7 +88,9 @@ export default async (root, {token, email, password, displayname}, {User, Sessio
 
     sendEmail({
       user,
-      'newDisplayname': displayname
+      oldUser,
+      'newDisplayname': displayname,
+      'email':          user.email
     }, {
       'template': 'username-changed'
     })
@@ -108,7 +121,8 @@ export default async (root, {token, email, password, displayname}, {User, Sessio
 
     sendEmail({
       'email': user.email,
-      user
+      user,
+      oldUser
     }, {
       'template': 'email-reverification-previous'
     })
@@ -116,12 +130,17 @@ export default async (root, {token, email, password, displayname}, {User, Sessio
 
     sendEmail({
       user,
+      oldUser,
       email,
       link
     }, {
       'template': 'email-reverification-next'
     })
     .catch(log.error)
+  }
+
+  if (bio) {
+    user.bio = decodeURIComponent(bio)
   }
 
   user.lastSeen = moment().toJSON()

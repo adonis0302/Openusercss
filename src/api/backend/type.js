@@ -12,6 +12,7 @@ const typeDefs = `
     lastSeenReason: String!
     createdAt:      String!
     lastUpdate:     String!
+    bio:            String!
   }
 
   type Session {
@@ -109,10 +110,11 @@ const typeDefs = `
       options: [OptionInput]!
     ): Theme!
     account(
-      token: String!
-      password: String
+      token:       String!
+      password:    String
       displayname: String
-      email: String
+      email:       String
+      bio:         String
     ): User!
   }
 `

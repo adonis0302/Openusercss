@@ -23,7 +23,7 @@ const createSendEmail = async ({email, displayname}) => {
 
   const result = await sendEmail({
     'to':       email,
-    'template': 'registration',
+    'template': 'email-verification-request',
     'locals':   {
       displayname,
       link
