@@ -15,14 +15,11 @@ export default async ({commit, getters}, {readyTheme, redirect}) => {
       '_id': theme.user._id
     })
 
-    users.findAndRemove({
-      '_id': theme.user._id
-    })
     user.themes = uniqBy([
-      ...user.themes,
+      ...user.themes || [],
       theme
     ], '_id')
-    users.insert(user)
+    users.update(user)
 
     theme.user = {
       '_id': theme.user._id
