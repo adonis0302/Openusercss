@@ -1,10 +1,42 @@
 import gql from 'graphql-tag'
-import {cloneDeep} from 'lodash'
+import {cloneDeep, forOwn} from 'lodash'
 import {userPropList, themePropList} from '../queries'
 import {apolloClient} from '../../'
 import {expected} from '../../../../../../shared/custom-errors'
 
 const {AuthenticationError} = expected
+
+export const remoteAccount = async (accountData, token) => {
+  const mutationHead = `mutation {
+    account(`
+  const mutationRes = `) {
+    ${userPropList}
+  }`
+  const mutationFoot = '}'
+  const mutationData = [
+    `token: "${token}"`
+  ]
+
+  forOwn(accountData, (value, key) => {
+    if (value) {
+      mutationData.push(`${key}: "${value}"`)
+    }
+  })
+
+  const mutationString = [
+    mutationHead,
+    mutationData.join('\n'),
+    mutationRes,
+    mutationFoot
+  ].join('\n')
+
+  const mutation = gql(mutationString)
+  const result = await apolloClient.mutate({
+    mutation
+  })
+
+  return result
+}
 
 export const remoteSendVerify = async ({token}) => {
   const mutation = gql(`

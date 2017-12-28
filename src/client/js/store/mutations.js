@@ -34,8 +34,8 @@ export default {
   },
 
   actionError (state, error) {
-    if (!(error instanceof Error) && error !== null) {
-      throw new Error(`Argument passed to actionError must be of type Error, got ${JSON.stringify(error, null, 4)}`)
+    if (error && !error.message) {
+      throw new Error(`Argument passed to actionError must have a message property, got ${error}`)
     }
 
     if (error) {

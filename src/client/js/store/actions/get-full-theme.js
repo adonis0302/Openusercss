@@ -11,6 +11,7 @@ export default async ({commit, getters}, id) => {
     const {data} = await getFullTheme(id)
     const {theme} = cloneDeep(data)
 
+    // console.log(theme.user)
     upsert(users, theme.user)
     theme.user = {
       '_id': theme.user._id
@@ -26,6 +27,5 @@ export default async ({commit, getters}, id) => {
     })
     commit('actionError', error)
     commit('loading', false)
-    throw error
   }
 }

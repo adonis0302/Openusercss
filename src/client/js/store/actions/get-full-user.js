@@ -36,10 +36,9 @@ export default async ({commit, getters}, id) => {
       }
     })
 
-    upsert(users, {
-      ...user,
-      'themes': userThemeRefs
-    })
+    user.themes = userThemeRefs
+
+    upsert(users, user)
     commit('loading', false)
     commit('actionError', null)
     return {
@@ -49,6 +48,5 @@ export default async ({commit, getters}, id) => {
   } catch (error) {
     commit('loading', false)
     commit('actionError', error)
-    throw error
   }
 }

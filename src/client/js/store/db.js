@@ -1,5 +1,4 @@
 import Loki from 'lokijs'
-import {defaultsDeep} from 'lodash'
 import {struct} from 'superstruct'
 
 let db = null
@@ -77,6 +76,7 @@ validators.users = struct({
   'lastSeenReason': 'string',
   'avatarUrl':      'string',
   'smallAvatarUrl': 'string',
+  'bio':            'string',
   'themes':         struct.optional([
     validators.reference('Theme')
   ])
@@ -89,12 +89,24 @@ if (!db.collections.length) {
 }
 
 export default db
-export const upsert = (collection, object) => {
+export const upsert = (wantedCollection, object) => {
+  if (!wantedCollection.name || typeof wantedCollection === 'string') {
+    throw new Error('Upsert must either be passed a string or a collection')
+  }
+  let collection = null
+
+  if (wantedCollection.name) {
+    collection = db.getCollection(wantedCollection.name)
+  } else if (typeof wantedCollection === 'string') {
+    collection = db.getCollection(wantedCollection)
+  } else {
+    throw new Error('Colllection not found')
+  }
+
   const validate = validators[collection.name]
-  let item = null
 
   try {
-    item = validate(object)
+    validate(object)
   } catch (error) {
     if (object instanceof Array) {
       throw new Error('upsert item must not be an array')
@@ -103,21 +115,14 @@ export const upsert = (collection, object) => {
     throw error
   }
 
-  item = collection.findOne({
-    '_id': item._id
-  })
-
-  if (item) {
-    item = defaultsDeep(object, item)
-    collection.update(item)
-  } else {
+  try {
+    collection.update(object)
+  } catch (err) {
+    collection.findAndRemove({
+      '_id': object._id
+    })
     collection.insert(object)
   }
 
   return object
 }
-export const createBogusDB = () => new Loki('ouc-request-db', {
-  'autoload':         true,
-  'autoloadCallback': initialize,
-  'autosave':         false
-})

@@ -4,16 +4,138 @@ div.route-root
       notification(v-show="actionErrors.length > 0", icon="alert", color="is-danger").is-danger
         div(slot="content")
           p(v-for="error in actionErrors") {{error}}
-      b-columns(v-show="currentUser._id")
-        b-column(is-6)
-          button.button(:class="['button', 'is-primary', {'is-loading': loading}]", @click="resendVerification") Resend verification e-mail
-        b-column(is-6)
-      div(v-show="!currentUser._id")
+      div(v-if="!currentUser._id")
         p
           | This page allows you to edit account details,
           | but you're not logged in.
         br
         p
           router-link.button.is-primary(to="/login") Click here to do so
+
+      form(v-else="!currentUser._id", @submit.prevent="submitAccount")
+        b-tile(is-parent, is-paddingless)
+          b-tile(is-child)
+            button.button.is-primary.is-pulled-right(
+              type="submit",
+              :disabled="this.editingCount === 0 || errors.any()",
+              :class="{'is-loading': loading}"
+            ) Save unlocked account details
+
+        br
+        b-columns
+          b-column(is-6)
+            .content
+              h3 Account details
+            //- button.button(:class="['button', 'is-primary', {'is-loading': loading}]", @click="resendVerification") Resend verification e-mail
+            hr
+            b-box(:disabled="!editing.email")
+              b-level
+                b-level-left
+                  h5 E-mail address
+                b-level-right
+                  label
+                    icon(v-if="!editing.email", icon="lock")
+                    icon(v-else="!editing.email", icon="lock-open-outline")
+                    b-switch(v-model="editing.email")
+              b-tile(is-parent, is-vertical, is-paddingless)
+                b-tile
+                  b-tile(is-child, is-3)
+                    .content
+                      p Change to
+                  b-tile(is-child, is-9)
+                    b-control
+                      b-input(v-model="account.email", :disabled="!editing.email")
+                br
+                b-tile
+                  b-tile(is-child)
+                    button.button.is-primary(
+                      type="button",
+                      :class="{'is-loading': loading}",
+                      @click="resendVerification",
+                      :disabled="!editing.email"
+                    )
+                      | Resend verification e-mail to the current address
+
+            b-box(:disabled="!editing.password")
+              b-level
+                b-level-left
+                  h5 Passphrase
+                b-level-right
+                  label
+                    icon(v-if="!editing.password", icon="lock")
+                    icon(v-else="!editing.password", icon="lock-open-outline")
+                    b-switch(v-model="editing.password")
+              b-tile(is-parent, is-vertical, is-paddingless)
+                b-tile(is-child)
+                  .content
+                    p Change to
+                b-tile(is-child)
+                  b-control
+                    b-input(
+                      name="password",
+                      type="password",
+                      v-model="account.password",
+                      :disabled="!editing.password",
+                      placeholder="Passphrase",
+                      v-validate="'required'",
+                      :class="{'is-danger': errors.has('password')}",
+                      data-vv-as="passphrase",
+                      aria-label="registration passphrase"
+                    )
+                  br
+                  b-control
+                    b-input(
+                      name="passwordVerify",
+                      type="password",
+                      v-model="account.passwordVerify",
+                      :disabled="!editing.password",
+                      placeholder="Passphrase verification",
+                      v-validate="'required|confirmed:password'",
+                      :class="{'is-danger': errors.has('passwordVerify')}",
+                      data-vv-as="passphrase verification",
+                      aria-label="registration passphrase again"
+                    )
+
+          b-column(is-6)
+            .content
+              h3 Profile settings
+            hr
+            b-box(:disabled="!editing.displayname")
+              b-level
+                b-level-left
+                  h5 Username
+                b-level-right
+                  label
+                    icon(v-if="!editing.displayname", icon="lock")
+                    icon(v-else="!editing.displayname", icon="lock-open-outline")
+                    b-switch(v-model="editing.displayname")
+              b-tile(is-parent, is-vertical, is-paddingless)
+                b-tile
+                  b-tile(is-child, is-3)
+                    .content
+                      p Currently
+                  b-tile(is-child, is-9)
+                    b-control
+                      b-input(:value="currentUser.displayname", disabled)
+                br
+                b-tile
+                  b-tile(is-child, is-3)
+                    .content
+                      p Change to
+                  b-tile(is-child, is-9)
+                    b-control
+                      b-input(v-model="account.displayname", :disabled="!editing.displayname")
+
+            b-box(:disabled="!editing.bio")
+              b-level
+                b-level-left
+                  h5 Bio
+                b-level-right
+                  label
+                    icon(v-if="!editing.bio", icon="lock")
+                    icon(v-else="!editing.bio", icon="lock-open-outline")
+                    b-switch(v-model="editing.bio")
+              b-control
+                b-textarea(v-model="account.bio", :disabled="!editing.bio")
 
   ouc-footer

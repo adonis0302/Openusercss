@@ -26,7 +26,8 @@ export const userPropList = `
   avatarUrl,
   smallAvatarUrl,
   lastSeen,
-  lastSeenReason
+  lastSeenReason,
+  bio
 `
 
 export const verifyToken = ({token}) => gql(`{

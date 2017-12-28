@@ -28,6 +28,5 @@ export default async ({commit, getters}, id) => {
   } catch (error) {
     commit('loading', false)
     commit('actionError', error)
-    throw error
   }
 }

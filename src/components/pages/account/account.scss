@@ -14,6 +14,8 @@
 @import 'node_modules/bulma/sass/elements/content';
 @import 'node_modules/bulma/sass/elements/container';
 @import 'node_modules/bulma/sass/elements/button';
+@import 'node_modules/bulma/sass/elements/form';
+@import 'node_modules/bulma/sass/components/level';
 
 .mw500 {
   max-width: 500px;
@@ -31,6 +33,12 @@
 .bg-danger {
   background-color: nth($danger, 1);
   color: nth($danger, 2);
+}
+
+.box {
+  &[disabled] {
+    background-color: $white-bis
+  }
 }
 
 @import '../../../client/scss/reboot';
