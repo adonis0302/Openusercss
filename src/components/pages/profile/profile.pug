@@ -46,7 +46,7 @@ div.route-root(itemtype="Person")
             b-box
               h2 About
               hr
-              //- p {{viewedUser.description}}
+              p {{viewedUser.bio}}
           b-column(is-6)
             b-columns(is-multiline)
               b-column(is-6, v-for="(theme, index) in viewedUser.themes")
