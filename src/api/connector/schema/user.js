@@ -69,7 +69,8 @@ export default class User extends Document {
         'type':     String,
         'unique':   false,
         'required': false,
-        'validate': validators.length(254)
+        'validate': validators.length(254),
+        'default':  ''
       },
       'emailVerified': {
         'type':     Boolean,
