@@ -32,3 +32,8 @@ body.v--modal-block-scroll {
   position: initial !important;
   width: initial !important;
 }
+
+meta ~ div[itemprop],
+meta ~ div[itemtype] {
+  display: none
+}
