@@ -59,6 +59,14 @@ gulp.task('client:js:prod', () => {
       source(entry),
       buffer(),
       optimize(),
+      minify({
+        'ext': {
+          'src': '.js',
+          'min': '.js'
+        },
+        'noSource': true,
+        'mangle':   false
+      }),
       sourcemaps.init({
         'loadMaps': true
       }),
@@ -66,15 +74,6 @@ gulp.task('client:js:prod', () => {
         'sourceMappingURL': (file) => {
           return `/${file.relative}.map`
         }
-      }),
-      minify({
-        'ext': {
-          'src': '.js',
-          'min': '.js'
-        },
-        'noSource': true,
-        'mangle':   true,
-        'compress': true
       }),
       flatten(),
       comment(`Built at ${Date.now()}`),
