@@ -13,6 +13,7 @@ import {auto} from './shared/error-handler'
 import http from 'http'
 import https from 'https'
 import helmet from 'helmet'
+import raven from 'raven'
 
 const cspOptions = {
   'directives': {
@@ -41,6 +42,11 @@ const servers = []
 const init = async () => {
   await auto()
   const app = express()
+
+  if (process.env.NODE_ENV !== 'development') {
+    raven.config('https://1d4b75dc379946cbb9e0dd770cb3f099@sentry.io/264732').install()
+    app.use(raven.requestHandler())
+  }
 
   app.use(helmet({
     'contentSecurityPolicy': cspOptions,
@@ -76,10 +82,11 @@ const init = async () => {
     servers.push(httpServer)
   }
 
-  // Here, we re-run the above if statement, but with production,
+  // Here, we re-run the above if statement,
   // because the minifier will remove everything in that in a prod build.
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV !== 'development') {
     app.use(morgan('combined'))
+    app.use(raven.errorHandler())
   }
 
   const httpsServer = https.createServer({

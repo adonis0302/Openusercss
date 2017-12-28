@@ -14,6 +14,7 @@ import fs from 'fs'
 import pug from 'pug'
 import helmet from 'helmet'
 import schemas from 'posthtml-schemas'
+import raven from 'raven'
 import {auto} from './shared/error-handler'
 
 import staticConfig from './shared/config'
@@ -50,7 +51,8 @@ const cspOptions = {
       'api.openusercss.com',
       'imageproxy.openusercss.org',
       'imageproxy.openusercss.com',
-      'gravatar.com'
+      'gravatar.com',
+      'sentry.io'
     ],
     'fontSrc': [
       'data:'
@@ -73,6 +75,11 @@ if (process.env.NODE_ENV === 'development') {
 const init = async () => {
   await auto()
   const app = express()
+
+  if (process.env.NODE_ENV !== 'development') {
+    raven.config('https://121a57831dd44be8af1added345b8c65@sentry.io/264731').install()
+    app.use(raven.requestHandler())
+  }
 
   app.use(helmet({
     'contentSecurityPolicy': cspOptions,
@@ -99,7 +106,7 @@ const init = async () => {
   const renderer = createBundleRenderer(client)
 
   app.set('env', config.get('env'))
-  if (process.env.NODE_ENV === 'production') {
+  if (process.env.NODE_ENV !== 'development') {
     app.use(morgan('combined'))
   }
 
@@ -145,6 +152,10 @@ const init = async () => {
       res.end()
     })
   })
+
+  if (process.env.NODE_ENV !== 'development') {
+    app.use(raven.errorHandler())
+  }
 
   log.info(`Webserver environment: ${app.get('env')}`)
 

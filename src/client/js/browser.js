@@ -4,6 +4,8 @@ import FpsEmitter from 'fps-emitter'
 import {divide, sum} from 'lodash'
 import log from 'chalk-console'
 import iziToast from 'izitoast'
+import raven from 'raven-js'
+import ravenVue from 'raven-js/plugins/vue'
 
 import VueModal from 'vue-js-modal'
 import VFlickity from 'vue-flickity'
@@ -38,6 +40,12 @@ const main = async () => {
   process.fpsHistory = []
   process.polyfills = polyfillsResult
   process.db = db
+
+  if (process.env.NODE_ENV !== 'development') {
+    raven.config('https://37715e4819864017ba7c02d05eb5cb75@sentry.io/264718')
+    .addPlugin(ravenVue, Vue)
+    .install()
+  }
 
   Vue.prototype.$toast = iziToast
   Vue.prototype.$db = db

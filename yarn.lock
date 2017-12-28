@@ -7988,6 +7988,10 @@ lru-queue@0.1:
   dependencies:
     es5-ext "~0.10.2"
 
+lsmod@1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/lsmod/-/lsmod-1.0.0.tgz#9a00f76dca36eb23fa05350afe1b585d4299e64b"
+
 macaddress@^0.2.8:
   version "0.2.8"
   resolved "https://registry.yarnpkg.com/macaddress/-/macaddress-0.2.8.tgz#5904dc537c39ec6dbefeae902327135fa8511f12"
@@ -10850,6 +10854,20 @@ range-parser@~1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.0.tgz#f49be6b487894ddc40dcc94a322f611092e00d5e"
 
+raven-js@^3.21.0:
+  version "3.21.0"
+  resolved "https://registry.yarnpkg.com/raven-js/-/raven-js-3.21.0.tgz#609236eb0ec30faf696b552f842a80b426be6258"
+
+raven@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/raven/-/raven-2.3.0.tgz#96f15346bdaa433b3b6d47130804506155833d69"
+  dependencies:
+    cookie "0.3.1"
+    lsmod "1.0.0"
+    stack-trace "0.0.9"
+    timed-out "4.0.1"
+    uuid "3.0.0"
+
 raw-body@2.3.2:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/raw-body/-/raw-body-2.3.2.tgz#bcd60c77d3eb93cde0050295c3f379389bc88f89"
@@ -12737,13 +12755,13 @@ time-zone@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/time-zone/-/time-zone-1.0.0.tgz#99c5bf55958966af6d06d83bdf3800dc82faec5d"
 
+timed-out@4.0.1, timed-out@^4.0.0:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/timed-out/-/timed-out-4.0.1.tgz#f32eacac5a175bea25d7fab565ab3ed8741ef56f"
+
 timed-out@^3.0.0:
   version "3.1.3"
   resolved "https://registry.yarnpkg.com/timed-out/-/timed-out-3.1.3.tgz#95860bfcc5c76c277f8f8326fd0f5b2e20eba217"
-
-timed-out@^4.0.0:
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/timed-out/-/timed-out-4.0.1.tgz#f32eacac5a175bea25d7fab565ab3ed8741ef56f"
 
 timers-browserify@^1.0.1:
   version "1.4.2"
@@ -13296,6 +13314,10 @@ utila@~0.4:
 utils-merge@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
+
+uuid@3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.0.0.tgz#6728fc0459c450d796a99c31837569bdf672d728"
 
 uuid@^2.0.1:
   version "2.0.3"
