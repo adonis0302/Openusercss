@@ -18,7 +18,9 @@ import raven from 'raven'
 const cspOptions = {
   'directives': {
     'defaultSrc': [
-      "'self'"
+      "'self'",
+      'cdn.jsdelivr.net',
+      'unpkg.com'
     ]
   }
 }
@@ -28,13 +30,11 @@ if (process.env.NODE_ENV === 'development') {
   cspOptions.directives.scriptSrc = [
     ...cspOptions.directives.defaultSrc,
     "'unsafe-inline'",
-    'unpkg.com',
-    'cdn.jsdelivr.net'
+    'unpkg.com'
   ]
   cspOptions.directives.styleSrc = [
     ...cspOptions.directives.defaultSrc,
-    "'unsafe-inline'",
-    'unpkg.com'
+    "'unsafe-inline'"
   ]
 }
 
