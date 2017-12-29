@@ -16,7 +16,7 @@
 
 .ouc-app-root {
   background-color: $white;
-  min-height: calc(100vh - #{$navbar-height});
+  min-height: calc(100vh - #{map-get($kerning, 'navbar-height')});
   position: absolute;
   width: 100%;
 }

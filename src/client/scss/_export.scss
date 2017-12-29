@@ -1,0 +1,12 @@
+@import './variables';
+
+:root {
+  @each $color in $colors {
+    --#{nth($color, 1)}: nth(nth($color, 2), 1);
+    --#{nth($color, 1)}-text: nth(nth($color, 2), 2);
+  }
+
+  @each $kern in $kerning {
+    --#{nth($kern, 1)}: nth($kern, 2);
+  }
+}

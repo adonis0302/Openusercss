@@ -21,13 +21,50 @@ $purple:	      map-get($tones, 'purple');
 $red:	          map-get($tones, 'red');
 
 $colors: (
-  'primary':    (map-get($tones, 'brand-primary'), text-for-bg(map-get($tones, 'brand-primary'))),
-  'secondary':  (map-get($tones, 'brand-secondary'), text-for-bg(map-get($tones, 'brand-secondary'))),
-  'background': (map-get($tones, 'brand-background'), text-for-bg(map-get($tones, 'brand-background'))),
-  'highlight':  (map-get($tones, 'brand-highlight'), text-for-bg(map-get($tones, 'brand-highlight'))),
-  'danger':     (map-get($tones, 'red'), text-for-bg(map-get($tones, 'red'))),
-  'success':    ($green, text-for-bg($green))
+  'body':         (map-get($tones, 'white'), text-for-bg(map-get($tones, 'white'))),
+  'primary':      (map-get($tones, 'brand-primary'), text-for-bg(map-get($tones, 'brand-primary'))),
+  'secondary':    (map-get($tones, 'brand-secondary'), text-for-bg(map-get($tones, 'brand-secondary'))),
+  'background':   (map-get($tones, 'brand-background'), text-for-bg(map-get($tones, 'brand-background'))),
+  'highlight':    (map-get($tones, 'brand-highlight'), text-for-bg(map-get($tones, 'brand-highlight'))),
+  'black':        (map-get($tones, 'black'), text-for-bg(map-get($tones, 'black'))),
+  'black-bis':    (map-get($tones, 'black-bis'), text-for-bg(map-get($tones, 'black-bis'))),
+  'black-ter':    (map-get($tones, 'black-ter'), text-for-bg(map-get($tones, 'black-ter'))),
+  'grey':         (map-get($tones, 'grey'), text-for-bg(map-get($tones, 'grey'))),
+  'grey-dark':    (map-get($tones, 'grey-dark'), text-for-bg(map-get($tones, 'grey-dark'))),
+  'grey-darker':  (map-get($tones, 'grey-darker'), text-for-bg(map-get($tones, 'grey-darker'))),
+  'grey-light':   (map-get($tones, 'grey-light'), text-for-bg(map-get($tones, 'grey-light'))),
+  'grey-lighter': (map-get($tones, 'grey-lighter'), text-for-bg(map-get($tones, 'grey-lighter'))),
+  'white':        (map-get($tones, 'white'), text-for-bg(map-get($tones, 'white'))),
+  'white-bis':    (map-get($tones, 'white-bis'), text-for-bg(map-get($tones, 'white-bis'))),
+  'white-ter':    (map-get($tones, 'white-ter'), text-for-bg(map-get($tones, 'white-ter'))),
+  'danger':       (map-get($tones, 'red'), text-for-bg(map-get($tones, 'red'))),
+  'success':      (map-get($tones, 'green'), text-for-bg(map-get($tones, 'green'))),
+  'warning':      (map-get($tones, 'orange'), text-for-bg(map-get($tones, 'orange')))
 );
+
+$kerning: (
+  'size-1':        map-get($layout, 'base-size'),
+  'size-2':        map-get($layout, 'base-size') / 1.25,
+  'size-3':        map-get($layout, 'base-size') / 1.5,
+  'size-4':        map-get($layout, 'base-size') / 2,
+  'size-5':        (map-get($layout, 'base-size') / 2) - .5rem,
+  'size-6':        map-get($layout, 'base-size') / 3,
+  'size-7':        (map-get($layout, 'base-size') / 3) - .5rem,
+  'navbar-height': map-get($layout, 'base-size') / 1.5,
+  'gap':           map-get($layout, 'gap'),
+  'radius-small':  map-get($layout, 'radius-small'),
+  'radius':        map-get($layout, 'radius'),
+  'radius-large':  map-get($layout, 'radius-large')
+);
+
+$sizes:
+  map-get($kerning, 'size-1')
+  map-get($kerning, 'size-2')
+  map-get($kerning, 'size-3')
+  map-get($kerning, 'size-4')
+  map-get($kerning, 'size-5')
+  map-get($kerning, 'size-6')
+  map-get($kerning, 'size-7');
 
 $primary: map-get($colors, 'primary');
 $secondary: map-get($colors, 'secondary');
@@ -35,26 +72,16 @@ $info: map-get($colors, 'secondary');
 $success: map-get($colors, 'success');
 $danger: map-get($colors, 'danger');
 
-$body-background-color: $white;
-$text: text-for-bg($body-background-color);
-$link: text-for-bg($body-background-color);
+$text: nth(map-get($colors, 'body'), 2);
+$link: nth(map-get($colors, 'body'), 2);
+
 $family-primary: 'Nunito';
 $family-code: $family-primary;
 $warning: $orange;
 
-$size1: map-get($layout, 'base-size');
-$size2: map-get($layout, 'base-size') / 1.25;
-$size3: map-get($layout, 'base-size') / 1.5;
-$size4: map-get($layout, 'base-size') / 2;
-$size5: (map-get($layout, 'base-size') / 2) - .5rem;
-$size6: map-get($layout, 'base-size') / 3;
-$size7: (map-get($layout, 'base-size') / 3) - .5rem;
-
-$navbar-height: $size3;
-$gap: map-get($layout, 'gap');
+$radius-small:  map-get($kerning, 'radius-small');
+$radius:        map-get($kerning, 'radius');
+$radius-large:  map-get($kerning, 'radius-large');
 
 $easing: map-get($animations, 'animation-function');
-$radius-small: map-get($layout, 'radius-small');
-$radius: map-get($layout, 'radius');
-$radius-large: map-get($layout, 'radius-large');
 $speed: map-get($animations, 'shorttime');

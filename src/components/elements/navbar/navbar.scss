@@ -18,15 +18,17 @@ $background: map-get($colors, 'background');
   position: fixed;
   width: 100%;
   z-index: 100;
+  height: map-get($kerning, 'navbar-height');
 }
 
 .body-spacer {
-  height: $navbar-height;
+  height: map-get($kerning, 'navbar-height');
 }
 
 .navbar-brand {
   img {
-    max-height: 32px;
+    max-height: map-get($kerning, 'navbar-height');
+    min-height: map-get($kerning, 'navbar-height');
   }
 }
 

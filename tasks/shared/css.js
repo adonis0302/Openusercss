@@ -65,6 +65,10 @@ export const ourSassConfig = processObject(appConfig.get(), (index, value) => {
     return value
   }
 
+  if (value === 0) {
+    return value
+  }
+
   return `"${value}"`
 })
 
