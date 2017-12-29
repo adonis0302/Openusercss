@@ -67,16 +67,17 @@ gulp.task('client:js:prod', () => {
         'noSource': true,
         'mangle':   false
       }),
+      flatten(),
       sourcemaps.init({
         'loadMaps': true
       }),
+      comment(`Built at ${Date.now()}`),
       sourcemaps.write(destination(), {
         'sourceMappingURL': (file) => {
           return `/${file.relative}.map`
         }
       }),
       flatten(),
-      comment(`Built at ${Date.now()}`),
       gulp.dest(destination())
     ])
   })
