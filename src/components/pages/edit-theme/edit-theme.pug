@@ -6,7 +6,7 @@ div.route-root
           p(v-for="error in concat(actionErrors, errors.all())") {{error}}
 
       form(slot="form", @submit.prevent="submit").ouc-new-theme-form
-        b-tile.ouc-new-theme-header(is-parent)
+        b-tile.ouc-new-theme-header(is-parent, is-paddingless)
           b-tile(is-6, is-child)
             h1.is-inline(v-if="$route.params.id") Editing:&nbsp;
             h1.is-inline(v-else="$route.params.id") Creating:&nbsp;
@@ -27,10 +27,11 @@ div.route-root
               :class="['button', 'is-primary', {'is-loading': loading}]"
             ) Save theme
 
-        b-columns
-          b-column(is-7)
-            b-tile(is-parent, is-vertical)
-              b-tile(is-child)
+        br
+        b-columns(is-multiline)
+          b-column(is-12)
+            b-columns
+              b-column(is-6)
                 b-field
                   b-control
                     b-textarea(
@@ -41,7 +42,17 @@ div.route-root
                       v-model="editedTheme.description",
                       :class="['input', {'is-danger': errors.has('description')}]"
                     )
+              b-column(is-6)
+                b-box(is-fullheight)
+                  .content
+                    vue-markdown(
+                      :source="editedTheme.description",
+                      :html="false",
+                      :postrender="postRender"
+                    )
 
+          b-column(is-7)
+            b-tile(is-parent, is-paddingless, is-vertical)
               b-tile(is-child)
                 b-field
                   b-control(has-icons-left)

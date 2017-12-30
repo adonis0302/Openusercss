@@ -44,9 +44,12 @@ div.route-root(itemtype="Person")
 
             hr
             b-box
-              h2 About
-              hr
-              p {{viewedUser.bio}}
+              .content
+                vue-markdown(
+                  :source="viewedUser.bio",
+                  :html="false",
+                  :anchorAttributes="$anchorAttributes"
+                )
           b-column(is-6)
             b-columns(is-multiline)
               b-column(is-6, v-for="(theme, index) in viewedUser.themes")

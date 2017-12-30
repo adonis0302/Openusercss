@@ -85,11 +85,6 @@ div.route-root(itemtype="SoftwareApplication")
                     :placeholder="proxyImage(screenshot).small",
                     align="center"
                   ).carousel-cell
-                  flush-img(
-                    v-else="hasScreenshots(viewedTheme)",
-                    height="250px",
-                    align="center"
-                  ).carousel-cell
                 b-column
                   b-tile(is-parent, is-paddingless)
                     b-tile(is-child, is-parent, is-vertical)
@@ -108,9 +103,11 @@ div.route-root(itemtype="SoftwareApplication")
                       p Version: {{viewedTheme.version}}
 
             b-box
-              h2 About
-              br
-              p {{viewedTheme.description}}
+              vue-markdown(
+                :source="viewedTheme.description",
+                :html="false",
+                :anchorAttributes="$anchorAttributes"
+              )
           b-column(is-6)
             h3 Theme options
             p A preview of options you can set in your extension

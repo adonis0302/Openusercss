@@ -159,6 +159,8 @@ export const remoteSaveTheme = async (theme, token) => {
   preparedTheme.content = encodeURIComponent(preparedTheme.content)
   preparedTheme.screenshots = JSON.stringify(preparedTheme.screenshots || [])
   preparedTheme.options = JSON.stringify(preparedTheme.options || []).replace(/\"([^(\")"]+)\":/g, '$1:')
+  preparedTheme.description = encodeURIComponent(preparedTheme.description)
+
   const newMutation = gql(`
     mutation {
       theme(

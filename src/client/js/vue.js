@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import VueFilters from 'vue2-filters'
 import VueMoment from 'vue-moment'
 import VeeValidate from 'vee-validate'
+import VueMarkdown from 'vue-markdown'
 
 import router from './router'
 import store from './store'
@@ -25,6 +26,12 @@ Vue.use(VeeValidate, {
 Vue.use(VueRouter)
 Vue.use(VueFilters)
 Vue.use(VueMoment)
+Vue.component('vue-markdown', VueMarkdown)
+
+Vue.prototype.$anchorAttributes = {
+  'target': '_blank',
+  'rel':    'nofollow noopener'
+}
 
 export {
   Vue,

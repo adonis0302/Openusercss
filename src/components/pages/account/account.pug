@@ -138,4 +138,13 @@ div.route-root
               b-control
                 b-textarea(v-model="account.bio", :disabled="!editing.bio")
 
+              br
+              b-box(:disabled="!editing.bio")
+                .content
+                  vue-markdown(
+                    :source="account.bio",
+                    :html="false",
+                    :anchorAttributes="$anchorAttributes"
+                  )
+
   ouc-footer
