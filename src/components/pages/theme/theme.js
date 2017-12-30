@@ -60,8 +60,10 @@ export default {
       this.options = JSON.parse(decodeURIComponent(this.$route.params.options))
     }
   },
-  beforeMount () {
-    this.$store.dispatch('getFullTheme', this.$route.params.id)
+  async beforeMount () {
+    await this.$store.dispatch('getFullTheme', this.$route.params.id)
+
+    this.$refs.flickity.rerender()
   },
   mounted () {
     if (this.options.viewingSource) {

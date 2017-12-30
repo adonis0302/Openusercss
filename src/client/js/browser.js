@@ -8,7 +8,7 @@ import raven from 'raven-js'
 import ravenVue from 'raven-js/plugins/vue'
 
 import VueModal from 'vue-js-modal'
-import VFlickity from 'vue-flickity'
+import VueFlickity from 'vue-flickity'
 import {
   Vue,
   store,
@@ -51,7 +51,7 @@ const main = async () => {
   Vue.prototype.$db = db
 
   Vue.use(VueModal)
-  Vue.component('flickity', VFlickity)
+  Vue.component('flickity', VueFlickity)
 
   mountApp()
   .catch(log.error)
