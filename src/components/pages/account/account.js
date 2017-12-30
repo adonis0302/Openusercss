@@ -38,13 +38,15 @@ export default {
         'email':       '',
         'password':    '',
         'displayname': '',
-        'bio':         ''
+        'bio':         '',
+        'donationUrl': 'https://'
       },
       'editing': {
         'email':       null,
         'password':    null,
         'displayname': null,
-        'bio':         null
+        'bio':         null,
+        'donationUrl': null
       }
     }
   },

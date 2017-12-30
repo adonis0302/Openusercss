@@ -51,6 +51,11 @@ div.route-root(itemtype="Person")
                   :anchor-attributes="$anchorAttributes"
                 )
           b-column(is-6)
+            div(v-if="viewedUser.donationUrl && viewedUser.donationUrl !== ''", is-paddingless)
+              a.button.is-primary(:href="viewedUser.donationUrl", target="_blank", rel="nofollow noopener")
+                | Support {{viewedUser.displayname}}'s themes by donating
+              hr
+
             b-columns(is-multiline)
               b-column(is-6, v-for="(theme, index) in viewedUser.themes")
                 theme-card(:data-index="index", :small="true", direction="horizontal", card-class="is-primary", :theme-id="theme._id").has-bottom-margin
