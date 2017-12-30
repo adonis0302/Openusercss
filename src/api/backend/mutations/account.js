@@ -56,7 +56,7 @@ export default async (root, {token, email, password, displayname, bio}, {User, S
   const session = await mustAuthenticate(token, Session)
   const config = await staticConfig()
   const saltRounds = parseInt(config.get('saltRounds'), 10)
-  const user = session.user
+  const {user} = session
   const oldUser = cloneDeep(user)
 
   // Password resets

@@ -32,7 +32,7 @@ export default async (root, {
     }
 
     newTheme.title = title
-    newTheme.description = description
+    newTheme.description = decodeURIComponent(description)
     newTheme.version = version
     newTheme.content = decodeURIComponent(content)
     newTheme.screenshots = screenshots
@@ -51,11 +51,11 @@ export default async (root, {
     user.themes[userThemeIndex] = newTheme
   } else {
     newTheme = Theme.create({
-      'user':    session.user,
-      'content': decodeURIComponent(content),
+      'user':        session.user,
+      'content':     decodeURIComponent(content),
+      'description': decodeURIComponent(description),
       options,
       title,
-      description,
       version,
       screenshots
     })
