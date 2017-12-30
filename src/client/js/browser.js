@@ -54,7 +54,10 @@ const main = async () => {
   Vue.component('flickity', VueFlickity)
 
   mountApp()
-  .catch(log.error)
+  .catch((error) => {
+    log.error(error)
+    raven.captureException(error)
+  })
   const fps = new FpsEmitter(1000)
 
   window.addEventListener('load', () => {
@@ -74,7 +77,10 @@ const main = async () => {
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('/worker.js')
-      .catch(log.error)
+      .catch((error) => {
+        log.error(error)
+        raven.captureException(error)
+      })
     })
   }
 }

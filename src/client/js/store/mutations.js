@@ -1,5 +1,6 @@
 import {uniq} from 'lodash'
 import {struct} from 'superstruct'
+import raven from 'raven-js'
 
 /*
  * All mutations are synchronous
@@ -44,6 +45,7 @@ export default {
       if (process.browser) {
         // eslint-disable-next-line no-console
         console.error(error)
+        raven.captureException(error)
       }
     } else {
       state.actionErrors = []

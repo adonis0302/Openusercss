@@ -1,6 +1,8 @@
 // @flow
 import PrettyError from 'pretty-error'
 import log from 'chalk-console'
+import raven from 'raven-js'
+
 const pe = new PrettyError()
 
 pe.appendStyle({
@@ -43,4 +45,5 @@ export const auto = async () => {
 
 export const write = async (error) => {
   log.error(pe.render(error))
+  raven.captureException(error)
 }
