@@ -26,7 +26,7 @@
     "commit": "git-cz"
   },
   "author": "DecentM",
-  "license": "AGPL-3.0",
+  "license": "GPL-3.0",
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"

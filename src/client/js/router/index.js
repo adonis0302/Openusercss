@@ -12,6 +12,7 @@ import themeRoute from '../../../../.tmp/pages/theme/theme.vue'
 import contactRoute from '../../../../.tmp/pages/contact/contact.vue'
 import testRoute from '../../../../.tmp/pages/test/test.vue'
 import accountRoute from '../../../../.tmp/pages/account/account.vue'
+import noticeRoute from '../../../../.tmp/pages/notice/notice.vue'
 
 import notFoundRoute from '../../../../.tmp/pages/not-found/not-found.vue'
 
@@ -30,6 +31,10 @@ export const routerOptions = {
           return next()
         }
       }
+    },
+    {
+      'path':      '/notice',
+      'component': noticeRoute
     },
     {
       'path':      '/login',
