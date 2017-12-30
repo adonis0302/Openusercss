@@ -37,3 +37,20 @@ meta ~ div[itemprop],
 meta ~ div[itemtype] {
   display: none
 }
+
+.content {
+  ul {
+    list-style: disc;
+    padding-left: 35px;
+  }
+
+  ol {
+    list-style: decimal;
+    padding-left: 35px;
+  }
+
+  a {
+    background-color: nth($primary, 2);
+    color: nth($primary, 1);
+  }
+}
