@@ -103,7 +103,7 @@ export default class Theme extends Document {
       },
       'description': {
         'type':     String,
-        'validate': validators.length(256),
+        'validate': validators.length(2048),
         'required': true
       },
       'content': {

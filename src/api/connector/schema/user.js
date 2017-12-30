@@ -98,7 +98,7 @@ export default class User extends Document {
         'type':     String,
         'required': false,
         'default':  '',
-        'validate': validators.length(768)
+        'validate': validators.length(2048)
       },
       'donationUrl': {
         'type':     String,
