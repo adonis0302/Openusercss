@@ -58,6 +58,7 @@ export default async (root, {token, email, password, displayname, bio, donationU
   const saltRounds = parseInt(config.get('saltRounds'), 10)
   const {user} = session
   const oldUser = cloneDeep(user)
+  let link = null
 
   // Password resets
   if (password) {
@@ -65,15 +66,6 @@ export default async (root, {token, email, password, displayname, bio, donationU
     const hash = await bcrypt.hash(password, salt)
 
     user.password = hash
-
-    sendEmail({
-      user,
-      oldUser,
-      'email': user.email
-    }, {
-      'template': 'password-changed'
-    })
-    .catch(log.error)
   }
 
   // Username changing
@@ -84,16 +76,6 @@ export default async (root, {token, email, password, displayname, bio, donationU
 
     user.displayname = displayname
     user.username = displayname.toLowerCase()
-
-    sendEmail({
-      user,
-      oldUser,
-      'newDisplayname': displayname,
-      'email':          user.email
-    }, {
-      'template': 'username-changed'
-    })
-    .catch(log.error)
   }
 
   // E-mail address changing
@@ -112,12 +94,52 @@ export default async (root, {token, email, password, displayname, bio, donationU
       'issuer':    config.get('domain'),
       'algorithm': 'HS256'
     })
-    let link = `https://openusercss.org/verify-email/${verificationToken}`
 
+    link = `https://openusercss.org/verify-email/${verificationToken}`
     if (process.env.NODE_ENV === 'development') {
       link = `http://localhost:5010/verify-email/${verificationToken}`
     }
+  }
 
+  if (bio) {
+    user.bio = decodeURIComponent(bio)
+  }
+
+  if (donationUrl || donationUrl === '') {
+    user.donationUrl = donationUrl
+  }
+
+  user.lastSeen = moment().toJSON()
+  user.lastSeenReason = 'changing account details'
+
+  // Try to save the user object
+  const savedUser = await user.save()
+
+  // Only send notification emails if saving was successful
+  if (password) {
+    sendEmail({
+      user,
+      oldUser,
+      'email': user.email
+    }, {
+      'template': 'password-changed'
+    })
+    .catch(log.error)
+  }
+
+  if (displayname) {
+    sendEmail({
+      user,
+      oldUser,
+      'newDisplayname': displayname,
+      'email':          user.email
+    }, {
+      'template': 'username-changed'
+    })
+    .catch(log.error)
+  }
+
+  if (email) {
     sendEmail({
       'email': user.email,
       user,
@@ -138,25 +160,15 @@ export default async (root, {token, email, password, displayname, bio, donationU
     .catch(log.error)
   }
 
-  if (bio) {
-    user.bio = decodeURIComponent(bio)
+  if (donationUrl && user.donationUrl !== oldUser.donationUrl) {
+    sendEmail({
+      'email': user.email,
+      user,
+      oldUser
+    }, {
+      'template': 'donation-link-changed'
+    })
   }
 
-  if (donationUrl) {
-    user.donationUrl = donationUrl
-
-    if (user.donationUrl !== oldUser.donationUrl) {
-      sendEmail({
-        'email': user.email,
-        user,
-        oldUser
-      }, {
-        'template': 'donation-link-changed'
-      })
-    }
-  }
-
-  user.lastSeen = moment().toJSON()
-  user.lastSeenReason = 'changing account details'
-  return user.save()
+  return savedUser
 }
