@@ -20,7 +20,7 @@ export const remoteAccount = async (accountData, token) => {
   forOwn(accountData, (value, key) => {
     if (key === 'bio') {
       mutationData.push(`${key}: "${encodeURIComponent(value)}"`)
-    } else if (value) {
+    } else {
       mutationData.push(`${key}: "${value}"`)
     }
   })

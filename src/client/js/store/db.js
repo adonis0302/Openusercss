@@ -77,6 +77,7 @@ validators.users = struct({
   'avatarUrl':      'string',
   'smallAvatarUrl': 'string',
   'bio':            'string',
+  'donationUrl':    'string',
   'themes':         struct.optional([
     validators.reference('Theme')
   ])
