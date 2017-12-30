@@ -151,6 +151,11 @@ export const remoteSaveTheme = async (theme, token) => {
   const preparedTheme = cloneDeep(theme)
   let mutation = null
 
+  preparedTheme.options.forEach((option, index) => {
+    Reflect.deleteProperty(option, '__typename')
+    preparedTheme.options[index] = option
+  })
+
   preparedTheme.content = encodeURIComponent(preparedTheme.content)
   preparedTheme.screenshots = JSON.stringify(preparedTheme.screenshots || [])
   preparedTheme.options = JSON.stringify(preparedTheme.options || []).replace(/\"([^(\")"]+)\":/g, '$1:')

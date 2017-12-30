@@ -86,7 +86,7 @@ div.route-root(itemtype="SoftwareApplication")
                     align="center"
                   ).carousel-cell
                   flush-img(
-                    v-if="!hasScreenshots(viewedTheme)",
+                    v-else="hasScreenshots(viewedTheme)",
                     height="250px",
                     align="center"
                   ).carousel-cell
