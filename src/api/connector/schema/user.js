@@ -100,6 +100,16 @@ export default class User extends Document {
         'default':  '',
         'validate': validators.length(768)
       },
+      'donationUrl': {
+        'type':     String,
+        'required': false,
+        'default':  '',
+        'validate': validators.regex({
+          'preset':    'url',
+          'validator': true,
+          'optional':  true
+        })
+      },
       'avatarUrl': {
         'type': String
       },

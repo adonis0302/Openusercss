@@ -1,0 +1,45 @@
+extends ../../views/layouts/email
+
+block page
+  .container
+    .section
+      .logo
+        img(src="https://openusercss.org/img/openusercss.icon-x64.png")
+    .section
+      .has-text-centered
+        p
+          span.size-h2 Your donation link has been changed
+    .section
+      .has-text-left
+        p
+          | The donation link on your OpenUserCSS account has
+          | been changed to #{user.donationUrl}.
+    .section
+      .has-text-left
+        p
+          | No verification needed, this is just a notification, in case you
+          | didn't do this.
+    .section
+      .has-text-left
+        p
+          | If you didn't make this change, someone has gotten into your
+          | OpenUserCSS account. In this case, you should change your password
+          | immediately.
+
+    .section
+      .has-text-right
+        p Keep the code flowing!
+
+    hr
+    .section
+      .has-text-left.has-text-small
+        p
+          | You've received this e-mail because someone changed
+          | your donation link on&nbsp;
+          a(href="https://openusercss.org") OpenUserCSS
+          | .
+        br
+        p
+          | To write a message, visit&nbsp;
+          a(href="https://openusercss.org/contact") the contact page
+          | !

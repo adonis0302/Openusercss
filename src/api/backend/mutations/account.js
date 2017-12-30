@@ -52,7 +52,7 @@ const sendEmail = async (locals, {template}) => {
  *   Changing bio
  */
 
-export default async (root, {token, email, password, displayname, bio}, {User, Session}) => {
+export default async (root, {token, email, password, displayname, bio, donationUrl}, {User, Session}) => {
   const session = await mustAuthenticate(token, Session)
   const config = await staticConfig()
   const saltRounds = parseInt(config.get('saltRounds'), 10)
@@ -140,6 +140,20 @@ export default async (root, {token, email, password, displayname, bio}, {User, S
 
   if (bio) {
     user.bio = decodeURIComponent(bio)
+  }
+
+  if (donationUrl) {
+    user.donationUrl = donationUrl
+
+    if (user.donationUrl !== oldUser.donationUrl) {
+      sendEmail({
+        'email': user.email,
+        user,
+        oldUser
+      }, {
+        'template': 'donation-link-changed'
+      })
+    }
   }
 
   user.lastSeen = moment().toJSON()

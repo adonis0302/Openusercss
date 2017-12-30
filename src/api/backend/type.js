@@ -13,6 +13,7 @@ const typeDefs = `
     createdAt:      String!
     lastUpdate:     String!
     bio:            String!
+    donationUrl:    String!
   }
 
   type Session {
@@ -115,6 +116,7 @@ const typeDefs = `
       displayname: String
       email:       String
       bio:         String
+      donationUrl: String
     ): User!
   }
 `

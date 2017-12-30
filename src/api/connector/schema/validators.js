@@ -23,7 +23,7 @@ export default {
     return encoded
   },
 
-  'regex': ({preset, validator}) => {
+  'regex': ({preset, validator, optional}) => {
     let match = null
 
     switch (preset) {
@@ -56,6 +56,10 @@ export default {
 
     if (validator) {
       return (data) => {
+        if (optional && data === '') {
+          return true
+        }
+
         return match.test(data)
       }
     }
