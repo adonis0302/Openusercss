@@ -1,3 +1,16 @@
+mixin account-card(condition, model, title)
+  b-box(:disabled=condition)
+    b-level
+      b-level-left
+        h5 #{title}
+      b-level-right
+        label
+          icon(v-if=condition, icon="lock")
+          icon(v-else=condition, icon="lock-open-outline")
+          b-switch(v-model=model)
+    if block
+      block
+
 div.route-root
   b-container
     .section
@@ -26,17 +39,9 @@ div.route-root
           b-column(is-6)
             .content
               h3 Account details
-            //- button.button(:class="['button', 'is-primary', {'is-loading': loading}]", @click="resendVerification") Resend verification e-mail
+
             hr
-            b-box(:disabled="!editing.email")
-              b-level
-                b-level-left
-                  h5 E-mail address
-                b-level-right
-                  label
-                    icon(v-if="!editing.email", icon="lock")
-                    icon(v-else="!editing.email", icon="lock-open-outline")
-                    b-switch(v-model="editing.email")
+            +account-card("!editing.email", "editing.email", "E-mail address")
               b-tile(is-parent, is-vertical, is-paddingless)
                 b-tile
                   b-tile(is-child, is-3)
@@ -56,15 +61,7 @@ div.route-root
                     )
                       | Resend verification e-mail to the current address
 
-            b-box(:disabled="!editing.password")
-              b-level
-                b-level-left
-                  h5 Passphrase
-                b-level-right
-                  label
-                    icon(v-if="!editing.password", icon="lock")
-                    icon(v-else="!editing.password", icon="lock-open-outline")
-                    b-switch(v-model="editing.password")
+            +account-card("!editing.password", "editing.password", "Passphrase")
               b-tile(is-parent, is-vertical, is-paddingless)
                 b-tile(is-child)
                   .content
@@ -100,15 +97,25 @@ div.route-root
             .content
               h3 Profile settings
             hr
-            b-box(:disabled="!editing.displayname")
-              b-level
-                b-level-left
-                  h5 Username
-                b-level-right
-                  label
-                    icon(v-if="!editing.displayname", icon="lock")
-                    icon(v-else="!editing.displayname", icon="lock-open-outline")
-                    b-switch(v-model="editing.displayname")
+            +account-card("!editing.donationUrl", "editing.donationUrl", "Donation link")
+              b-tile(is-parent, is-vertical, is-paddingless)
+                b-tile
+                  b-tile(is-child, is-3)
+                    .content
+                      p Currently
+                  b-tile(is-child, is-9)
+                    b-control
+                      b-input(:value="currentUser.donationUrl", disabled)
+                br
+                b-tile
+                  b-tile(is-child, is-3)
+                    .content
+                      p Change to
+                  b-tile(is-child, is-9)
+                    b-control
+                      b-input(v-model="account.donationUrl", :disabled="!editing.donationUrl")
+
+            +account-card("!editing.displayname", "editing.displayname", "Username")
               b-tile(is-parent, is-vertical, is-paddingless)
                 b-tile
                   b-tile(is-child, is-3)
@@ -126,15 +133,7 @@ div.route-root
                     b-control
                       b-input(v-model="account.displayname", :disabled="!editing.displayname")
 
-            b-box(:disabled="!editing.bio")
-              b-level
-                b-level-left
-                  h5 Bio
-                b-level-right
-                  label
-                    icon(v-if="!editing.bio", icon="lock")
-                    icon(v-else="!editing.bio", icon="lock-open-outline")
-                    b-switch(v-model="editing.bio")
+            +account-card("!editing.bio", "editing.bio", "Bio")
               b-control
                 b-textarea(v-model="account.bio", :disabled="!editing.bio")
 
