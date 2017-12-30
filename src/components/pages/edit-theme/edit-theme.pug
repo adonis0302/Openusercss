@@ -48,7 +48,7 @@ div.route-root
                     vue-markdown(
                       :source="editedTheme.description",
                       :html="false",
-                      :postrender="postRender"
+                      :anchor-attributes="anchorAttributes"
                     )
 
           b-column(is-7)
