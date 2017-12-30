@@ -76,7 +76,7 @@ export default {
         if (value) {
           this.$store.dispatch('account', {
             'accountData': {
-              [key]: self.account[key]
+              [key]: self.account[key] || ''
             },
             'redirect': `/profile/${this.currentUser._id}`
           })
