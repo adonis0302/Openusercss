@@ -44,6 +44,14 @@ div.route-root
                     b-column
                       h4 {{theme.title}}
                       br
+                      p(v-if="averageRating(theme.ratings) === 0") Not rated yet
+                      p(v-if="averageRating(theme.ratings) !== 0")
+                        star-rating(
+                          :rating="averageRating(theme.ratings)",
+                          :item-size="10",
+                          :show-rating="false",
+                          :read-only="true"
+                        )
                       h6 Created {{theme.createdAt | moment('from', 'now')}}
                       h6(v-if="theme.createdAt !== theme.lastUpdate") Last updated {{theme.lastUpdate | moment('from', 'now')}}
   ouc-footer

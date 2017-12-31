@@ -15,6 +15,17 @@ div.route-root
                     b-columns
                       b-column
                         h4 {{theme.title}}
+                        div(v-if="averageRating(theme.ratings) === 0")
+                          br
+                          p Not rated yet
+                        div(v-if="averageRating(theme.ratings) !== 0")
+                          br
+                          star-rating(
+                            :rating="averageRating(theme.ratings)",
+                            :item-size="10",
+                            :show-rating="false",
+                            :read-only="true"
+                          )
                         h6 by {{theme.user.displayname}}
                         h6 {{theme.createdAt | moment('from', 'now')}}
 

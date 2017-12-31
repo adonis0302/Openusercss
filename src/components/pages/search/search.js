@@ -36,6 +36,28 @@ export default {
     }
   },
   'methods': {
+    averageRating (array) {
+      let sum = 0
+
+      if (!array) {
+        return sum
+      }
+
+      array.forEach((rating) => {
+        if (!rating.value) {
+          throw new Error('Rating has no value')
+        }
+
+        sum = sum + rating.value
+      })
+
+      const result = sum / array.length
+
+      if (isNaN(result)) {
+        return 0
+      }
+      return result
+    },
     async submitSearch () {
       const searchResults = await this.$store.dispatch('search', {
         'terms': this.query,
