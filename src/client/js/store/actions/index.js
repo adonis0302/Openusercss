@@ -14,6 +14,7 @@ import search from './search'
 import verifyEmail from './verify-email'
 import sendVerify from './remote-send-verify'
 import account from './account'
+import rate from './rate'
 import 'isomorphic-fetch'
 
 const ssrMode = process.title === 'node'
@@ -85,5 +86,6 @@ export default {
   search,
   verifyEmail,
   sendVerify,
-  account
+  account,
+  rate
 }

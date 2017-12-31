@@ -10,26 +10,18 @@ export default async ({commit, getters}, id) => {
     const users = db.getCollection('users')
     const {data} = await getFullUser(id)
     const {user} = cloneDeep(data)
-
-    if (user.themes.length) {
-      user.themes.forEach((theme, index) => {
-        if (theme && theme._id) {
-          const constructedTheme = {
-            ...theme,
-            'user': {
-              '_id': user._id
-            }
-          }
-
-          upsert(themes, constructedTheme)
-        }
-      })
-    }
-
     const userThemeRefs = []
 
     user.themes.forEach((theme) => {
       if (theme && theme._id) {
+        const constructedTheme = {
+          ...theme,
+          'user': {
+            '_id': user._id
+          }
+        }
+
+        upsert(themes, constructedTheme)
         userThemeRefs.push({
           '_id': theme._id
         })

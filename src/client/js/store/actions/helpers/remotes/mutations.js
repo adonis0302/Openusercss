@@ -6,6 +6,24 @@ import {expected} from '../../../../../../shared/custom-errors'
 
 const {AuthenticationError} = expected
 
+export const remoteRate = async ({id, value}, token) => {
+  const mutation = gql(`
+    mutation {
+      rate (
+        token: "${token}"
+        id: "${id}"
+        value: ${value}
+      ) {
+        ${themePropList}
+      }
+    }
+  `)
+
+  return apolloClient.mutate({
+    mutation
+  })
+}
+
 export const remoteAccount = async (accountData, token) => {
   const mutationHead = `mutation {
     account(`
@@ -46,13 +64,10 @@ export const remoteSendVerify = async ({token}) => {
       resendVerification(token: "${token}")
     }
   `)
-  let result = null
 
-  result = await apolloClient.mutate({
+  return apolloClient.mutate({
     mutation
   })
-
-  return result
 }
 
 export const verifyEmail = async (token) => {

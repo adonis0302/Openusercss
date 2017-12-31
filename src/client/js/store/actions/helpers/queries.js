@@ -17,6 +17,9 @@ export const themePropList = `
     default,
     possibleValues
   }
+  ratings {
+    value
+  }
 `
 
 export const userPropList = `

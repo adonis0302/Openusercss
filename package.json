@@ -223,6 +223,7 @@
     "vue-markdown": "^2.2.4",
     "vue-moment": "^3.1.0",
     "vue-no-ssr": "^0.2.0",
+    "vue-rate-it": "^2.1.0",
     "vue-router": "^2",
     "vue-select": "^2.3.1",
     "vue-server-renderer": "^2",

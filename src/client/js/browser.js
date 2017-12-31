@@ -5,6 +5,7 @@ import {divide, sum} from 'lodash'
 import log from 'chalk-console'
 import iziToast from 'izitoast'
 import raven from 'raven-js'
+import {StarRating} from 'vue-rate-it'
 import ravenVue from 'raven-js/plugins/vue'
 
 import VueModal from 'vue-js-modal'
@@ -52,6 +53,7 @@ const main = async () => {
 
   Vue.use(VueModal)
   Vue.component('flickity', VueFlickity)
+  Vue.component('star-rating', StarRating)
 
   mountApp()
   .catch((error) => {

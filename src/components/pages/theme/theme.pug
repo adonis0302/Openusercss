@@ -6,7 +6,7 @@ div.route-root(itemtype="SoftwareApplication")
   meta(itemprop="description", :value="viewedTheme.description")
   meta(itemprop="operatingSystem", value="Windows, Mac OS X, Linux")
   meta(itemprop="applicationCategory", value="Theme")
-  //- meta(itemprop="aggregateRating", :value="viewedTheme.rating")
+  meta(itemprop="aggregateRating", :value="averageRating(viewedTheme.ratings)")
   div(itemprop="author", itemtype="Person")
     meta(itemprop="name", :value="viewedTheme.user.displayname")
 
@@ -97,10 +97,23 @@ div.route-root(itemtype="SoftwareApplication")
                             @click="viewSource"
                           ) View source
                       br
-                      //- p Average rating: {{viewedTheme.rating}}
+                      p(v-if="averageRating(viewedTheme.ratings) !== 0") Average rating: {{averageRating(viewedTheme.ratings)}}
+                      p(v-if="averageRating(viewedTheme.ratings) === 0") Not rated yet
                       p Created: {{formatMoment(viewedTheme.createdAt)}}
                       p Last updated: {{formatMoment(viewedTheme.lastUpdate)}}
                       p Version: {{viewedTheme.version}}
+                      div(v-if="currentUser._id")
+                        br
+                        b-level
+                          b-level-left
+                            p Rate this theme:
+                          b-level-right
+                            star-rating(
+                              :rating="averageRating(viewedTheme.ratings)",
+                              :item-size="25",
+                              :show-rating="false",
+                              @rating-selected="sendRating"
+                            )
 
             b-box
               vue-markdown(
