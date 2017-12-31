@@ -12,9 +12,24 @@
 @import 'node_modules/bulma/sass/grid/tiles';
 @import 'node_modules/bulma/sass/elements/container';
 @import 'node_modules/bulma/sass/elements/content';
+@import 'node_modules/bulma/sass/elements/box';
 
 .footer {
   padding-bottom: 48px;
+}
+
+.is-vertical {
+  display: flex;
+  flex-direction: column;
+}
+
+.is-primary-bg {
+  background-color: nth($primary, 1);
+  color: nth($primary, 2);
+}
+
+.is-fullheight {
+  height: 100%
 }
 
 @import '../../../client/scss/reboot';

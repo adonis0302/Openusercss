@@ -1,25 +1,37 @@
-.footer
-  .container
-    .columns
-      .column(has-text-centered)
-        .tile
-          p
-            | Copyright&nbsp;&copy;&nbsp;{{new Date().getFullYear()}}&nbsp;
-            a(href="//github.com/DecentM") DecentM&#32;
-            //- | and&#32;
-            //- a(href="//github.com/OpenUserCSS/app") Contributors
-        .tile
-          p
-            a(href="//forums.openusercss.org/topic/5/privacy-policy") Privacy policy
-            | &#32;|&#32;
-            a(href="//forums.openusercss.org/topic/6/terms-of-service") Terms of service
-            | &#32;|&#32;
-            router-link(to="/notice") Notice
-      .column.has-text-centered
-        a(href="//github.com/OpenUserCSS", target="_blank")
-          icon(icon="github-circle")
-          | GitHub
-      .column.has-text-centered
-        router-link(to="/contact")
-          icon(icon="email-variant")
-          | Contact the administrator
+.is-vertical
+  .is-primary-bg
+    .container
+      b-tile(is-parent, is-paddingless)
+        b-tile(is-child, is-pulled-left)
+          b-box.is-primary-bg(is-borderless, is-shadowless) OpenUserCSS needs your support!
+        b-tile(is-child)
+          a.button.is-patreon.is-pulled-right.is-fullheight(href="//patreon.com/DecentM", target="_blank")
+            | Support on Patreon!
+          a.button.is-paypal.is-pulled-right.is-fullheight(href="//www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NQE35LHY6NKS6", target="_blank")
+            | Support by PayPal!
+
+  .footer.is-vertical
+    .container
+      .columns
+        .column.has-text-centered
+          .tile
+            p
+              | Copyright&nbsp;&copy;&nbsp;{{new Date().getFullYear()}}&nbsp;
+              a(href="//github.com/DecentM") DecentM&#32;
+              | and&#32;
+              a(href="//github.com/OpenUserCSS/app") Contributors
+          .tile
+            p
+              a(href="//forums.openusercss.org/topic/5/privacy-policy") Privacy policy
+              | &#32;|&#32;
+              a(href="//forums.openusercss.org/topic/6/terms-of-service") Terms of service
+              | &#32;|&#32;
+              router-link(to="/notice") Notice
+        .column.has-text-centered
+          a(href="//github.com/OpenUserCSS", target="_blank")
+            icon(icon="github-circle")
+            | GitHub
+        .column.has-text-centered
+          router-link(to="/contact")
+            icon(icon="email-variant")
+            | Contact the administrator

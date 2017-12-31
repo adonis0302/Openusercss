@@ -9,6 +9,7 @@ export default {
     'b-columns':   bulma('columns', 'div'),
     'b-column':    bulma('column', 'div'),
     'b-tile':      bulma('tile', 'div'),
+    'b-box':       bulma('box', 'div'),
     icon
   }
 }

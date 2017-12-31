@@ -39,7 +39,9 @@ $colors: (
   'white-ter':    (map-get($tones, 'white-ter'), text-for-bg(map-get($tones, 'white-ter'))),
   'danger':       (map-get($tones, 'red'), text-for-bg(map-get($tones, 'red'))),
   'success':      (map-get($tones, 'green'), text-for-bg(map-get($tones, 'green'))),
-  'warning':      (map-get($tones, 'orange'), text-for-bg(map-get($tones, 'orange')))
+  'warning':      (map-get($tones, 'orange'), text-for-bg(map-get($tones, 'orange'))),
+  'paypal':       (#003087, text-for-bg(#003087)),
+  'patreon':      (#F96854, text-for-bg(#F96854))
 );
 
 $kerning: (
