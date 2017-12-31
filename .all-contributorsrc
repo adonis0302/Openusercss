@@ -1,0 +1,52 @@
+{
+  "projectName": "OpenUserCSS",
+  "projectOwner": "DecentM",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": true,
+  "contributors": [
+    {
+      "login": "RaitaroH",
+      "name": "RaitaroHikami",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/19552720?v=4",
+      "profile": "https://userstyles.org/users/377182",
+      "contributions": [
+        "ideas",
+        "question",
+        "code",
+        "design",
+        "fundingFinding"
+      ]
+    },
+    {
+      "login": "Mottie",
+      "name": "Rob Garrison",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/136959?v=4",
+      "profile": "http://wowmotty.blogspot.com/",
+      "contributions": [
+        "bug",
+        "fundingFinding"
+      ]
+    },
+    {
+      "login": "jerone",
+      "name": "Jeroen van Warmerdam",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/55841?v=4",
+      "profile": "https://twitter.com/jeronevw",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "narcolepticinsomniac",
+      "name": "narcolepticinsomniac",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/14100003?v=4",
+      "profile": "https://github.com/narcolepticinsomniac",
+      "contributions": [
+        "ideas"
+      ]
+    }
+  ]
+}

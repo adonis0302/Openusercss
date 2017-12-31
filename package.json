@@ -4,6 +4,8 @@
   "description": "OpenUserCSS",
   "main": "src/app.js",
   "scripts": {
+    "contrib:add": "all-contributors add",
+    "contrib:generate": "all-contributors generate",
     "clean": "rimraf build .tmp",
     "build:prod": "env-cmd ./.prod.env gulp build:prod",
     "build:fast": "env-cmd ./.dev.env gulp build:fast",
@@ -42,6 +44,7 @@
     "@commitlint/cli": "^5.2.3",
     "@commitlint/config-conventional": "^5.2.3",
     "add": "^2.0.6",
+    "all-contributors-cli": "^4.10.1",
     "ava": "^0.24.0",
     "babel-cli": "^6",
     "babel-core": "^6",
