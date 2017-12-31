@@ -41,6 +41,10 @@ export default {
       'version':     '1.0.0',
       'content':     '@-moz-document regexp(".*openusercss.org.*") {body {content: "yaeee";}}',
       'description': 'test description',
+      'createdAt':   '2017-12-31T09:20:29.234Z',
+      'lastUpdate':  '2017-12-31T09:20:29.234Z',
+      'screenshots': [],
+      'ratings':     [],
       'user':        {
         '_schema':    {},
         '__typename': 'User',

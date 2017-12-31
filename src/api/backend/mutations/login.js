@@ -7,7 +7,7 @@ import bcrypt from 'bcryptjs'
 const {AuthenticationError} = expected
 const invalidCreds = 'Invalid credentials'
 
-export default async (root, {email, password}, {User, Session, headers, connection}) => {
+export default async (root, {email, password}, {User, Session, Theme, headers, connection}) => {
   const config = await staticConfig()
   const requestedUser = await User.findOne({
     email
@@ -47,11 +47,18 @@ export default async (root, {email, password}, {User, Session, headers, connecti
   requestedUser.lastSeen = moment().toJSON()
   requestedUser.lastSeenReason = 'logging in'
 
+  const themeFinds = []
+
   requestedUser.themes.forEach((theme, index) => {
     if (!theme) {
       requestedUser.themes.splice(index, 1)
+
+      themeFinds.push(Theme.findOne({
+        '_id': theme._id
+      }))
     }
   })
+  requestedUser.themes = await Promise.all(themeFinds)
 
   await requestedUser.save()
   return newSession.save()

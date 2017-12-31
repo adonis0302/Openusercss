@@ -22,6 +22,8 @@ test('processObject - runs function on object', (t) => {
   expected.session.ua = 'Mozilla%2F5.0%20(X11%3B%20Linux%20x86_64)%20AppleWebKit%2F537.36%20(KHTML%2C%20like%20Gecko)%20Chrome%2F62.0.3202.94%20Safari%2F537.36'
   expected.themes[0].content = '%40-moz-document%20regexp(%22.*openusercss.org.*%22)%20%7Bbody%20%7Bcontent%3A%20%22yaeee%22%3B%7D%7D'
   expected.themes[0].description = 'test%20description'
+  expected.themes[0].lastUpdate = '2017-12-31T09%3A20%3A29.234Z'
+  expected.themes[0].createdAt = '2017-12-31T09%3A20%3A29.234Z'
   expected.users[0].lastSeen = '2017-12-06T02%3A21%3A12.373Z'
 
   t.deepEqual(state, expected)
