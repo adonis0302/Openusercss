@@ -25,7 +25,7 @@ const createSendEmail = async ({email, displayname}) => {
 
   const result = await sendEmail({
     'to':       email,
-    'template': 'verification',
+    'template': 'email-verification-initial',
     'locals':   {
       displayname,
       link
