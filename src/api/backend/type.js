@@ -1,6 +1,6 @@
 // @flow
 
-const typeDefs = `
+const outputTypeDefs = `
   type User {
     _id:            ID!
     username:       String!
@@ -34,12 +34,11 @@ const typeDefs = `
     possibleValues: String
   }
 
-  input OptionInput {
-    type: String!
-    title: String!
-    varname: String!
-    default: String!
-    possibleValues: [String]
+  type Rating {
+    _id:   ID!
+    user:  User!
+    theme: Theme!
+    value: Int!
   }
 
   type Theme {
@@ -50,7 +49,8 @@ const typeDefs = `
     content:     String!
     createdAt:   String!
     lastUpdate:  String!
-    rating:      Float!
+    rating:      Int @deprecated
+    ratings:     [Rating]!
     version:     String!
     screenshots: [String]
     options:     [Option]!
@@ -67,7 +67,19 @@ const typeDefs = `
     revisionTag:    String!
     revisionBranch: String!
   }
+`
 
+const inputTypeDefs = `
+  input OptionInput {
+    type: String!
+    title: String!
+    varname: String!
+    default: String!
+    possibleValues: [String]
+  }
+`
+
+const rootTypeDefs = `
   type Query {
     verifyToken(token: String!): Session!
     theme(id: ID!): Theme!
@@ -81,35 +93,42 @@ const typeDefs = `
     verifyEmail(
       token: String!
     ): Boolean!
+
     register(
       displayname: String!
       email: String!
       password: String!
     ): User!
+
     login(
       email: String!
       password: String!
     ): Session!
+
     logout(
       token: String!
     ): Boolean!
+
     deleteTheme(
       token: String!
       id: ID!
     ): Boolean!
+
     resendVerification(
       token: String!
     ): Boolean!
+
     theme(
-      token: String!
-      id: ID
-      title: String!
+      token:       String!
+      id:          ID
+      title:       String!
       description: String!
-      content: String!
-      version: String!
+      content:     String!
+      version:     String!
       screenshots: [String]
-      options: [OptionInput]!
+      options:     [OptionInput]!
     ): Theme!
+
     account(
       token:       String!
       password:    String
@@ -118,7 +137,17 @@ const typeDefs = `
       bio:         String
       donationUrl: String
     ): User!
+
+    rate(
+      id:    String!
+      token: String!
+      value: Int!
+    ): Theme!
   }
 `
 
-export default typeDefs
+export default `
+  ${outputTypeDefs}
+  ${inputTypeDefs}
+  ${rootTypeDefs}
+`

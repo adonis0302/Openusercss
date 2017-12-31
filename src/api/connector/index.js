@@ -6,12 +6,14 @@ import staticConfig from '../../shared/config'
 import Theme, {Option} from './schema/theme'
 import User from './schema/user'
 import Session from './schema/session'
+import Rating from './schema/rating'
 
 const init = async () => {
   const config = await staticConfig()
   const connectionUrl = config.get('database.main')
 
   await connect(connectionUrl)
+  log.info('API database connection established')
 
   const indexes = {
     'themes': [
@@ -31,12 +33,14 @@ const init = async () => {
     'users': [
       {
         'displayname': 'text',
-        'username':    'text'
+        'username':    'text',
+        'bio':         'text'
       },
       {
         'weights': {
-          'displayname': 2,
-          'username':    1
+          'displayname': 3,
+          'username':    2,
+          'bio':         1
         }
       }
     ]
@@ -50,7 +54,7 @@ const init = async () => {
     camo.getClient().driver().ensureIndex(key, value[0], value[1])
   })
 
-  log.info('API database connection established')
+  log.info('API database initialization completed')
 }
 
 export default async () => {
@@ -60,6 +64,7 @@ export default async () => {
     Theme,
     User,
     Session,
-    Option
+    Option,
+    Rating
   }
 }

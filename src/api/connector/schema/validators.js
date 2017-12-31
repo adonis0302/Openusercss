@@ -23,6 +23,20 @@ export default {
     return encoded
   },
 
+  'between': (...numbers) => {
+    if (numbers.length !== 2) {
+      throw new Error('"between" validator must be passed two arguments')
+    }
+
+    const [min, max] = numbers
+
+    if (min > max) {
+      throw new Error('minimum value must be passed first')
+    }
+
+    return (value) => value >= min && value <= max
+  },
+
   'regex': ({preset, validator, optional}) => {
     let match = null
 

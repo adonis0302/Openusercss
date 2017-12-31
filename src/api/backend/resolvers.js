@@ -13,6 +13,7 @@ import deleteThemeMutation from './mutations/delete-theme'
 import resendVerificationMutation from './mutations/resend-email-verify'
 import verifyEmailMutation from './mutations/verify-email'
 import accountMutation from './mutations/account'
+import rateMutation from './mutations/rate'
 
 export default {
   'Query': {
@@ -31,6 +32,7 @@ export default {
     'deleteTheme':        deleteThemeMutation,
     'resendVerification': resendVerificationMutation,
     'verifyEmail':        verifyEmailMutation,
-    'account':            accountMutation
+    'account':            accountMutation,
+    'rate':               rateMutation
   }
 }

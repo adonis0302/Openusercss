@@ -4,6 +4,7 @@ import {findIndex} from 'lodash'
 
 import validators from './validators'
 import User from './user'
+import Rating from './rating'
 
 export class Option extends EmbeddedDocument {
   constructor () {
@@ -53,6 +54,8 @@ export default class Theme extends Document {
       this.createdAt = moment().toJSON()
     }
     this.lastUpdate = moment().toJSON()
+
+    this.rating = 0
   }
 
   async preDelete () {
@@ -117,11 +120,13 @@ export default class Theme extends Document {
         'validate': validators.isSemver
       },
       'rating': {
-        'type':    Number,
-        'min':     0,
-        'max':     5,
-        'default': 0
+        'type':     Number,
+        'required': false,
+        'validate': validators.isFalsey
       },
+      'ratings': [
+        Rating
+      ],
       'screenshots': {
         'type': [
           String
