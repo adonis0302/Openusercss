@@ -87,6 +87,7 @@ const rootTypeDefs = `
     search(terms: String!, limit: Int, skip: Int): Results!
     latestThemes(limit: Int): [Theme]!
     version: Version!
+    popularThemes(limit: Int): [Theme]!
   }
 
   type Mutation {
