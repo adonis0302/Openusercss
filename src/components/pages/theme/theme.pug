@@ -1,6 +1,6 @@
 include ../../static/microdata/theme.pug
 
-div.route-root(itemtype="SoftwareApplication")
+div.route-root
   +theme-microdata
 
   modal(name="delete-theme", :draggable="true", height="auto")
@@ -42,7 +42,7 @@ div.route-root(itemtype="SoftwareApplication")
   )
     b-tile(is-parent, is-paddingless)
       b-tile(is-child)
-        code(itemprop="text") {{theme.content}}
+        code {{theme.content}}
 
   b-container(:inert="showingModal")
     div
