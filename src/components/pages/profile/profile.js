@@ -74,7 +74,7 @@ export default {
       'actionErrors',
       'themes'
     ]),
-    'viewedUser': {
+    'user': {
       'cache': false,
       get () {
         const user = this.$db.getCollection('users').findOne({
@@ -101,7 +101,7 @@ export default {
       }
     },
     lastOnlineDisplay () {
-      const user = this.viewedUser
+      const user = this.user
 
       return `Last seen ${user.lastSeenReason}, ${moment(this.time).to(user.lastSeen)}`
     }

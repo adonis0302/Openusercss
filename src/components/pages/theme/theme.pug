@@ -1,14 +1,7 @@
+include ../../static/microdata/theme.pug
+
 div.route-root(itemtype="SoftwareApplication")
-  meta(itemprop="name", :value="viewedTheme.title")
-  meta(itemprop="dateCreated", :value="viewedTheme.createdAt")
-  meta(itemprop="dateModified", :value="viewedTheme.lastUpdate")
-  meta(itemprop="version", :value="viewedTheme.version")
-  meta(itemprop="description", :value="viewedTheme.description")
-  meta(itemprop="operatingSystem", value="Windows, Mac OS X, Linux")
-  meta(itemprop="applicationCategory", value="Theme")
-  meta(itemprop="aggregateRating", :value="averageRating(viewedTheme.ratings)")
-  div(itemprop="author", itemtype="Person")
-    meta(itemprop="name", :value="viewedTheme.user.displayname")
+  +theme-microdata
 
   modal(name="delete-theme", :draggable="true", height="auto")
     form(@submit.prevent="deleteTheme")
@@ -20,11 +13,11 @@ div.route-root(itemtype="SoftwareApplication")
         b-card-content
           .content
             p
-              | Title: {{viewedTheme.title}}
+              | Title: {{theme.title}}
               br
-              | Created: {{viewedTheme.createdAt | moment('MMMM DD, YYYY (ZZ)')}}
+              | Created: {{theme.createdAt | moment('MMMM DD, YYYY (ZZ)')}}
               br
-              | Last updated: {{viewedTheme.lastUpdate | moment('MMMM DD, YYYY (ZZ)')}}
+              | Last updated: {{theme.lastUpdate | moment('MMMM DD, YYYY (ZZ)')}}
             hr
             p Please type your theme's title here to confirm:
             b-control(has-icons-left)
@@ -33,11 +26,11 @@ div.route-root(itemtype="SoftwareApplication")
                 name="confirmTitle",
                 v-model="confirmTitle",
                 aria-label="confirm theme title",
-                :placeholder="viewedTheme.title"
+                :placeholder="theme.title"
               )
         b-card-footer
           b-card-footer-item(is-paddingless)
-            button.button(type="submit", is-danger, is-fullbleed, :disabled="viewedTheme.title !== confirmTitle") Delete theme
+            button.button(type="submit", is-danger, is-fullbleed, :disabled="theme.title !== confirmTitle") Delete theme
           b-card-footer-item(is-paddingless)
             button.button(type="reset", @click="cancelDelete", is-fullbleed, is-borderless) Cancel
 
@@ -49,22 +42,22 @@ div.route-root(itemtype="SoftwareApplication")
   )
     b-tile(is-parent, is-paddingless)
       b-tile(is-child)
-        code(itemprop="text") {{viewedTheme.content}}
+        code(itemprop="text") {{theme.content}}
 
   b-container(:inert="showingModal")
     div
       .section
         b-level
           b-level-left(is-marginless)
-            h1 {{viewedTheme.title}}
+            h1 {{theme.title}}
           b-level-right
             b-tile(is-parent, is-paddingless)
-              b-tile(is-child, v-if="currentUser && viewedTheme.user._id === currentUser._id")
+              b-tile(is-child, v-if="currentUser && theme.user._id === currentUser._id")
                 .content(is-marginless, is-pulled-right)
                   button.button.is-danger(@click="confirmDeleteTheme") Delete theme
-              b-tile(is-child, v-if="currentUser && viewedTheme.user._id === currentUser._id")
+              b-tile(is-child, v-if="currentUser && theme.user._id === currentUser._id")
                 .content.is-marginless(is-pulled-right)
-                  router-link.button.is-primary(:to="'/theme/edit/' + viewedTheme._id") Edit theme
+                  router-link.button.is-primary(:to="'/theme/edit/' + theme._id") Edit theme
               b-tile(is-child)
                 .content.is-marginless(is-pulled-right)
                   button.button.is-primary(@click="installTheme") Install theme
@@ -75,8 +68,8 @@ div.route-root(itemtype="SoftwareApplication")
               b-box(is-paddingless, is-marginless).ouc-theme-card
                 flickity.carousel(ref="flickity", :options="flickityOptions")
                   flush-img(
-                    v-if="hasScreenshots(viewedTheme)",
-                    v-for="screenshot in viewedTheme.screenshots",
+                    v-if="hasScreenshots(theme)",
+                    v-for="screenshot in theme.screenshots",
                     :source="proxyImage(screenshot).large",
                     height="250px",
                     :placeholder="proxyImage(screenshot).small",
@@ -87,18 +80,18 @@ div.route-root(itemtype="SoftwareApplication")
                     b-tile(is-child, is-parent, is-vertical)
                       b-level(is-marginless)
                         b-level-left
-                          router-link(:to="'/profile/' + viewedTheme.user._id")
+                          router-link(:to="'/profile/' + theme.user._id")
                             button.button.is-primary
-                              p Visit {{viewedTheme.user.displayname}}'s profile
+                              p Visit {{theme.user.displayname}}'s profile
                           button.button.is-primary(
                             @click="viewSource"
                           ) View source
                       br
-                      p(v-if="averageRating(viewedTheme.ratings) !== 0") Average rating: {{averageRating(viewedTheme.ratings)}}
-                      p(v-if="averageRating(viewedTheme.ratings) === 0") Not rated yet
-                      p Created: {{formatMoment(viewedTheme.createdAt)}}
-                      p Last updated: {{formatMoment(viewedTheme.lastUpdate)}}
-                      p Version: {{viewedTheme.version}}
+                      p(v-if="averageRating(theme.ratings) !== 0") Average rating: {{averageRating(theme.ratings)}}
+                      p(v-if="averageRating(theme.ratings) === 0") Not rated yet
+                      p Created: {{formatMoment(theme.createdAt)}}
+                      p Last updated: {{formatMoment(theme.lastUpdate)}}
+                      p Version: {{theme.version}}
                       div(v-if="currentUser._id")
                         br
                         b-level
@@ -106,7 +99,7 @@ div.route-root(itemtype="SoftwareApplication")
                             p Rate this theme:
                           b-level-right
                             star-rating(
-                              :rating="averageRating(viewedTheme.ratings)",
+                              :rating="averageRating(theme.ratings)",
                               :item-size="25",
                               :show-rating="false",
                               @rating-selected="sendRating"
@@ -114,7 +107,7 @@ div.route-root(itemtype="SoftwareApplication")
 
             b-box
               vue-markdown(
-                :source="viewedTheme.description",
+                :source="theme.description",
                 :html="false",
                 :anchor-attributes="$anchorAttributes"
               )
@@ -123,7 +116,7 @@ div.route-root(itemtype="SoftwareApplication")
             p A preview of options you can set in your extension
             hr
             b-columns(is-multiline)
-              b-column(is-6, v-for="option in viewedTheme.options")
+              b-column(is-6, v-for="option in theme.options")
                 b-box
                   b {{option.title}}
                   p Type: {{option.type}}

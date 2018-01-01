@@ -1,0 +1,10 @@
+mixin user-microdata
+  meta(itemprop="name", :value="user.displayname")
+  meta(itemprop="image", :value="user.avatarUrl")
+  meta(itemprop="url", :value="'/profile/' + user._id")
+
+  div(itemprop="owns")
+    div(v-for="theme in user.themes", itemtype="OwnershipInfo")
+      meta(itemprop="additionalType", value="SoftwareApplication")
+      meta(itemprop="name", :value="theme.title")
+      meta(itemprop="url", :value="'/theme/' + theme._id")

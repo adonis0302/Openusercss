@@ -151,7 +151,7 @@ export default {
       'themes',
       'currentUser'
     ]),
-    'viewedTheme': {
+    'theme': {
       'cache': false,
       get () {
         const theme = this.$db.getCollection('themes').findOne({

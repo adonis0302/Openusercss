@@ -1,0 +1,32 @@
+mixin theme-microdata
+  meta(itemprop="name", :value="theme.title")
+  meta(itemprop="version", :value="theme.version")
+  meta(itemprop="softwareVersion", :value="theme.version")
+  meta(itemprop="description", :value="theme.description")
+  meta(itemprop="operatingSystem", value="Windows, Mac OS X, Linux")
+  meta(itemprop="applicationCategory", value="Theme")
+
+  meta(itemprop="dateCreated", itemtype="Date", :value="theme.createdAt")
+  meta(itemprop="dateModified", itemtype="Date", :value="theme.lastUpdate")
+
+  div(itemprop="aggregateRating", itemtype="AggregateRating")
+    div(itemprop="itemReviewed", itemtype="SoftwareApplication")
+      meta(itemprop="url", :value="'/theme/' + theme._id")
+    meta(itemprop="ratingCount", :value="theme.ratings ? theme.ratings.length : 0")
+    meta(itemprop="bestRating", value="5")
+    meta(itemprop="worstRating", value="1")
+    meta(itemprop="ratingValue", :value="averageRating(theme.ratings)")
+
+  meta(itemprop="url", :value="'/theme/' + theme._id")
+  meta(itemprop="installUrl", :value="'https://api.openusercss.org/theme/' + theme._id + '.user.css'")
+  meta(itemprop="fileSize", :value="theme.content ? theme.content.length / 1000 : 0")
+  meta(v-for="screenshot in theme.screenshots", itemprop="screenshot", :value="screenshot")
+
+  div(itemprop="author", itemtype="Person")
+    meta(itemprop="name", :value="theme.user.displayname")
+    meta(itemprop="url", :value="'/profile/' + theme.user._id")
+
+  div(itemprop="softwareAddOn", itemtype="SoftwareApplication")
+    meta(itemprop="name", value="Stylus")
+    meta(itemprop="applicationCategory", value="Extension")
+    meta(itemprop="url", value="https://add0n.com/stylus.html")

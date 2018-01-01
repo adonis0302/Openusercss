@@ -61,22 +61,36 @@ export default {
       'cache': false,
       get () {
         const result = this.$db.getCollection('themes').chain()
-
-        return result
+        const themes = result
         .find()
-        .simplesort('createdAt')
+        .simplesort('createdAt', true)
         .data()
+
+        themes.forEach((theme, index) => {
+          themes[index].user = this.$db.getCollection('users').findOne({
+            '_id': themes[index].user._id
+          })
+        })
+
+        return themes
       }
     },
     'popularThemes': {
       'cache': false,
       get () {
         const result = this.$db.getCollection('themes').chain()
-
-        return result
+        const themes = result
         .find()
-        .simplesort('ratings')
+        .simplesort('ratings', true)
         .data()
+
+        themes.forEach((theme, index) => {
+          themes[index].user = this.$db.getCollection('users').findOne({
+            '_id': themes[index].user._id
+          })
+        })
+
+        return themes
       }
     }
   }
