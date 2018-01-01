@@ -10,6 +10,7 @@ import deleteTheme from './delete-theme'
 import getFullUser from './get-full-user'
 import getFullTheme from './get-full-theme'
 import getLatestThemes from './get-latest-themes'
+import getPopularThemes from './get-popular-themes'
 import search from './search'
 import verifyEmail from './verify-email'
 import sendVerify from './remote-send-verify'
@@ -87,5 +88,6 @@ export default {
   verifyEmail,
   sendVerify,
   account,
-  rate
+  rate,
+  getPopularThemes
 }

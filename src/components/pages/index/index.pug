@@ -6,8 +6,8 @@ div.route-root
           b-column
             h2.has-bottom-margin Newest themes
             b-columns(is-multiline)
-              b-column(is-6, v-for="(theme, index) in limitBy(themes, 6)")
-                theme-card(v-if="themes.length !== 0", :small="true", :theme-id="theme._id", :data-index="index", direction="horizontal", card-class="is-primary").has-bottom-margin
+              b-column(is-6, v-for="(theme, index) in limitBy(latestThemes, 6)")
+                theme-card(:small="true", :theme-id="theme._id", :data-index="index", direction="horizontal", card-class="is-primary").has-bottom-margin
                   b-tile(slot="content", is-parent)
                     b-columns
                       b-column
@@ -28,7 +28,15 @@ div.route-root
 
           b-column
             h2.has-bottom-margin Popular themes
-            b-box
-              p Popular themes are not implemented yet
+            b-columns(is-multiline)
+              b-column(is-6, v-for="(theme, index) in limitBy(popularThemes, 6)")
+                theme-card(:small="true", :theme-id="theme._id", :data-index="index", direction="horizontal", card-class="is-primary").has-bottom-margin
+                  b-tile(slot="content", is-parent)
+                    b-tile(is-child)
+                      h4 {{theme.title}}
+                      h6 by {{theme.user.displayname}}
+                      p(v-if="theme.ratings.length === 0") Not rated yet
+                      p(v-if="theme.ratings.length > 1") Rated by {{theme.ratings.length}} people
+                      p(v-if="theme.ratings.length === 1") Rated by {{theme.ratings.length}} person
 
   ouc-footer

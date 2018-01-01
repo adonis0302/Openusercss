@@ -8,7 +8,8 @@ import {
   theme as themeQuery,
   user as userQuery,
   latestThemes as latestThemesQuery,
-  search as searchQuery
+  search as searchQuery,
+  popularThemes as popularThemesQuery
 } from '../queries'
 
 export const deleteTheme = async (id, token) => {
@@ -88,6 +89,22 @@ export const getLatestThemes = async (limit) => {
   try {
     themes = await apolloClient.query({
       'query': latestThemesQuery({limit})
+    })
+  } catch (error) {
+    throw new ExpectedError({
+      'message': error.message
+    })
+  }
+
+  return themes
+}
+
+export const getPopularThemes = async (limit) => {
+  let themes = null
+
+  try {
+    themes = await apolloClient.query({
+      'query': popularThemesQuery({limit})
     })
   } catch (error) {
     throw new ExpectedError({

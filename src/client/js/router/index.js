@@ -24,7 +24,10 @@ export const routerOptions = {
       'component': indexRoute,
       beforeEnter (to, from, next) {
         if (process.title === 'node') {
-          store.dispatch('getLatestThemes', 6)
+          Promise.all([
+            store.dispatch('getLatestThemes', 6),
+            store.dispatch('getPopularThemes', 6)
+          ])
           .then(next)
           .catch(next)
         } else {

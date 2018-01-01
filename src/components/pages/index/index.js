@@ -26,6 +26,7 @@ export default {
   },
   beforeMount () {
     this.$store.dispatch('getLatestThemes', 6)
+    this.$store.dispatch('getPopularThemes', 6)
   },
   'methods': {
     averageRating (array) {
@@ -55,6 +56,28 @@ export default {
     ...mapGetters([
       'actionErrors',
       'themes'
-    ])
+    ]),
+    'latestThemes': {
+      'cache': false,
+      get () {
+        const result = this.$db.getCollection('themes').chain()
+
+        return result
+        .find()
+        .simplesort('createdAt')
+        .data()
+      }
+    },
+    'popularThemes': {
+      'cache': false,
+      get () {
+        const result = this.$db.getCollection('themes').chain()
+
+        return result
+        .find()
+        .simplesort('ratings')
+        .data()
+      }
+    }
   }
 }
