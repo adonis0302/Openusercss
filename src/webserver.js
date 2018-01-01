@@ -138,7 +138,7 @@ const init = async () => {
 
     appStream.on('error', async (err) => {
       log.error('Failed to render client, sending shell HTML:')
-      log.error(err)
+      log.error(err.stack)
       res.status(err.code || 500)
 
       res.type('html')
