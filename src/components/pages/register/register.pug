@@ -72,8 +72,5 @@ div.route-root
                     div(slot="content")
                       ul
                         li(v-for="error in errors.all()") {{error}}
-                  notification(v-show="actionErrors.length > 0", icon="alert", color="is-danger").is-danger
-                    div(slot="content")
-                      p(v-for="error in actionErrors") {{error}}
 
   ouc-footer

@@ -89,33 +89,6 @@ test('logout - sets session to null', (t) => {
   t.deepEqual(state, expected)
 })
 
-test('actionError - clears errors if passed null', (t) => {
-  const state = cloneDeep(stateMock)
-  const expected = cloneDeep(stateMock)
-
-  expected.actionErrors = []
-
-  mutations.actionError(state, null)
-  t.deepEqual(state, expected)
-})
-
-test('actionError - adds error to state', (t) => {
-  const state = cloneDeep(stateMock)
-  const originalState = cloneDeep(stateMock)
-
-  mutations.actionError(state, new Error('Test'))
-  t.true(state.actionErrors.length === originalState.actionErrors.length + 1)
-})
-
-test('actionError - does not add error to state if duplicate', (t) => {
-  const state = cloneDeep(stateMock)
-  const originalState = cloneDeep(stateMock)
-
-  mutations.actionError(state, new Error('Test'))
-  mutations.actionError(state, new Error('Test'))
-  t.true(state.actionErrors.length === originalState.actionErrors.length + 1)
-})
-
 test('actionError - throws if argument is not an error', (t) => {
   const state = cloneDeep(stateMock)
 

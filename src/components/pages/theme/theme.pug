@@ -54,9 +54,6 @@ div.route-root(itemtype="SoftwareApplication")
   b-container(:inert="showingModal")
     div
       .section
-        notification(v-show="actionErrors.length > 0", icon="alert", color="is-danger").is-danger
-          div(slot="content")
-            p(v-for="error in actionErrors") {{error}}
         b-level
           b-level-left(is-marginless)
             h1 {{viewedTheme.title}}

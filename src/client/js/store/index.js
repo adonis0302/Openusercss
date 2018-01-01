@@ -8,9 +8,8 @@ import actions from './actions'
 
 const storeOptions = {
   'state': {
-    'actionErrors': [],
-    'session':      null,
-    'loading':      false
+    'session': null,
+    'loading': false
   },
   getters,
   mutations,

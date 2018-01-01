@@ -14,9 +14,6 @@ mixin account-card(condition, model, title)
 div.route-root
   b-container
     .section
-      notification(v-show="actionErrors.length > 0", icon="alert", color="is-danger").is-danger
-        div(slot="content")
-          p(v-for="error in actionErrors") {{error}}
       div(v-if="!currentUser._id")
         p
           | This page allows you to edit account details,

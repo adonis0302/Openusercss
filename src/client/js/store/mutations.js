@@ -1,4 +1,3 @@
-import {uniq} from 'lodash'
 import {struct} from 'superstruct'
 import raven from 'raven-js'
 
@@ -39,16 +38,19 @@ export default {
       throw new Error(`Argument passed to actionError must have a message property, got ${error}`)
     }
 
-    if (error) {
-      state.actionErrors.push(error.message)
-      state.actionErrors = uniq(state.actionErrors)
-      if (process.browser) {
-        // eslint-disable-next-line no-console
-        console.error(error)
-        raven.captureException(error)
-      }
-    } else {
-      state.actionErrors = []
+    if (error && process.browser) {
+      const toast = require('izitoast')
+
+      // eslint-disable-next-line no-console
+      console.error(error)
+      raven.captureException(error)
+      toast.error({
+        'title':   'An error occurred within the application:',
+        'message': error.message,
+        'timeout': 10000,
+        'theme':   'ouc',
+        'layout':  2
+      })
     }
   },
 

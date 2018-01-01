@@ -1,10 +1,6 @@
 div.route-root
   b-container
     .section
-      p {{testquery}}
-      notification(v-show="actionErrors.length > 0", icon="alert", color="is-danger").is-danger
-        div(slot="content")
-          p(v-for="error in actionErrors") {{error}}
       form(@submit.prevent="submitSearch").has-bottom-margin
         b-columns
           b-column(is-11)
