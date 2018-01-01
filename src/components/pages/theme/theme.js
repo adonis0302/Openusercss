@@ -122,8 +122,8 @@ export default {
     },
     deleteTheme () {
       this.$store.dispatch('deleteTheme', {
-        'id':       this.viewedTheme._id,
-        'redirect': `/profile/${this.viewedTheme.user._id}`
+        'id':       this.theme._id,
+        'redirect': `/profile/${this.theme.user._id}`
       })
     },
     viewSource () {
@@ -139,9 +139,9 @@ export default {
     },
     installTheme () {
       if (process.env.NODE_ENV === 'development') {
-        window.open(`http://localhost:5000/theme/${this.viewedTheme._id}.user.css`)
+        window.open(`http://localhost:5000/theme/${this.theme._id}.user.css`)
       } else {
-        window.open(`https://api.openusercss.org/theme/${this.viewedTheme._id}.user.css`)
+        window.open(`https://api.openusercss.org/theme/${this.theme._id}.user.css`)
       }
     }
   },
