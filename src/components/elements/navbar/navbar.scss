@@ -49,8 +49,8 @@ $background: map-get($colors, 'background');
   }
 
   &:not(.router-link-exact-active):not(:hover) {
-    background-color: nth($primary, 1) !important;
-    color: nth($primary, 2) !important;
+    background-color: nth($primary, 1);
+    color: nth($primary, 2);
   }
 }
 
