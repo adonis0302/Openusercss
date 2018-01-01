@@ -13,15 +13,20 @@ export default async (root, {token, id, value}, {Session, Theme, Rating, User}) 
     throw new Error('No theme found')
   }
 
+  user.themes = await Theme.find({
+    'user': user._id
+  })
+
   user.themes.forEach((userTheme) => {
-    if (userTheme.equals(theme._id)) {
+    if (userTheme._id.equals(id)) {
       throw new Error('You can\'t rate your own themes')
     }
   })
 
   // Load the existing rating object
   let existing = await Rating.findOne({
-    'theme': theme._id
+    'theme': theme._id,
+    'user':  user._id
   })
 
   if (existing) {

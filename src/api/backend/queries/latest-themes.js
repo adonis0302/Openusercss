@@ -23,9 +23,15 @@ export default async (root, {limit}, {User, Theme, Rating}) => {
   }
 
   result = result.map(async (theme) => {
-    const rates = theme.ratings.map((rating) => Rating.findOne({
-      '_id': rating._id
-    }))
+    const rates = []
+
+    theme.ratings.forEach((rating) => {
+      if (rating) {
+        rates.push(Rating.findOne({
+          '_id': rating._id
+        }))
+      }
+    })
 
     theme.ratings = await Promise.all(rates)
     return theme
