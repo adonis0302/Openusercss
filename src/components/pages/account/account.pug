@@ -46,7 +46,14 @@ div.route-root
                       p Change to
                   b-tile(is-child, is-9)
                     b-control
-                      b-input(v-model="account.email", :disabled="!editing.email")
+                      b-input(
+                        name="email",
+                        v-model="account.email",
+                        :disabled="!editing.email",
+                        placeholder="E-mail address"
+                        v-validate.disable="'required|email'",
+                        :class="{'is-danger': errors.has('email')}",
+                      )
                 br
                 b-tile
                   b-tile(is-child)
@@ -71,7 +78,7 @@ div.route-root
                       v-model="account.password",
                       :disabled="!editing.password",
                       placeholder="Passphrase",
-                      v-validate="'required'",
+                      v-validate.disable="'required'",
                       :class="{'is-danger': errors.has('password')}",
                       data-vv-as="passphrase",
                       aria-label="registration passphrase"
@@ -84,7 +91,7 @@ div.route-root
                       v-model="account.passwordVerify",
                       :disabled="!editing.password",
                       placeholder="Passphrase verification",
-                      v-validate="'required|confirmed:password'",
+                      v-validate.disable="'required|confirmed:password'",
                       :class="{'is-danger': errors.has('passwordVerify')}",
                       data-vv-as="passphrase verification",
                       aria-label="registration passphrase again"
@@ -128,11 +135,25 @@ div.route-root
                       p Change to
                   b-tile(is-child, is-9)
                     b-control
-                      b-input(v-model="account.displayname", :disabled="!editing.displayname")
+                      b-input(
+                        name="displayname"
+                        v-model="account.displayname",
+                        :disabled="!editing.displayname"
+                        placeholder="Username",
+                        v-validate.disable="'required|alpha_num'",
+                        :class="{'is-danger': errors.has('displayname')}"
+                      )
 
             +account-card("!editing.bio", "editing.bio", "Bio")
               b-control
-                b-textarea(v-model="account.bio", :disabled="!editing.bio")
+                b-textarea(
+                  name="bio",
+                  v-model="account.bio",
+                  :disabled="!editing.bio",
+                  placeholder="Write something about yourself!",
+                  v-validate.disable="'required'",
+                  :class="{'is-danger': errors.has('bio')}"
+                )
 
               br
               b-box(:disabled="!editing.bio")

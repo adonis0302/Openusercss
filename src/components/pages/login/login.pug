@@ -15,7 +15,7 @@ div.route-root
                         type="email",
                         name="email",
                         placeholder="E-mail",
-                        v-validate="'required|email'",
+                        v-validate.disable="'required|email'",
                         v-model.lazy="login.email",
                         :class="{'input': true, 'is-danger': errors.has('email') }",
                         data-vv-as="e-mail",
@@ -31,7 +31,7 @@ div.route-root
                             type="password",
                             name="password",
                             placeholder="Passphrase",
-                            v-validate="'required'",
+                            v-validate.disable="'required'",
                             v-model.lazy="login.password"
                             :class="{'input': true, 'is-danger': errors.has('password') }",
                             data-vv-as="passphrase",

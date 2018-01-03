@@ -14,7 +14,7 @@ div.route-root
               type="text",
               name="title",
               placeholder="Theme title",
-              v-validate="'required'",
+              v-validate.disable="'required'",
               v-model="editedTheme.title",
               :class="['input', {'is-danger': errors.has('title')}]"
             )
@@ -38,7 +38,7 @@ div.route-root
                       type="text",
                       name="description",
                       placeholder="Theme description",
-                      v-validate="'required'",
+                      v-validate.disable="'required'",
                       v-model="editedTheme.description",
                       :class="['input', {'is-danger': errors.has('description')}]"
                     )
@@ -61,7 +61,7 @@ div.route-root
                       type="text",
                       name="version",
                       placeholder="Version",
-                      v-validate="'required|semver'",
+                      v-validate.disable="'required|semver'",
                       v-model="editedTheme.version",
                       :class="['input', {'is-danger': errors.has('version')}]"
                     )
@@ -81,7 +81,7 @@ div.route-root
                     editor(
                       v-model="editedTheme.content",
                       name="content",
-                      v-validate="'required'",
+                      v-validate.disable="'required'",
                       :class="{'is-danger': errors.has('content')}"
                     )
 

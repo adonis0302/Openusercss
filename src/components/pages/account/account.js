@@ -72,18 +72,21 @@ export default {
       }
     },
     async submitAccount () {
+      const validated = await this.$validator.validateAll()
       const self = this
 
-      forOwn(this.editing, (value, key) => {
-        if (value) {
-          this.$store.dispatch('account', {
-            'accountData': {
-              [key]: self.account[key] || ''
-            },
-            'redirect': `/profile/${this.currentUser._id}`
-          })
-        }
-      })
+      if (validated) {
+        forOwn(this.editing, (value, key) => {
+          if (value) {
+            this.$store.dispatch('account', {
+              'accountData': {
+                [key]: self.account[key] || ''
+              },
+              'redirect': `/profile/${this.currentUser._id}`
+            })
+          }
+        })
+      }
     }
   },
   'computed': {
