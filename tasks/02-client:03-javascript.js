@@ -15,7 +15,6 @@ import watchify from 'watchify'
 import hmr from 'browserify-hmr'
 import merge from 'merge-stream'
 import walk from 'walk'
-import comment from 'gulp-header-comment'
 
 import server from './shared/server'
 import {createBrowserify} from './shared/js'
@@ -71,7 +70,6 @@ gulp.task('client:js:prod', () => {
       sourcemaps.init({
         'loadMaps': true
       }),
-      comment(`Built at ${Date.now()}`),
       sourcemaps.write(destination(), {
         'sourceMappingURL': (file) => {
           return `/${file.relative}.map`

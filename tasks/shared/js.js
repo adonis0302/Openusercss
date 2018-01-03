@@ -5,6 +5,8 @@ import envify from 'loose-envify'
 import extractCss from 'vueify-extract-css'
 import path from 'path'
 import {defaultsDeep} from 'lodash'
+import banner from 'browserify-banner'
+import git from 'git-revision'
 
 const babelOptions = {
   'presets': [
@@ -40,6 +42,36 @@ export const processObject = (object, func) => {
 export const browserifyOpts = (input) => {
   if (input.target === 'node') {
     input.bundleExternal = false
+  }
+
+  if (input.target === 'browser') {
+    input.plugin = [
+      [
+        banner, {
+          'banner': `var oucRevision = ${JSON.stringify({
+            'revisionLong':   git('long'),
+            'revisionShort':  git('short'),
+            'revisionTag':    git('tag'),
+            'revisionBranch': git('branch')
+          })}; if (window && !window.revision) {window.revision = Object.freeze(oucRevision)};`
+        }
+      ]
+    ]
+  }
+
+  if (input.target === 'worker') {
+    input.plugin = [
+      [
+        banner, {
+          'banner': `var oucRevision = ${JSON.stringify({
+            'revisionLong':   git('long'),
+            'revisionShort':  git('short'),
+            'revisionTag':    git('tag'),
+            'revisionBranch': git('branch')
+          })}; if (self && !self.revision) {self.revision = Object.freeze(oucRevision)};`
+        }
+      ]
+    ]
   }
 
   const options = defaultsDeep(input, {
