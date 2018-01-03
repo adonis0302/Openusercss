@@ -31,6 +31,12 @@ const cspOptions = {
       'openusercss.org',
       'openusercss.com'
     ],
+    'scriptSrc': [
+      "'self'",
+      'openusercss.org',
+      'openusercss.com',
+      'sentry.io'
+    ],
     'styleSrc': [
       "'self'",
       "'unsafe-inline'",
@@ -66,7 +72,7 @@ if (process.env.NODE_ENV === 'development') {
   cspOptions.directives.connectSrc.push('localhost:*')
   cspOptions.directives.connectSrc.push('ws://localhost:*')
   cspOptions.directives.scriptSrc = [
-    ...cspOptions.directives.defaultSrc,
+    ...cspOptions.directives.scriptSrc,
     "'unsafe-inline'",
     "'unsafe-eval'"
   ]
