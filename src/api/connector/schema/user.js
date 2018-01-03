@@ -6,12 +6,6 @@ import validators from './validators'
 
 export default class User extends Document {
   preSave () {
-    this.themes.forEach((theme, index) => {
-      if (!theme) {
-        this.themes.splice(index, 1)
-      }
-    })
-
     if (!this.createdAt) {
       this.createdAt = moment().toJSON()
     }

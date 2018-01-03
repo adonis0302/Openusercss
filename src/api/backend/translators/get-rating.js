@@ -1,9 +1,9 @@
 import Rating from '../../connector/schema/rating'
 
-import getTheme from './get-theme'
-import getUser from './get-user'
+import {getTheme} from './get-theme'
+import {getUser} from './get-user'
 
-export default async (query) => {
+export const getRating = async (query) => {
   const rating = await Rating.findOne(query, {
     'populate': true
   })

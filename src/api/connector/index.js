@@ -54,19 +54,6 @@ const init = async () => {
     camo.getClient().driver().ensureIndex(key, value[0], value[1])
   })
 
-  log.info('Restoring lost user-theme links')
-  const users = await User.find()
-
-  users.forEach(async (user) => {
-    const usersThemes = await Theme.find({
-      'user': user._id
-    })
-
-    user.themes = usersThemes
-
-    await user.save()
-  })
-
   log.info('API database initialization completed')
 }
 

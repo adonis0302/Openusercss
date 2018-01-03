@@ -1,5 +1,5 @@
-import getUser from '../translators/get-user'
-import getTheme from '../translators/get-theme'
+import {getUser} from '../translators/get-user'
+import {getTheme} from '../translators/get-theme'
 
 export default async (root, {terms, limit = 10, skip = 0}, {Theme, User}) => {
   if (limit > 25 || limit < 1) {

@@ -55,7 +55,6 @@ validators.themes = struct({
   'content':     'string',
   'createdAt':   'string',
   'lastUpdate':  'string',
-  'rating':      'number',
   'description': 'string',
   'ratings':     [
     'object'

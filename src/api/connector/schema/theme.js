@@ -118,11 +118,6 @@ export default class Theme extends Document {
         'required': true,
         'validate': validators.isSemver
       },
-      'rating': {
-        'type':     Number,
-        'required': false,
-        'validate': validators.isFalsey
-      },
       'screenshots': {
         'type': [
           String

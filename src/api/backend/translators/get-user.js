@@ -2,7 +2,7 @@ import User from '../../connector/schema/user'
 import Theme from '../../connector/schema/theme'
 import {getRatings} from './get-rating'
 
-export default async (query) => {
+export const getUser = async (query) => {
   const user = await User.findOne(query, {
     'populate': true
   })

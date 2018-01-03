@@ -49,7 +49,6 @@ const outputTypeDefs = `
     content:     String!
     createdAt:   String!
     lastUpdate:  String!
-    rating:      Int @deprecated
     ratings:     [Rating]!
     version:     String!
     screenshots: [String]

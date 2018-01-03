@@ -1,7 +1,7 @@
 import Theme from '../../connector/schema/theme'
 import {getRatings} from './get-rating'
 
-export default async (query) => {
+export const getTheme = async (query) => {
   const theme = await Theme.findOne(query, {
     'populate': true
   })
