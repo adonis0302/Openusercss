@@ -46,6 +46,7 @@ const main = async () => {
     raven.config('https://37715e4819864017ba7c02d05eb5cb75@sentry.io/264718')
     .addPlugin(ravenVue, Vue)
     .install()
+    .setTagsContext(window.revision)
   }
 
   Vue.prototype.$toast = iziToast

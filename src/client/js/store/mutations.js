@@ -49,7 +49,25 @@ export default {
         'message': error.message,
         'timeout': 10000,
         'theme':   'ouc',
-        'layout':  2
+        'layout':  2,
+        'buttons': [
+          [
+            '<button type="button" class="button is-danger has-text-white">Send feedback</button>',
+            (instance, notification) => {
+              if (raven.isSetup()) {
+                raven.showReportDialog()
+              } else {
+                toast.error({
+                  'title':   'Thank you, but...',
+                  'message': 'Error reporting is disabled in development builds.',
+                  'timeout': 10000,
+                  'theme':   'ouc',
+                  'layout':  2
+                })
+              }
+            }
+          ]
+        ]
       })
     }
   },
