@@ -35,9 +35,6 @@ div.route-root
                   b-tile(slot="content", is-parent)
                     b-tile(is-child)
                       h4 {{theme.title}}
-                      div(v-if="averageRating(theme.ratings) === 0")
-                        br
-                        p Not rated yet
                       div(v-if="averageRating(theme.ratings) !== 0")
                         br
                         star-rating(
@@ -47,7 +44,7 @@ div.route-root
                           :read-only="true"
                         )
                       h6 by {{theme.user.displayname}}
-                      p(v-if="theme.ratings.length === 0") Not rated yet
-                      p(v-if="theme.ratings.length !== 0") Has {{theme.ratings.length}} ratings
+                      p(v-if="theme.ratings && theme.ratings.length === 0") Not rated yet
+                      p(v-if="theme.ratings && theme.ratings.length !== 0") Has {{theme.ratings.length}} ratings
 
   ouc-footer
