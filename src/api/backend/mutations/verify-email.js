@@ -1,6 +1,7 @@
 import staticConfig from '../../../shared/config'
 import jwt from 'jsonwebtoken'
 import pify from 'pify'
+import getUser from '../translators/get-user'
 
 export default async (root, {token}, {User}) => {
   const config = await staticConfig()
@@ -10,14 +11,13 @@ export default async (root, {token}, {User}) => {
   if (decoded.email) {
     let user = null
 
-    const existingEmailUser = await User.findOne({
+    const existingEmailUser = await getUser({
       'email': decoded.email
     })
-    const pendingEmailUser = await User.findOne({
+
+    user = existingEmailUser || await getUser({
       'pendingEmail': decoded.email
     })
-
-    user = existingEmailUser || pendingEmailUser
 
     if (!user) {
       // Just in case we made an error by sending a verification link

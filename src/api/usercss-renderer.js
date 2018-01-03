@@ -2,7 +2,7 @@ import {struct} from 'superstruct'
 import {pick, cloneDeep} from 'lodash'
 import {ObjectID} from 'mongodb'
 
-import Theme from './connector/schema/theme'
+import getTheme from './backend/translators/get-theme'
 
 const validators = {}
 
@@ -109,7 +109,7 @@ export const buildTheme = async (rawTheme) => {
 }
 
 export default async (req, res, next) => {
-  const foundTheme = await Theme.findOne({
+  const foundTheme = await getTheme({
     '_id': req.params.id
   })
 

@@ -1,5 +1,8 @@
 import {findIndex} from 'lodash'
 import mustAuthenticate from '../../../shared/enforce-session'
+import getTheme from '../translators/get-theme'
+import getUser from '../translators/get-user'
+import {getRatings} from '../translators/get-rating'
 
 export default async (root, {
   token,
@@ -12,7 +15,7 @@ export default async (root, {
   options
 }, {Session, Theme, User, Option}) => {
   const session = await mustAuthenticate(token, Session)
-  const user = await User.findOne({
+  const user = await getUser({
     '_id': session.user._id
   })
   let newTheme = null
@@ -22,7 +25,7 @@ export default async (root, {
   }
 
   if (id) {
-    newTheme = await Theme.findOne({
+    newTheme = await getTheme({
       '_id': id
     })
     const userOwnsTheme = session.user._id.equals(newTheme.user._id)
@@ -65,5 +68,9 @@ export default async (root, {
   const savedTheme = await newTheme.save()
 
   await user.save()
+  savedTheme.ratings = await getRatings({
+    'theme': savedTheme._id
+  })
+
   return savedTheme
 }

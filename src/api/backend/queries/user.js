@@ -1,17 +1,16 @@
-import {ObjectId} from 'mongodb'
+// import {ObjectId} from 'mongodb'
+import getUser from '../translators/get-user'
 
 export default async (root, {id}, {Session, Theme, User, Rating}) => {
-  const foundUser = await User.findOne({
-    '_id': new ObjectId(id)
-  }, {
-    'populate': true
+  const foundUser = await getUser({
+    '_id': id
   })
 
   if (!foundUser) {
     throw new Error('No user found')
   }
 
-  const themes = foundUser.themes.map(async (theme) => {
+  /* const themes = foundUser.themes.map(async (theme) => {
     const rates = []
 
     theme.ratings.forEach((rating) => {
@@ -29,6 +28,6 @@ export default async (root, {id}, {Session, Theme, User, Rating}) => {
     return theme
   })
 
-  foundUser.themes = await Promise.all(themes)
+  foundUser.themes = await Promise.all(themes) */
   return foundUser
 }

@@ -1,21 +1,21 @@
 import mustAuthenticate from '../../../shared/enforce-session'
+import getUser from '../translators/get-user'
+import getTheme from '../translators/get-theme'
+import getRating from '../translators/get-rating'
 
 export default async (root, {token, id, value}, {Session, Theme, Rating, User}) => {
-  const {user} = await mustAuthenticate(token, Session)
-  const theme = await Theme.findOne({
+  const session = await mustAuthenticate(token, Session)
+  const user = await getUser({
+    '_id': session.user._id
+  })
+  const theme = await getTheme({
     '_id': id
-  }, {
-    'populate': true
   })
 
   // Sanity checks
   if (!theme) {
     throw new Error('No theme found')
   }
-
-  user.themes = await Theme.find({
-    'user': user._id
-  })
 
   user.themes.forEach((userTheme) => {
     if (userTheme._id.equals(id)) {
@@ -24,7 +24,7 @@ export default async (root, {token, id, value}, {Session, Theme, Rating, User}) 
   })
 
   // Load the existing rating object
-  let existing = await Rating.findOne({
+  let existing = await getRating({
     'theme': theme._id,
     'user':  user._id
   })

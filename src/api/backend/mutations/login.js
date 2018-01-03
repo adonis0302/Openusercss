@@ -1,5 +1,6 @@
 import staticConfig from '../../../shared/config'
 import {expected} from '../../../shared/custom-errors'
+import getUser from '../translators/get-user'
 import jwt from 'jsonwebtoken'
 import moment from 'moment'
 import bcrypt from 'bcryptjs'
@@ -9,10 +10,8 @@ const invalidCreds = 'Invalid credentials'
 
 export default async (root, {email, password}, {User, Session, Theme, headers, connection}) => {
   const config = await staticConfig()
-  const requestedUser = await User.findOne({
+  const requestedUser = await getUser({
     email
-  }, {
-    'populate': true
   })
 
   let authResult = null
@@ -47,19 +46,10 @@ export default async (root, {email, password}, {User, Session, Theme, headers, c
   requestedUser.lastSeen = moment().toJSON()
   requestedUser.lastSeenReason = 'logging in'
 
-  const themeFinds = []
+  const user = await requestedUser.save()
 
-  requestedUser.themes.forEach((theme, index) => {
-    if (!theme) {
-      requestedUser.themes.splice(index, 1)
+  newSession.user = user
+  const session = await newSession.save()
 
-      themeFinds.push(Theme.findOne({
-        '_id': theme._id
-      }))
-    }
-  })
-  requestedUser.themes = await Promise.all(themeFinds)
-
-  await requestedUser.save()
-  return newSession.save()
+  return session
 }

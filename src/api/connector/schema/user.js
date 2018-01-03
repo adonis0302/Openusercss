@@ -2,7 +2,6 @@ import {Document} from 'camo'
 import moment from 'moment'
 import gravatarUrl from 'gravatar-url'
 
-import Theme from './theme'
 import validators from './validators'
 
 export default class User extends Document {
@@ -115,10 +114,7 @@ export default class User extends Document {
       },
       'smallAvatarUrl': {
         'type': String
-      },
-      'themes': [
-        Theme
-      ]
+      }
     })
   }
 }

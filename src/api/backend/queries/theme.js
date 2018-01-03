@@ -1,8 +1,8 @@
+import getTheme from '../translators/get-theme'
+
 export default async (root, {id}, {User, Theme}) => {
-  const result = await Theme.findOne({
+  const result = await getTheme({
     '_id': id
-  }, {
-    'populate': true
   })
 
   if (!result) {

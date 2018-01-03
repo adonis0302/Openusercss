@@ -1,8 +1,9 @@
 import mustAuthenticate from '../../../shared/enforce-session'
+import getTheme from '../translators/get-theme'
 
 export default async (root, {token, id}, {Session, Theme}) => {
   const session = await mustAuthenticate(token, Session)
-  const theme = await Theme.findOne({
+  const theme = await getTheme({
     '_id': id
   })
   let userOwnsTheme = false

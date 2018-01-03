@@ -1,3 +1,5 @@
+import {getRatings} from '../translators/get-rating'
+
 export default async (root, {limit}, {User, Theme, Rating}) => {
   const upperLimit = 25
   const lowerLimit = 1
@@ -22,21 +24,13 @@ export default async (root, {limit}, {User, Theme, Rating}) => {
     throw new Error('No theme found')
   }
 
-  result = result.map(async (theme) => {
-    const rates = []
-
-    theme.ratings.forEach((rating) => {
-      if (rating) {
-        rates.push(Rating.findOne({
-          '_id': rating._id
-        }))
-      }
+  result = await Promise.all(result.map(async (theme) => {
+    theme.ratings = await getRatings({
+      'theme': theme._id
     })
 
-    theme.ratings = await Promise.all(rates)
     return theme
-  })
-  const done = Promise.all(result)
+  }))
 
-  return done
+  return result
 }

@@ -44,14 +44,6 @@ const sendEmail = async (locals, {template}) => {
   return result
 }
 
-/*
- * Possible actions:
- *   Password reset
- *   Changing e-mail
- *   Changing username
- *   Changing bio
- */
-
 export default async (root, {token, email, password, displayname, bio, donationUrl}, {User, Session}) => {
   const session = await mustAuthenticate(token, Session)
   const config = await staticConfig()

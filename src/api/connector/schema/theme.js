@@ -4,7 +4,6 @@ import {findIndex} from 'lodash'
 
 import validators from './validators'
 import User from './user'
-import Rating from './rating'
 
 export class Option extends EmbeddedDocument {
   constructor () {
@@ -124,9 +123,6 @@ export default class Theme extends Document {
         'required': false,
         'validate': validators.isFalsey
       },
-      'ratings': [
-        Rating
-      ],
       'screenshots': {
         'type': [
           String
