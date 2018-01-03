@@ -11,5 +11,14 @@ export default {
     'b-tile':      bulma('tile', 'div'),
     'b-box':       bulma('box', 'div'),
     icon
+  },
+  'computed': {
+    revision () {
+      if (typeof window === 'undefined') {
+        return {}
+      }
+
+      return window.revision
+    }
   }
 }
