@@ -23,7 +23,7 @@
     "docker": "docker build . -t decentm/openusercss",
     "postdocker": "docker push decentm/openusercss",
     "watch": "nodemon -q --delay 0.25 -w tasks -w gulpfile.babel.js --exec 'npm run watch:dirty'",
-    "release": "standard-version && npm run stash && npm run docker; npm run unstash",
+    "release": "standard-version && npm run stash && concurrently --raw 'git push --follow-tags' 'npm run docker'; npm run unstash",
     "pretest": "eslint --ext .js,.vue --ignore-path .gitignore src tasks test",
     "test": "ava test/*.js",
     "test:watch": "nodemon --delay 0.25 --watch package.json --watch test --exec 'npm t'",
