@@ -1,5 +1,6 @@
 import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import icon from '../icon/icon.vue'
+import flushImg from '../flush-img/flush-img.vue'
 
 export default {
   'components': {
@@ -10,7 +11,8 @@ export default {
     'b-column':    bulma('column', 'div'),
     'b-tile':      bulma('tile', 'div'),
     'b-box':       bulma('box', 'div'),
-    icon
+    icon,
+    flushImg
   },
   'computed': {
     revision () {
@@ -19,6 +21,18 @@ export default {
       }
 
       return window.revision
+    },
+    changelog () {
+      if (typeof window === 'undefined') {
+        return ''
+      }
+
+      return window.changelog
+    }
+  },
+  'methods': {
+    showChangelog () {
+      this.$modal.show('changelog-viewer')
     }
   }
 }
