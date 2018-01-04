@@ -1,13 +1,15 @@
 # OpenUserCSS  
 [![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors)
--------------
 
-by [DecentM](//github.com/DecentM) and [contributors](//github.com/OpenUserCSS/openusercss.org/graphs/contributors)  
-OpenUserCSS is a website where you can upload and find themes for other sites, to change how they look.  
-This repository houses the source code powering [the website and API](//openusercss.org)  
+by [@DecentM](https://github.com/DecentM) and [contributors](https://github.com/OpenUserCSS/openusercss.org/graphs/contributors)  
+OpenUserCSS is a website where you can upload and find themes for websites, to change how they look.  
 
-## Contributors
+**This repository houses the source code powering [openusercss.org](https://openusercss.org)**
 
+## Contributing  
+If you want to help with adding new features or fix bugs, please read the [CONTRIBUTING.md](https://github.com/OpenUserCSS/openusercss.org/blob/master/CONTRIBUTING.md) file!
+
+## Contributors  
 Thanks goes to these wonderful people who help me develop and improve the site! ([emoji key](https://github.com/kentcdodds/all-contributors#emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
