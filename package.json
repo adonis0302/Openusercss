@@ -1,6 +1,6 @@
 {
   "name": "openusercss.org",
-  "version": "0.0.1",
+  "version": "0.2.0",
   "description": "OpenUserCSS",
   "main": "src/app.js",
   "scripts": {
@@ -32,6 +32,11 @@
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
+    }
+  },
+  "standard-version": {
+    "skip": {
+      "changelog": true
     }
   },
   "ava": {
@@ -153,6 +158,7 @@
     "sass-web-fonts": "^2",
     "scrollsnap-polyfill": "^0",
     "scss-lint": "^0",
+    "standard-version": "^4.3.0",
     "sw-toolbox": "^3",
     "vinyl-source-stream": "^1",
     "vinyl-transform": "^1",
@@ -184,11 +190,11 @@
     "express": "^4",
     "express-brute": "^1",
     "express-brute-mongo": "^1",
+    "git-revision": "^0.0.2",
     "graphql": "^0.10.3",
     "graphql-subscriptions": "^0",
     "graphql-tools": "^2",
     "gravatar-url": "^2",
-    "git-revision": "^0.0.2",
     "hat": "^0",
     "helmet": "^3.9.0",
     "html-escaper": "^1",
