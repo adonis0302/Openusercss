@@ -29,4 +29,4 @@ If you don't want to type this format manually, you can use `npm run commit` or 
 
 If you're not using Commitizen, make sure that you stash your changes beforehand, so that only committed code gets tested.  
 
-If you're using `npm run commit` to commit your changes, stashing is taken care of automatically. If the process fails for some reason, the stash should get restored. If that doesn't happen, you can type `git stash apply` to restore them manually.
+If you're using `npm run c` to commit your changes, stashing is taken care of automatically. If the process fails for some reason, the stash should get restored. If that doesn't happen, you can type `git stash apply` to restore them manually.
