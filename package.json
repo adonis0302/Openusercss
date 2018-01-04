@@ -67,6 +67,7 @@
     "browsernizr": "^2",
     "bulma": "^0",
     "classlist-polyfill": "^1",
+    "concurrently": "^3.5.1",
     "console-polyfill": "^0",
     "css-reset-and-normalize-sass": "^0",
     "css-supports": "^0",
