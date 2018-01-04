@@ -43,7 +43,9 @@ const main = async () => {
   process.db = db
 
   if (process.env.NODE_ENV !== 'development') {
-    raven.config('https://37715e4819864017ba7c02d05eb5cb75@sentry.io/264718')
+    raven.config('https://37715e4819864017ba7c02d05eb5cb75@sentry.io/264718', {
+      'release': window.revision.revisionLong
+    })
     .addPlugin(ravenVue, Vue)
     .install()
     .setTagsContext(window.revision)
