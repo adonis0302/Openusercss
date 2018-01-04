@@ -7,6 +7,7 @@ import path from 'path'
 import {defaultsDeep} from 'lodash'
 import banner from 'browserify-banner'
 import git from 'git-revision'
+import fs from 'fs'
 
 const babelOptions = {
   'presets': [
@@ -24,6 +25,14 @@ const babelOptions = {
     'stage-3'
   ]
 }
+const revision = {
+  'revisionLong':   git('long'),
+  'revisionShort':  git('short'),
+  'revisionTag':    git('tag'),
+  'revisionBranch': git('branch')
+}
+// eslint-disable-next-line no-sync
+const changelog = fs.readFileSync('CHANGELOG.md')
 
 export default babelOptions
 
@@ -48,12 +57,16 @@ export const browserifyOpts = (input) => {
     input.plugin = [
       [
         banner, {
-          'banner': `var oucRevision = ${JSON.stringify({
-            'revisionLong':   git('long'),
-            'revisionShort':  git('short'),
-            'revisionTag':    git('tag'),
-            'revisionBranch': git('branch')
-          })}; if (window && !window.revision) {window.revision = Object.freeze(oucRevision)};`
+          'banner': `
+            if (window) {
+              if (!window.revision) {
+                window.revision = Object.freeze(${JSON.stringify(revision)});
+              }
+              if (!window.changelog) {
+                window.changelog = decodeURIComponent('${encodeURIComponent(changelog.toString())}');
+              }
+            }
+          `
         }
       ]
     ]
