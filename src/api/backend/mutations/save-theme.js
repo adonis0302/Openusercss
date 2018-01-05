@@ -1,5 +1,6 @@
 import {findIndex} from 'lodash'
 import mustAuthenticate from '../../../shared/enforce-session'
+import parse from '../../../shared/usercss-parser'
 import {getTheme} from '../translators/get-theme'
 import {getUser} from '../translators/get-user'
 import {getRatings} from '../translators/get-rating'
@@ -24,6 +25,8 @@ export default async (root, {
     throw new Error('You must verify your e-mail address before uploading themes.')
   }
 
+  const parsed = await parse(decodeURIComponent(content))
+
   if (id) {
     newTheme = await getTheme({
       '_id': id
@@ -37,7 +40,7 @@ export default async (root, {
     newTheme.title = title
     newTheme.description = decodeURIComponent(description)
     newTheme.version = version
-    newTheme.content = decodeURIComponent(content)
+    newTheme.content = parsed.code
     newTheme.screenshots = screenshots
     newTheme.options = []
 
@@ -55,7 +58,7 @@ export default async (root, {
   } else {
     newTheme = Theme.create({
       'user':        session.user,
-      'content':     decodeURIComponent(content),
+      'content':     parsed.code,
       'description': decodeURIComponent(description),
       options,
       title,
