@@ -7,6 +7,8 @@ import iziToast from 'izitoast'
 import raven from 'raven-js'
 import {StarRating} from 'vue-rate-it'
 import ravenVue from 'raven-js/plugins/vue'
+import hat from 'hat'
+import {struct} from 'superstruct'
 
 import VueModal from 'vue-js-modal'
 import VueFlickity from 'vue-flickity'
@@ -19,8 +21,109 @@ import {
 import db from './store/db'
 import {runPolyfills} from './utils/features'
 
+if (process.env.NODE_ENV !== 'development') {
+  raven.config('https://37715e4819864017ba7c02d05eb5cb75@sentry.io/264718', {
+    'release': window.revision.revisionLong
+  })
+  .addPlugin(ravenVue, Vue)
+  .install()
+  .setTagsContext(window.revision)
+}
+
+const key = hat()
+const responseValidator = struct({
+  'type':      'string',
+  'key':       'string',
+  'extension': {
+    'name':         'string',
+    'version':      'string',
+    'capabilities': [
+      'string?'
+    ]
+  }
+})
+const questionValidator = struct({
+  'type':         'string',
+  'key':          'string',
+  'revision':     'object',
+  'featuresList': {
+    'required': [
+      'string'
+    ],
+    'optional': [
+      'string'
+    ]
+  }
+})
+const featuresList = {
+  'required': [
+    'install-usercss',
+    'configure-after-install'
+  ],
+  'optional': [
+    'configure-before-install',
+    'builtin-editor',
+    'create-usercss',
+    'edit-usercss',
+    'import-moz-export',
+    'export-moz-export',
+    'update-manual',
+    'update-auto',
+    'export-json-backups',
+    'import-json-backups',
+    'manage-installed-themes',
+    'search-remote-themes',
+    'query-api',
+    'mutate-api'
+  ]
+}
+
 const polyfills = async () => {
   return runPolyfills()
+}
+const sendExtensionQuestion = () => {
+  window.postMessage(questionValidator({
+    'type':     'ouc-extension-question',
+    'revision': window.revision,
+    featuresList,
+    key
+  }), '*')
+}
+const attachResponseListener = () => {
+  window.addEventListener('message', (event) => {
+    try {
+      if (event.data && event.data.type === 'ouc-extension-response') {
+        const response = responseValidator(event.data)
+        const missingFeatures = []
+
+        featuresList.required.forEach((feature) => {
+          if (!response.extension.capabilities.includes(feature)) {
+            missingFeatures.push(feature)
+          }
+        })
+
+        if (missingFeatures.length) {
+          throw new Error([
+            `${response.extension.name} ${response.extension.version} is not capable of the following features:`,
+            `${missingFeatures.join('\n')}`
+          ].join('\n'))
+        }
+
+        if (response.key !== key) {
+          throw new Error([
+            'Response key doesn\'t match.\n',
+            `Expected: ${key}`,
+            `Received: ${response.key}`,
+            `Raw data: ${JSON.stringify(response, null, 2)}`
+          ].join('\n'))
+        }
+
+        process.extension = response.extension
+      }
+    } catch (error) {
+      console.error(error)
+    }
+  })
 }
 
 const mountApp = async () => {
@@ -31,25 +134,20 @@ const mountApp = async () => {
   })
 
   app.$mount('app')
+  return true
 }
 
 const main = async () => {
   const polyfillsResult = await polyfills()
+
+  attachResponseListener()
 
   process.animating = []
   process.averageFps = 0
   process.fpsHistory = []
   process.polyfills = polyfillsResult
   process.db = db
-
-  if (process.env.NODE_ENV !== 'development') {
-    raven.config('https://37715e4819864017ba7c02d05eb5cb75@sentry.io/264718', {
-      'release': window.revision.revisionLong
-    })
-    .addPlugin(ravenVue, Vue)
-    .install()
-    .setTagsContext(window.revision)
-  }
+  process.extension = null
 
   Vue.prototype.$toast = iziToast
   Vue.prototype.$db = db
@@ -58,11 +156,7 @@ const main = async () => {
   Vue.component('flickity', VueFlickity)
   Vue.component('star-rating', StarRating)
 
-  mountApp()
-  .catch((error) => {
-    log.error(error)
-    raven.captureException(error)
-  })
+  await mountApp()
   const fps = new FpsEmitter(1000)
 
   window.addEventListener('load', () => {
@@ -88,7 +182,14 @@ const main = async () => {
       })
     })
   }
+
+  sendExtensionQuestion()
 }
 
 main()
+.catch((error) => {
+  console.error(error)
+  raven.captureException(error)
+})
+
 window.process = process
