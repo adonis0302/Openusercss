@@ -76,12 +76,7 @@ export const browserifyOpts = (input) => {
     input.plugin = [
       [
         banner, {
-          'banner': `var oucRevision = ${JSON.stringify({
-            'revisionLong':   git('long'),
-            'revisionShort':  git('short'),
-            'revisionTag':    git('tag'),
-            'revisionBranch': git('branch')
-          })}; if (self && !self.revision) {self.revision = Object.freeze(oucRevision)};`
+          'banner': `self.revision = Object.freeze(${JSON.stringify(revision)});`
         }
       ]
     ]
