@@ -151,6 +151,9 @@ export default {
       'themes',
       'currentUser'
     ]),
+    extension () {
+      return process.extension
+    },
     'theme': {
       'cache': false,
       get () {
