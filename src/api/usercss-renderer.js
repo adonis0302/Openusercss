@@ -1,6 +1,7 @@
 import {struct} from 'superstruct'
 import {pick, cloneDeep} from 'lodash'
 import {ObjectID} from 'mongodb'
+import stripDown from 'remove-markdown'
 
 import {getTheme} from './backend/translators/get-theme'
 
@@ -63,7 +64,7 @@ export const buildTheme = async (rawTheme) => {
   const header = [
     '/* ==userstyle==',
     `@name ${theme.title}`,
-    `@description ${theme.description}`,
+    `@description ${stripDown(theme.description).replace(/\n/, ' - ')}`,
     `@version ${theme.version}`,
     `@namespace https://openusercss.org/theme/${theme._id}`,
     `@homepageURL https://openusercss.org/theme/${theme._id}`,
