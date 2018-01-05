@@ -1,6 +1,6 @@
 {
   "name": "openusercss.org",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "OpenUserCSS",
   "main": "src/app.js",
   "scripts": {
@@ -207,6 +207,7 @@
     "node-cp": "^0",
     "nodemailer": "^4.4.1",
     "p-waterfall": "^1",
+    "parserlib": "^1.1.1",
     "passport": "^0",
     "passport-http": "^0",
     "passport-local": "^1",

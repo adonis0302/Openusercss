@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.3.3"></a>
+## [0.3.3](https://github.com/OpenUserCSS/openusercss.org/compare/v0.3.2...v0.3.3) (2018-01-05)
+
+
+### Bug Fixes
+
+* **API:** Fix bad import in renderer (fixes [#50](https://github.com/OpenUserCSS/openusercss.org/issues/50)) ([0d13dd3](https://github.com/OpenUserCSS/openusercss.org/commit/0d13dd3))
+
+
+
 <a name="0.3.2"></a>
 ## [0.3.2](https://github.com/OpenUserCSS/openusercss.org/compare/v0.3.1...v0.3.2) (2018-01-04)
 
