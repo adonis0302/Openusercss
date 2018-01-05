@@ -56,11 +56,16 @@ div.route-root
                 .content(is-marginless, is-pulled-right)
                   button.button.is-danger(@click="confirmDeleteTheme") Delete theme
               b-tile(is-child, v-if="currentUser && theme.user._id === currentUser._id")
-                .content.is-marginless(is-pulled-right)
+                .is-marginless(is-pulled-right)
                   router-link.button.is-primary(:to="'/theme/edit/' + theme._id") Edit theme
-              b-tile(is-child)
-                .content.is-marginless(is-pulled-right)
-                  button.button.is-primary(@click="installTheme") Install theme
+              button.button.is-primary(@click="installTheme") Install theme
+              //- b-tile // TODO: Enable this when there are extensions to support
+                b-tile.is-warning.is-banner(is-child, v-if="!extension")
+                  | No compatible extension detected
+                b-tile(is-child)
+                  .content.is-marginless(is-pulled-right)
+                    button.button.is-primary(v-if="extension", @click="installTheme") Install theme with {{extension.name}}
+                    button.button.is-primary(v-if="!extension", @click="installTheme") Try installing anyway
 
         b-columns
           b-column(is-6)
