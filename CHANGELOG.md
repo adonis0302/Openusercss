@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.5.2"></a>
+## [0.5.2](https://github.com/OpenUserCSS/openusercss.org/compare/v0.5.1...v0.5.2) (2018-01-05)
+
+
+### Bug Fixes
+
+* **client:** Always hide microdata (closes [#51](https://github.com/OpenUserCSS/openusercss.org/issues/51)) ([a2c2a94](https://github.com/OpenUserCSS/openusercss.org/commit/a2c2a94))
+
+
+
 <a name="0.5.1"></a>
 ## [0.5.1](https://github.com/OpenUserCSS/openusercss.org/compare/v0.5.0...v0.5.1) (2018-01-05)
 
