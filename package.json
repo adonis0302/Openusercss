@@ -29,7 +29,8 @@
     "test:watch": "nodemon --delay 0.25 --watch package.json --watch test --exec 'npm t'",
     "precommit": "npm run stash && npm t",
     "postcommit": "npm run unstash",
-    "c": "git-cz"
+    "commit": "git-cz",
+    "c": "npm run commit"
   },
   "author": "DecentM",
   "license": "GPL-3.0",
