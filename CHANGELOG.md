@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.4.0"></a>
+# [0.4.0](https://github.com/OpenUserCSS/openusercss.org/compare/v0.3.3...v0.4.0) (2018-01-05)
+
+
+### Features
+
+* **API:** Cut usercss definitions from code ([c29555e](https://github.com/OpenUserCSS/openusercss.org/commit/c29555e))
+* **client:** Parse theme source on input in editor ([572aaa9](https://github.com/OpenUserCSS/openusercss.org/commit/572aaa9))
+* **shared:** Add usercss parser function ([12487fb](https://github.com/OpenUserCSS/openusercss.org/commit/12487fb))
+
+
+
 <a name="0.3.3"></a>
 ## [0.3.3](https://github.com/OpenUserCSS/openusercss.org/compare/v0.3.2...v0.3.3) (2018-01-05)
 
