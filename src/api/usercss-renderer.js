@@ -2,7 +2,7 @@ import {struct} from 'superstruct'
 import {pick, cloneDeep} from 'lodash'
 import {ObjectID} from 'mongodb'
 
-import getTheme from './backend/translators/get-theme'
+import {getTheme} from './backend/translators/get-theme'
 
 const validators = {}
 
@@ -38,7 +38,6 @@ validators.theme = struct({
   'content':     'string',
   'createdAt':   'string',
   'lastUpdate':  'string',
-  'rating':      'number',
   'description': 'string',
   'screenshots': 'array',
   'options':     'array',

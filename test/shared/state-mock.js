@@ -36,7 +36,6 @@ export default {
       '_schema':     {},
       '__typename':  'Theme',
       '_id':         '5a275431707d23a322cff59f',
-      'rating':      0,
       'title':       'asd',
       'version':     '1.0.0',
       'content':     '@-moz-document regexp(".*openusercss.org.*") {body {content: "yaeee";}}',
