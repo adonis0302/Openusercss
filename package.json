@@ -217,6 +217,7 @@
     "pug": "^2.0.0-rc.4",
     "raven": "^2.3.0",
     "raven-js": "^3.21.0",
+    "remove-markdown": "^0.2.2",
     "respawn": "^2.5.0",
     "selfsigned": "^1",
     "semver": "^5.4.1",
