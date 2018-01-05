@@ -73,13 +73,13 @@ $secondary: map-get($colors, 'secondary');
 $info: map-get($colors, 'secondary');
 $success: map-get($colors, 'success');
 $danger: map-get($colors, 'danger');
+$warning: map-get($colors, 'warning');
 
 $text: nth(map-get($colors, 'body'), 2);
 $link: nth(map-get($colors, 'body'), 2);
 
 $family-primary: 'Nunito';
 $family-code: $family-primary;
-$warning: $orange;
 
 $radius-small:  map-get($kerning, 'radius-small');
 $radius:        map-get($kerning, 'radius');
