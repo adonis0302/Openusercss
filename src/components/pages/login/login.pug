@@ -38,7 +38,7 @@ div.route-root
                             aria-label="login passphrase"
                           )
                 b-tile(is-parent, is-vertical, is-paddingless)
-                  ouc-button(icon="account-plus", :disabled="errors.any()").is-primary
+                  ouc-button(icon="account-plus").is-primary
                     p(slot="content") Login
                   notification(v-show="errors.any()", icon="alert", color="is-danger").is-danger
                     div(slot="content")

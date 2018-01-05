@@ -66,7 +66,7 @@ div.route-root
                             aria-label="registration passphrase, again"
                           )
                 b-tile(is-parent, is-vertical, is-paddingless)
-                  ouc-button(icon="account-plus", :disabled="errors.any()").is-primary
+                  ouc-button(icon="account-plus").is-primary
                     p(slot="content") Register
                   notification(v-show="errors.any()", icon="alert", color="is-danger").is-danger
                     div(slot="content")

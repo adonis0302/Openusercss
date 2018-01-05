@@ -27,7 +27,7 @@ div.route-root
           b-tile(is-child)
             button.button.is-primary.is-pulled-right(
               type="submit",
-              :disabled="this.editingCount === 0 || errors.any()",
+              :disabled="this.editingCount === 0",
               :class="{'is-loading': loading}"
             ) Save unlocked account details
 
