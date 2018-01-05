@@ -2,9 +2,11 @@ import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import noSSR from 'vue-no-ssr'
 import {mapGetters} from 'vuex'
 import semver from 'semver'
-import {cloneDeep, concat} from 'lodash'
+import {cloneDeep, concat, forOwn} from 'lodash'
 import {Chrome as colorPicker} from 'vue-color'
+import parse from '../../../src/shared/usercss-parser'
 
+import bSwitch from '../../components/b-switch/b-switch.vue'
 import oucFooter from '../../components/ouc-footer/ouc-footer.vue'
 import navbar from '../../components/navbar/navbar.vue'
 import icon from '../../components/icon/icon.vue'
@@ -37,7 +39,7 @@ export default {
     'b-label':       bulma('label', 'label'),
     'b-select':      bulma('select', 'select'),
     'b-control':     bulma('control', 'div'),
-    'b-checkbox':    bulma('checkbox', 'checkbox'),
+    'b-checkbox':    bulma('checkbox', 'input'),
     'b-radio':       bulma('radio', 'radio'),
     'b-help':        bulma('help', 'p'),
     'b-tile':        bulma('tile', 'div'),
@@ -53,7 +55,8 @@ export default {
     bInput,
     bTextarea,
     listCreator,
-    colorPicker
+    colorPicker,
+    bSwitch
   },
   'data': () => {
     return {
@@ -69,7 +72,8 @@ export default {
       },
       'colors': {
         'hex': '#ffffff'
-      }
+      },
+      'parse': 'on'
     }
   },
   created () {
@@ -129,6 +133,24 @@ export default {
     },
     updateColor (colorObj, index) {
       this.editedTheme.options[index].default = colorObj.hex
+    },
+    async parseUserCSS (input) {
+      if (this.parse && input.toLowerCase().includes('==userstyle==')) {
+        const {code, props} = await parse(input)
+
+        forOwn(props, (prop, index) => {
+          const trim = /^\s*(.*?)\s*$/
+          const trimmed = trim.exec(prop)[1]
+
+          props[index] = trimmed
+        })
+
+        this.editedTheme.version = props.version
+        this.editedTheme.description = props.description
+        this.editedTheme.license = props.license
+        this.editedTheme.title = props.name
+        this.editedTheme.content = code
+      }
     }
   },
   'computed': {

@@ -75,10 +75,18 @@ div.route-root
                   placeholder="Paste a URL to your image here"
                 ).has-bottom-margin
 
+                b-field
+                  b-control(has-icons-left)
+                    label
+                      b-switch(v-model="parse")
+                      .is-horizontal-spacer
+                      | (experimental) Parse source code on input event
+
               b-tile.ouc-new-theme-editor(is-child)
                 b-box(is-paddingless)
                   no-ssr
                     editor(
+                      @input="parseUserCSS",
                       v-model="editedTheme.content",
                       name="content",
                       v-validate.disable="'required'",

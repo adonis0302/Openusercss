@@ -50,4 +50,10 @@ textarea[name="description"] {
   height: 100%
 }
 
+.is-horizontal-spacer {
+  display: inline;
+  padding-left: .25rem;
+  padding-right: .25rem;
+}
+
 @import '../../../client/scss/reboot';
