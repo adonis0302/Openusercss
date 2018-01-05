@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.5.0"></a>
+# [0.5.0](https://github.com/OpenUserCSS/openusercss.org/compare/v0.4.0...v0.5.0) (2018-01-05)
+
+
+### Bug Fixes
+
+* **API:** Remove markdown from theme description on render ([d9caf1d](https://github.com/OpenUserCSS/openusercss.org/commit/d9caf1d))
+
+
+### Features
+
+* **API:** Throw an error if theme parsing fails ([911f95e](https://github.com/OpenUserCSS/openusercss.org/commit/911f95e))
+
+
+
 <a name="0.4.0"></a>
 # [0.4.0](https://github.com/OpenUserCSS/openusercss.org/compare/v0.3.3...v0.4.0) (2018-01-05)
 
