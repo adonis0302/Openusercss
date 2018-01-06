@@ -21,9 +21,12 @@ div.route-root
             | Click here to install Stylus to be able to use themes!
       div(v-if="extension")
         b-box.is-primary
-          p
+          p(v-if="extension.version")
             icon(icon="puzzle")
-            | Detected {{extension.name}}, version {{extension.version}}
+            | Detected extension: {{extension.name}}, version {{extension.version}}. You're good to go!
+          p(v-if="!extension.version")
+            icon(icon="puzzle")
+            | Detected extension: {{extension.name}}. You're good to go!
 
         p Here's some info about what you can do with {{extension.name}}:
         .content

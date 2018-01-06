@@ -36,7 +36,7 @@ const responseValidator = struct({
   'key':       'string',
   'extension': {
     'name':         'string',
-    'version':      'string',
+    'version':      'string?',
     'capabilities': [
       'string?'
     ]
