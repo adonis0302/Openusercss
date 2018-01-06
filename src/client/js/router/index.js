@@ -13,6 +13,7 @@ import contactRoute from '../../../../.tmp/pages/contact/contact.vue'
 import testRoute from '../../../../.tmp/pages/test/test.vue'
 import accountRoute from '../../../../.tmp/pages/account/account.vue'
 import noticeRoute from '../../../../.tmp/pages/notice/notice.vue'
+import helpRoute from '../../../../.tmp/pages/help/help.vue'
 
 import notFoundRoute from '../../../../.tmp/pages/not-found/not-found.vue'
 
@@ -34,6 +35,10 @@ export const routerOptions = {
           return next()
         }
       }
+    },
+    {
+      'path':      '/help',
+      'component': helpRoute
     },
     {
       'path':      '/notice',

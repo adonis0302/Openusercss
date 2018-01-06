@@ -24,4 +24,17 @@ code {
   white-space: pre-wrap
 }
 
+.is-warning {
+  background-color: nth($warning, 1);
+  color: nth($warning, 2);
+}
+
+.is-banner {
+  padding-bottom: .4rem;
+  padding-top: .4rem;
+  padding-left: .6rem;
+  padding-right: .6rem;
+  white-space: nowrap;
+}
+
 @import '../../../client/scss/reboot';
