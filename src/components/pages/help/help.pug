@@ -17,7 +17,7 @@ div.route-root
           icon(icon="alert")
           a(href="https://add0n.com/stylus.html", target="_blank", rel="nofollow noopener")
             | You don't seem to have a compatible extension installed,
-            | or it doesn't advertise support of required features.
+            | or an error occurred.
             | Click here to install Stylus to be able to use themes!
       div(v-if="extension")
         b-box.is-primary
@@ -41,9 +41,9 @@ div.route-root
             li(v-if="extension.capabilities.includes('edit-usercss') && extension.capabilities.includes('builtin-editor')")
               | You can edit already installed themes with this extension using its builtin code editor.
             li(v-if="extension.capabilities.includes('import-moz-export')")
-              | You can import themes that user the non-usercss @moz- export format.
+              | You can import themes that user the @moz- export format.
             li(v-if="extension.capabilities.includes('export-moz-export')")
-              | You can export themes into the non-usercss @moz- format.
+              | You can export themes into the @moz- format.
             li(v-if="extension.capabilities.includes('update-manual')")
               | {{extension.name}} includes an update checker button that lets
               | you update installed themes easily.
@@ -56,10 +56,10 @@ div.route-root
             li(v-if="extension.capabilities.includes('import-json-backups')")
               | You can import your JSON backups into the extension to restore
               | what you backed up.
-            li(v-if="extension.capabilities.includes('manage-installed-themes')")
+            li(v-if="extension.capabilities.includes('manage-local')")
               | You can view a list of installed themes in the extension and
               | disable, enable, edit or uninstall them.
-            li(v-if="extension.capabilities.includes('search-remote-themes')")
+            li(v-if="extension.capabilities.includes('search-remote')")
               | You can search for themes on websites without having to leave
               | the extension.
             li(v-if="extension.capabilities.includes('query-api')")

@@ -71,8 +71,8 @@ const featuresList = {
     'update-auto',
     'export-json-backups',
     'import-json-backups',
-    'manage-installed-themes',
-    'search-remote-themes',
+    'manage-local',
+    'search-remote',
     'query-api',
     'mutate-api'
   ]
@@ -81,18 +81,22 @@ const featuresList = {
 const polyfills = async () => {
   return runPolyfills()
 }
-const sendExtensionQuestion = () => {
+const sendHandshakeQuestion = () => {
   window.postMessage(questionValidator({
-    'type':     'ouc-extension-question',
+    'type':     'ouc-handshake-question',
     'revision': window.revision,
     featuresList,
     key
   }), '*')
 }
-const attachResponseListener = () => {
+const attachHandshakeListeners = () => {
   window.addEventListener('message', (event) => {
     try {
-      if (event.data && event.data.type === 'ouc-extension-response') {
+      if (event.data && event.data.type === 'ouc-begin-handshake') {
+        sendHandshakeQuestion()
+      }
+
+      if (event.data && event.data.type === 'ouc-handshake-response') {
         const response = responseValidator(event.data)
         const missingFeatures = []
 
@@ -140,7 +144,8 @@ const mountApp = async () => {
 const main = async () => {
   const polyfillsResult = await polyfills()
 
-  attachResponseListener()
+  attachHandshakeListeners()
+  sendHandshakeQuestion()
 
   process.animating = []
   process.averageFps = 0
@@ -182,8 +187,6 @@ const main = async () => {
       })
     })
   }
-
-  sendExtensionQuestion()
 }
 
 main()
