@@ -2,9 +2,10 @@ import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
 import noSSR from 'vue-no-ssr'
 import {mapGetters} from 'vuex'
 import semver from 'semver'
-import {cloneDeep, concat, forOwn} from 'lodash'
+import {cloneDeep, concat} from 'lodash'
 import {Chrome as colorPicker} from 'vue-color'
 import parse from '../../../src/shared/usercss-parser'
+import raven from 'raven-js'
 
 import bSwitch from '../../components/b-switch/b-switch.vue'
 import oucFooter from '../../components/ouc-footer/ouc-footer.vue'
@@ -60,23 +61,21 @@ export default {
   },
   'data': () => {
     return {
-      // eslint-disable-next-line
-      'regex': /((?![*+?])(?:[^\r\n\[\/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)/,
       'editedTheme': {
         'title':       '',
         'description': '',
         'version':     '',
         'screenshots': [],
         'content':     '',
-        'options':     []
+        'options':     [],
+        'license':     'string'
       },
       'colors': {
         'hex': '#ffffff'
-      },
-      'parse': 'on'
+      }
     }
   },
-  created () {
+  beforeMount () {
     const self = this
 
     if (this.$route.params.id) {
@@ -101,8 +100,7 @@ export default {
       Reflect.deleteProperty(cleanOption, '__typename')
       this.editedTheme.options[index] = cleanOption
     })
-  },
-  beforeMount () {
+
     this.$validator.extend('semver', (value) => !!semver.valid(value))
     this.$validator.localize(customDictionary)
   },
@@ -120,6 +118,11 @@ export default {
         })
       }
     },
+    createColorsObject (hex) {
+      return {
+        hex
+      }
+    },
     addOption (type) {
       this.editedTheme.options.push({
         type
@@ -132,24 +135,44 @@ export default {
       return string.charAt(0).toUpperCase() + string.slice(1)
     },
     updateColor (colorObj, index) {
-      this.editedTheme.options[index].default = colorObj.hex
+      this.editedTheme.options[index].value = colorObj.hex
+    },
+    renderObjectOption (obj) {
+      if (typeof obj === 'string') {
+        return obj
+      }
+
+      return `${obj.label} - ${obj.value}`
     },
     async parseUserCSS (input) {
-      if (this.parse && input.toLowerCase().includes('==userstyle==')) {
-        const {code, props} = await parse(input)
+      if (input.toLowerCase().includes('==userstyle==')) {
+        let parseResult = null
 
-        forOwn(props, (prop, index) => {
-          const trim = /^\s*(.*?)\s*$/
-          const trimmed = trim.exec(prop)[1]
-
-          props[index] = trimmed
+        raven.captureBreadcrumb({
+          'event': {
+            'name': 'parsing-usercss'
+          },
+          'contents': {
+            'source': input
+          }
         })
 
+        try {
+          parseResult = await parse(input)
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.error(error)
+          raven.captureException(error)
+        }
+
+        const {props, code} = parseResult
+
+        this.editedTheme.content = code
         this.editedTheme.version = props.version
         this.editedTheme.description = props.description
         this.editedTheme.license = props.license
-        this.editedTheme.title = props.name
-        this.editedTheme.content = code
+        this.editedTheme.title = props.title
+        this.editedTheme.options = props.vars
       }
     }
   },

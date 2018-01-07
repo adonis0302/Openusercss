@@ -74,13 +74,6 @@ div.route-root
                   placeholder="Paste a URL to your image here"
                 ).has-bottom-margin
 
-                b-field
-                  b-control(has-icons-left)
-                    label
-                      b-switch(v-model="parse")
-                      .is-horizontal-spacer
-                      | (experimental) Parse source code on input event
-
               b-tile.ouc-new-theme-editor(is-child)
                 b-box(is-paddingless)
                   no-ssr
@@ -114,7 +107,7 @@ div.route-root
                 b-tile(is-child, is-6)
                   button.button.is-primary.is-fullwidth(
                     type="button",
-                    @click="addOption('dropdown')"
+                    @click="addOption('select')"
                   ) Add dropdown option
 
               br
@@ -135,34 +128,31 @@ div.route-root
                       b-tile(is-child)
                         b-input(
                           type="text",
-                          :name="option.type + '-' + index + '-' + 'title'",
-                          placeholder="Option title",
-                          v-model="editedTheme.options[index].title"
+                          :name="option.type + '-' + index + '-' + 'label'",
+                          placeholder="Option label",
+                          v-model="editedTheme.options[index].label"
                         )
                       b-tile(is-child)
                         b-input(
                           type="text",
-                          :name="option.type + '-' + index + '-' + 'varname'",
+                          :name="option.type + '-' + index + '-' + 'name'",
                           placeholder="Variable name",
-                          v-model="editedTheme.options[index].varname"
+                          v-model="editedTheme.options[index].name"
                         )
                       b-tile(is-child, v-if="option.type === 'text'")
                         b-input(
                           type="text",
-                          :name="option.type + '-' + index + '-' + 'default'",
+                          :name="option.type + '-' + index + '-' + 'value'",
                           placeholder="Default value",
-                          v-model="editedTheme.options[index].default"
+                          v-model="editedTheme.options[index].value"
                         )
-                      b-tile(is-child, v-if="option.type === 'dropdown'")
+                      //- b-tile(is-child, v-if="option.type === 'select'")
                         .select.is-fullwidth
-                          select(v-model="editedTheme.options[index].default")
-                            option(v-for="value in option.possibleValues") {{value}}
+                          select(v-model="editedTheme.options[index].value")
+                            option(v-for="(value, index) in option.value") {{renderObjectOption(value)}}
                       b-tile(has-text-centered, is-child, v-if="option.type === 'checkbox'")
-                        //- label.checkbox
-                          input(type="checkbox", v-model="editedTheme.options[index].default")
-                          | &nbsp;Default
                         .select.is-fullwidth
-                          select(v-model="editedTheme.options[index].default")
+                          select(v-model="editedTheme.options[index].value")
                             option(value="checked") Checked
                             option(value="unchecked") Unchecked
 
@@ -172,18 +162,19 @@ div.route-root
                         p Default:
                       b-tile(is-child)
                         color-picker.is-fullwidth(
-                          :value="colors",
+                          :value="createColorsObject(option.value)",
                           @input="(event) => updateColor(event, index)"
                         )
 
-                    b-tile(is-parent, is-paddingless, is-vertical, v-if="option.type === 'dropdown'")
+                    b-tile(is-parent, is-paddingless, is-vertical, v-if="option.type === 'select'")
                       hr
                       list-creator(
-                        v-model="editedTheme.options[index].possibleValues",
+                        v-model="editedTheme.options[index].value",
                         item-name="value option",
                         max-items=64,
                         placeholder="Value",
-                        icon="view-list"
+                        icon="view-list",
+                        :support-objects="true"
                       )
 
   ouc-footer
