@@ -2,6 +2,35 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.6.0"></a>
+# [0.6.0](https://github.com/OpenUserCSS/openusercss.org/compare/v0.5.2...v0.6.0) (2018-01-07)
+
+
+### Bug Fixes
+
+* **client:** Add missin helper css and js to theme page ([ef0e7cf](https://github.com/OpenUserCSS/openusercss.org/commit/ef0e7cf))
+
+
+### Features
+
+* **API:** Add usercss parser, remove def from css on save ([9b87b3a](https://github.com/OpenUserCSS/openusercss.org/commit/9b87b3a))
+* **client:** Add a commented out button depending on extension ([dcf206d](https://github.com/OpenUserCSS/openusercss.org/commit/dcf206d))
+* **client:** Add help item to navbar ([8687722](https://github.com/OpenUserCSS/openusercss.org/commit/8687722))
+* **client:** Add help page + show detected extension ([9f583de](https://github.com/OpenUserCSS/openusercss.org/commit/9f583de))
+* **client:** Add usercss parsing, build options object ([c09b739](https://github.com/OpenUserCSS/openusercss.org/commit/c09b739))
+* **client:** Don't show no-extension warning on theme page ([df881a4](https://github.com/OpenUserCSS/openusercss.org/commit/df881a4))
+* **client:** Implement checking for extensions ([6b78df2](https://github.com/OpenUserCSS/openusercss.org/commit/6b78df2))
+* **client:** Make the version property optional for extensions ([16159f3](https://github.com/OpenUserCSS/openusercss.org/commit/16159f3))
+* **client:** Use parsed usercss to build the edited model ([5088889](https://github.com/OpenUserCSS/openusercss.org/commit/5088889))
+* **list-creator:** Add the ability to create nano collections ([2bbaa8a](https://github.com/OpenUserCSS/openusercss.org/commit/2bbaa8a))
+
+
+### Performance Improvements
+
+* **client:** Remove unused lifecycle hooks from notice page ([814207e](https://github.com/OpenUserCSS/openusercss.org/commit/814207e))
+
+
+
 <a name="0.5.2"></a>
 ## [0.5.2](https://github.com/OpenUserCSS/openusercss.org/compare/v0.5.1...v0.5.2) (2018-01-05)
 
