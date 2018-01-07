@@ -14,6 +14,19 @@ export default async ({commit, getters}, id) => {
 
     user.themes.forEach((theme) => {
       if (theme && theme._id) {
+        theme.options = theme.options.filter((option) => {
+          let newValue = null
+
+          try {
+            newValue = JSON.parse(option.value)
+          } catch (error) {
+            newValue = option.value
+          }
+
+          option.value = newValue
+          return option
+        })
+
         const constructedTheme = {
           ...theme,
           'user': {

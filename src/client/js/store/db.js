@@ -1,5 +1,11 @@
 import Loki from 'lokijs'
-import {struct} from 'superstruct'
+import {superstruct} from 'superstruct'
+
+const struct = superstruct({
+  'types': {
+    'any': () => true
+  }
+})
 
 let db = null
 const initialize = () => {
@@ -47,6 +53,13 @@ validators.reference = (typename) => {
     '__typename': typename
   })
 }
+validators.option = struct({
+  '__typename': 'string',
+  'type':       'string',
+  'label':      'string',
+  'name':       'string',
+  'value':      'any'
+})
 validators.themes = struct({
   '__typename':  'string?',
   '_id':         'string',
@@ -60,7 +73,7 @@ validators.themes = struct({
     'object'
   ],
   'options': [
-    'object'
+    validators.option
   ],
   'screenshots': struct.optional([
     'string'

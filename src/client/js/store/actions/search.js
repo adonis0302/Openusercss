@@ -12,11 +12,24 @@ export default async ({commit, getters}, {terms, limit, skip}) => {
     const {search} = data
 
     search.themes.forEach((theme) => {
+      theme.options = theme.options.filter((option) => {
+        let newValue = null
+
+        try {
+          newValue = JSON.parse(option.value)
+        } catch (error) {
+          newValue = option.value
+        }
+
+        option.value = newValue
+        return option
+      })
       const savedTheme = cloneDeep(theme)
 
       savedTheme.user = {
         '_id': theme.user._id
       }
+
       upsert(themes, savedTheme)
     })
     search.users.forEach((user) => {

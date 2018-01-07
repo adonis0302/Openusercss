@@ -173,7 +173,7 @@ export const remoteSaveTheme = async (theme, token) => {
 
   preparedTheme.content = encodeURIComponent(preparedTheme.content)
   preparedTheme.screenshots = JSON.stringify(preparedTheme.screenshots || [])
-  preparedTheme.options = JSON.stringify(preparedTheme.options || []).replace(/\"([^(\")"]+)\":/g, '$1:')
+  preparedTheme.options = encodeURIComponent(JSON.stringify(preparedTheme.options || []))
   preparedTheme.description = encodeURIComponent(preparedTheme.description)
 
   const newMutation = gql(`
@@ -184,7 +184,7 @@ export const remoteSaveTheme = async (theme, token) => {
         content: "${preparedTheme.content}",
         version: "${preparedTheme.version}",
         screenshots: ${preparedTheme.screenshots},
-        options: ${preparedTheme.options},
+        options: "${preparedTheme.options}",
         token: "${token}"
       ) {
         ${themePropList}
@@ -203,7 +203,7 @@ export const remoteSaveTheme = async (theme, token) => {
         content: "${preparedTheme.content}",
         version: "${preparedTheme.version}",
         screenshots: ${preparedTheme.screenshots},
-        options: ${preparedTheme.options},
+        options: "${preparedTheme.options}",
         token: "${token}"
       ) {
         ${themePropList}
@@ -221,13 +221,9 @@ export const remoteSaveTheme = async (theme, token) => {
 
   let savedTheme = {}
 
-  try {
-    savedTheme = await apolloClient.mutate({
-      mutation
-    })
-  } catch (error) {
-    throw new AuthenticationError(error.message)
-  }
+  savedTheme = await apolloClient.mutate({
+    mutation
+  })
 
   return savedTheme
 }

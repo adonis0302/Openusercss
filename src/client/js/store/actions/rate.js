@@ -14,6 +14,19 @@ export default async ({commit, getters}, {id, value}) => {
       _id
     })
 
+    theme.options = theme.options.filter((option) => {
+      let newValue = null
+
+      try {
+        newValue = JSON.parse(option.value)
+      } catch (error) {
+        newValue = option.value
+      }
+
+      option.value = newValue
+      return option
+    })
+
     themes.update(defaultsDeep(rate, theme))
     commit('loading', false)
     commit('actionError', null)

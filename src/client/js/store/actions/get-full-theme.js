@@ -11,11 +11,23 @@ export default async ({commit, getters}, id) => {
     const {data} = await getFullTheme(id)
     const {theme} = cloneDeep(data)
 
-    // console.log(theme.user)
     upsert(users, theme.user)
     theme.user = {
       '_id': theme.user._id
     }
+
+    theme.options = theme.options.filter((option) => {
+      let newValue = null
+
+      try {
+        newValue = JSON.parse(option.value)
+      } catch (error) {
+        newValue = option.value
+      }
+
+      option.value = newValue
+      return option
+    })
 
     upsert(themes, theme)
     commit('actionError', null)

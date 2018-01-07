@@ -11,10 +11,9 @@ export const themePropList = `
   screenshots,
   options {
     type,
-    title,
-    varname,
-    default,
-    possibleValues
+    label,
+    name,
+    value
   }
   ratings {
     value

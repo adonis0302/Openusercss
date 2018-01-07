@@ -15,10 +15,23 @@ export default async ({commit, getters}, limit) => {
     popularThemes.forEach((theme) => {
       const savedTheme = cloneDeep(theme)
 
+      savedTheme.options = savedTheme.options.filter((option) => {
+        let newValue = null
+
+        try {
+          newValue = JSON.parse(option.value)
+        } catch (error) {
+          newValue = option.value
+        }
+
+        option.value = newValue
+        return option
+      })
       upsert(users, savedTheme.user)
       savedTheme.user = {
         '_id': theme.user._id
       }
+
       savedThemes.push(savedTheme)
       upsert(themes, savedTheme)
     })
