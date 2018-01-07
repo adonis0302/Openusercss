@@ -160,6 +160,7 @@
     "scss-lint": "^0",
     "standard-version": "^4.3.0",
     "sw-toolbox": "^3",
+    "unquote": "^1.1.1",
     "vinyl-source-stream": "^1",
     "vinyl-transform": "^1",
     "vue-codemirror-lite": "^1.0.2",
