@@ -1,5 +1,3 @@
-// @flow
-
 const outputTypeDefs = `
   type User {
     _id:            ID!
@@ -28,10 +26,10 @@ const outputTypeDefs = `
 
   type Option {
     type: String!
-    title: String!
-    varname: String!
-    default: String!
-    possibleValues: String
+    label: String!
+    name: String!
+    value: String!
+    possibleValues: String @deprecated
   }
 
   type Rating {
@@ -52,7 +50,7 @@ const outputTypeDefs = `
     ratings:     [Rating]!
     version:     String!
     screenshots: [String]
-    options:     [Option]!
+    options:     [Option]
   }
 
   type Results {
@@ -65,16 +63,6 @@ const outputTypeDefs = `
     revisionShort:  String!
     revisionTag:    String!
     revisionBranch: String!
-  }
-`
-
-const inputTypeDefs = `
-  input OptionInput {
-    type: String!
-    title: String!
-    varname: String!
-    default: String!
-    possibleValues: [String]
   }
 `
 
@@ -126,7 +114,7 @@ const rootTypeDefs = `
       content:     String!
       version:     String!
       screenshots: [String]
-      options:     [OptionInput]!
+      options:     String!
     ): Theme!
 
     account(
@@ -148,6 +136,5 @@ const rootTypeDefs = `
 
 export default `
   ${outputTypeDefs}
-  ${inputTypeDefs}
   ${rootTypeDefs}
 `

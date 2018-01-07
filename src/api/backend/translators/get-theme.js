@@ -10,6 +10,12 @@ export const getTheme = async (query) => {
     theme.ratings = await getRatings({
       'theme': theme._id
     })
+
+    theme.options = theme.options.filter((option) => {
+      option.value = JSON.stringify(option.value)
+
+      return option
+    })
   }
 
   return theme

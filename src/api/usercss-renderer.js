@@ -1,7 +1,8 @@
 import {struct} from 'superstruct'
-import {pick, cloneDeep} from 'lodash'
+import {pick, cloneDeep, forOwn} from 'lodash'
 import {ObjectID} from 'mongodb'
 import stripDown from 'remove-markdown'
+import unquote from 'unquote'
 
 import {getTheme} from './backend/translators/get-theme'
 
@@ -20,6 +21,13 @@ validators.reference = (typename) => {
     '__typename': typename
   })
 }
+
+validators.option = struct({
+  'type':  'string',
+  'label': 'string',
+  'name':  'string',
+  'value': 'any'
+})
 
 validators.user = struct({
   '_schema':     'object',
@@ -41,9 +49,11 @@ validators.theme = struct({
   'lastUpdate':  'string',
   'description': 'string',
   'screenshots': 'array',
-  'options':     'array',
-  'ratings':     'array',
-  'user':        validators.user
+  'options':     [
+    validators.option
+  ],
+  'ratings': 'array',
+  'user':    validators.user
 }, {
   '__typename': 'Theme'
 })
@@ -75,20 +85,35 @@ export const buildTheme = async (rawTheme) => {
 
   theme.options.forEach((option) => {
     switch (option.type) {
-    case 'checkbox':
-      let defaultOption = 0
+    case 'select':
+      const values = JSON.parse(option.value)
+      let finalValues = null
 
-      if (option.default === 'checked') {
-        defaultOption = 1
+      if (values[0].label) {
+        finalValues = {}
+
+        forOwn(values, (value, index) => {
+          finalValues[value.label] = value.value
+        })
+      } else {
+        finalValues = values
       }
 
-      rawVars.push(`@var ${option.type} ${option.varname} "${option.title}" ${defaultOption}`)
+      rawVars.push(`@var select ${option.name} "${option.label}" ${JSON.stringify(finalValues, null, 4)}`)
       break
-    case 'dropdown':
-      rawVars.push(`@var select ${option.varname} "${option.title}" ${JSON.stringify(option.possibleValues)}`)
+    case 'checkbox':
+      option.value = unquote(option.value)
+      let isChecked = 0
+
+      if (option.value === 'checked') {
+        isChecked = 1
+      }
+
+      rawVars.push(`@var ${option.type} ${option.name} "${option.label}" ${isChecked}`)
       break
     default:
-      rawVars.push(`@var ${option.type} ${option.varname} "${option.title}" ${option.default}`)
+      option.value = unquote(option.value)
+      rawVars.push(`@var ${option.type} ${option.name} "${option.label}" ${option.value}`)
       break
     }
   })

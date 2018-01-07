@@ -29,6 +29,12 @@ export default async (root, {limit}, {User, Theme, Rating}) => {
       'user': theme.user._id
     })
 
+    theme.options = theme.options.filter((option) => {
+      option.value = JSON.stringify(option.value)
+
+      return option
+    })
+
     return theme
   }))
 

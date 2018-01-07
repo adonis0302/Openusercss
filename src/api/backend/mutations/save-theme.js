@@ -35,6 +35,7 @@ export default async (root, {
   if (!parsed.code) {
     throw new Error('Parse result is empty. Is your CSS valid?')
   }
+  const parsedOptions = JSON.parse(decodeURIComponent(options))
 
   if (id) {
     newTheme = await getTheme({
@@ -51,13 +52,7 @@ export default async (root, {
     newTheme.version = version
     newTheme.content = parsed.code
     newTheme.screenshots = screenshots
-    newTheme.options = []
-
-    options.forEach((option) => {
-      const savedOption = Option.create(option)
-
-      newTheme.options.push(savedOption)
-    })
+    newTheme.options = parsedOptions
 
     const userThemeIndex = findIndex(user.themes, {
       '_id': id
@@ -69,7 +64,7 @@ export default async (root, {
       'user':        session.user,
       'content':     parsed.code,
       'description': decodeURIComponent(description),
-      options,
+      'options':     parsedOptions,
       title,
       version,
       screenshots

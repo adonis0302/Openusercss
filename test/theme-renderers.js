@@ -33,10 +33,10 @@ test('buildTheme - correctly builds from theme object', async (t) => {
     },
     'options': [
       {
-        'type':    'text',
-        'default': 'hello',
-        'varname': 'thing',
-        'title':   'My Title'
+        'type':  'text',
+        'value': 'hello',
+        'name':  'thing',
+        'label': 'My Title'
       }
     ]
   })
