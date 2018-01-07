@@ -63,7 +63,7 @@ export const browserifyOpts = (input) => {
                 window.revision = Object.freeze(${JSON.stringify(revision)});
               }
               if (!window.changelog) {
-                window.changelog = decodeURIComponent('${encodeURIComponent(changelog.toString())}');
+                window.changelog = unescape('${escape(changelog.toString())}');
               }
             }
           `
