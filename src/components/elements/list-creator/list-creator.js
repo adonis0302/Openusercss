@@ -13,12 +13,17 @@ export default {
     'itemName',
     'maxItems',
     'icon',
-    'placeholder'
+    'placeholder',
+    'value',
+    'supportObjects'
   ],
   data () {
     return {
-      'list': []
+      'list': this.value
     }
+  },
+  created () {
+    this.list = this.value
   },
   'watch': {
     value (newValue) {
@@ -37,6 +42,15 @@ export default {
     addItem () {
       if (this.list.length < this.maxItems) {
         this.list.push('')
+      }
+      this.$emit('input', this.list)
+    },
+    addObject () {
+      if (this.list.length < this.maxItems) {
+        this.list.push({
+          'label': '',
+          'value': ''
+        })
       }
       this.$emit('input', this.list)
     },
