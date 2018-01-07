@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.6.1"></a>
+## [0.6.1](https://github.com/OpenUserCSS/openusercss.org/compare/v0.6.0...v0.6.1) (2018-01-07)
+
+
+### Bug Fixes
+
+* **build:** Escape changelog instead on URI encoding ([efa9f5b](https://github.com/OpenUserCSS/openusercss.org/commit/efa9f5b))
+* **client:** Adjust options cards for new options model ([0936f37](https://github.com/OpenUserCSS/openusercss.org/commit/0936f37))
+
+
+
 <a name="0.6.0"></a>
 # [0.6.0](https://github.com/OpenUserCSS/openusercss.org/compare/v0.5.2...v0.6.0) (2018-01-07)
 
