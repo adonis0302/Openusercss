@@ -120,9 +120,8 @@ div.route-root
             b-columns(is-multiline)
               b-column(is-6, v-for="option in theme.options")
                 b-box
-                  b {{option.title}}
+                  b {{option.label}}
                   p Type: {{option.type}}
-                  p Default: {{option.default}}
                   p(v-if="option.possibleValues && option.possibleValues.length") {{option.possibleValues}}
 
   ouc-footer
