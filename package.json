@@ -30,7 +30,7 @@
     "lint:dry": "eslint --ext .js,.vue --ignore-path .gitignore src tasks test",
     "lint": "eslint --ext .js,.vue --fix --ignore-path .gitignore src tasks test",
     "pretest": "npm run stash && npm run selenium:update && npm run selenium:start",
-    "test": "concurrently --raw --kill-others 'npm start' 'npm run lint && ava'",
+    "test": "concurrently --raw --kill-others -s last 'npm start' 'npm run lint && ava'",
     "posttest": "concurrently --raw 'npm run selenium:stop' 'npm run unstash'",
     "test:watch": "nodemon --delay 0.25 --watch package.json --watch test --exec 'npm t'",
     "commit": "git-cz",
