@@ -2,12 +2,12 @@ import browserify from 'browserify'
 import babelify from 'babelify'
 import vueify from 'vueify'
 import envify from 'loose-envify'
-import extractCss from 'vueify-extract-css'
-import path from 'path'
+// import extractCss from 'vueify-extract-css'
 import {defaultsDeep,} from 'lodash'
 import banner from 'browserify-banner'
 import git from 'git-revision'
 import fs from 'fs'
+import pug from 'pug'
 
 const babelOptions = {
   'presets': [
@@ -98,7 +98,16 @@ export const browserifyOpts = (input) => {
 export const createBrowserify = (opts) => {
   const bify = browserify(browserifyOpts(opts))
 
-  bify.transform(vueify)
+  bify.transform(vueify, {
+    'customCompilers': {
+      'pug': (content, done, compiler, file) => {
+        done(null, pug.render(content, {
+          'filename': file,
+        }))
+      },
+    },
+  })
+
   bify.transform(envify, process.env)
 
   switch (opts.target) {
@@ -120,17 +129,9 @@ export const createBrowserify = (opts) => {
         'stage-3',
       ],
     })
-    if (process.env.NODE_ENV !== 'development') {
-      bify.plugin(extractCss, {
-        'out': path.resolve('.tmp/components.min.css'),
-      })
-    }
     break
   case 'node':
     bify.transform(babelify)
-    bify.plugin(extractCss, {
-      'out': '/dev/null',
-    })
     break
   case 'worker':
     bify.transform(babelify, {

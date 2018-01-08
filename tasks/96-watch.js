@@ -2,11 +2,6 @@ import gulp from 'gulp'
 import server from './shared/server'
 
 gulp.task('fs-watch', () => {
-  gulp.watch('src/components/**/*', gulp.series(
-    'shared:components:fast',
-    'shared:pages:fast'
-  ))
-
   gulp.watch('src/views/**/*.pug', gulp.series('server:views'))
   gulp.watch('src/emails/**/*.pug', gulp.series('server:email-templates', server.restart))
   gulp.watch('src/shared/**/*.js', gulp.series('shared:fast'))
@@ -14,8 +9,6 @@ gulp.task('fs-watch', () => {
 })
 
 gulp.task('watch', gulp.series(
-  'shared:components:fast',
-  'shared:pages:fast',
   gulp.parallel(
     'client:media:email',
     gulp.series('client:js:watch', 'client:media:fast'),

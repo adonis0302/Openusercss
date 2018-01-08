@@ -7,7 +7,7 @@ import prettyError from 'gulp-prettyerror'
 import gutil from 'gulp-util'
 import flatten from 'gulp-flatten'
 import buffer from 'gulp-buffer'
-import sourcemaps from 'gulp-sourcemaps'
+// import sourcemaps from 'gulp-sourcemaps'
 import watchify from 'watchify'
 import path from 'path'
 
@@ -67,16 +67,7 @@ gulp.task('server:fast', (done) => {
       prettyError(),
       bify.bundle(),
       source(entry),
-      flatten(),
       buffer(),
-      sourcemaps.init({
-        'loadMaps': true,
-      }),
-      sourcemaps.write(destination(), {
-        'sourceMappingURL': (file) => {
-          return path.resolve(destination(), `${file.relative}.map`)
-        },
-      }),
       flatten(),
       gulp.dest(destination()),
     ])
@@ -105,15 +96,6 @@ gulp.task('server:watch', () => {
         bify.bundle(),
         source(entry),
         buffer(),
-        flatten(),
-        sourcemaps.init({
-          'loadMaps': true,
-        }),
-        sourcemaps.write(destination(), {
-          'sourceMappingURL': (file) => {
-            return path.resolve(destination(), `${file.relative}.map`)
-          },
-        }),
         flatten(),
         gulp.dest(destination()),
       ]).on('end', () => {
