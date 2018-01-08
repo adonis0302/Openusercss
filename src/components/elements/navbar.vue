@@ -47,8 +47,8 @@
 
 <style lang="scss" scoped>
   @import 'node_modules/bulma/sass/utilities/initial-variables';
-  @import '../../../client/scss/autocolor';
-  @import '../../../client/scss/variables';
+  @import '../../client/scss/autocolor';
+  @import '../../client/scss/variables';
 
   @import 'node_modules/bulma/sass/utilities/all';
   @import 'node_modules/bulma/sass/base/all';
@@ -100,7 +100,7 @@
     }
   }
 
-  @import '../../../client/scss/reboot';
+  @import '../../client/scss/reboot';
 </style>
 
 <template lang="pug">

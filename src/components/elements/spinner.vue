@@ -26,8 +26,8 @@
 </script>
 
 <style lang="scss" scoped>
-  @import '../../../client/scss/autocolor';
-  @import '../../../client/scss/variables';
+  @import '../../client/scss/autocolor';
+  @import '../../client/scss/variables';
 
   @keyframes spin {
     0% {
