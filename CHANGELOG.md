@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.6.3"></a>
+## [0.6.3](https://github.com/OpenUserCSS/openusercss.org/compare/v0.6.2...v0.6.3) (2018-01-08)
+
+
+### Bug Fixes
+
+* **build:** Correctly lint vue SFCs ([3bcdc09](https://github.com/OpenUserCSS/openusercss.org/commit/3bcdc09))
+* **build:** Manually commit after cutting a release ([1c79814](https://github.com/OpenUserCSS/openusercss.org/commit/1c79814))
+* **build:** Only use the testing exit code ([320e294](https://github.com/OpenUserCSS/openusercss.org/commit/320e294))
+
+
+### Performance Improvements
+
+* **build:** Remove some unneeded steps ([1a4027a](https://github.com/OpenUserCSS/openusercss.org/commit/1a4027a))
+* **build:** Remove unused build steps ([7b39d80](https://github.com/OpenUserCSS/openusercss.org/commit/7b39d80))
+
+
+
 <a name="0.6.2"></a>
 ## [0.6.2](https://github.com/OpenUserCSS/openusercss.org/compare/v0.6.1...v0.6.2) (2018-01-07)
 
