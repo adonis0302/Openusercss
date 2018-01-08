@@ -48,7 +48,6 @@ gulp.task('client:js:prod', () => {
     if (entry.indexOf('worker') !== -1) {
       options.target = 'worker'
     }
-
     const bify = createBrowserify(options)
 
     return pump([

@@ -5,9 +5,6 @@ import source from 'vinyl-source-stream'
 import merge from 'merge-stream'
 import prettyError from 'gulp-prettyerror'
 import gutil from 'gulp-util'
-import flatten from 'gulp-flatten'
-import buffer from 'gulp-buffer'
-// import sourcemaps from 'gulp-sourcemaps'
 import watchify from 'watchify'
 import path from 'path'
 
@@ -41,9 +38,7 @@ gulp.task('server:prod', (done) => {
     return pump([
       prettyError(),
       bify.bundle(),
-      source(entry),
-      buffer(),
-      flatten(),
+      source(entry.split('/').reverse()[0]),
       gulp.dest(destination()),
     ])
   })
@@ -66,9 +61,7 @@ gulp.task('server:fast', (done) => {
     return pump([
       prettyError(),
       bify.bundle(),
-      source(entry),
-      buffer(),
-      flatten(),
+      source(entry.split('/').reverse()[0]),
       gulp.dest(destination()),
     ])
   })
@@ -94,9 +87,7 @@ gulp.task('server:watch', () => {
       return pump([
         prettyError(),
         bify.bundle(),
-        source(entry),
-        buffer(),
-        flatten(),
+        source(entry.split('/').reverse()[0]),
         gulp.dest(destination()),
       ]).on('end', () => {
         if (server.child) {

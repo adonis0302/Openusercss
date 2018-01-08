@@ -2,13 +2,11 @@ import browserify from 'browserify'
 import babelify from 'babelify'
 import vueify from 'vueify'
 import envify from 'loose-envify'
-// import extractCss from 'vueify-extract-css'
 import {defaultsDeep,} from 'lodash'
 import banner from 'browserify-banner'
 import git from 'git-revision'
 import fs from 'fs'
 import pug from 'pug'
-import devNull from 'dev-null'
 
 const babelOptions = {
   'presets': [
@@ -136,7 +134,7 @@ export const createBrowserify = (opts) => {
   case 'node':
     bify.transform(babelify)
     bify.plugin('vueify/plugins/extract-css', {
-      'out': devNull(),
+      'out': '/dev/null',
     })
     break
   case 'worker':
