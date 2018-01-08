@@ -1,66 +1,56 @@
-import CSS from 'css'
 import unquote from 'unquote'
 import {
   forOwn,
 } from 'lodash'
 
 export default async (code) => {
-  const ast = CSS.parse(code)
+  const commentsRegex = /\/\*[^*]*\*+([^\/][^*]*\*+)*\//g
+  const comments = code.match(commentsRegex)
+  let usercssComment = null
+
+  const hasDefOpen = comments[0].toLowerCase().includes('==userstyle==')
+  const hasDefClose = comments[0].toLowerCase().includes('==/userstyle==')
+  const hasDef = hasDefOpen && hasDefClose
   const props = {
     'vars': [],
   }
-  const transformedAst = {
-    'type':       'stylesheet',
-    'stylesheet': {
-      'rules': [],
-    },
+
+  if (hasDef) {
+    usercssComment = comments[0]
+  } else {
+    return {
+      'props': null,
+      code,
+    }
   }
 
-  if (ast.type !== 'stylesheet') {
-    throw new Error('Source code is not of type "stylesheet"')
-  }
+  const regex = /^\@[^@|\==\/]{0,}$/gim
+  const matches = usercssComment.match(regex)
 
-  ast.stylesheet.rules.forEach((rule, ruleIndex) => {
-    if (rule.type === 'comment' && rule.comment) {
-      const hasDefOpen = rule.comment.toLowerCase().includes('==userstyle==')
-      const hasDefClose = rule.comment.toLowerCase().includes('==/userstyle==')
-      const hasDef = hasDefOpen && hasDefClose
+  matches.forEach((match) => {
+    const declaration = match.split(' ').filter((item) => {
+      return item !== ''
+    })
 
-      if (hasDef) {
-        const regex = /^\@[^@|\==\/]{0,}$/gim
-        const matches = rule.comment.match(regex)
-
-        matches.forEach((match) => {
-          const declaration = match.split(' ').filter((item) => {
-            return item !== ''
-          })
-
-          switch (declaration[0]) {
-          case '@name':
-            declaration.splice(0, 1)
-            props.title = declaration.join(' ')
-            break
-          case '@description':
-            declaration.splice(0, 1)
-            props.description = declaration.join(' ')
-            break
-          case '@version':
-            declaration.splice(0, 1)
-            props.version = declaration.join(' ')
-            break
-          case '@var':
-            declaration.splice(0, 1)
-            props.vars.push(declaration.join(' '))
-            break
-          default:
-            break
-          }
-        })
-      } else {
-        transformedAst.stylesheet.rules.push(rule)
-      }
-    } else {
-      transformedAst.stylesheet.rules.push(rule)
+    switch (declaration[0]) {
+    case '@name':
+      declaration.splice(0, 1)
+      props.title = declaration.join(' ')
+      break
+    case '@description':
+      declaration.splice(0, 1)
+      props.description = declaration.join(' ')
+      break
+    case '@version':
+      declaration.splice(0, 1)
+      props.version = declaration.join(' ')
+      break
+    case '@var':
+      declaration.splice(0, 1)
+      props.vars.push(declaration.join(' '))
+      break
+    default:
+      break
     }
   })
 
@@ -101,7 +91,7 @@ export default async (code) => {
   })
 
   return {
-    'code': CSS.stringify(transformedAst),
+    'code': code.replace(/\/\*[^*]*\*+([^\/][^*]*\*+)*\//, ''),
     props,
   }
 }
