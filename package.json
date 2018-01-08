@@ -26,7 +26,7 @@
     "docker": "docker build . -t decentm/openusercss",
     "postdocker": "docker push decentm/openusercss",
     "watch": "nodemon -q --delay 0.25 -w tasks -w gulpfile.babel.js --exec 'npm run watch:dirty'",
-    "release": "standard-version && npm run stash && concurrently --raw 'git push --follow-tags' 'npm run docker'; npm run unstash",
+    "release": "standard-version && git add -A && npm run c && npm run stash && concurrently --raw 'git push --follow-tags' 'npm run docker'; npm run unstash",
     "lint:dry": "eslint --ext .js,.vue --ignore-path .gitignore src tasks test",
     "lint": "eslint --ext .js,.vue --fix --ignore-path .gitignore src tasks test",
     "pretest": "npm run stash && npm run selenium:update && npm run selenium:start",
@@ -41,6 +41,11 @@
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
+    }
+  },
+  "standard-version": {
+    "skip": {
+      "commit": true
     }
   },
   "ava": {
