@@ -1,0 +1,77 @@
+<script>
+  import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
+
+  import oucFooter from '../../components/ouc-footer/ouc-footer.vue'
+  import navbar from '../../components/navbar/navbar.vue'
+
+  export default {
+    'components': {
+      'b-container': bulma('container', 'div'),
+      'b-content':   bulma('content', 'div'),
+      'b-button':    bulma('button', 'div'),
+      oucFooter,
+      navbar,
+    },
+  }
+</script>
+
+<style lang="scss" scoped>
+  @import 'node_modules/bulma/sass/utilities/initial-variables';
+  @import '../../../client/scss/autocolor';
+  @import '../../../client/scss/variables';
+
+  @import 'node_modules/bulma/sass/utilities/all';
+  @import 'node_modules/bulma/sass/base/all';
+
+  @import 'node_modules/bulma/sass/layout/section';
+  @import 'node_modules/bulma/sass/elements/button';
+  @import 'node_modules/bulma/sass/elements/container';
+  @import 'node_modules/bulma/sass/elements/content';
+
+  @import '../../../client/scss/reboot';
+</style>
+
+<template lang="pug">
+  div.route-root
+    b-container
+      .section
+        .content
+          h1 Notice
+          hr
+          p
+            | OpenUserCSS - A collection of custom website themes
+            br
+            | Copyright (C) 2017 Barnabás Bertényi
+          p
+            | This program is free software: you can redistribute it and/or modify
+            | it under the terms of the GNU General Public License as published by
+            | the Free Software Foundation, either version 3 of the License, or
+            | (at your option) any later version.
+          p
+            | This program is distributed in the hope that it will be useful,
+            | but WITHOUT ANY WARRANTY; without even the implied warranty of
+            | MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+            | GNU General Public License for more details.
+          p
+            | You should have received a copy of the GNU General Public License
+            | along with this program.  If not, see&nbsp;&lt;
+            a(
+              href="https://www.gnu.org/licenses/",
+              target="_blank",
+              rel="nofollow noopener"
+            )
+              | https://www.gnu.org/licenses/
+            | &gt;
+
+          hr
+          p
+            | You can see the full text of the license here:&nbsp;
+            a(
+              href="https://github.com/OpenUserCSS/openusercss.org/blob/master/LICENSE",
+              target="_blank",
+              rel="nofollow noopener"
+            )
+              | https://github.com/OpenUserCSS/openusercss.org/blob/master/LICENSE
+
+    ouc-footer
+</template>
