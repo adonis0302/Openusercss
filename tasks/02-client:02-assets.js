@@ -18,7 +18,6 @@ import jimp from 'gulp-jimp-resize'
 // SASS
 import sass from 'gulp-sass'
 import sassGlob from 'gulp-sass-glob'
-import sassVars from 'gulp-sass-vars'
 
 // POSTCSS
 import postcss from 'gulp-postcss'
@@ -32,7 +31,6 @@ import {
   iconSizes,
   bgSizes,
   sizes,
-  ourSassConfig,
   postCssPluginsProd,
   postCssPluginsFunctional,
 } from './shared/css'
@@ -140,9 +138,6 @@ gulp.task('client:media:prod', (done) => {
   const finalCssStream = pump([
     prettyError(),
     merge(fontStream, sassStream, componentCssStream),
-    sassVars(ourSassConfig, {
-      'verbose': false,
-    }),
     sass(),
     buffer(),
     concat('bundle.min.css'),
@@ -244,9 +239,6 @@ gulp.task('client:media:fast', (done) => {
     prettyError(),
     merge(fontStream, sassStream, componentCssStream),
     remember('fonts'),
-    sassVars(ourSassConfig, {
-      'verbose': false,
-    }),
     sass(),
     buffer(),
     concat('bundle.min.css'),
@@ -262,9 +254,6 @@ gulp.task('client:media:email', (done) => {
   return pump([
     prettyError(),
     gulp.src(sources.email),
-    sassVars(ourSassConfig, {
-      'verbose': false,
-    }),
     sass(),
     buffer(),
     concat('email.min.css'),

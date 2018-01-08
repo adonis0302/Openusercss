@@ -8,6 +8,7 @@ import banner from 'browserify-banner'
 import git from 'git-revision'
 import fs from 'fs'
 import pug from 'pug'
+import devNull from 'dev-null'
 
 const babelOptions = {
   'presets': [
@@ -114,7 +115,6 @@ export const createBrowserify = (opts) => {
   case 'browser':
     bify.transform(babelify, {
       'presets': [
-        'vue',
         'flow',
         [
           'env', {
@@ -129,9 +129,15 @@ export const createBrowserify = (opts) => {
         'stage-3',
       ],
     })
+    bify.plugin('vueify/plugins/extract-css', {
+      'out': '.tmp/components.min.css',
+    })
     break
   case 'node':
     bify.transform(babelify)
+    bify.plugin('vueify/plugins/extract-css', {
+      'out': devNull(),
+    })
     break
   case 'worker':
     bify.transform(babelify, {

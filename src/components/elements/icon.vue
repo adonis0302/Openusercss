@@ -34,15 +34,6 @@
   @import 'node_modules/mdi/scss/core';
   @import 'node_modules/mdi/scss/icons';
 
-  @import 'node_modules/bulma/sass/utilities/initial-variables';
-  @import '../../client/scss/autocolor';
-  @import '../../client/scss/variables';
-
-  @import 'node_modules/bulma/sass/utilities/all';
-  @import 'node_modules/bulma/sass/base/all';
-
-  @import 'node_modules/bulma/sass/elements/icon';
-
   span {
     margin-right: .5rem;
   }
@@ -51,8 +42,6 @@
   b-icon {
     z-index: 2
   }
-
-  @import '../../client/scss/reboot';
 </style>
 
 <template lang="pug">

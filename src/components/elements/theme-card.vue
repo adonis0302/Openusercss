@@ -49,14 +49,6 @@
   @import '../../client/scss/autocolor';
   @import '../../client/scss/variables';
 
-  @import 'node_modules/bulma/sass/utilities/all';
-  @import 'node_modules/bulma/sass/base/all';
-
-  @import 'node_modules/bulma/sass/components/card';
-  @import 'node_modules/bulma/sass/components/media';
-  @import 'node_modules/bulma/sass/grid/tiles';
-  @import 'node_modules/bulma/sass/elements/box';
-
   $background: map-get($colors, 'background');
 
   .is-primary > .box {

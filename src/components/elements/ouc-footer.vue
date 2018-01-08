@@ -44,16 +44,6 @@
   @import '../../client/scss/autocolor';
   @import '../../client/scss/variables';
 
-  @import 'node_modules/bulma/sass/utilities/all';
-  @import 'node_modules/bulma/sass/base/all';
-
-  @import 'node_modules/bulma/sass/layout/footer';
-  @import 'node_modules/bulma/sass/grid/columns';
-  @import 'node_modules/bulma/sass/grid/tiles';
-  @import 'node_modules/bulma/sass/elements/container';
-  @import 'node_modules/bulma/sass/elements/content';
-  @import 'node_modules/bulma/sass/elements/box';
-
   .footer {
     padding-bottom: 48px;
   }
@@ -80,8 +70,6 @@
   .has-padding {
     padding: .25rem
   }
-
-  @import '../../client/scss/reboot';
 </style>
 
 <template lang="pug">

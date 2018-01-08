@@ -50,13 +50,6 @@
   @import '../../client/scss/autocolor';
   @import '../../client/scss/variables';
 
-  @import 'node_modules/bulma/sass/utilities/all';
-  @import 'node_modules/bulma/sass/base/all';
-
-  @import 'node_modules/bulma/sass/components/navbar';
-  @import 'node_modules/bulma/sass/elements/container';
-  @import 'node_modules/bulma/sass/elements/tag';
-
   $primary: map-get($colors, 'primary');
   $background: map-get($colors, 'background');
 
@@ -99,8 +92,6 @@
       color: nth($primary, 2);
     }
   }
-
-  @import '../../client/scss/reboot';
 </style>
 
 <template lang="pug">

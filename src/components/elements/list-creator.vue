@@ -63,21 +63,6 @@
   }
 </script>
 
-<style lang="scss" scoped>
-  @import 'node_modules/bulma/sass/utilities/initial-variables';
-  @import '../../client/scss/autocolor';
-  @import '../../client/scss/variables';
-
-  @import 'node_modules/bulma/sass/utilities/all';
-  @import 'node_modules/bulma/sass/base/all';
-
-  @import 'node_modules/bulma/sass/grid/tiles';
-  @import 'node_modules/bulma/sass/elements/form';
-  @import 'node_modules/bulma/sass/elements/button';
-
-  @import '../../client/scss/reboot';
-</style>
-
 <template lang="pug">
   div
     b-tile(v-for="(item, index) in list", is-parent, is-vertical, is-paddingless).has-bottom-margin
