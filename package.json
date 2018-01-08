@@ -213,7 +213,7 @@
     "node-cp": "^0",
     "nodemailer": "^4.4.1",
     "p-waterfall": "^1",
-    "parse-usercss": "https://github.com/StylishThemes/usercss-parser",
+    "parse-usercss": "https://github.com/StylishThemes/parse-usercss",
     "passport": "^0",
     "passport-http": "^0",
     "passport-local": "^1",
