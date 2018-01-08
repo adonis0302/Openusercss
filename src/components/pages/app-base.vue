@@ -1,7 +1,7 @@
 <script>
   import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
-  import navbar from '../../components/navbar/navbar.vue'
-  import {LeftRight,} from '../../../src/shared/animations'
+  import navbar from '../elements/navbar.vue'
+  import {LeftRight,} from '../../shared/animations'
   import {mapGetters, mapMutations,} from 'vuex'
 
   export default {

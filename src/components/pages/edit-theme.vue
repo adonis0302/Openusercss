@@ -5,18 +5,18 @@
   import semver from 'semver'
   import {cloneDeep, concat,} from 'lodash'
   import {Chrome as colorPicker,} from 'vue-color'
-  import parse from '../../../src/shared/usercss-parser'
+  import parse from '../../shared/usercss-parser'
   import raven from 'raven-js'
 
-  import bSwitch from '../../components/b-switch/b-switch.vue'
-  import oucFooter from '../../components/ouc-footer/ouc-footer.vue'
-  import navbar from '../../components/navbar/navbar.vue'
-  import icon from '../../components/icon/icon.vue'
-  import notification from '../../components/notification/notification.vue'
-  import editor from '../../components/editor/editor.vue'
-  import bInput from '../../components/b-input/b-input.vue'
-  import bTextarea from '../../components/b-textarea/b-textarea.vue'
-  import listCreator from '../../components/list-creator/list-creator.vue'
+  import bSwitch from '../elements/b-switch.vue'
+  import oucFooter from '../elements/ouc-footer.vue'
+  import navbar from '../elements/navbar.vue'
+  import icon from '../elements/icon.vue'
+  import notification from '../elements/notification.vue'
+  import editor from '../elements/editor.vue'
+  import bInput from '../elements/b-input.vue'
+  import bTextarea from '../elements/b-textarea.vue'
+  import listCreator from '../elements/list-creator.vue'
 
   const customDictionary = {
     'en': {

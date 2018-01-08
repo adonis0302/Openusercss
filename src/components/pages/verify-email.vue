@@ -2,9 +2,9 @@
   import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
   import {mapGetters,} from 'vuex'
 
-  import spinner from '../../components/spinner/spinner.vue'
-  import oucFooter from '../../components/ouc-footer/ouc-footer.vue'
-  import notification from '../../components/notification/notification.vue'
+  import spinner from '../elements/spinner.vue'
+  import oucFooter from '../elements/ouc-footer.vue'
+  import notification from '../elements/notification.vue'
 
   export default {
     'components': {

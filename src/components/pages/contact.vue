@@ -2,8 +2,8 @@
   import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
   import {decode,} from 'he'
 
-  import oucFooter from '../../components/ouc-footer/ouc-footer.vue'
-  import navbar from '../../components/navbar/navbar.vue'
+  import oucFooter from '../elements/ouc-footer.vue'
+  import navbar from '../elements/navbar.vue'
 
   export default {
     'components': {

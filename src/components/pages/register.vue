@@ -2,14 +2,14 @@
   import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
   import {mapGetters,} from 'vuex'
 
-  import flushImg from '../../components/flush-img/flush-img.vue'
-  import icon from '../../components/icon/icon.vue'
-  import notification from '../../components/notification/notification.vue'
-  import oucButton from '../../components/ouc-button/ouc-button.vue'
-  import bInput from '../../components/b-input/b-input.vue'
+  import flushImg from '../elements/flush-img.vue'
+  import icon from '../elements/icon.vue'
+  import notification from '../elements/notification.vue'
+  import oucButton from '../elements/ouc-button.vue'
+  import bInput from '../elements/b-input.vue'
 
-  import oucFooter from '../../components/ouc-footer/ouc-footer.vue'
-  import navbar from '../../components/navbar/navbar.vue'
+  import oucFooter from '../elements/ouc-footer.vue'
+  import navbar from '../elements/navbar.vue'
 
   export default {
     'components': {

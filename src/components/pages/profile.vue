@@ -3,12 +3,12 @@
   import {mapGetters,} from 'vuex'
   import moment from 'moment'
 
-  import icon from '../../components/icon/icon.vue'
-  import themeCard from '../../components/theme-card/theme-card.vue'
-  import flushImg from '../../components/flush-img/flush-img.vue'
-  import oucFooter from '../../components/ouc-footer/ouc-footer.vue'
-  import navbar from '../../components/navbar/navbar.vue'
-  import notification from '../../components/notification/notification.vue'
+  import icon from '../elements/icon.vue'
+  import themeCard from '../elements/theme-card.vue'
+  import flushImg from '../elements/flush-img.vue'
+  import oucFooter from '../elements/ouc-footer.vue'
+  import navbar from '../elements/navbar.vue'
+  import notification from '../elements/notification.vue'
 
   export default {
     'components': {

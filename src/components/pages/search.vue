@@ -2,12 +2,12 @@
   import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
   import {mapGetters,} from 'vuex'
 
-  import oucFooter from '../../components/ouc-footer/ouc-footer.vue'
-  import navbar from '../../components/navbar/navbar.vue'
-  import searchField from '../../components/search-field/search-field.vue'
-  import notification from '../../components/notification/notification.vue'
-  import themeCard from '../../components/theme-card/theme-card.vue'
-  import flushImg from '../../components/flush-img/flush-img.vue'
+  import oucFooter from '../elements/ouc-footer.vue'
+  import navbar from '../elements/navbar.vue'
+  import searchField from '../elements/search-field.vue'
+  import notification from '../elements/notification.vue'
+  import themeCard from '../elements/theme-card.vue'
+  import flushImg from '../elements/flush-img.vue'
 
   export default {
     'components': {

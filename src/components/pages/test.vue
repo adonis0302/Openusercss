@@ -1,9 +1,9 @@
 <script>
   import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
 
-  import oucFooter from '../../components/ouc-footer/ouc-footer.vue'
-  import spinner from '../../components/spinner/spinner.vue'
-  import flushImg from '../../components/flush-img/flush-img.vue'
+  import oucFooter from '../elements/ouc-footer.vue'
+  import spinner from '../elements/spinner.vue'
+  import flushImg from '../elements/flush-img.vue'
 
   export default {
     'components': {
