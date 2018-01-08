@@ -2,8 +2,8 @@
   import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
   import {mapGetters, mapActions,} from 'vuex'
 
-  import flushImg from '../flush-img/flush-img.vue'
-  import icon from '../icon/icon.vue'
+  import flushImg from './flush-img.vue'
+  import icon from './icon.vue'
 
   export default {
     'components': {

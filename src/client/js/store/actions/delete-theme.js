@@ -1,4 +1,4 @@
-import router from '../../router'
+import router from '../../utils/router'
 import {deleteTheme as deleteThemeRemote,} from './helpers/remotes/mutations'
 import db from '../db'
 

@@ -1,5 +1,5 @@
 <script>
-  import spinner from '../spinner/spinner.vue'
+  import spinner from './spinner.vue'
 
   const loadImage = (url, Image) => {
     return new Promise((resolve, reject) => {

@@ -3,14 +3,15 @@
   import {mapGetters,} from 'vuex'
   import {forOwn,} from 'lodash'
 
-  import bSwitch from '../elements/b-switch.vue'
   import spinner from '../elements/spinner.vue'
   import oucFooter from '../elements/ouc-footer.vue'
   import notification from '../elements/notification.vue'
   import oucButton from '../elements/ouc-button.vue'
-  import bInput from '../elements/b-input.vue'
-  import bTextarea from '../elements/b-textarea.vue'
   import icon from '../elements/icon.vue'
+
+  import bInput from '../bits/b-input.vue'
+  import bTextarea from '../bits/b-textarea.vue'
+  import bSwitch from '../bits/b-switch.vue'
 
   export default {
     'components': {

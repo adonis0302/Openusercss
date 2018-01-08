@@ -2,7 +2,7 @@
   import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
   import {mapGetters,} from 'vuex'
 
-  import icon from '../icon/icon.vue'
+  import icon from './icon.vue'
 
   export default {
     'components': {

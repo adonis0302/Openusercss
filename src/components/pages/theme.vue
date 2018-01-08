@@ -8,7 +8,7 @@
   import oucFooter from '../elements/ouc-footer.vue'
   import navbar from '../elements/navbar.vue'
   import notification from '../elements/notification.vue'
-  import bInput from '../elements/b-input.vue'
+  import bInput from '../bits/b-input.vue'
 
   export default {
     'components': {
@@ -207,7 +207,7 @@
 </style>
 
 <template lang="pug">
-  include ../../static/microdata/theme.pug
+  include ../static/microdata/theme.pug
 
   div.route-root
     +theme-microdata

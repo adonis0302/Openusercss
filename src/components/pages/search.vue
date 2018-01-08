@@ -80,8 +80,8 @@
 </script>
 
 <template lang="pug">
-  include ../../static/microdata/theme.pug
-  include ../../static/microdata/user.pug
+  include ../static/microdata/theme.pug
+  include ../static/microdata/user.pug
 
   div.route-root
     b-container

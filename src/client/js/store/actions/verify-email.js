@@ -1,4 +1,4 @@
-// import router from '../../router'
+// import router from '../../utils/router'
 import {verifyEmail,} from './helpers/remotes/mutations'
 
 export default async ({getters, commit,}, token) => {

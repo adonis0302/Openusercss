@@ -6,7 +6,7 @@
   import icon from '../elements/icon.vue'
   import notification from '../elements/notification.vue'
   import oucButton from '../elements/ouc-button.vue'
-  import bInput from '../elements/b-input.vue'
+  import bInput from '../bits/b-input.vue'
 
   import oucFooter from '../elements/ouc-footer.vue'
   import navbar from '../elements/navbar.vue'

@@ -4,7 +4,7 @@ import {
   store,
   router,
   appBase,
-} from './vue'
+} from './utils/vue'
 import db from './store/db'
 import raven from 'raven-js'
 import ravenVue from 'raven-js/plugins/vue'

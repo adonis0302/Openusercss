@@ -1,6 +1,6 @@
 <script>
   import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
-  import flushImg from '../flush-img/flush-img.vue'
+  import flushImg from './flush-img.vue'
 
   export default {
     'components': {

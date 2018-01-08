@@ -1,4 +1,4 @@
-import router from '../../router'
+import router from '../../utils/router'
 import {remoteRegister,} from './helpers/remotes/mutations'
 
 export default async ({getters, commit,}, registerData) => {

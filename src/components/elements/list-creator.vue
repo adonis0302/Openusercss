@@ -1,7 +1,7 @@
 <script>
   import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
-  import bInput from '../../components/b-input/b-input.vue'
-  import icon from '../icon/icon.vue'
+  import bInput from '../bits/b-input.vue'
+  import icon from './icon.vue'
 
   export default {
     'components': {

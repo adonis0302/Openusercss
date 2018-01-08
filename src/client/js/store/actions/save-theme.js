@@ -1,5 +1,5 @@
 import {cloneDeep, uniqBy,} from 'lodash'
-import router from '../../router'
+import router from '../../utils/router'
 import {remoteSaveTheme,} from './helpers/remotes/mutations'
 import db, {upsert,} from '../db'
 

@@ -1,5 +1,5 @@
 import {cloneDeep,} from 'lodash'
-import router from '../../router'
+import router from '../../utils/router'
 import {remoteAccount,} from './helpers/remotes/mutations'
 import db from '../db'
 

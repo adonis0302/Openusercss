@@ -8,15 +8,16 @@
   import parse from '../../shared/usercss-parser'
   import raven from 'raven-js'
 
-  import bSwitch from '../elements/b-switch.vue'
   import oucFooter from '../elements/ouc-footer.vue'
   import navbar from '../elements/navbar.vue'
   import icon from '../elements/icon.vue'
   import notification from '../elements/notification.vue'
   import editor from '../elements/editor.vue'
-  import bInput from '../elements/b-input.vue'
-  import bTextarea from '../elements/b-textarea.vue'
   import listCreator from '../elements/list-creator.vue'
+
+  import bInput from '../bits/b-input.vue'
+  import bTextarea from '../bits/b-textarea.vue'
+  import bSwitch from '../bits/b-switch.vue'
 
   const customDictionary = {
     'en': {

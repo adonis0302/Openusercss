@@ -1,47 +1,66 @@
-$black:         map-get($tones, 'black');
-$black-bis:     map-get($tones, 'black-bis');
-$black-ter:     map-get($tones, 'black-ter');
+$tones: (
+  "brand-primary":    #005FFF,
+  "brand-secondary":  #FFB450,
+  "brand-background": #3E28B0,
+  "brand-highlight":  #024991,
+  "black":            #0A0A0A,
+  "black-bis":        #121212,
+  "black-ter":        #242424,
+  "grey-darker":      #363636,
+  "grey-dark":        #4A4A4A,
+  "grey":             #7A7A7A,
+  "grey-light":       #B5B5B5,
+  "grey-lighter":     #DBDBDB,
+  "white-ter":        #F5F5F5,
+  "white-bis":        #FAFAFA,
+  "white":            #FFFFFF,
+  "orange":           #F97A1F,
+  "yellow":           #FFDD57,
+  "green":            #06BC5A,
+  "turquoise":        #1EB39D,
+  "blue":             #3273DC,
+  "purple":           #AC52FF,
+  "red":              #D80B00,
+  "paypal":           #003087,
+  "patreon":          #F96854
+);
 
-$grey-darker:	  map-get($tones, 'grey-darker');
-$grey-dark:	    map-get($tones, 'grey-dark');
-$grey:          map-get($tones, 'grey');
-$grey-light:    map-get($tones, 'grey-light');
-$grey-lighter:  map-get($tones, 'grey-lighter');
+$layout: (
+  "base-size":    6rem,
+  "radius-small": 0,
+  "radius":       0,
+  "radius-large": 0,
+  "gap":          16px
+);
 
-$white-ter:	    map-get($tones, 'white-ter');
-$white-bis:	    map-get($tones, 'white-bis');
-$white:	        map-get($tones, 'white');
-
-$orange:	      map-get($tones, 'orange');
-$yellow:	      map-get($tones, 'yellow');
-$green:	        map-get($tones, 'green');
-$turquoise:	    map-get($tones, 'turquoise');
-$blue:	        map-get($tones, 'blue');
-$purple:	      map-get($tones, 'purple');
-$red:	          map-get($tones, 'red');
+$animations: (
+  "animation-function": ease-in-out-quart,
+  "shorttime":          .3s,
+  "longtime":           1s
+);
 
 $colors: (
-  'body':         (map-get($tones, 'white'), text-for-bg(map-get($tones, 'white'))),
-  'primary':      (map-get($tones, 'brand-primary'), text-for-bg(map-get($tones, 'brand-primary'))),
-  'secondary':    (map-get($tones, 'brand-secondary'), text-for-bg(map-get($tones, 'brand-secondary'))),
+  'body':         (map-get($tones, 'white'),            text-for-bg(map-get($tones, 'white'))),
+  'primary':      (map-get($tones, 'brand-primary'),    text-for-bg(map-get($tones, 'brand-primary'))),
+  'secondary':    (map-get($tones, 'brand-secondary'),  text-for-bg(map-get($tones, 'brand-secondary'))),
   'background':   (map-get($tones, 'brand-background'), text-for-bg(map-get($tones, 'brand-background'))),
-  'highlight':    (map-get($tones, 'brand-highlight'), text-for-bg(map-get($tones, 'brand-highlight'))),
-  'black':        (map-get($tones, 'black'), text-for-bg(map-get($tones, 'black'))),
-  'black-bis':    (map-get($tones, 'black-bis'), text-for-bg(map-get($tones, 'black-bis'))),
-  'black-ter':    (map-get($tones, 'black-ter'), text-for-bg(map-get($tones, 'black-ter'))),
-  'grey':         (map-get($tones, 'grey'), text-for-bg(map-get($tones, 'grey'))),
-  'grey-dark':    (map-get($tones, 'grey-dark'), text-for-bg(map-get($tones, 'grey-dark'))),
-  'grey-darker':  (map-get($tones, 'grey-darker'), text-for-bg(map-get($tones, 'grey-darker'))),
-  'grey-light':   (map-get($tones, 'grey-light'), text-for-bg(map-get($tones, 'grey-light'))),
-  'grey-lighter': (map-get($tones, 'grey-lighter'), text-for-bg(map-get($tones, 'grey-lighter'))),
-  'white':        (map-get($tones, 'white'), text-for-bg(map-get($tones, 'white'))),
-  'white-bis':    (map-get($tones, 'white-bis'), text-for-bg(map-get($tones, 'white-bis'))),
-  'white-ter':    (map-get($tones, 'white-ter'), text-for-bg(map-get($tones, 'white-ter'))),
-  'danger':       (map-get($tones, 'red'), text-for-bg(map-get($tones, 'red'))),
-  'success':      (map-get($tones, 'green'), text-for-bg(map-get($tones, 'green'))),
-  'warning':      (map-get($tones, 'orange'), text-for-bg(map-get($tones, 'orange'))),
-  'paypal':       (#003087, text-for-bg(#003087)),
-  'patreon':      (#F96854, text-for-bg(#F96854))
+  'highlight':    (map-get($tones, 'brand-highlight'),  text-for-bg(map-get($tones, 'brand-highlight'))),
+  'black':        (map-get($tones, 'black'),            text-for-bg(map-get($tones, 'black'))),
+  'black-bis':    (map-get($tones, 'black-bis'),        text-for-bg(map-get($tones, 'black-bis'))),
+  'black-ter':    (map-get($tones, 'black-ter'),        text-for-bg(map-get($tones, 'black-ter'))),
+  'grey':         (map-get($tones, 'grey'),             text-for-bg(map-get($tones, 'grey'))),
+  'grey-dark':    (map-get($tones, 'grey-dark'),        text-for-bg(map-get($tones, 'grey-dark'))),
+  'grey-darker':  (map-get($tones, 'grey-darker'),      text-for-bg(map-get($tones, 'grey-darker'))),
+  'grey-light':   (map-get($tones, 'grey-light'),       text-for-bg(map-get($tones, 'grey-light'))),
+  'grey-lighter': (map-get($tones, 'grey-lighter'),     text-for-bg(map-get($tones, 'grey-lighter'))),
+  'white':        (map-get($tones, 'white'),            text-for-bg(map-get($tones, 'white'))),
+  'white-bis':    (map-get($tones, 'white-bis'),        text-for-bg(map-get($tones, 'white-bis'))),
+  'white-ter':    (map-get($tones, 'white-ter'),        text-for-bg(map-get($tones, 'white-ter'))),
+  'danger':       (map-get($tones, 'red'),              text-for-bg(map-get($tones, 'red'))),
+  'success':      (map-get($tones, 'green'),            text-for-bg(map-get($tones, 'green'))),
+  'warning':      (map-get($tones, 'orange'),           text-for-bg(map-get($tones, 'orange'))),
+  'paypal':       (map-get($tones, 'paypal'),           text-for-bg(map-get($tones, 'paypal'))),
+  'patreon':      (map-get($tones, 'patreon'),          text-for-bg(map-get($tones, 'patreon')))
 );
 
 $kerning: (
@@ -67,6 +86,28 @@ $sizes:
   map-get($kerning, 'size-5')
   map-get($kerning, 'size-6')
   map-get($kerning, 'size-7');
+
+$black:         map-get($tones, 'black');
+$black-bis:     map-get($tones, 'black-bis');
+$black-ter:     map-get($tones, 'black-ter');
+
+$grey-darker:	  map-get($tones, 'grey-darker');
+$grey-dark:	    map-get($tones, 'grey-dark');
+$grey:          map-get($tones, 'grey');
+$grey-light:    map-get($tones, 'grey-light');
+$grey-lighter:  map-get($tones, 'grey-lighter');
+
+$white-ter:	    map-get($tones, 'white-ter');
+$white-bis:	    map-get($tones, 'white-bis');
+$white:	        map-get($tones, 'white');
+
+$orange:	      map-get($tones, 'orange');
+$yellow:	      map-get($tones, 'yellow');
+$green:	        map-get($tones, 'green');
+$turquoise:	    map-get($tones, 'turquoise');
+$blue:	        map-get($tones, 'blue');
+$purple:	      map-get($tones, 'purple');
+$red:	          map-get($tones, 'red');
 
 $primary: map-get($colors, 'primary');
 $secondary: map-get($colors, 'secondary');

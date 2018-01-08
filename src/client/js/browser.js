@@ -17,7 +17,7 @@ import {
   store,
   router,
   appBase,
-} from './vue'
+} from './utils/vue'
 import db from './store/db'
 import {runPolyfills,} from './utils/features'
 

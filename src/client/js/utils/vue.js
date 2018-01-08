@@ -6,9 +6,9 @@ import VeeValidate from 'vee-validate'
 import VueMarkdown from 'vue-markdown'
 
 import router from './router'
-import store from './store'
+import store from '../store'
 
-import appBase from '../../../.tmp/pages/app-base/app-base.vue'
+import appBase from '../../../components/pages/app-base.vue'
 
 Vue.use(VeeValidate, {
   'errorBagName':  'errors',
