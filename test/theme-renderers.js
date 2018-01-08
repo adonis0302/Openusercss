@@ -1,8 +1,10 @@
 import test from 'ava'
-import {cloneDeep} from 'lodash'
-import {ObjectID} from 'mongodb'
+import {cloneDeep,} from 'lodash'
+import {ObjectID,} from 'mongodb'
 
-import {buildTheme} from '../src/api/usercss-renderer'
+import {
+  buildTheme,
+} from '../src/api/usercss-renderer'
 import stateMock from './shared/state-mock'
 
 test('buildTheme - throws when nothing is passed', async (t) => {
@@ -29,16 +31,16 @@ test('buildTheme - correctly builds from theme object', async (t) => {
     'user': {
       '_schema':     {},
       '_id':         new ObjectID('5a262a2c3835ee7627db2ef9'),
-      'displayname': 'DecentM'
+      'displayname': 'DecentM',
     },
     'options': [
       {
         'type':  'text',
         'value': 'hello',
         'name':  'thing',
-        'label': 'My Title'
-      }
-    ]
+        'label': 'My Title',
+      },
+    ],
   })
 
   t.deepEqual(result, expected)

@@ -1,6 +1,6 @@
-import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
-import {mapGetters} from 'vuex'
-import {formatMoment} from '../../../src/shared/time'
+import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
+import {mapGetters,} from 'vuex'
+import {formatMoment,} from '../../../src/shared/time'
 
 import icon from '../../components/icon/icon.vue'
 import flushImg from '../../components/flush-img/flush-img.vue'
@@ -38,12 +38,12 @@ export default {
     flushImg,
     icon,
     notification,
-    bInput
+    bInput,
   },
   data () {
     return {
       'options': {
-        'viewingSource': false
+        'viewingSource': false,
       },
       'confirmTitle':    '',
       'showingModal':    false,
@@ -51,8 +51,8 @@ export default {
         'wrapAround':      true,
         'prevNextButtons': false,
         'pageDots':        false,
-        'cellAlign':       'left'
-      }
+        'cellAlign':       'left',
+      },
     }
   },
   created () {
@@ -101,13 +101,13 @@ export default {
     sendRating (value) {
       this.$store.dispatch('rate', {
         'id': this.$route.params.id,
-        value
+        value,
       })
     },
     proxyImage (original) {
       return {
         'large': `https://imageproxy.openusercss.org/${original}`,
-        'small': `https://imageproxy.openusercss.org/50x/${original}`
+        'small': `https://imageproxy.openusercss.org/50x/${original}`,
       }
     },
     hasScreenshots (theme) {
@@ -123,18 +123,18 @@ export default {
     deleteTheme () {
       this.$store.dispatch('deleteTheme', {
         'id':       this.theme._id,
-        'redirect': `/profile/${this.theme.user._id}`
+        'redirect': `/profile/${this.theme.user._id}`,
       })
     },
     viewSource () {
       this.$modal.show('source-viewer')
       this.$router.replace(`/theme/${this.$route.params.id}/${encodeURIComponent(JSON.stringify({
-        'viewingSource': true
+        'viewingSource': true,
       }))}`)
     },
     closeSource () {
       this.$router.replace(`/theme/${this.$route.params.id}/${encodeURIComponent(JSON.stringify({
-        'viewingSource': false
+        'viewingSource': false,
       }))}`)
     },
     installTheme () {
@@ -143,13 +143,13 @@ export default {
       } else {
         window.open(`https://api.openusercss.org/theme/${this.theme._id}.user.css`)
       }
-    }
+    },
   },
   'computed': {
     ...mapGetters([
       'actionErrors',
       'themes',
-      'currentUser'
+      'currentUser',
     ]),
     extension () {
       return process.extension
@@ -158,7 +158,7 @@ export default {
       'cache': false,
       get () {
         const theme = this.$db.getCollection('themes').findOne({
-          '_id': this.$route.params.id
+          '_id': this.$route.params.id,
         }) || {}
         let userId = 0
 
@@ -167,14 +167,14 @@ export default {
         }
 
         const user = this.$db.getCollection('users').findOne({
-          '_id': userId
+          '_id': userId,
         }) || {}
 
         return {
           ...theme,
-          user
+          user,
         }
-      }
-    }
-  }
+      },
+    },
+  },
 }

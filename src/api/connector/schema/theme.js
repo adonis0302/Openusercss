@@ -1,4 +1,4 @@
-import {Document, EmbeddedDocument} from 'camo'
+import {Document, EmbeddedDocument,} from 'camo'
 import moment from 'moment'
 
 import validators from './validators'
@@ -16,24 +16,24 @@ export class Option extends EmbeddedDocument {
           'text',
           'color',
           'dropdown',
-          'checkbox'
-        ])
+          'checkbox',
+        ]),
       },
       'label': {
         'type':     String,
         'required': true,
-        'validate': validators.length(64)
+        'validate': validators.length(64),
       },
       'name': {
         'type':     String,
         'required': true,
-        'validate': validators.length(64)
+        'validate': validators.length(64),
       },
       'value': {
         'type':     String,
         'required': false,
-        'validate': validators.length(64)
-      }
+        'validate': validators.length(64),
+      },
     })
   }
 }
@@ -56,48 +56,48 @@ export default class Theme extends Document {
         'type':     String,
         'default':  moment().toJSON(),
         'required': false,
-        'validate': validators.isMomentJSON
+        'validate': validators.isMomentJSON,
       },
       'lastUpdate': {
         'type':     String,
         'default':  moment().toJSON(),
         'required': false,
-        'validate': validators.isMomentJSON
+        'validate': validators.isMomentJSON,
       },
       'title': {
         'type':     String,
         'validate': validators.length(64),
-        'required': true
+        'required': true,
       },
       'description': {
         'type':     String,
         'validate': validators.length(2048),
-        'required': true
+        'required': true,
       },
       'content': {
         'type':     String,
         'validate': (value) => validators.length(102400)(value) && validators.urlEncoded(value),
-        'required': true
+        'required': true,
       },
       'version': {
         'type':     String,
         'required': true,
-        'validate': validators.isSemver
+        'validate': validators.isSemver,
       },
       'screenshots': {
         'type': [
-          String
+          String,
         ],
         'required': false,
-        'validate': validators.length(10)
+        'validate': validators.length(10),
       },
       'options': {
         'type':     Array,
         'required': false,
         'default':  [],
-        'validate': validators.length(64)
+        'validate': validators.length(64),
       },
-      'user': User
+      'user': User,
     })
   }
 }

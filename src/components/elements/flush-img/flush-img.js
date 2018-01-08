@@ -55,40 +55,40 @@ const updateImage = async (self, Image) => {
 
 export default {
   'components': {
-    spinner
+    spinner,
   },
   data () {
     return {
       'loading':     true,
       'smallsrc':    this.placeholder,
-      'originalsrc': this.source
+      'originalsrc': this.source,
     }
   },
   'props': {
     'source': {
       'type':    String,
-      'default': '/img/main.bg-x640.png'
+      'default': '/img/main.bg-x640.png',
     },
     'placeholder': {
       'type':    String,
-      'default': '/img/main.bg-x128.png'
+      'default': '/img/main.bg-x128.png',
     },
     'height': {
       'type':    String,
-      'default': '200px'
+      'default': '200px',
     },
     'width': {
       'type':    String,
-      'default': '100%'
+      'default': '100%',
     },
     'align': {
       'type':    String,
-      'default': 'center'
+      'default': 'center',
     },
     'mode': {
       'type':    String,
-      'default': 'cover'
-    }
+      'default': 'cover',
+    },
   },
   'watch': {
     placeholder (newPlaceholder) {
@@ -97,9 +97,9 @@ export default {
 
     source (newSource) {
       updateImage(this, window.Image)
-    }
+    },
   },
   mounted () {
     updateImage(this, window.Image)
-  }
+  },
 }

@@ -1,4 +1,4 @@
-import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
+import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
 import bInput from '../../components/b-input/b-input.vue'
 import icon from '../icon/icon.vue'
 
@@ -7,7 +7,7 @@ export default {
     'b-tile':    bulma('tile', 'div'),
     'b-control': bulma('control', 'div'),
     bInput,
-    icon
+    icon,
   },
   'props': [
     'itemName',
@@ -15,11 +15,11 @@ export default {
     'icon',
     'placeholder',
     'value',
-    'supportObjects'
+    'supportObjects',
   ],
   data () {
     return {
-      'list': this.value
+      'list': this.value,
     }
   },
   created () {
@@ -28,12 +28,12 @@ export default {
   'watch': {
     value (newValue) {
       this.list = newValue
-    }
+    },
   },
   'computed': {
     listFull () {
       return this.list.length >= this.maxItems
-    }
+    },
   },
   'methods': {
     changeItem () {
@@ -49,7 +49,7 @@ export default {
       if (this.list.length < this.maxItems) {
         this.list.push({
           'label': '',
-          'value': ''
+          'value': '',
         })
       }
       this.$emit('input', this.list)
@@ -57,6 +57,6 @@ export default {
     removeItem (index) {
       this.list.splice(index, 1)
       this.$emit('input', this.list)
-    }
-  }
+    },
+  },
 }

@@ -1,4 +1,4 @@
-import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
+import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
 
 import oucFooter from '../../components/ouc-footer/ouc-footer.vue'
 import navbar from '../../components/navbar/navbar.vue'
@@ -9,6 +9,6 @@ export default {
     'b-content':   bulma('content', 'div'),
     'b-button':    bulma('button', 'div'),
     oucFooter,
-    navbar
-  }
+    navbar,
+  },
 }

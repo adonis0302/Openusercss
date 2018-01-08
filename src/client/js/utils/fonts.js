@@ -1,4 +1,4 @@
-import {uniq} from 'lodash'
+import {uniq,} from 'lodash'
 
 export default async () => {
   const fontsStart = Date.now()
@@ -12,7 +12,7 @@ export default async () => {
         style,
         weight,
         stretch,
-        status
+        status,
       } = await entries[0]
 
       fontResults.push({
@@ -20,7 +20,7 @@ export default async () => {
         style,
         weight,
         stretch,
-        status
+        status,
       })
     } catch (error) {
       const {
@@ -28,7 +28,7 @@ export default async () => {
         style,
         weight,
         stretch,
-        status
+        status,
       } = entries[0]
 
       fontResults.push({
@@ -36,18 +36,18 @@ export default async () => {
         style,
         weight,
         stretch,
-        status
+        status,
       })
     }
   }
 
   const perfStats = {
     'name': 'fontStats',
-    'time': Date.now() - fontsStart
+    'time': Date.now() - fontsStart,
   }
 
   return {
     'results': uniq(fontResults),
-    perfStats
+    perfStats,
   }
 }

@@ -1,22 +1,22 @@
-import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
+import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
 import icon from '../icon/icon.vue'
-import {LeftRight} from '../../../src/shared/animations'
+import {LeftRight,} from '../../../src/shared/animations'
 
 export default {
   'components': {
     'b-notification': bulma('notification', 'div'),
     'b-tile':         bulma('tile', 'div'),
-    icon
+    icon,
   },
   'methods': new LeftRight(),
   'props':   {
     'icon': {
       'type':    String,
-      'default': 'information'
+      'default': 'information',
     },
     'color': {
       'type':    String,
-      'default': 'is-primary'
-    }
-  }
+      'default': 'is-primary',
+    },
+  },
 }

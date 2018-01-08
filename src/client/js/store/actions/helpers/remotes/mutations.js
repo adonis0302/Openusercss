@@ -1,12 +1,12 @@
 import gql from 'graphql-tag'
-import {cloneDeep, forOwn} from 'lodash'
-import {userPropList, themePropList} from '../queries'
-import {apolloClient} from '../../'
-import {expected} from '../../../../../../shared/custom-errors'
+import {cloneDeep, forOwn,} from 'lodash'
+import {userPropList, themePropList,} from '../queries'
+import {apolloClient,} from '../../'
+import {expected,} from '../../../../../../shared/custom-errors'
 
-const {AuthenticationError} = expected
+const {AuthenticationError,} = expected
 
-export const remoteRate = async ({id, value}, token) => {
+export const remoteRate = async ({id, value,}, token) => {
   const mutation = gql(`
     mutation {
       rate (
@@ -20,7 +20,7 @@ export const remoteRate = async ({id, value}, token) => {
   `)
 
   return apolloClient.mutate({
-    mutation
+    mutation,
   })
 }
 
@@ -32,7 +32,7 @@ export const remoteAccount = async (accountData, token) => {
   }`
   const mutationFoot = '}'
   const mutationData = [
-    `token: "${token}"`
+    `token: "${token}"`,
   ]
 
   forOwn(accountData, (value, key) => {
@@ -47,18 +47,18 @@ export const remoteAccount = async (accountData, token) => {
     mutationHead,
     mutationData.join('\n'),
     mutationRes,
-    mutationFoot
+    mutationFoot,
   ].join('\n')
 
   const mutation = gql(mutationString)
   const result = await apolloClient.mutate({
-    mutation
+    mutation,
   })
 
   return result
 }
 
-export const remoteSendVerify = async ({token}) => {
+export const remoteSendVerify = async ({token,}) => {
   const mutation = gql(`
     mutation {
       resendVerification(token: "${token}")
@@ -66,7 +66,7 @@ export const remoteSendVerify = async ({token}) => {
   `)
 
   return apolloClient.mutate({
-    mutation
+    mutation,
   })
 }
 
@@ -80,20 +80,20 @@ export const verifyEmail = async (token) => {
 
   try {
     result = await apolloClient.mutate({
-      mutation
+      mutation,
     })
   } catch (error) {
     result = {
       'data': {
-        'verifyEmail': false
-      }
+        'verifyEmail': false,
+      },
     }
   }
 
   return result
 }
 
-export const remoteLogin = async ({email, password}) => {
+export const remoteLogin = async ({email, password,}) => {
   const mutation = gql(`
     mutation {
       login(email: "${email}", password: "${password}") {
@@ -113,7 +113,7 @@ export const remoteLogin = async ({email, password}) => {
 
   try {
     session = await apolloClient.mutate({
-      mutation
+      mutation,
     })
   } catch (error) {
     throw new AuthenticationError(error.message)
@@ -131,7 +131,7 @@ export const remoteLogout = async (token) => {
 
   try {
     const result = await apolloClient.mutate({
-      mutation
+      mutation,
     })
 
     if (!result.data.logout) {
@@ -144,7 +144,7 @@ export const remoteLogout = async (token) => {
   return true
 }
 
-export const remoteRegister = async ({email, password, displayname}) => {
+export const remoteRegister = async ({email, password, displayname,}) => {
   const mutation = gql(`
     mutation {
       register(displayname: "${displayname}", email: "${email}", password: "${password}") {
@@ -153,7 +153,7 @@ export const remoteRegister = async ({email, password, displayname}) => {
     }
   `)
   const result = await apolloClient.mutate({
-    mutation
+    mutation,
   })
 
   return result
@@ -222,7 +222,7 @@ export const remoteSaveTheme = async (theme, token) => {
   let savedTheme = {}
 
   savedTheme = await apolloClient.mutate({
-    mutation
+    mutation,
   })
 
   return savedTheme
@@ -238,7 +238,7 @@ export const deleteTheme = async (id, token) => {
 
   try {
     success = await apolloClient.mutate({
-      mutation
+      mutation,
     })
   } catch (error) {
     throw new AuthenticationError(error.message)

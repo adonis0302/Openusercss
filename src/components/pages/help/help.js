@@ -1,4 +1,4 @@
-import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
+import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
 
 import oucFooter from '../../components/ouc-footer/ouc-footer.vue'
 import navbar from '../../components/navbar/navbar.vue'
@@ -14,11 +14,11 @@ export default {
     oucFooter,
     navbar,
     icon,
-    notification
+    notification,
   },
   'computed': {
     extension () {
       return process.extension
-    }
-  }
+    },
+  },
 }

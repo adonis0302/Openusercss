@@ -3,7 +3,7 @@ import {
   Vue,
   store,
   router,
-  appBase
+  appBase,
 } from './vue'
 import db from './store/db'
 import raven from 'raven-js'
@@ -22,7 +22,7 @@ export default (context) => {
     const app = new Vue({
       store,
       router,
-      ...appBase
+      ...appBase,
     })
 
     router.push(context.url)
@@ -33,7 +33,7 @@ export default (context) => {
       matchedComponents.forEach((component) => {
         if (component.errorStatus) {
           return reject({
-            'code': component.errorStatus
+            'code': component.errorStatus,
           })
         }
       })

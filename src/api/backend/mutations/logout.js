@@ -1,6 +1,6 @@
 import mustAuthenticate from '../../../shared/enforce-session'
 
-export default async (root, {token}, {Session}) => {
+export default async (root, {token,}, {Session,}) => {
   const session = await mustAuthenticate(token, Session)
   /* const session = await Session.findOne({
     token

@@ -1,7 +1,7 @@
 export default {
   'props': [
     'lazy',
-    'value'
+    'value',
   ],
   mounted () {
     if (this.lazy) {
@@ -13,5 +13,5 @@ export default {
         this.$emit('input', this.$el.value)
       }
     }
-  }
+  },
 }

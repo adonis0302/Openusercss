@@ -1,17 +1,19 @@
 import CSS from 'css'
 import unquote from 'unquote'
-import {forOwn} from 'lodash'
+import {
+  forOwn,
+} from 'lodash'
 
 export default async (code) => {
   const ast = CSS.parse(code)
   const props = {
-    'vars': []
+    'vars': [],
   }
   const transformedAst = {
     'type':       'stylesheet',
     'stylesheet': {
-      'rules': []
-    }
+      'rules': [],
+    },
   }
 
   if (ast.type !== 'stylesheet') {
@@ -82,7 +84,7 @@ export default async (code) => {
         forOwn(rawValue, (item, key) => {
           value.push({
             'label': key,
-            'value': item
+            'value': item,
           })
         })
       }
@@ -94,12 +96,12 @@ export default async (code) => {
       type,
       name,
       label,
-      value
+      value,
     }
   })
 
   return {
     'code': CSS.stringify(transformedAst),
-    props
+    props,
   }
 }

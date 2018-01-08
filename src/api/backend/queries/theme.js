@@ -1,8 +1,8 @@
-import {getTheme} from '../translators/get-theme'
+import {getTheme,} from '../translators/get-theme'
 
-export default async (root, {id}, {User, Theme}) => {
+export default async (root, {id,}, {User, Theme,}) => {
   const result = await getTheme({
-    '_id': id
+    '_id': id,
   })
 
   if (!result) {

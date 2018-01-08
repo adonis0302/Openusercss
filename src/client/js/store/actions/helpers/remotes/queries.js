@@ -1,7 +1,7 @@
 import gql from 'graphql-tag'
-import {cloneDeep} from 'lodash'
-import {ExpectedError} from '../../../../../../shared/custom-errors'
-import {apolloClient} from '../../'
+import {cloneDeep,} from 'lodash'
+import {ExpectedError,} from '../../../../../../shared/custom-errors'
+import {apolloClient,} from '../../'
 
 import {
   verifyToken as verifyTokenQuery,
@@ -9,7 +9,7 @@ import {
   user as userQuery,
   latestThemes as latestThemesQuery,
   search as searchQuery,
-  popularThemes as popularThemesQuery
+  popularThemes as popularThemesQuery,
 } from '../queries'
 
 export const deleteTheme = async (id, token) => {
@@ -22,11 +22,11 @@ export const deleteTheme = async (id, token) => {
 
   try {
     success = await apolloClient.mutate({
-      mutation
+      mutation,
     })
   } catch (error) {
     throw new ExpectedError({
-      'message': error.message
+      'message': error.message,
     })
   }
 
@@ -38,13 +38,13 @@ export const verifyToken = async (token) => {
 
   try {
     result = await apolloClient.query({
-      'query': verifyTokenQuery({token})
+      'query': verifyTokenQuery({token,}),
     })
   } catch (error) {
     result = {
       'data': {
-        'verifyToken': false
-      }
+        'verifyToken': false,
+      },
     }
   }
 
@@ -56,11 +56,11 @@ export const getFullTheme = async (id) => {
 
   try {
     theme = await apolloClient.query({
-      'query': themeQuery({id})
+      'query': themeQuery({id,}),
     })
   } catch (error) {
     throw new ExpectedError({
-      'message': error.message
+      'message': error.message,
     })
   }
 
@@ -72,11 +72,11 @@ export const getFullUser = async (id) => {
 
   try {
     user = await apolloClient.query({
-      'query': userQuery({id})
+      'query': userQuery({id,}),
     })
   } catch (error) {
     throw new ExpectedError({
-      'message': error.message
+      'message': error.message,
     })
   }
 
@@ -88,11 +88,11 @@ export const getLatestThemes = async (limit) => {
 
   try {
     themes = await apolloClient.query({
-      'query': latestThemesQuery({limit})
+      'query': latestThemesQuery({limit,}),
     })
   } catch (error) {
     throw new ExpectedError({
-      'message': error.message
+      'message': error.message,
     })
   }
 
@@ -104,24 +104,24 @@ export const getPopularThemes = async (limit) => {
 
   try {
     themes = await apolloClient.query({
-      'query': popularThemesQuery({limit})
+      'query': popularThemesQuery({limit,}),
     })
   } catch (error) {
     throw new ExpectedError({
-      'message': error.message
+      'message': error.message,
     })
   }
 
   return themes
 }
 
-export const search = async ({terms, limit, skip}) => {
+export const search = async ({terms, limit, skip,}) => {
   let results = null
   let data = null
 
   try {
     results = await apolloClient.query({
-      'query': searchQuery({terms, limit, skip})
+      'query': searchQuery({terms, limit, skip,}),
     })
     data = cloneDeep(results).data
 
@@ -133,7 +133,7 @@ export const search = async ({terms, limit, skip}) => {
     })
   } catch (error) {
     throw new ExpectedError({
-      'message': error.message
+      'message': error.message,
     })
   }
 
@@ -142,12 +142,12 @@ export const search = async ({terms, limit, skip}) => {
       'data': {
         'search': {
           'users':  [],
-          'themes': []
-        }
-      }
+          'themes': [],
+        },
+      },
     }
   }
   return {
-    data
+    data,
   }
 }

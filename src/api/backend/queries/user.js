@@ -1,8 +1,8 @@
-import {getUser} from '../translators/get-user'
+import {getUser,} from '../translators/get-user'
 
-export default async (root, {id}, {Session, Theme, User, Rating}) => {
+export default async (root, {id,}, {Session, Theme, User, Rating,}) => {
   const foundUser = await getUser({
-    '_id': id
+    '_id': id,
   })
 
   if (!foundUser) {

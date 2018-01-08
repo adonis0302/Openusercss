@@ -7,8 +7,8 @@ import minify from 'gulp-minify'
 
 const sources = {
   'shared': [
-    'src/shared/**/*.js'
-  ]
+    'src/shared/**/*.js',
+  ],
 }
 
 const destination = (dest) => {
@@ -24,7 +24,7 @@ gulp.task('shared:fast', (done) => {
     prettyError(),
     gulp.src(sources.shared),
     babel(),
-    gulp.dest(destination('shared'))
+    gulp.dest(destination('shared')),
   ]).on('end', done)
 })
 
@@ -36,12 +36,12 @@ gulp.task('shared:prod', (done) => {
     minify({
       'ext': {
         'src': '.js',
-        'min': '.js'
+        'min': '.js',
       },
       'noSource': true,
       'mangle':   true,
-      'compress': true
+      'compress': true,
     }),
-    gulp.dest(destination('shared'))
+    gulp.dest(destination('shared')),
   ]).on('end', done)
 })

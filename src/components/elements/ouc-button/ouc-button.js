@@ -1,20 +1,20 @@
-import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
-import {mapGetters} from 'vuex'
+import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
+import {mapGetters,} from 'vuex'
 
 import icon from '../icon/icon.vue'
 
 export default {
   'components': {
     'b-button': bulma('button', 'button'),
-    icon
+    icon,
   },
   'computed': mapGetters([
-    'loading'
+    'loading',
   ]),
   'props': {
     'icon': {
       'type':    String,
-      'default': 'chevron-up'
-    }
-  }
+      'default': 'chevron-up',
+    },
+  },
 }

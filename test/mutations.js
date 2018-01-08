@@ -1,5 +1,5 @@
 import test from 'ava'
-import {cloneDeep} from 'lodash'
+import {cloneDeep,} from 'lodash'
 
 import mutations from '../src/client/js/store/mutations'
 import stateMock from './shared/state-mock'
@@ -15,8 +15,8 @@ test('login - sets session in state from null', (t) => {
     'ua':    'curl/5.0',
     'token': 'viD4aigh1ke7eej7ow6Raogu8u',
     'user':  {
-      '_id': '5a262a2c3835ee7627db2ef9'
-    }
+      '_id': '5a262a2c3835ee7627db2ef9',
+    },
   }
 
   mutations.login(state, {
@@ -24,8 +24,8 @@ test('login - sets session in state from null', (t) => {
     'ua':    'curl/5.0',
     'token': 'viD4aigh1ke7eej7ow6Raogu8u',
     'user':  {
-      '_id': '5a262a2c3835ee7627db2ef9'
-    }
+      '_id': '5a262a2c3835ee7627db2ef9',
+    },
   })
   t.deepEqual(state, expected)
 })
@@ -40,8 +40,8 @@ test('login - sets session in state from other', (t) => {
     'ua':    'curl/5.0',
     'token': 'viD4aigh1ke7eej7ow6Raogu8u',
     'user':  {
-      '_id': '5a262a2c3835ee7627db2ef9'
-    }
+      '_id': '5a262a2c3835ee7627db2ef9',
+    },
   }
 
   mutations.login(state, {
@@ -49,8 +49,8 @@ test('login - sets session in state from other', (t) => {
     'ua':    'curl/5.0',
     'token': 'viD4aigh1ke7eej7ow6Raogu8u',
     'user':  {
-      '_id': '5a262a2c3835ee7627db2ef9'
-    }
+      '_id': '5a262a2c3835ee7627db2ef9',
+    },
   })
   t.deepEqual(state, expected)
 })
@@ -64,8 +64,8 @@ test('login - overrides session in state', (t) => {
     'ip':    '172.16.22.12',
     'ua':    'curl/5.0',
     'user':  {
-      '_id': '5a262a2c3835ee7627db2ef9'
-    }
+      '_id': '5a262a2c3835ee7627db2ef9',
+    },
   }
 
   mutations.login(state, {
@@ -73,8 +73,8 @@ test('login - overrides session in state', (t) => {
     'ua':    'curl/5.0',
     'token': 'viD4aigh1ke7eej7ow6Raogu8u',
     'user':  {
-      '_id': '5a262a2c3835ee7627db2ef9'
-    }
+      '_id': '5a262a2c3835ee7627db2ef9',
+    },
   })
   t.deepEqual(state, expected)
 })

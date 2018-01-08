@@ -2,19 +2,19 @@ import bcrypt from 'bcryptjs'
 import log from 'chalk-console'
 import jwt from 'jsonwebtoken'
 import {
-  sendEmail
+  sendEmail,
 } from '../../email/mailer'
 
 import staticConfig from '../../../shared/config'
 
-const createSendEmail = async ({email, displayname}) => {
+const createSendEmail = async ({email, displayname,}) => {
   const config = await staticConfig()
   const token = jwt.sign({
-    email
+    email,
   }, config.get('keypair.clientprivate'), {
     'expiresIn': '1d',
     'issuer':    config.get('domain'),
-    'algorithm': 'HS256'
+    'algorithm': 'HS256',
   })
 
   let link = `https://openusercss.org/verify-email/${token}`
@@ -28,14 +28,14 @@ const createSendEmail = async ({email, displayname}) => {
     'template': 'email-verification-initial',
     'locals':   {
       displayname,
-      link
-    }
+      link,
+    },
   })
 
   return result
 }
 
-export default async (root, {displayname, email, password}, {User}) => {
+export default async (root, {displayname, email, password,}, {User,}) => {
   const config = await staticConfig()
   const salt = await bcrypt.genSalt(parseInt(config.get('saltRounds'), 10))
   const hash = await bcrypt.hash(password, salt)
@@ -43,7 +43,7 @@ export default async (root, {displayname, email, password}, {User}) => {
     'password': hash,
     'username': displayname.toLowerCase(),
     displayname,
-    email
+    email,
   })
   const savedUser = await newUser.save()
 

@@ -1,4 +1,4 @@
-import {Document} from 'camo'
+import {Document,} from 'camo'
 import moment from 'moment'
 import gravatarUrl from 'gravatar-url'
 
@@ -12,11 +12,11 @@ export default class User extends Document {
     this.lastUpdate = moment().toJSON()
 
     this.avatarUrl = gravatarUrl(this.email, {
-      'size': 425
+      'size': 425,
     })
 
     this.smallAvatarUrl = gravatarUrl(this.email, {
-      'size': 15
+      'size': 15,
     })
   }
 
@@ -28,25 +28,25 @@ export default class User extends Document {
         'type':     String,
         'default':  moment().toJSON(),
         'required': false,
-        'validate': validators.isMomentJSON
+        'validate': validators.isMomentJSON,
       },
       'lastUpdate': {
         'type':     String,
         'default':  moment().toJSON(),
         'required': false,
-        'validate': validators.isMomentJSON
+        'validate': validators.isMomentJSON,
       },
       'displayname': {
         'type':     String,
         'unique':   true,
         'required': true,
-        'validate': validators.length(32)
+        'validate': validators.length(32),
       },
       'username': {
         'type':     String,
         'unique':   true,
         'required': true,
-        'validate': validators.length(32)
+        'validate': validators.length(32),
       },
       'email': {
         'type':     String,
@@ -54,44 +54,44 @@ export default class User extends Document {
         'required': true,
         'match':    validators.regex({
           'preset':    'email',
-          'validator': false
+          'validator': false,
         }),
-        'validate': validators.length(254)
+        'validate': validators.length(254),
       },
       'pendingEmail': {
         'type':     String,
         'unique':   false,
         'required': false,
         'validate': validators.length(254),
-        'default':  ''
+        'default':  '',
       },
       'emailVerified': {
         'type':     Boolean,
         'required': true,
-        'default':  false
+        'default':  false,
       },
       'password': {
         'type':     String,
         'required': true,
-        'validate': validators.length(1024)
+        'validate': validators.length(1024),
       },
       'lastSeen': {
         'type':     String,
         'required': false,
         'default':  moment().toJSON(),
-        'validate': validators.isMomentJSON
+        'validate': validators.isMomentJSON,
       },
       'lastSeenReason': {
         'type':     String,
         'required': false,
         'default':  'registering',
-        'validate': validators.length(64)
+        'validate': validators.length(64),
       },
       'bio': {
         'type':     String,
         'required': false,
         'default':  '',
-        'validate': validators.length(2048)
+        'validate': validators.length(2048),
       },
       'donationUrl': {
         'type':     String,
@@ -100,15 +100,15 @@ export default class User extends Document {
         'validate': validators.regex({
           'preset':    'url',
           'validator': true,
-          'optional':  true
-        })
+          'optional':  true,
+        }),
       },
       'avatarUrl': {
-        'type': String
+        'type': String,
       },
       'smallAvatarUrl': {
-        'type': String
-      }
+        'type': String,
+      },
     })
   }
 }

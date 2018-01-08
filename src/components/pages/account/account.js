@@ -1,6 +1,6 @@
-import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
-import {mapGetters} from 'vuex'
-import {forOwn} from 'lodash'
+import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
+import {mapGetters,} from 'vuex'
+import {forOwn,} from 'lodash'
 
 import bSwitch from '../../components/b-switch/b-switch.vue'
 import spinner from '../../components/spinner/spinner.vue'
@@ -29,7 +29,7 @@ export default {
     oucButton,
     bTextarea,
     bSwitch,
-    icon
+    icon,
   },
   data () {
     return {
@@ -39,15 +39,15 @@ export default {
         'password':    '',
         'displayname': '',
         'bio':         '',
-        'donationUrl': 'https://'
+        'donationUrl': 'https://',
       },
       'editing': {
         'email':       null,
         'password':    null,
         'displayname': null,
         'bio':         null,
-        'donationUrl': null
-      }
+        'donationUrl': null,
+      },
     }
   },
   async beforeMount () {
@@ -59,15 +59,15 @@ export default {
   },
   'methods': {
     async resendVerification () {
-      const {data} = await this.$store.dispatch('sendVerify', this.session.token)
-      const {resendVerification} = data
+      const {data,} = await this.$store.dispatch('sendVerify', this.session.token)
+      const {resendVerification,} = data
 
       if (resendVerification) {
         this.$toast.success({
           'title':   'Sent',
           'message': 'Check your inbox!',
           'theme':   'ouc',
-          'layout':  2
+          'layout':  2,
         })
       }
     },
@@ -80,21 +80,21 @@ export default {
           if (value) {
             this.$store.dispatch('account', {
               'accountData': {
-                [key]: self.account[key] || ''
+                [key]: self.account[key] || '',
               },
-              'redirect': `/profile/${this.currentUser._id}`
+              'redirect': `/profile/${this.currentUser._id}`,
             })
           }
         })
       }
-    }
+    },
   },
   'computed': {
     ...mapGetters([
       'currentUser',
       'session',
       'actionErrors',
-      'loading'
+      'loading',
     ]),
     editingCount () {
       let result = 0
@@ -106,6 +106,6 @@ export default {
       })
 
       return result
-    }
-  }
+    },
+  },
 }

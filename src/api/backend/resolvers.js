@@ -24,7 +24,7 @@ export default {
     'user':          userQuery,
     'latestThemes':  latestThemesQuery,
     'version':       versionQuery,
-    'popularThemes': popularThemesQuery
+    'popularThemes': popularThemesQuery,
   },
   'Mutation': {
     'register':           registerMutation,
@@ -35,6 +35,6 @@ export default {
     'resendVerification': resendVerificationMutation,
     'verifyEmail':        verifyEmailMutation,
     'account':            accountMutation,
-    'rate':               rateMutation
-  }
+    'rate':               rateMutation,
+  },
 }

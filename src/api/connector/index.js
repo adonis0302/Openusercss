@@ -1,9 +1,9 @@
 import log from 'chalk-console'
-import camo, {connect} from 'camo'
-import {forOwn} from 'lodash'
+import camo, {connect,} from 'camo'
+import {forOwn,} from 'lodash'
 import staticConfig from '../../shared/config'
 
-import Theme, {Option} from './schema/theme'
+import Theme, {Option,} from './schema/theme'
 import User from './schema/user'
 import Session from './schema/session'
 import Rating from './schema/rating'
@@ -20,30 +20,30 @@ const init = async () => {
       {
         'title':       'text',
         'description': 'text',
-        'content':     'text'
+        'content':     'text',
       },
       {
         'weights': {
           'title':       3,
           'description': 2,
-          'content':     1
-        }
-      }
+          'content':     1,
+        },
+      },
     ],
     'users': [
       {
         'displayname': 'text',
         'username':    'text',
-        'bio':         'text'
+        'bio':         'text',
       },
       {
         'weights': {
           'displayname': 3,
           'username':    2,
-          'bio':         1
-        }
-      }
-    ]
+          'bio':         1,
+        },
+      },
+    ],
   }
 
   forOwn(await camo.getClient().driver().collections(), (value) => {
@@ -65,6 +65,6 @@ export default async () => {
     User,
     Session,
     Option,
-    Rating
+    Rating,
   }
 }

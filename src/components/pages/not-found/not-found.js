@@ -1,5 +1,5 @@
-import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
-import {mapGetters} from 'vuex'
+import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
+import {mapGetters,} from 'vuex'
 
 import oucFooter from '../../components/ouc-footer/ouc-footer.vue'
 import navbar from '../../components/navbar/navbar.vue'
@@ -17,7 +17,7 @@ export default {
     oucFooter,
     navbar,
     icon,
-    themeCard
+    themeCard,
   },
   beforeMount () {
     this.$store.dispatch('getLatestThemes', 3)
@@ -25,7 +25,7 @@ export default {
   'computed': {
     ...mapGetters([
       'actionErrors',
-      'themes'
-    ])
-  }
+      'themes',
+    ]),
+  },
 }

@@ -1,4 +1,4 @@
-import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
+import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
 
 import oucFooter from '../../components/ouc-footer/ouc-footer.vue'
 import spinner from '../../components/spinner/spinner.vue'
@@ -11,11 +11,11 @@ export default {
     'b-column':    bulma('column', 'div'),
     oucFooter,
     spinner,
-    flushImg
+    flushImg,
   },
   data () {
     return {
-      'spinning': true
+      'spinning': true,
     }
   },
   'methods': {
@@ -25,7 +25,7 @@ export default {
         'message': 'This is an info message',
         'timeout': false,
         'theme':   'ouc',
-        'layout':  2
+        'layout':  2,
       })
     },
     showSuccess () {
@@ -34,7 +34,7 @@ export default {
         'message': 'This is a success message',
         'timeout': false,
         'theme':   'ouc',
-        'layout':  2
+        'layout':  2,
       })
     },
     showWarning () {
@@ -43,7 +43,7 @@ export default {
         'message': 'This is a warning message',
         'timeout': false,
         'theme':   'ouc',
-        'layout':  2
+        'layout':  2,
       })
     },
     showError () {
@@ -52,8 +52,8 @@ export default {
         'message': 'This is an error message',
         'timeout': false,
         'theme':   'ouc',
-        'layout':  2
+        'layout':  2,
       })
-    }
-  }
+    },
+  },
 }

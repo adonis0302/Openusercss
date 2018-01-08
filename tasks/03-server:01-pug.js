@@ -13,14 +13,14 @@ const destination = (dest) => {
 
 const sources = {
   'views':  './src/views/**/*.pug',
-  'emails': './src/emails/**/*.pug'
+  'emails': './src/emails/**/*.pug',
 }
 
 gulp.task('server:views', (done) => {
   pump([
     prettyError(),
     gulp.src(sources.views),
-    gulp.dest(destination('views'))
+    gulp.dest(destination('views')),
   ]).on('end', done)
 })
 
@@ -28,6 +28,6 @@ gulp.task('server:email-templates', (done) => {
   pump([
     prettyError(),
     gulp.src(sources.emails),
-    gulp.dest(destination('emails'))
+    gulp.dest(destination('emails')),
   ]).on('end', done)
 })

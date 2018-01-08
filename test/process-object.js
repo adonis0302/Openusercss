@@ -1,5 +1,5 @@
 import test from 'ava'
-import {cloneDeep} from 'lodash'
+import {cloneDeep,} from 'lodash'
 
 import processObject from '../src/shared/process-object'
 import stateMock from './shared/state-mock'
@@ -37,13 +37,13 @@ test('processObject - runs function on object recursively', (t) => {
           {
             'three': [
               {
-                'thing': 'this has spaces in it'
-              }
-            ]
-          }
-        ]
-      }
-    ]
+                'thing': 'this has spaces in it',
+              },
+            ],
+          },
+        ],
+      },
+    ],
   }
   const expected = cloneDeep(state)
 
@@ -58,7 +58,7 @@ test('processObject - runs function on object recursively', (t) => {
 
 test('processObject - runs function on array', (t) => {
   let state = [
-    'this has spaces in it'
+    'this has spaces in it',
   ]
   const expected = cloneDeep(state)
 
@@ -80,19 +80,19 @@ test('processObject - runs function on array recursively', (t) => {
           {
             'three': [
               {
-                'thing': 'this has spaces in it'
-              }
-            ]
-          }
-        ]
-      }
+                'thing': 'this has spaces in it',
+              },
+            ],
+          },
+        ],
+      },
     ],
     {
       'four': [
-        'this has spaces in it'
+        'this has spaces in it',
       ],
-      'five': 'this has spaces in it'
-    }
+      'five': 'this has spaces in it',
+    },
   ]
   const expected = cloneDeep(state)
 

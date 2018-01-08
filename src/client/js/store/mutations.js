@@ -1,4 +1,4 @@
-import {struct} from 'superstruct'
+import {struct,} from 'superstruct'
 import raven from 'raven-js'
 
 /*
@@ -13,7 +13,7 @@ validators.reference = (typename) => {
   }
 
   return struct({
-    '_id': 'string'
+    '_id': 'string',
   })
 }
 
@@ -21,7 +21,7 @@ validators.session = struct({
   'token': 'string',
   'ip':    'string',
   'ua':    'string',
-  'user':  validators.reference('User')
+  'user':  validators.reference('User'),
 })
 
 export default {
@@ -62,12 +62,12 @@ export default {
                   'message': 'Error reporting is disabled in development builds.',
                   'timeout': 10000,
                   'theme':   'ouc',
-                  'layout':  2
+                  'layout':  2,
                 })
               }
-            }
-          ]
-        ]
+            },
+          ],
+        ],
       })
     }
   },
@@ -106,5 +106,5 @@ export default {
     }
 
     state.loading = isLoading
-  }
+  },
 }

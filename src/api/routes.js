@@ -1,6 +1,6 @@
 // @flow
 import express from 'express'
-import {graphqlExpress, graphiqlExpress} from 'apollo-server-express'
+import {graphqlExpress, graphiqlExpress,} from 'apollo-server-express'
 import bodyParser from 'body-parser'
 import staticConfig from '../shared/config'
 
@@ -16,7 +16,7 @@ const setupRoutes = async () => {
 
   if (config.get('env') === 'development') {
     router.use('/graphiql', graphiqlExpress({
-      'endpointURL': '/'
+      'endpointURL': '/',
     }))
   }
 
@@ -25,9 +25,9 @@ const setupRoutes = async () => {
   router.use('/', bodyParser.json(), graphqlExpress((req, res, next) => ({
     'context': {
       ...req,
-      ...db
+      ...db,
     },
-    schema
+    schema,
   })))
 
   return router

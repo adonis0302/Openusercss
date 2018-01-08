@@ -39,15 +39,15 @@ export const createTestTransport = async () => {
     'secure': testAccount.smtp.secure,
     'auth':   {
       'user': testAccount.user,
-      'pass': testAccount.pass
-    }
+      'pass': testAccount.pass,
+    },
   })
 
   await verifyConnection(transport)
   return transport
 }
 
-export const sendEmail = async ({to, template, locals}) => {
+export const sendEmail = async ({to, template, locals,}) => {
   const transportOptions = {
     'host':       account.smtp.host,
     'port':       account.smtp.port,
@@ -55,8 +55,8 @@ export const sendEmail = async ({to, template, locals}) => {
     'requireTls': true,
     'auth':       {
       'user': account.user,
-      'pass': account.pass
-    }
+      'pass': account.pass,
+    },
   }
   const transport = await createTransport(transportOptions)
   const resourcePath = path.resolve('./static')
@@ -65,22 +65,22 @@ export const sendEmail = async ({to, template, locals}) => {
     'juiceResources': {
       'preserveImportant': true,
       'webResources':      {
-        'relativeTo': resourcePath
-      }
+        'relativeTo': resourcePath,
+      },
     },
     'send':    true,
     'preview': false,
     'message': {
-      'from': 'notifications@openusercss.org'
+      'from': 'notifications@openusercss.org',
     },
-    transport
+    transport,
   })
 
   return email.send({
     template,
     locals,
     'message': {
-      to
-    }
+      to,
+    },
   })
 }

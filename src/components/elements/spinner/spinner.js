@@ -1,7 +1,7 @@
 export default {
   'props': [
     'size',
-    'spinning'
+    'spinning',
   ],
   data () {
     return {
@@ -9,8 +9,8 @@ export default {
         'width':               this.sizePx(this.size),
         'height':              this.sizePx(this.size),
         'border-top-width':    this.sizePx(this.size / 2),
-        'border-bottom-width': this.sizePx(this.size / 2)
-      }
+        'border-bottom-width': this.sizePx(this.size / 2),
+      },
     }
   },
   'methods': {
@@ -19,6 +19,6 @@ export default {
         return value
       }
       return `${value}px`
-    }
-  }
+    },
+  },
 }

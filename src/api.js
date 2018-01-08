@@ -8,7 +8,7 @@ import corser from 'corser'
 
 import staticConfig from './shared/config'
 import setupRoutes from './api/routes'
-import {auto} from './shared/error-handler'
+import {auto,} from './shared/error-handler'
 
 import http from 'http'
 import https from 'https'
@@ -18,9 +18,9 @@ import raven from 'raven'
 const cspOptions = {
   'directives': {
     'defaultSrc': [
-      "'self'"
-    ]
-  }
+      "'self'",
+    ],
+  },
 }
 
 if (process.env.NODE_ENV === 'development') {
@@ -29,12 +29,12 @@ if (process.env.NODE_ENV === 'development') {
     ...cspOptions.directives.defaultSrc,
     "'unsafe-inline'",
     'unpkg.com',
-    'cdn.jsdelivr.net'
+    'cdn.jsdelivr.net',
   ]
   cspOptions.directives.styleSrc = [
     ...cspOptions.directives.defaultSrc,
     "'unsafe-inline'",
-    'unpkg.com'
+    'unpkg.com',
   ]
 }
 
@@ -51,17 +51,17 @@ const init = async () => {
   app.use(helmet({
     'contentSecurityPolicy': cspOptions,
     'dnsPrefetchControl':    {
-      'allow': false
+      'allow': false,
     },
     'frameguard': {
-      'action': 'deny'
+      'action': 'deny',
     },
     'hsts': {
-      'maxAge': 60 * 60 * 24 * 60
+      'maxAge': 60 * 60 * 24 * 60,
     },
     'referrerPolicy': {
-      'policy': 'no-referrer'
-    }
+      'policy': 'no-referrer',
+    },
   }))
 
   const config = await staticConfig()
@@ -91,7 +91,7 @@ const init = async () => {
 
   const httpsServer = https.createServer({
     'key':  config.get('keypair.clientprivate'),
-    'cert': config.get('keypair.clientcert')
+    'cert': config.get('keypair.clientcert'),
   }, app)
 
   httpsServer.listen(config.get('ports.api.https'))

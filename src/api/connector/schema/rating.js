@@ -1,4 +1,4 @@
-import {Document} from 'camo'
+import {Document,} from 'camo'
 import moment from 'moment'
 
 import validators from './validators'
@@ -23,20 +23,20 @@ export default class Rating extends Document {
         'type':     Number,
         'required': false,
         'default':  0,
-        'validate': validators.between(1, 5)
+        'validate': validators.between(1, 5),
       },
       'createdAt': {
         'type':     String,
         'default':  moment().toJSON(),
         'required': false,
-        'validate': validators.isMomentJSON
+        'validate': validators.isMomentJSON,
       },
       'lastUpdate': {
         'type':     String,
         'default':  moment().toJSON(),
         'required': false,
-        'validate': validators.isMomentJSON
-      }
+        'validate': validators.isMomentJSON,
+      },
     })
   }
 }

@@ -4,7 +4,11 @@ import log from 'chalk-console'
 import cp from 'node-cp'
 import path from 'path'
 import selfsigned from 'selfsigned'
-import {defaultsDeep, forOwn, isEqual} from 'lodash'
+import {
+  defaultsDeep,
+  forOwn,
+  isEqual,
+} from 'lodash'
 
 // Delete ourselves from the require cache, so that different processes
 // can have different configs
@@ -18,18 +22,18 @@ const defaultConfig = {
   'ports': {
     'api': {
       'https': 5001,
-      'http':  5000
+      'http':  5000,
     },
     'frontend': {
       'https': 5011,
-      'http':  5010
-    }
+      'http':  5010,
+    },
   },
   'domain':     'openusercss.org',
   'saltRounds': 15,
   'database':   {
-    'main': 'mongodb://localhost:27017/openusercss-main'
-  }
+    'main': 'mongodb://localhost:27017/openusercss-main',
+  },
 }
 
 const envConfig = {
@@ -37,18 +41,18 @@ const envConfig = {
   'ports': {
     'api': {
       'https': process.env.API_HTTPS_PORT,
-      'http':  process.env.API_HTTP_PORT
+      'http':  process.env.API_HTTP_PORT,
     },
     'frontend': {
       'https': process.env.FRONTEND_HTTPS_PORT,
-      'http':  process.env.FRONTEND_HTTP_PORT
-    }
+      'http':  process.env.FRONTEND_HTTP_PORT,
+    },
   },
   'domain':     process.env.DOMAIN,
   'saltRounds': process.env.SALT_ROUNDS,
   'database':   {
-    'main': process.env.MONGODB_STRING
-  }
+    'main': process.env.MONGODB_STRING,
+  },
 }
 
 const genKeypair = () => {
@@ -60,20 +64,20 @@ const genKeypair = () => {
       'keySize':    4096,
       'algorithm':  'sha256',
       'extensions': [
-        {'name': 'basicConstraints'}
+        {'name': 'basicConstraints',},
       ],
       'clientCertificate':   true,
-      'clientCertificateCN': '*'
+      'clientCertificateCN': '*',
     })
   } else {
     pem = selfsigned.generate(null, {
       'keySize':    512,
       'algorithm':  'sha256',
       'extensions': [
-        {'name': 'basicConstraints'}
+        {'name': 'basicConstraints',},
       ],
       'clientCertificate':   true,
-      'clientCertificateCN': '*'
+      'clientCertificateCN': '*',
     })
   }
 
@@ -96,7 +100,7 @@ const initConfig = () => {
   const secretsConfig = new Conf({
     'cwd':         path.join(appPath, 'data'),
     'configName':  'secrets',
-    'projectName': 'opensuercss.org'
+    'projectName': 'opensuercss.org',
   })
   const configKey = secretsConfig.get('configKey')
   const newVersion = `${Date.now()}.${hat(8)}`
@@ -111,7 +115,7 @@ const initConfig = () => {
       'Your configuration options have been reset to defaults',
       'A backup of your previous config has been made, just in case',
       'You can find your backups here:',
-      path.join(appPath, `bkup.${newVersion}`)
+      path.join(appPath, `bkup.${newVersion}`),
     ].join('\n\t'))
 
     secretsConfig.set('configKey', hat(256))
@@ -122,7 +126,7 @@ const initConfig = () => {
     'configName':    'config',
     'cwd':           path.join(appPath, 'data'),
     'encryptionKey': secretsConfig.get('configKey'),
-    'defaults':      defaultConfig
+    'defaults':      defaultConfig,
   })
 
   if (!config.get('version') || !config.get('keypair')) {
@@ -142,7 +146,7 @@ export default async () => {
     log.warn([
       'Environment discrepancy',
       'Your configuration doesn\'t match your environment',
-      'Resetting to new value based on environment'
+      'Resetting to new value based on environment',
     ].join('\n\t'))
     ourConfig.set(finalizedConfig)
   }

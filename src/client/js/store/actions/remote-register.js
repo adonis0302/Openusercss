@@ -1,7 +1,7 @@
 import router from '../../router'
-import {remoteRegister} from './helpers/remotes/mutations'
+import {remoteRegister,} from './helpers/remotes/mutations'
 
-export default async ({getters, commit}, registerData) => {
+export default async ({getters, commit,}, registerData) => {
   commit('loading', true)
 
   try {

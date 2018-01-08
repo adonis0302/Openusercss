@@ -1,7 +1,7 @@
 // @flow
 import 'babel-polyfill'
 
-import {createBundleRenderer} from 'vue-server-renderer'
+import {createBundleRenderer,} from 'vue-server-renderer'
 
 import express from 'express'
 import log from 'chalk-console'
@@ -15,7 +15,7 @@ import pug from 'pug'
 import helmet from 'helmet'
 import schemas from 'posthtml-schemas'
 import raven from 'raven'
-import {auto} from './shared/error-handler'
+import {auto,} from './shared/error-handler'
 
 import staticConfig from './shared/config'
 
@@ -29,26 +29,26 @@ const cspOptions = {
     'defaultSrc': [
       "'self'",
       'openusercss.org',
-      'openusercss.com'
+      'openusercss.com',
     ],
     'scriptSrc': [
       "'self'",
       'openusercss.org',
       'openusercss.com',
-      'sentry.io'
+      'sentry.io',
     ],
     'styleSrc': [
       "'self'",
       "'unsafe-inline'",
       'openusercss.org',
-      'openusercss.com'
+      'openusercss.com',
     ],
     'imgSrc': [
       "'self'",
       'data:',
       'imageproxy.openusercss.org',
       'imageproxy.openusercss.com',
-      'gravatar.com'
+      'gravatar.com',
     ],
     'connectSrc': [
       'openusercss.org',
@@ -58,12 +58,12 @@ const cspOptions = {
       'imageproxy.openusercss.org',
       'imageproxy.openusercss.com',
       'gravatar.com',
-      'sentry.io'
+      'sentry.io',
     ],
     'fontSrc': [
-      'data:'
-    ]
-  }
+      'data:',
+    ],
+  },
 }
 
 if (process.env.NODE_ENV === 'development') {
@@ -74,7 +74,7 @@ if (process.env.NODE_ENV === 'development') {
   cspOptions.directives.scriptSrc = [
     ...cspOptions.directives.scriptSrc,
     "'unsafe-inline'",
-    "'unsafe-eval'"
+    "'unsafe-eval'",
   ]
 }
 
@@ -90,17 +90,17 @@ const init = async () => {
   app.use(helmet({
     'contentSecurityPolicy': cspOptions,
     'dnsPrefetchControl':    {
-      'allow': true
+      'allow': true,
     },
     'frameguard': {
-      'action': 'deny'
+      'action': 'deny',
     },
     'hsts': {
-      'maxAge': 60 * 60 * 24 * 60
+      'maxAge': 60 * 60 * 24 * 60,
     },
     'referrerPolicy': {
-      'policy': 'strict-origin-when-cross-origin'
-    }
+      'policy': 'strict-origin-when-cross-origin',
+    },
   }))
 
   app.enable('trust proxy')
@@ -117,13 +117,13 @@ const init = async () => {
   }
 
   app.get(/.*\.(js|json|png|jpg|txt|css|mp4|map)$/, express.static(path.join(basePath, 'static'), {
-    'dotfiles': 'deny'
+    'dotfiles': 'deny',
   }))
 
   app.get(/^(?!.*\.(js|json|png|jpg|txt|css|mp4|map)$)/, async (req, res) => {
     let appHTML = ''
     const appStream = await renderer.renderToStream({
-      'url': req.url
+      'url': req.url,
     })
 
     appStream.on('data', (data) => {
@@ -134,9 +134,11 @@ const init = async () => {
       res.type('html')
       const pugHTML = pug.renderFile(templatePath, {
         req,
-        appHTML
+        appHTML,
       })
-      const {html} = await schemas.process(pugHTML)
+      const {
+        html,
+      } = await schemas.process(pugHTML)
 
       res.write(html)
       res.end()
@@ -150,9 +152,11 @@ const init = async () => {
       res.type('html')
       const pugHTML = pug.renderFile(templatePath, {
         req,
-        appHTML
+        appHTML,
       })
-      const {html} = await schemas.process(pugHTML)
+      const {
+        html,
+      } = await schemas.process(pugHTML)
 
       res.write(html)
       res.end()
@@ -174,7 +178,7 @@ const init = async () => {
 
   const httpsServer = https.createServer({
     'key':  config.get('keypair.clientprivate'),
-    'cert': config.get('keypair.clientcert')
+    'cert': config.get('keypair.clientcert'),
   }, app)
 
   httpsServer.listen(config.get('ports.frontend.https'))

@@ -1,5 +1,5 @@
-import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
-import {mapGetters} from 'vuex'
+import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
+import {mapGetters,} from 'vuex'
 
 import oucFooter from '../../components/ouc-footer/ouc-footer.vue'
 import navbar from '../../components/navbar/navbar.vue'
@@ -22,7 +22,7 @@ export default {
     flushImg,
     navbar,
     chip,
-    notification
+    notification,
   },
   beforeMount () {
     this.$store.dispatch('getLatestThemes', 6)
@@ -50,12 +50,12 @@ export default {
         return 0
       }
       return result
-    }
+    },
   },
   'computed': {
     ...mapGetters([
       'actionErrors',
-      'themes'
+      'themes',
     ]),
     'latestThemes': {
       'cache': false,
@@ -68,12 +68,12 @@ export default {
 
         themes.forEach((theme, index) => {
           themes[index].user = this.$db.getCollection('users').findOne({
-            '_id': themes[index].user._id
+            '_id': themes[index].user._id,
           })
         })
 
         return themes
-      }
+      },
     },
     'popularThemes': {
       'cache': false,
@@ -86,12 +86,12 @@ export default {
 
         themes.forEach((theme, index) => {
           themes[index].user = this.$db.getCollection('users').findOne({
-            '_id': themes[index].user._id
+            '_id': themes[index].user._id,
           })
         })
 
         return themes
-      }
-    }
-  }
+      },
+    },
+  },
 }

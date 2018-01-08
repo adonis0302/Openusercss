@@ -1,5 +1,8 @@
 export class ExpectedError extends Error {
-  constructor ({prefix, message}) {
+  constructor ({
+    prefix,
+    message,
+  }) {
     let msg = message
 
     if (message instanceof Object) {
@@ -22,7 +25,7 @@ class AuthenticationError extends ExpectedError {
   constructor (message, status) {
     super({
       'prefix': 'Authentication error',
-      message
+      message,
     })
   }
 }
@@ -31,12 +34,12 @@ class LintError extends ExpectedError {
   constructor (message, status) {
     super({
       'prefix': 'Linting error',
-      message
+      message,
     })
   }
 }
 
 export const expected = {
   AuthenticationError,
-  LintError
+  LintError,
 }

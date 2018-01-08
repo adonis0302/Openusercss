@@ -32,7 +32,7 @@ export const userPropList = `
   donationUrl
 `
 
-export const verifyToken = ({token}) => gql(`{
+export const verifyToken = ({token,}) => gql(`{
   verifyToken(token: "${token}") {
     user {
       ${userPropList}
@@ -43,7 +43,7 @@ export const verifyToken = ({token}) => gql(`{
   }
 }`)
 
-export const theme = ({id}) => gql(`
+export const theme = ({id,}) => gql(`
   query {
     theme(id: "${id}") {
       user {
@@ -54,7 +54,7 @@ export const theme = ({id}) => gql(`
   }
 `)
 
-export const user = ({id}) => gql(`
+export const user = ({id,}) => gql(`
   query {
     user(id: "${id}") {
       themes {
@@ -65,7 +65,7 @@ export const user = ({id}) => gql(`
   }
 `)
 
-export const latestThemes = ({limit}) => gql(`
+export const latestThemes = ({limit,}) => gql(`
   query {
     latestThemes(limit: ${limit}) {
       user {
@@ -76,7 +76,7 @@ export const latestThemes = ({limit}) => gql(`
   }
 `)
 
-export const popularThemes = ({limit}) => gql(`
+export const popularThemes = ({limit,}) => gql(`
   query {
     popularThemes(limit: ${limit}) {
       user {
@@ -87,7 +87,7 @@ export const popularThemes = ({limit}) => gql(`
   }
 `)
 
-export const search = ({terms, limit, skip}) => gql(`
+export const search = ({terms, limit, skip,}) => gql(`
   query {
     search(terms: "${terms}", limit: ${limit}, skip: ${skip}) {
       users {

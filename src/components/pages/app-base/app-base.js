@@ -1,7 +1,7 @@
-import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
+import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
 import navbar from '../../components/navbar/navbar.vue'
-import {LeftRight} from '../../../src/shared/animations'
-import {mapGetters, mapMutations} from 'vuex'
+import {LeftRight,} from '../../../src/shared/animations'
+import {mapGetters, mapMutations,} from 'vuex'
 
 export default {
   'components': {
@@ -13,7 +13,7 @@ export default {
     'b-container':   bulma('container', 'div'),
     'b-columns':     bulma('columns', 'div'),
     'b-column':      bulma('column', 'div'),
-    navbar
+    navbar,
   },
   beforeMount () {
     this.$store.dispatch('verifyToken')
@@ -22,17 +22,17 @@ export default {
   },
   data () {
     return {
-      process
+      process,
     }
   },
   'methods': {
     ...new LeftRight('easeOutCubic'),
     ...mapMutations([
-      'clearCache'
-    ])
+      'clearCache',
+    ]),
   },
   'computed': mapGetters([
     'session',
-    'loading'
-  ])
+    'loading',
+  ]),
 }

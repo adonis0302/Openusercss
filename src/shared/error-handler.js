@@ -7,29 +7,29 @@ const pe = new PrettyError()
 
 pe.appendStyle({
   'pretty-error > header > title > kind': {
-    'display': 'none'
+    'display': 'none',
   },
   'pretty-error > header > colon': {
-    'display': 'none'
+    'display': 'none',
   },
   'pretty-error > header > message': {
-    'color': 'red'
+    'color': 'red',
   },
   'pretty-error > trace > item > header > pointer > file': {
-    'color': 'bright-cyan'
+    'color': 'bright-cyan',
   },
   'pretty-error > trace > item > header > pointer > colon': {
-    'color': 'cyan'
+    'color': 'cyan',
   },
   'pretty-error > trace > item > header > pointer > line': {
-    'color': 'cyan'
+    'color': 'cyan',
   },
   'pretty-error > trace > item > header > what': {
-    'color': 'bright-white'
+    'color': 'bright-white',
   },
   'pretty-error > trace > item > footer > addr': {
-    'color': 'white'
-  }
+    'color': 'white',
+  },
 })
 pe.skipPackage('regenerator-runtime')
 pe.skipNodeFiles()

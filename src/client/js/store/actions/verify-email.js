@@ -1,7 +1,7 @@
 // import router from '../../router'
-import {verifyEmail} from './helpers/remotes/mutations'
+import {verifyEmail,} from './helpers/remotes/mutations'
 
-export default async ({getters, commit}, token) => {
+export default async ({getters, commit,}, token) => {
   commit('loading', true)
   let result = null
 

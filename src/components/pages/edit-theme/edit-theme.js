@@ -1,9 +1,9 @@
-import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
+import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
 import noSSR from 'vue-no-ssr'
-import {mapGetters} from 'vuex'
+import {mapGetters,} from 'vuex'
 import semver from 'semver'
-import {cloneDeep, concat} from 'lodash'
-import {Chrome as colorPicker} from 'vue-color'
+import {cloneDeep, concat,} from 'lodash'
+import {Chrome as colorPicker,} from 'vue-color'
 import parse from '../../../src/shared/usercss-parser'
 import raven from 'raven-js'
 
@@ -21,13 +21,13 @@ const customDictionary = {
   'en': {
     'custom': {
       'content': {
-        'required': 'Theme code must not be empty'
+        'required': 'Theme code must not be empty',
       },
       'version': {
-        'semver': 'Theme versioning must be semantic'
-      }
-    }
-  }
+        'semver': 'Theme versioning must be semantic',
+      },
+    },
+  },
 }
 
 export default {
@@ -57,7 +57,7 @@ export default {
     bTextarea,
     listCreator,
     colorPicker,
-    bSwitch
+    bSwitch,
   },
   'data': () => {
     return {
@@ -68,11 +68,11 @@ export default {
         'screenshots': [],
         'content':     '',
         'options':     [],
-        'license':     'string'
+        'license':     'string',
       },
       'colors': {
-        'hex': '#ffffff'
-      }
+        'hex': '#ffffff',
+      },
     }
   },
   beforeMount () {
@@ -83,13 +83,13 @@ export default {
         this.$store.dispatch('getFullTheme', this.$route.params.id)
         .then((theme) => {
           theme.user = {
-            '_id': theme.user._id
+            '_id': theme.user._id,
           }
           self.editedTheme = theme
         })
       } else {
         self.editedTheme = this.$db.getCollection('themes').findOne({
-          '_id': this.$route.params.id
+          '_id': this.$route.params.id,
         })
       }
     }
@@ -114,18 +114,18 @@ export default {
 
         this.$store.dispatch('saveTheme', {
           'redirect': `/profile/${this.currentUser._id}`,
-          readyTheme
+          readyTheme,
         })
       }
     },
     createColorsObject (hex) {
       return {
-        hex
+        hex,
       }
     },
     addOption (type) {
       this.editedTheme.options.push({
-        type
+        type,
       })
     },
     removeOption (index) {
@@ -150,11 +150,11 @@ export default {
 
         raven.captureBreadcrumb({
           'event': {
-            'name': 'parsing-usercss'
+            'name': 'parsing-usercss',
           },
           'contents': {
-            'source': input
-          }
+            'source': input,
+          },
         })
 
         try {
@@ -165,7 +165,7 @@ export default {
           raven.captureException(error)
         }
 
-        const {props, code} = parseResult
+        const {props, code,} = parseResult
 
         this.editedTheme.content = code
         this.editedTheme.version = props.version
@@ -174,13 +174,13 @@ export default {
         this.editedTheme.title = props.title
         this.editedTheme.options = props.vars
       }
-    }
+    },
   },
   'computed': {
     ...mapGetters([
       'actionErrors',
       'currentUser',
-      'loading'
+      'loading',
     ]),
     theme () {
       if (!this.$route.params.id) {
@@ -188,8 +188,8 @@ export default {
       }
 
       return this.$db.getCollection('themes').findOne({
-        '_id': this.$route.params.id
+        '_id': this.$route.params.id,
       })
-    }
-  }
+    },
+  },
 }

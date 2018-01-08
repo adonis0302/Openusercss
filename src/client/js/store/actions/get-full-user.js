@@ -1,15 +1,15 @@
-import {cloneDeep} from 'lodash'
-import {getFullUser} from './helpers/remotes/queries'
-import db, {upsert} from '../db'
+import {cloneDeep,} from 'lodash'
+import {getFullUser,} from './helpers/remotes/queries'
+import db, {upsert,} from '../db'
 
-export default async ({commit, getters}, id) => {
+export default async ({commit, getters,}, id) => {
   commit('loading', true)
 
   try {
     const themes = db.getCollection('themes')
     const users = db.getCollection('users')
-    const {data} = await getFullUser(id)
-    const {user} = cloneDeep(data)
+    const {data,} = await getFullUser(id)
+    const {user,} = cloneDeep(data)
     const userThemeRefs = []
 
     user.themes.forEach((theme) => {
@@ -30,13 +30,13 @@ export default async ({commit, getters}, id) => {
         const constructedTheme = {
           ...theme,
           'user': {
-            '_id': user._id
-          }
+            '_id': user._id,
+          },
         }
 
         upsert(themes, constructedTheme)
         userThemeRefs.push({
-          '_id': theme._id
+          '_id': theme._id,
         })
       }
     })
@@ -48,7 +48,7 @@ export default async ({commit, getters}, id) => {
     commit('actionError', null)
     return {
       ...user,
-      'themes': userThemeRefs
+      'themes': userThemeRefs,
     }
   } catch (error) {
     commit('loading', false)

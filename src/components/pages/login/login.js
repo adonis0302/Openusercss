@@ -1,5 +1,5 @@
-import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
-import {mapGetters} from 'vuex'
+import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
+import {mapGetters,} from 'vuex'
 
 import oucFooter from '../../components/ouc-footer/ouc-footer.vue'
 import navbar from '../../components/navbar/navbar.vue'
@@ -29,14 +29,14 @@ export default {
     notification,
     oucFooter,
     navbar,
-    bInput
+    bInput,
   },
   'data': () => {
     return {
       'login': {
         'email':    '',
-        'password': ''
-      }
+        'password': '',
+      },
     }
   },
   'methods': {
@@ -46,9 +46,9 @@ export default {
       if (validated) {
         await this.$store.dispatch('login', this.login)
       }
-    }
+    },
   },
   'computed': mapGetters([
-    'actionErrors'
-  ])
+    'actionErrors',
+  ]),
 }

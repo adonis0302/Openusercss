@@ -1,9 +1,9 @@
 import staticConfig from '../../../shared/config'
 import jwt from 'jsonwebtoken'
 import pify from 'pify'
-import {getUser} from '../translators/get-user'
+import {getUser,} from '../translators/get-user'
 
-export default async (root, {token}, {User}) => {
+export default async (root, {token,}, {User,}) => {
   const config = await staticConfig()
   const decoded = await pify(jwt.verify)(token, config.get('keypair.clientprivate'))
   let result = false
@@ -12,11 +12,11 @@ export default async (root, {token}, {User}) => {
     let user = null
 
     const existingEmailUser = await getUser({
-      'email': decoded.email
+      'email': decoded.email,
     })
 
     user = existingEmailUser || await getUser({
-      'pendingEmail': decoded.email
+      'pendingEmail': decoded.email,
     })
 
     if (!user) {

@@ -1,10 +1,10 @@
 import Loki from 'lokijs'
-import {superstruct} from 'superstruct'
+import {superstruct,} from 'superstruct'
 
 const struct = superstruct({
   'types': {
-    'any': () => true
-  }
+    'any': () => true,
+  },
 })
 
 let db = null
@@ -29,13 +29,13 @@ if (process.browser) {
     'autoload':         true,
     'autoloadCallback': initialize,
     'autosave':         true,
-    'autosaveInterval': 10000
+    'autosaveInterval': 10000,
   })
 } else {
   db = new Loki('ouc-db', {
     'autoload':         true,
     'autoloadCallback': initialize,
-    'autosave':         false
+    'autosave':         false,
   })
 }
 
@@ -48,9 +48,9 @@ validators.reference = (typename) => {
 
   return struct({
     '__typename': 'string',
-    '_id':        'string'
+    '_id':        'string',
   }, {
-    '__typename': typename
+    '__typename': typename,
   })
 }
 validators.option = struct({
@@ -58,7 +58,7 @@ validators.option = struct({
   'type':       'string',
   'label':      'string',
   'name':       'string',
-  'value':      'any'
+  'value':      'any',
 })
 validators.themes = struct({
   '__typename':  'string?',
@@ -70,17 +70,17 @@ validators.themes = struct({
   'lastUpdate':  'string',
   'description': 'string',
   'ratings':     [
-    'object'
+    'object',
   ],
   'options': [
-    validators.option
+    validators.option,
   ],
   'screenshots': struct.optional([
-    'string'
+    'string',
   ]),
-  'user': validators.reference('User')
+  'user': validators.reference('User'),
 }, {
-  '__typename': 'Theme'
+  '__typename': 'Theme',
 })
 validators.users = struct({
   '__typename':     'string?',
@@ -94,10 +94,10 @@ validators.users = struct({
   'bio':            'string',
   'donationUrl':    'string',
   'themes':         struct.optional([
-    validators.reference('Theme')
-  ])
+    validators.reference('Theme'),
+  ]),
 }, {
-  '__typename': 'User'
+  '__typename': 'User',
 })
 
 if (!db.collections.length) {
@@ -135,7 +135,7 @@ export const upsert = (wantedCollection, object) => {
     collection.update(object)
   } catch (err) {
     collection.findAndRemove({
-      '_id': object._id
+      '_id': object._id,
     })
     collection.insert(object)
   }

@@ -1,5 +1,5 @@
 import test from 'ava'
-import {cloneDeep} from 'lodash'
+import {cloneDeep,} from 'lodash'
 
 import mergeDeep from '../src/shared/merge-deep'
 import state from './shared/state-mock'
@@ -9,8 +9,8 @@ test('modifies existing objects', async (t) => {
     {
       '_id':     '5a275431707d23a322cff59f',
       'rating':  1,
-      'version': '1.0.1'
-    }
+      'version': '1.0.1',
+    },
   ])
 
   const expected = cloneDeep(state.themes)
@@ -31,10 +31,10 @@ test('adds new objects', async (t) => {
       'title':      'Hello',
       'user':       {
         '__typename': 'User',
-        '_id':        '5a262a2c3835ee7627db2ef9'
+        '_id':        '5a262a2c3835ee7627db2ef9',
       },
-      'version': '2.0.0'
-    }
+      'version': '2.0.0',
+    },
   ])
   const expected = cloneDeep(state.themes)
 
@@ -45,9 +45,9 @@ test('adds new objects', async (t) => {
     'title':      'Hello',
     'user':       {
       '__typename': 'User',
-      '_id':        '5a262a2c3835ee7627db2ef9'
+      '_id':        '5a262a2c3835ee7627db2ef9',
     },
-    'version': '2.0.0'
+    'version': '2.0.0',
   })
 
   t.deepEqual(merged, expected)
@@ -56,8 +56,8 @@ test('adds new objects', async (t) => {
 test('does not remove existing objects', async (t) => {
   const merged = mergeDeep(state.themes, '_id', [
     {
-      '_id': '5a275431707d23a322cff59f'
-    }
+      '_id': '5a275431707d23a322cff59f',
+    },
   ])
   const expected = state.themes
 
@@ -75,8 +75,8 @@ test('throws error if no source is given', (t) => {
     // eslint-disable-next-line no-undefined
     mergeDeep(undefined, '_id', [
       {
-        '_id': '5a275431707d23a322cff588'
-      }
+        '_id': '5a275431707d23a322cff588',
+      },
     ])
   })
 })
@@ -86,8 +86,8 @@ test('throws error if no key is given', (t) => {
     // eslint-disable-next-line no-undefined
     mergeDeep(state.themes, undefined, [
       {
-        '_id': '5a275431707d23a322cff588'
-      }
+        '_id': '5a275431707d23a322cff588',
+      },
     ])
   })
 })
@@ -107,7 +107,7 @@ test('throws error if new data is null', (t) => {
 test('throws error if new data is empty', (t) => {
   t.throws(() => {
     mergeDeep(state.themes, '_id', [
-      {}
+      {},
     ])
   })
 })

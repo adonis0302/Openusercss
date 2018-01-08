@@ -1,4 +1,8 @@
-import {findIndex, cloneDeep, defaultsDeep} from 'lodash'
+import {
+  findIndex,
+  cloneDeep,
+  defaultsDeep,
+} from 'lodash'
 
 // This function takes source (array), and merges newDataArgs
 // into it by key, then returns it
@@ -33,7 +37,7 @@ export default (source, key, ...newDataArgs) => {
   newDataArgs.forEach((newDataArg) => {
     newDataArg.forEach((newData) => {
       const index = findIndex(sourceCopy, {
-        [key]: newData[key]
+        [key]: newData[key],
       })
 
       if (index === -1) {

@@ -1,17 +1,17 @@
 import staticConfig from '../../../shared/config'
-import {expected} from '../../../shared/custom-errors'
-import {getUser} from '../translators/get-user'
+import {expected,} from '../../../shared/custom-errors'
+import {getUser,} from '../translators/get-user'
 import jwt from 'jsonwebtoken'
 import moment from 'moment'
 import bcrypt from 'bcryptjs'
 
-const {AuthenticationError} = expected
+const {AuthenticationError,} = expected
 const invalidCreds = 'Invalid credentials'
 
-export default async (root, {email, password}, {User, Session, Theme, headers, connection}) => {
+export default async (root, {email, password,}, {User, Session, Theme, headers, connection,}) => {
   const config = await staticConfig()
   const requestedUser = await getUser({
-    email
+    email,
   })
 
   let authResult = null
@@ -27,11 +27,11 @@ export default async (root, {email, password}, {User, Session, Theme, headers, c
   }
 
   const token = jwt.sign({
-    'userId': requestedUser._id
+    'userId': requestedUser._id,
   }, config.get('keypair.clientprivate'), {
     'expiresIn': '60d',
     'issuer':    config.get('domain'),
-    'algorithm': 'HS256'
+    'algorithm': 'HS256',
   })
 
   const newSession = Session.create({
@@ -40,7 +40,7 @@ export default async (root, {email, password}, {User, Session, Theme, headers, c
     'createdAt': moment().toJSON(),
     'ua':        headers['user-agent'],
     'ip':        connection.remoteAddress,
-    token
+    token,
   })
 
   requestedUser.lastSeen = moment().toJSON()

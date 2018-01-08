@@ -1,14 +1,14 @@
 /* eslint no-console:0 */
 import 'babel-polyfill'
 import FpsEmitter from 'fps-emitter'
-import {divide, sum} from 'lodash'
+import {divide, sum,} from 'lodash'
 import log from 'chalk-console'
 import iziToast from 'izitoast'
 import raven from 'raven-js'
-import {StarRating} from 'vue-rate-it'
+import {StarRating,} from 'vue-rate-it'
 import ravenVue from 'raven-js/plugins/vue'
 import hat from 'hat'
-import {struct} from 'superstruct'
+import {struct,} from 'superstruct'
 
 import VueModal from 'vue-js-modal'
 import VueFlickity from 'vue-flickity'
@@ -16,14 +16,14 @@ import {
   Vue,
   store,
   router,
-  appBase
+  appBase,
 } from './vue'
 import db from './store/db'
-import {runPolyfills} from './utils/features'
+import {runPolyfills,} from './utils/features'
 
 if (process.env.NODE_ENV !== 'development') {
   raven.config('https://37715e4819864017ba7c02d05eb5cb75@sentry.io/264718', {
-    'release': window.revision.revisionLong
+    'release': window.revision.revisionLong,
   })
   .addPlugin(ravenVue, Vue)
   .install()
@@ -38,9 +38,9 @@ const responseValidator = struct({
     'name':         'string',
     'version':      'string?',
     'capabilities': [
-      'string?'
-    ]
-  }
+      'string?',
+    ],
+  },
 })
 const questionValidator = struct({
   'type':         'string',
@@ -48,17 +48,17 @@ const questionValidator = struct({
   'revision':     'object',
   'featuresList': {
     'required': [
-      'string'
+      'string',
     ],
     'optional': [
-      'string'
-    ]
-  }
+      'string',
+    ],
+  },
 })
 const featuresList = {
   'required': [
     'install-usercss',
-    'configure-after-install'
+    'configure-after-install',
   ],
   'optional': [
     'configure-before-install',
@@ -74,8 +74,8 @@ const featuresList = {
     'manage-local',
     'search-remote',
     'query-api',
-    'mutate-api'
-  ]
+    'mutate-api',
+  ],
 }
 
 const polyfills = async () => {
@@ -86,7 +86,7 @@ const sendHandshakeQuestion = () => {
     'type':     'ouc-handshake-question',
     'revision': window.revision,
     featuresList,
-    key
+    key,
   }), '*')
 }
 const attachHandshakeListeners = () => {
@@ -109,7 +109,7 @@ const attachHandshakeListeners = () => {
         if (missingFeatures.length) {
           throw new Error([
             `${response.extension.name} ${response.extension.version} is not capable of the following features:`,
-            `${missingFeatures.join('\n')}`
+            `${missingFeatures.join('\n')}`,
           ].join('\n'))
         }
 
@@ -118,7 +118,7 @@ const attachHandshakeListeners = () => {
             'Response key doesn\'t match.\n',
             `Expected: ${key}`,
             `Received: ${response.key}`,
-            `Raw data: ${JSON.stringify(response, null, 2)}`
+            `Raw data: ${JSON.stringify(response, null, 2)}`,
           ].join('\n'))
         }
 
@@ -134,7 +134,7 @@ const mountApp = async () => {
   const app = new Vue({
     store,
     router,
-    ...appBase
+    ...appBase,
   })
 
   app.$mount('app')

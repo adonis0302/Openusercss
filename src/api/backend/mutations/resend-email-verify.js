@@ -2,17 +2,17 @@ import mustAuthenticate from '../../../shared/enforce-session'
 import staticConfig from '../../../shared/config'
 import jwt from 'jsonwebtoken'
 import {
-  sendEmail
+  sendEmail,
 } from '../../email/mailer'
 
-const createSendEmail = async ({email, displayname}) => {
+const createSendEmail = async ({email, displayname,}) => {
   const config = await staticConfig()
   const token = jwt.sign({
-    email
+    email,
   }, config.get('keypair.clientprivate'), {
     'expiresIn': '1d',
     'issuer':    config.get('domain'),
-    'algorithm': 'HS256'
+    'algorithm': 'HS256',
   })
 
   let link = `https://openusercss.org/verify-email/${token}`
@@ -26,14 +26,14 @@ const createSendEmail = async ({email, displayname}) => {
     'template': 'email-verification-request',
     'locals':   {
       displayname,
-      link
-    }
+      link,
+    },
   })
 
   return result
 }
 
-export default async (root, {token}, {Session}) => {
+export default async (root, {token,}, {Session,}) => {
   const session = await mustAuthenticate(token, Session)
   const result = await createSendEmail(session.user)
 

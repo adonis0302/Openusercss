@@ -1,16 +1,16 @@
-import {ObjectID} from 'mongodb'
+import {ObjectID,} from 'mongodb'
 import mustAuthenticate from '../../../shared/enforce-session'
-import {getUser} from '../translators/get-user'
-import {getTheme} from '../translators/get-theme'
-import {getRating} from '../translators/get-rating'
+import {getUser,} from '../translators/get-user'
+import {getTheme,} from '../translators/get-theme'
+import {getRating,} from '../translators/get-rating'
 
-export default async (root, {token, id, value}, {Session, Theme, Rating, User}) => {
+export default async (root, {token, id, value,}, {Session, Theme, Rating, User,}) => {
   const session = await mustAuthenticate(token, Session)
   const user = await getUser({
-    '_id': session.user._id
+    '_id': session.user._id,
   })
   const theme = await getTheme({
-    '_id': id
+    '_id': id,
   })
 
   // Sanity checks
@@ -27,7 +27,7 @@ export default async (root, {token, id, value}, {Session, Theme, Rating, User}) 
   // Load the existing rating object
   let existing = await getRating({
     'theme': new ObjectID(id),
-    'user':  user._id
+    'user':  user._id,
   })
 
   if (existing) {
@@ -39,13 +39,13 @@ export default async (root, {token, id, value}, {Session, Theme, Rating, User}) 
     existing = Rating.create({
       user,
       theme,
-      value
+      value,
     })
   }
 
   await existing.save()
   const finalTheme = await getTheme({
-    '_id': id
+    '_id': id,
   })
 
   return finalTheme

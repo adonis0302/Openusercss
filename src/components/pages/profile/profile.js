@@ -1,5 +1,5 @@
-import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
-import {mapGetters} from 'vuex'
+import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
+import {mapGetters,} from 'vuex'
 import moment from 'moment'
 
 import icon from '../../components/icon/icon.vue'
@@ -25,7 +25,7 @@ export default {
     themeCard,
     flushImg,
     icon,
-    notification
+    notification,
   },
   beforeMount () {
     this.$store.dispatch('getFullUser', this.$route.params.id)
@@ -61,24 +61,24 @@ export default {
         return 0
       }
       return result
-    }
+    },
   },
   data () {
     return {
-      'time': moment()
+      'time': moment(),
     }
   },
   'computed': {
     ...mapGetters([
       'currentUser',
       'actionErrors',
-      'themes'
+      'themes',
     ]),
     'user': {
       'cache': false,
       get () {
         const user = this.$db.getCollection('users').findOne({
-          '_id': this.$route.params.id
+          '_id': this.$route.params.id,
         })
         const userThemes = []
 
@@ -86,7 +86,7 @@ export default {
           user.themes.forEach((theme) => {
             if (theme) {
               const userTheme = this.$db.getCollection('themes').findOne({
-                '_id': theme._id
+                '_id': theme._id,
               })
 
               userThemes.push(userTheme)
@@ -96,14 +96,14 @@ export default {
 
         return {
           ...user,
-          'themes': userThemes
+          'themes': userThemes,
         }
-      }
+      },
     },
     lastOnlineDisplay () {
       const user = this.user
 
       return `Last seen ${user.lastSeenReason}, ${moment(this.time).to(user.lastSeen)}`
-    }
-  }
+    },
+  },
 }

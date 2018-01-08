@@ -2,7 +2,7 @@ import 'babel-polyfill'
 
 import log from 'chalk-console'
 import path from 'path'
-import {forOwn} from 'lodash'
+import {forOwn,} from 'lodash'
 import respawn from 'respawn'
 
 log.info('Manager process starting')
@@ -10,7 +10,7 @@ log.info('Manager process starting')
 const basePath = path.resolve(process.mainModule.paths[0], '..')
 const startList = {
   'API':       path.join(basePath, '/api'),
-  'Webserver': path.join(basePath, '/webserver')
+  'Webserver': path.join(basePath, '/webserver'),
 }
 
 const startProcesses = (list) => {
@@ -18,7 +18,10 @@ const startProcesses = (list) => {
 
   forOwn(list, async (value, key) => {
     log.info(`Manager starting ${key}`)
-    const child = respawn(['node', value], {
+    const child = respawn([
+      'node',
+      value,
+    ], {
       'name':        key,
       'env':         process.env,
       'cwd':         basePath,
@@ -26,7 +29,7 @@ const startProcesses = (list) => {
       'sleep':       500,
       'kill':        200,
       'stdio':       'inherit',
-      'fork':        false
+      'fork':        false,
     })
 
     child.start()

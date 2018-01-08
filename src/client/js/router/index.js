@@ -27,46 +27,46 @@ export const routerOptions = {
         if (process.title === 'node') {
           Promise.all([
             store.dispatch('getLatestThemes', 6),
-            store.dispatch('getPopularThemes', 6)
+            store.dispatch('getPopularThemes', 6),
           ])
           .then(next)
           .catch(next)
         } else {
           return next()
         }
-      }
+      },
     },
     {
       'path':      '/help',
-      'component': helpRoute
+      'component': helpRoute,
     },
     {
       'path':      '/notice',
-      'component': noticeRoute
+      'component': noticeRoute,
     },
     {
       'path':      '/login',
-      'component': loginRoute
+      'component': loginRoute,
     },
     {
       'path':      '/register',
-      'component': registerRoute
+      'component': registerRoute,
     },
     {
       'path':      '/account',
-      'component': accountRoute
+      'component': accountRoute,
     },
     {
       'path':      '/verify-email/:token',
-      'component': verifyEmailRoute
+      'component': verifyEmailRoute,
     },
     {
       'path':      '/search/:terms?',
-      'component': searchRoute
+      'component': searchRoute,
     },
     {
       'path':      '/contact',
-      'component': contactRoute
+      'component': contactRoute,
     },
     {
       'path':      '/profile/:id',
@@ -79,7 +79,7 @@ export const routerOptions = {
         } else {
           return next()
         }
-      }
+      },
     },
     {
       'path':      '/theme/edit/:id?',
@@ -96,7 +96,7 @@ export const routerOptions = {
         } else {
           return next()
         }
-      }
+      },
     },
     {
       'path':      '/theme/:id/:options?',
@@ -109,17 +109,17 @@ export const routerOptions = {
         } else {
           return next()
         }
-      }
+      },
     },
     {
       'path':      '/test',
-      'component': testRoute
+      'component': testRoute,
     },
     {
       'path':      '*',
-      'component': notFoundRoute
-    }
-  ]
+      'component': notFoundRoute,
+    },
+  ],
 }
 const router = new VueRouter(routerOptions)
 
@@ -130,13 +130,13 @@ router.beforeEach((to, from, next) => {
     && navigator.serviceWorker.controller
     && 'MessageChannel' in window
   ) {
-    const {port2} = new window.MessageChannel()
+    const {port2,} = new window.MessageChannel()
 
     navigator.serviceWorker.controller.postMessage({
       'action': 'cache-route',
-      'route':  to.path
+      'route':  to.path,
     }, [
-      port2
+      port2,
     ])
   }
 

@@ -1,18 +1,18 @@
-import {cloneDeep} from 'lodash'
+import {cloneDeep,} from 'lodash'
 import router from '../../router'
-import {remoteAccount} from './helpers/remotes/mutations'
+import {remoteAccount,} from './helpers/remotes/mutations'
 import db from '../db'
 
-export default async ({commit, getters}, {accountData, redirect}) => {
+export default async ({commit, getters,}, {accountData, redirect,}) => {
   commit('loading', true)
 
   try {
     const users = db.getCollection('users')
-    const {data} = await remoteAccount(accountData, getters.session.token)
-    const {account} = cloneDeep(data)
-    const {_id} = account
+    const {data,} = await remoteAccount(accountData, getters.session.token)
+    const {account,} = cloneDeep(data)
+    const {_id,} = account
     const user = users.findOne({
-      _id
+      _id,
     })
 
     user.bio = account.bio

@@ -1,5 +1,5 @@
-import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
-import {mapGetters} from 'vuex'
+import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
+import {mapGetters,} from 'vuex'
 
 import oucFooter from '../../components/ouc-footer/ouc-footer.vue'
 import navbar from '../../components/navbar/navbar.vue'
@@ -21,13 +21,13 @@ export default {
     searchField,
     notification,
     themeCard,
-    flushImg
+    flushImg,
   },
   data () {
     return {
       'results': null,
       'query':   this.$route.params.terms,
-      'page':    0
+      'page':    0,
     }
   },
   async mounted () {
@@ -62,17 +62,17 @@ export default {
       const searchResults = await this.$store.dispatch('search', {
         'terms': this.query,
         'limit': 25,
-        'skip':  0
+        'skip':  0,
       })
 
       this.results = searchResults
     },
     queryChange (value) {
       this.$router.replace(`/search/${value}`)
-    }
+    },
   },
   'computed': mapGetters([
     'actionErrors',
-    'loading'
-  ])
+    'loading',
+  ]),
 }

@@ -1,17 +1,17 @@
-import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
+import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
 
 import icon from '../icon/icon.vue'
 
 export default {
   'props': [
     'lazy',
-    'value'
+    'value',
   ],
   'components': {
     'b-field':   bulma('field', 'div'),
     'b-label':   bulma('label', 'label'),
     'b-control': bulma('control', 'div'),
-    icon
+    icon,
   },
   mounted () {
     if (this.lazy) {
@@ -27,6 +27,6 @@ export default {
   'watch': {
     value (value) {
       this.$refs.main.value = value
-    }
-  }
+    },
+  },
 }

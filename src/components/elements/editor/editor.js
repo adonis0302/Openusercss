@@ -2,32 +2,32 @@ export default {
   'props': {
     'mode': {
       'type':    String,
-      'default': 'css'
+      'default': 'css',
     },
     'fontsize': {
       'type':    String,
-      'default': '12px'
+      'default': '12px',
     },
     'codefolding': {
       'type':    String,
-      'default': 'markbegin'
+      'default': 'markbegin',
     },
     'selectionstyle': {
       'type':    String,
-      'default': 'text'
+      'default': 'text',
     },
     'highlightline': {
       'type':    Boolean,
-      'default': true
+      'default': true,
     },
     'value': {
       'type':    String,
-      'default': ''
-    }
+      'default': '',
+    },
   },
   data () {
     return {
-      'editor': null
+      'editor': null,
     }
   },
   'methods': {
@@ -35,9 +35,9 @@ export default {
       const editorSession = editor.getSession()
 
       editorSession.setOptions({
-        'tabSize': 2
+        'tabSize': 2,
       })
-    }
+    },
   },
   mounted () {
     const brace = require('brace')
@@ -68,6 +68,6 @@ export default {
         this.editor.setValue(data, 0)
         this.editor.clearSelection()
       }
-    }
-  }
+    },
+  },
 }

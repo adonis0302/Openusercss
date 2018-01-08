@@ -1,4 +1,4 @@
-import {Document} from 'camo'
+import {Document,} from 'camo'
 import moment from 'moment'
 import validators from './validators'
 
@@ -19,33 +19,33 @@ export default class Session extends Document {
         'type':     String,
         'required': true,
         'default':  moment().toJSON(),
-        'validate': validators.isMomentJSON
+        'validate': validators.isMomentJSON,
       },
       'expiresAt': {
         'type':     String,
         'required': true,
         'default':  moment().add(60, 'days').toJSON(),
-        'validate': validators.notLongerDate(60)
+        'validate': validators.notLongerDate(60),
       },
       'token': {
         'type':     String,
         'required': true,
         'unique':   true,
-        'valiade':  validators.regex('jwt')
+        'valiade':  validators.regex('jwt'),
       },
       'ip': {
         'type':     String,
         'required': true,
         'unique':   false,
-        'validate': validators.regex('ip')
+        'validate': validators.regex('ip'),
       },
       'ua': {
         'type':     String,
         'required': true,
         'unique':   false,
-        'validate': validators.length(512)
+        'validate': validators.length(512),
       },
-      'user': User
+      'user': User,
     })
   }
 }

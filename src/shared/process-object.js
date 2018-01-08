@@ -1,6 +1,6 @@
 import {
   cloneDeep,
-  forOwn
+  forOwn,
 } from 'lodash'
 
 const processObject = (obj, func) => {

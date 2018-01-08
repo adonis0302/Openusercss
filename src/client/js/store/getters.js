@@ -10,7 +10,7 @@ const users = (state) => {
     dbUsers.forEach((user, userIndex) => {
       user.themes.forEach((theme, themeIndex) => {
         user.themes[themeIndex] = themesCol.findOne({
-          '_id': theme._id
+          '_id': theme._id,
         })
       })
 
@@ -33,7 +33,7 @@ const themes = (state) => {
     // return dbThemes.find({})
     dbThemes.forEach((theme, themeIndex) => {
       theme.user = usersCol.findOne({
-        '_id': theme.user._id
+        '_id': theme.user._id,
       })
 
       processedThemes.push(theme)
@@ -65,7 +65,7 @@ const currentUser = (state) => {
   }
 
   const user = dbUsers.findOne({
-    '_id': state.session.user._id
+    '_id': state.session.user._id,
   })
 
   return user || {}
@@ -77,5 +77,5 @@ export default {
   actionErrors,
   session,
   loading,
-  currentUser
+  currentUser,
 }

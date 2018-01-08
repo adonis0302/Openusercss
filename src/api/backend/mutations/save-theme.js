@@ -1,9 +1,9 @@
-import {findIndex} from 'lodash'
+import {findIndex,} from 'lodash'
 import mustAuthenticate from '../../../shared/enforce-session'
 import parse from '../../../shared/usercss-parser'
-import {getTheme} from '../translators/get-theme'
-import {getUser} from '../translators/get-user'
-import {getRatings} from '../translators/get-rating'
+import {getTheme,} from '../translators/get-theme'
+import {getUser,} from '../translators/get-user'
+import {getRatings,} from '../translators/get-rating'
 
 export default async (root, {
   token,
@@ -13,11 +13,11 @@ export default async (root, {
   version,
   id,
   screenshots,
-  options
-}, {Session, Theme, User, Option}) => {
+  options,
+}, {Session, Theme, User, Option,}) => {
   const session = await mustAuthenticate(token, Session)
   const user = await getUser({
-    '_id': session.user._id
+    '_id': session.user._id,
   })
   let newTheme = null
 
@@ -39,7 +39,7 @@ export default async (root, {
 
   if (id) {
     newTheme = await getTheme({
-      '_id': id
+      '_id': id,
     })
     const userOwnsTheme = session.user._id.equals(newTheme.user._id)
 
@@ -55,7 +55,7 @@ export default async (root, {
     newTheme.options = parsedOptions
 
     const userThemeIndex = findIndex(user.themes, {
-      '_id': id
+      '_id': id,
     })
 
     user.themes[userThemeIndex] = newTheme
@@ -67,7 +67,7 @@ export default async (root, {
       'options':     parsedOptions,
       title,
       version,
-      screenshots
+      screenshots,
     })
     user.themes.push(newTheme)
   }
@@ -76,7 +76,7 @@ export default async (root, {
 
   await user.save()
   savedTheme.ratings = await getRatings({
-    'theme': savedTheme._id
+    'theme': savedTheme._id,
   })
 
   return savedTheme

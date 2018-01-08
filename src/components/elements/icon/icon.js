@@ -1,25 +1,25 @@
-import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
+import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
 
 export default {
   'props': {
     'icon': {
       'type':    String,
-      'default': 'exclamation'
+      'default': 'exclamation',
     },
     'size': {
       'type':    String,
-      'default': '18'
+      'default': '18',
     },
     'color': {
-      'type': String
-    }
+      'type': String,
+    },
   },
   'methods': {
     'classValue': (iconName, size) => {
       return `mdi-${iconName} mdi-${size}px`
-    }
+    },
   },
   'components': {
-    'b-icon': bulma('icon', 'span')
-  }
+    'b-icon': bulma('icon', 'span'),
+  },
 }

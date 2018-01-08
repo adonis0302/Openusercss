@@ -11,19 +11,26 @@ import htmlmin from 'gulp-htmlmin'
 import sourcemaps from 'gulp-sourcemaps'
 import postcss from 'gulp-postcss'
 import pleeease from 'gulp-pleeease'
-import {pugOptions} from './shared/pug'
-import {ourSassConfig, postCssPluginsFunctional, postCssPluginsProdComponents} from './shared/css'
-import {remember, cached} from './shared/cache'
+import {pugOptions,} from './shared/pug'
+import {
+  ourSassConfig,
+  postCssPluginsFunctional,
+  postCssPluginsProdComponents,
+} from './shared/css'
+import {
+  remember,
+  cached,
+} from './shared/cache'
 
 const sources = {
   'components': [
     'src/components/bits/**/*.+(js|scss|pug)',
     'src/components/elements/**/*.+(js|scss|pug)',
-    'src/components/sets/**/*.+(js|scss|pug)'
+    'src/components/sets/**/*.+(js|scss|pug)',
   ],
   'pages': [
-    'src/components/pages/**/*.+(js|scss|pug)'
-  ]
+    'src/components/pages/**/*.+(js|scss|pug)',
+  ],
 }
 
 gulp.task('shared:components:prod', (done) => {
@@ -37,7 +44,7 @@ gulp.task('shared:components:prod', (done) => {
           stream,
           sassGlob(),
           sassVars(ourSassConfig, {
-            'verbose': false
+            'verbose': false,
           }),
           sass(),
           pleeease({
@@ -45,28 +52,28 @@ gulp.task('shared:components:prod', (done) => {
               'browsers': [
                 '> 1%',
                 'last 4 versions',
-                'ios 7'
+                'ios 7',
               ],
-              'cascade': true
+              'cascade': true,
             },
             'filters': {
-              'oldIe': false
+              'oldIe': false,
             },
             'rem': [
               '16px',
               {
                 'replace': true,
-                'atrules': true
-              }
+                'atrules': true,
+              },
             ],
             'pseudoElements': true,
             'import':         false,
             'rebaseUrls':     false,
             'minifier':       false,
             'mqpacker':       true,
-            'sourcemaps':     false
+            'sourcemaps':     false,
           }),
-          postcss(postCssPluginsProdComponents)
+          postcss(postCssPluginsProdComponents),
         ])
       },
 
@@ -80,13 +87,13 @@ gulp.task('shared:components:prod', (done) => {
             'minifyCss':          true,
             'minifyJs':           true,
             'keepClosingSlash':   true,
-            'removeComments':     true
-          })
+            'removeComments':     true,
+          }),
         ])
-      }
+      },
     }),
     vuemaker(),
-    gulp.dest('.tmp/components')
+    gulp.dest('.tmp/components'),
   ]).on('end', done)
 })
 
@@ -103,10 +110,10 @@ gulp.task('shared:components:fast', (done) => {
           stream,
           sassGlob(),
           sassVars(ourSassConfig, {
-            'verbose': false
+            'verbose': false,
           }),
           sass(),
-          postcss(postCssPluginsFunctional)
+          postcss(postCssPluginsFunctional),
         ])
       },
 
@@ -114,14 +121,14 @@ gulp.task('shared:components:fast', (done) => {
         return pump([
           prettyError(),
           stream,
-          pug(pugOptions)
+          pug(pugOptions),
         ])
-      }
+      },
     }),
     remember('components'),
     vuemaker(),
     sourcemaps.write(),
-    gulp.dest('.tmp/components')
+    gulp.dest('.tmp/components'),
   ]).on('end', done)
 })
 
@@ -136,7 +143,7 @@ gulp.task('shared:pages:prod', (done) => {
           stream,
           sassGlob(),
           sassVars(ourSassConfig, {
-            'verbose': false
+            'verbose': false,
           }),
           sass(),
           pleeease({
@@ -144,28 +151,28 @@ gulp.task('shared:pages:prod', (done) => {
               'browsers': [
                 '> 1%',
                 'last 4 versions',
-                'ios 7'
+                'ios 7',
               ],
-              'cascade': true
+              'cascade': true,
             },
             'filters': {
-              'oldIe': false
+              'oldIe': false,
             },
             'rem': [
               '16px',
               {
                 'replace': true,
-                'atrules': true
-              }
+                'atrules': true,
+              },
             ],
             'pseudoElements': true,
             'import':         false,
             'rebaseUrls':     false,
             'minifier':       false,
             'mqpacker':       true,
-            'sourcemaps':     false
+            'sourcemaps':     false,
           }),
-          postcss(postCssPluginsProdComponents)
+          postcss(postCssPluginsProdComponents),
         ])
       },
 
@@ -179,13 +186,13 @@ gulp.task('shared:pages:prod', (done) => {
             'minifyCss':          true,
             'minifyJs':           true,
             'keepClosingSlash':   true,
-            'removeComments':     true
-          })
+            'removeComments':     true,
+          }),
         ])
-      }
+      },
     }),
     vuemaker(),
-    gulp.dest('.tmp/pages')
+    gulp.dest('.tmp/pages'),
   ]).on('end', done)
 })
 
@@ -202,10 +209,10 @@ gulp.task('shared:pages:fast', (done) => {
           stream,
           sassGlob(),
           sassVars(ourSassConfig, {
-            'verbose': false
+            'verbose': false,
           }),
           sass(),
-          postcss(postCssPluginsFunctional)
+          postcss(postCssPluginsFunctional),
         ])
       },
 
@@ -213,13 +220,13 @@ gulp.task('shared:pages:fast', (done) => {
         return pump([
           prettyError(),
           stream,
-          pug(pugOptions)
+          pug(pugOptions),
         ])
-      }
+      },
     }),
     remember('pages'),
     vuemaker(),
     sourcemaps.write(),
-    gulp.dest('.tmp/pages')
+    gulp.dest('.tmp/pages'),
   ]).on('end', done)
 })

@@ -1,5 +1,5 @@
-import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
-import {mapGetters, mapActions} from 'vuex'
+import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
+import {mapGetters, mapActions,} from 'vuex'
 
 import flushImg from '../flush-img/flush-img.vue'
 import icon from '../icon/icon.vue'
@@ -19,26 +19,26 @@ export default {
     'b-container':     bulma('container', 'div'),
     'b-tag':           bulma('tag', 'div'),
     icon,
-    flushImg
+    flushImg,
   },
   'methods': {
     ...mapActions([
-      'logout'
+      'logout',
     ]),
     toggleOpen () {
       this.open = !this.open
     },
     close () {
       this.open = false
-    }
+    },
   },
   data () {
     return {
-      'open': false
+      'open': false,
     }
   },
   'computed': mapGetters([
     'session',
-    'currentUser'
-  ])
+    'currentUser',
+  ]),
 }

@@ -27,7 +27,7 @@ test('loading - returns from state', (t) => {
 test('currentUser - returns empty object if session is missing', (t) => {
   const result = getters.currentUser({
     // eslint-disable-next-line no-undefined
-    'session': undefined
+    'session': undefined,
   })
   const expected = {}
 

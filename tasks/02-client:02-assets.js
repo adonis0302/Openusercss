@@ -5,7 +5,10 @@ import buffer from 'gulp-buffer'
 import filter from 'gulp-filter'
 import prettyError from 'gulp-prettyerror'
 import path from 'path'
-import {remember, cached} from './shared/cache'
+import {
+  remember,
+  cached,
+} from './shared/cache'
 
 // IMAGES
 import imagemin from 'gulp-imagemin'
@@ -31,36 +34,36 @@ import {
   sizes,
   ourSassConfig,
   postCssPluginsProd,
-  postCssPluginsFunctional
+  postCssPluginsFunctional,
 } from './shared/css'
 
 const sources = {
   'fonts': [
     'node_modules/mdi/fonts/*.woff',
-    'src/client/fonts/*.woff'
+    'src/client/fonts/*.woff',
   ],
   'scss': [
-    'src/client/scss/main.scss'
+    'src/client/scss/main.scss',
   ],
   'email': [
-    'src/client/scss/email.scss'
+    'src/client/scss/email.scss',
   ],
   'css': [
-    '.tmp/*.min.css'
+    '.tmp/*.min.css',
   ],
   'icons': [
-    'src/client/img/*.icon.*'
+    'src/client/img/*.icon.*',
   ],
   'elements': [
-    'src/client/img/**/*'
+    'src/client/img/**/*',
   ],
   'elementFilter': [
     '**/*.{png,jpg,jpeg,gif}',
-    '!**/*.{icon|bg}*'
+    '!**/*.{icon|bg}*',
   ],
   'backgrounds': [
-    'src/client/img/**/*.bg.*'
-  ]
+    'src/client/img/**/*.bg.*',
+  ],
 }
 
 const destination = (dest) => {
@@ -75,34 +78,34 @@ gulp.task('client:media:prod', (done) => {
   const fontStream = pump([
     gulp.src(sources.fonts),
     webfont64(),
-    concat('fonts.scss')
+    concat('fonts.scss'),
   ])
 
   const sassStream = pump([
     gulp.src(sources.scss),
-    sassGlob()
+    sassGlob(),
   ])
 
   const iconStream = pump([
     gulp.src(sources.icons),
     jimp({
-      'sizes': iconSizes
-    })
+      'sizes': iconSizes,
+    }),
   ])
 
   const elementStream = pump([
     gulp.src(sources.elements),
     filter(sources.elementFilter),
     jimp({
-      sizes
-    })
+      sizes,
+    }),
   ])
 
   const backgroundsStream = pump([
     gulp.src(sources.backgrounds),
     jimp({
-      'sizes': bgSizes
-    })
+      'sizes': bgSizes,
+    }),
   ])
 
   const finalImageStream = pump([
@@ -111,34 +114,34 @@ gulp.task('client:media:prod', (done) => {
     imagemin([
       imagemin.gifsicle({
         'interlaced':        true,
-        'optimizationLevel': 3
+        'optimizationLevel': 3,
       }),
       jpegRecompress(),
       imagemin.optipng({
-        'optimizationLevel': 5
+        'optimizationLevel': 5,
       }),
       imagemin.svgo({
         'plugins': [
           {
-            'removeViewBox': true
-          }
-        ]
-      })
+            'removeViewBox': true,
+          },
+        ],
+      }),
     ]),
     flatten(),
-    gulp.dest(destination('img'))
+    gulp.dest(destination('img')),
   ])
 
   const componentCssStream = pump([
     prettyError(),
-    gulp.src(sources.css)
+    gulp.src(sources.css),
   ])
 
   const finalCssStream = pump([
     prettyError(),
     merge(fontStream, sassStream, componentCssStream),
     sassVars(ourSassConfig, {
-      'verbose': false
+      'verbose': false,
     }),
     sass(),
     buffer(),
@@ -148,32 +151,32 @@ gulp.task('client:media:prod', (done) => {
         'browsers': [
           '> 1%',
           'last 4 versions',
-          'ios 7'
+          'ios 7',
         ],
-        'cascade': true
+        'cascade': true,
       },
       'filters': {
-        'oldIe': false
+        'oldIe': false,
       },
       'rem': [
         '16px',
         {
           'replace': true,
-          'atrules': true
-        }
+          'atrules': true,
+        },
       ],
       'pseudoElements': true,
       'import':         false,
       'rebaseUrls':     false,
       'minifier':       {
-        'removeAllComments': true
+        'removeAllComments': true,
       },
       'mqpacker':   true,
-      'sourcemaps': false
+      'sourcemaps': false,
     }),
     postcss(postCssPluginsProd),
     flatten(),
-    gulp.dest(destination('css'))
+    gulp.dest(destination('css')),
   ])
 
   return merge(finalCssStream, finalImageStream)
@@ -184,20 +187,20 @@ gulp.task('client:media:fast', (done) => {
     gulp.src(sources.fonts),
     cached('fonts'),
     webfont64(),
-    concat('fonts.scss')
+    concat('fonts.scss'),
   ])
 
   const sassStream = pump([
     gulp.src(sources.scss),
-    sassGlob()
+    sassGlob(),
   ])
 
   const iconStream = pump([
     gulp.src(sources.icons),
     cached('icons'),
     jimp({
-      'sizes': iconSizes
-    })
+      'sizes': iconSizes,
+    }),
   ])
 
   const elementStream = pump([
@@ -205,19 +208,19 @@ gulp.task('client:media:fast', (done) => {
     cached('elements'),
     filter([
       '**/*.{png,jpg,jpeg,gif}',
-      '!**/*.bg*'
+      '!**/*.bg*',
     ]),
     jimp({
-      sizes
-    })
+      sizes,
+    }),
   ])
 
   const backgroundsStream = pump([
     gulp.src(sources.backgrounds),
     cached('backgrounds'),
     jimp({
-      'sizes': bgSizes
-    })
+      'sizes': bgSizes,
+    }),
   ])
 
   const finalImageStream = pump([
@@ -229,12 +232,12 @@ gulp.task('client:media:fast', (done) => {
       remember('elements'),
       remember('backgrounds')
     ),
-    gulp.dest(destination('img'))
+    gulp.dest(destination('img')),
   ])
 
   const componentCssStream = pump([
     prettyError(),
-    gulp.src(sources.css)
+    gulp.src(sources.css),
   ])
 
   const finalCssStream = pump([
@@ -242,14 +245,14 @@ gulp.task('client:media:fast', (done) => {
     merge(fontStream, sassStream, componentCssStream),
     remember('fonts'),
     sassVars(ourSassConfig, {
-      'verbose': false
+      'verbose': false,
     }),
     sass(),
     buffer(),
     concat('bundle.min.css'),
     postcss(postCssPluginsFunctional),
     flatten(),
-    gulp.dest(destination('css'))
+    gulp.dest(destination('css')),
   ])
 
   return merge(finalCssStream, finalImageStream)
@@ -260,13 +263,13 @@ gulp.task('client:media:email', (done) => {
     prettyError(),
     gulp.src(sources.email),
     sassVars(ourSassConfig, {
-      'verbose': false
+      'verbose': false,
     }),
     sass(),
     buffer(),
     concat('email.min.css'),
     postcss(postCssPluginsProd),
     flatten(),
-    gulp.dest(destination('css'))
+    gulp.dest(destination('css')),
   ])
 })

@@ -1,6 +1,6 @@
 export default {
   'actionErrors': [
-    new Error('This is a test error')
+    new Error('This is a test error'),
   ],
   'loading': false,
   'session': {
@@ -12,8 +12,8 @@ export default {
     'user':       {
       '_schema':    {},
       '__typename': 'User',
-      '_id':        '5a262a2c3835ee7627db2ef9'
-    }
+      '_id':        '5a262a2c3835ee7627db2ef9',
+    },
   },
   'users': [
     {
@@ -26,10 +26,10 @@ export default {
         {
           '_schema':    {},
           '__typename': 'Theme',
-          '_id':        '5a275431707d23a322cff59f'
-        }
-      ]
-    }
+          '_id':        '5a275431707d23a322cff59f',
+        },
+      ],
+    },
   ],
   'themes': [
     {
@@ -47,8 +47,8 @@ export default {
       'user':        {
         '_schema':    {},
         '__typename': 'User',
-        '_id':        '5a262a2c3835ee7627db2ef9'
-      }
-    }
-  ]
+        '_id':        '5a262a2c3835ee7627db2ef9',
+      },
+    },
+  ],
 }

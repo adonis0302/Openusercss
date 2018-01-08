@@ -1,5 +1,5 @@
-import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
-import {mapGetters} from 'vuex'
+import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
+import {mapGetters,} from 'vuex'
 
 import spinner from '../../components/spinner/spinner.vue'
 import oucFooter from '../../components/ouc-footer/ouc-footer.vue'
@@ -17,21 +17,21 @@ export default {
     'b-button':    bulma('button', 'button'),
     oucFooter,
     notification,
-    spinner
+    spinner,
   },
   data () {
     return {
       'token':   this.$route.params.token,
-      'success': null
+      'success': null,
     }
   },
   async mounted () {
-    const {data} = await this.$store.dispatch('verifyEmail', this.token)
-    const {verifyEmail} = data
+    const {data,} = await this.$store.dispatch('verifyEmail', this.token)
+    const {verifyEmail,} = data
 
     this.success = verifyEmail
   },
   'computed': mapGetters([
-    'loading'
-  ])
+    'loading',
+  ]),
 }

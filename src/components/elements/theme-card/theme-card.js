@@ -1,6 +1,6 @@
-import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
+import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
 import icon from '../icon/icon.vue'
-import {LeftRight} from '../../../src/shared/animations'
+import {LeftRight,} from '../../../src/shared/animations'
 
 export default {
   'components': {
@@ -17,27 +17,27 @@ export default {
     'b-media-content':     bulma('media-content', 'div'),
     'b-tile':              bulma('tile', 'div'),
     'b-box':               bulma('box', 'div'),
-    icon
+    icon,
   },
   'methods': new LeftRight(),
   'props':   {
     'direction': {
       'type':    String,
-      'default': 'vertical'
+      'default': 'vertical',
     },
     'height': {
-      'type': String
+      'type': String,
     },
     'card-class': {
-      'type': String
+      'type': String,
     },
     'tooltip': {
       'type':    String,
-      'default': 'unknown'
+      'default': 'unknown',
     },
     'themeId': {
       'type':    String,
-      'default': ''
-    }
-  }
+      'default': '',
+    },
+  },
 }

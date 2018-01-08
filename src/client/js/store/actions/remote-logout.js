@@ -1,7 +1,7 @@
 import router from '../../router'
-import {remoteLogout} from './helpers/remotes/mutations'
+import {remoteLogout,} from './helpers/remotes/mutations'
 
-export default async ({commit, getters}) => {
+export default async ({commit, getters,}) => {
   commit('loading', true)
 
   try {

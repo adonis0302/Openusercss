@@ -1,15 +1,15 @@
 import bcrypt from 'bcryptjs'
 import log from 'chalk-console'
 import jwt from 'jsonwebtoken'
-import {cloneDeep} from 'lodash'
+import {cloneDeep,} from 'lodash'
 import moment from 'moment'
 import {
-  sendEmail as transportEmail
+  sendEmail as transportEmail,
 } from '../../email/mailer'
 import mustAuthenticate from '../../../shared/enforce-session'
 import staticConfig from '../../../shared/config'
 
-const sendEmail = async (locals, {template}) => {
+const sendEmail = async (locals, {template,}) => {
   if (!locals.email) {
     throw new Error('No email address defined in locals')
   }
@@ -19,11 +19,11 @@ const sendEmail = async (locals, {template}) => {
 
   const config = await staticConfig()
   const token = jwt.sign({
-    'email': locals.email
+    'email': locals.email,
   }, config.get('keypair.clientprivate'), {
     'expiresIn': '1d',
     'issuer':    config.get('domain'),
-    'algorithm': 'HS256'
+    'algorithm': 'HS256',
   })
 
   let link = `https://openusercss.org/verify-email/${token}`
@@ -36,19 +36,19 @@ const sendEmail = async (locals, {template}) => {
     'to':     locals.email,
     'locals': {
       ...locals,
-      link
+      link,
     },
-    template
+    template,
   })
 
   return result
 }
 
-export default async (root, {token, email, password, displayname, bio, donationUrl}, {User, Session}) => {
+export default async (root, {token, email, password, displayname, bio, donationUrl,}, {User, Session,}) => {
   const session = await mustAuthenticate(token, Session)
   const config = await staticConfig()
   const saltRounds = parseInt(config.get('saltRounds'), 10)
-  const {user} = session
+  const {user,} = session
   const oldUser = cloneDeep(user)
   let link = null
 
@@ -80,11 +80,11 @@ export default async (root, {token, email, password, displayname, bio, donationU
     user.emailVerified = false
 
     const verificationToken = jwt.sign({
-      email
+      email,
     }, config.get('keypair.clientprivate'), {
       'expiresIn': '1d',
       'issuer':    config.get('domain'),
-      'algorithm': 'HS256'
+      'algorithm': 'HS256',
     })
 
     link = `https://openusercss.org/verify-email/${verificationToken}`
@@ -112,9 +112,9 @@ export default async (root, {token, email, password, displayname, bio, donationU
     sendEmail({
       user,
       oldUser,
-      'email': user.email
+      'email': user.email,
     }, {
-      'template': 'password-changed'
+      'template': 'password-changed',
     })
     .catch(log.error)
   }
@@ -124,9 +124,9 @@ export default async (root, {token, email, password, displayname, bio, donationU
       user,
       oldUser,
       'newDisplayname': displayname,
-      'email':          user.email
+      'email':          user.email,
     }, {
-      'template': 'username-changed'
+      'template': 'username-changed',
     })
     .catch(log.error)
   }
@@ -135,9 +135,9 @@ export default async (root, {token, email, password, displayname, bio, donationU
     sendEmail({
       'email': user.email,
       user,
-      oldUser
+      oldUser,
     }, {
-      'template': 'email-reverification-previous'
+      'template': 'email-reverification-previous',
     })
     .catch(log.error)
 
@@ -145,9 +145,9 @@ export default async (root, {token, email, password, displayname, bio, donationU
       user,
       oldUser,
       email,
-      link
+      link,
     }, {
-      'template': 'email-reverification-next'
+      'template': 'email-reverification-next',
     })
     .catch(log.error)
   }
@@ -156,9 +156,9 @@ export default async (root, {token, email, password, displayname, bio, donationU
     sendEmail({
       'email': user.email,
       user,
-      oldUser
+      oldUser,
     }, {
-      'template': 'donation-link-changed'
+      'template': 'donation-link-changed',
     })
   }
 

@@ -1,5 +1,5 @@
-import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
-import {mapGetters} from 'vuex'
+import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
+import {mapGetters,} from 'vuex'
 
 import flushImg from '../../components/flush-img/flush-img.vue'
 import icon from '../../components/icon/icon.vue'
@@ -31,7 +31,7 @@ export default {
     icon,
     notification,
     oucFooter,
-    navbar
+    navbar,
   },
   data () {
     return {
@@ -39,12 +39,12 @@ export default {
         'displayname':    '',
         'password':       '',
         'passwordVerify': '',
-        'email':          ''
-      }
+        'email':          '',
+      },
     }
   },
   'computed': mapGetters([
-    'actionErrors'
+    'actionErrors',
   ]),
   'methods': {
     async submitRegistration () {
@@ -53,6 +53,6 @@ export default {
       if (validated) {
         this.$store.dispatch('register', this.register)
       }
-    }
-  }
+    },
+  },
 }

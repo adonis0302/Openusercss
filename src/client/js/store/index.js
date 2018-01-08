@@ -9,21 +9,21 @@ import actions from './actions'
 const storeOptions = {
   'state': {
     'session': null,
-    'loading': false
+    'loading': false,
   },
   getters,
   mutations,
-  actions
+  actions,
 }
 
 if (process.browser) {
   const vuexLocal = new VuexPersistence({
     'storage': window.localStorage,
-    'key':     'ouc-state'
+    'key':     'ouc-state',
   })
 
   storeOptions.plugins = [
-    vuexLocal.plugin
+    vuexLocal.plugin,
   ]
 }
 

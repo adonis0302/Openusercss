@@ -5,6 +5,6 @@ export default async () => {
     'revisionLong':   git('long'),
     'revisionShort':  git('short'),
     'revisionTag':    git('tag'),
-    'revisionBranch': git('branch')
+    'revisionBranch': git('branch'),
   }
 }

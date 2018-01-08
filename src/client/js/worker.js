@@ -3,14 +3,14 @@ import toolbox from 'sw-toolbox'
 
 toolbox.options.cache = {
   'name':          'ouc-assets',
-  'maxAgeSeconds': 60 * 60 * 24 * 30
+  'maxAgeSeconds': 60 * 60 * 24 * 30,
 }
 
 toolbox.router.get(/^https?:\/\/localhost:312.\/.*/, toolbox.networkOnly)
 toolbox.router.get(/^https?:\/\/.*$/, toolbox.cacheFirst)
 
 addEventListener('message', (event) => {
-  const {action, route} = event.data
+  const {action, route,} = event.data
 
   if (action === 'cache-route') {
     toolbox.cache(route)
@@ -29,6 +29,6 @@ addEventListener('install', (event) => {
     '/img/openusercss.icon-x16.png',
     '/browser.js',
     '/css/bundle.min.css',
-    '/manifest.json'
+    '/manifest.json',
   ])
 })

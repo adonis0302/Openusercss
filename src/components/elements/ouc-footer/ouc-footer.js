@@ -1,4 +1,4 @@
-import {bulmaComponentGenerator as bulma} from 'vue-bulma-components'
+import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
 import icon from '../icon/icon.vue'
 import flushImg from '../flush-img/flush-img.vue'
 
@@ -12,7 +12,7 @@ export default {
     'b-tile':      bulma('tile', 'div'),
     'b-box':       bulma('box', 'div'),
     icon,
-    flushImg
+    flushImg,
   },
   'computed': {
     revision () {
@@ -28,11 +28,11 @@ export default {
       }
 
       return window.changelog
-    }
+    },
   },
   'methods': {
     showChangelog () {
       this.$modal.show('changelog-viewer')
-    }
-  }
+    },
+  },
 }

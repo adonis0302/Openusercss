@@ -9,7 +9,7 @@ export default async (token: String, Session) => {
   let session = null
 
   session = await Session.findOne({
-    token
+    token,
   })
 
   if (!await session) {
@@ -20,8 +20,8 @@ export default async (token: String, Session) => {
     jwt.verify(token, config.get('keypair.clientprivate'), {
       'issuer':     config.get('domain'),
       'algorithms': [
-        'HS256'
-      ]
+        'HS256',
+      ],
     })
   } catch (error) {
     log.error(error)

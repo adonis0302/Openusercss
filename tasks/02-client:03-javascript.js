@@ -17,10 +17,10 @@ import merge from 'merge-stream'
 import walk from 'walk'
 
 import server from './shared/server'
-import {createBrowserify} from './shared/js'
+import {createBrowserify,} from './shared/js'
 
 const sources = {
-  'client': 'src/client/js/*.js'
+  'client': 'src/client/js/*.js',
 }
 
 const destination = (dest) => {
@@ -37,10 +37,10 @@ gulp.task('client:js:prod', () => {
   const bundles = files.map((entry, index) => {
     const options = {
       'entries': [
-        entry
+        entry,
       ],
       'debug':  true,
-      'target': 'browser'
+      'target': 'browser',
     }
 
     if (entry.indexOf('server') !== -1) {
@@ -61,22 +61,22 @@ gulp.task('client:js:prod', () => {
       minify({
         'ext': {
           'src': '.js',
-          'min': '.js'
+          'min': '.js',
         },
         'noSource': true,
-        'mangle':   false
+        'mangle':   false,
       }),
       flatten(),
       sourcemaps.init({
-        'loadMaps': true
+        'loadMaps': true,
       }),
       sourcemaps.write(destination(), {
         'sourceMappingURL': (file) => {
           return `/${file.relative}.map`
-        }
+        },
       }),
       flatten(),
-      gulp.dest(destination())
+      gulp.dest(destination()),
     ])
   })
 
@@ -89,10 +89,10 @@ gulp.task('client:js:fast', () => {
   const bundles = files.map((entry, index) => {
     const options = {
       'entries': [
-        entry
+        entry,
       ],
       'debug':  true,
-      'target': 'browser'
+      'target': 'browser',
     }
 
     if (entry.indexOf('server') !== -1) {
@@ -110,15 +110,15 @@ gulp.task('client:js:fast', () => {
       buffer(),
       flatten(),
       sourcemaps.init({
-        'loadMaps': true
+        'loadMaps': true,
       }),
       sourcemaps.write(destination(), {
         'sourceMappingURL': (file) => {
           return `/${file.relative}.map`
-        }
+        },
       }),
       flatten(),
-      gulp.dest(destination())
+      gulp.dest(destination()),
     ])
   })
 
@@ -131,10 +131,10 @@ gulp.task('client:js:watch', () => {
   const bundles = files.map((entry, index) => {
     const options = {
       'entries': [
-        entry
+        entry,
       ],
       'debug':  true,
-      'target': 'browser'
+      'target': 'browser',
     }
 
     if (entry.indexOf('server') !== -1) {
@@ -151,7 +151,7 @@ gulp.task('client:js:watch', () => {
       bify.plugin(hmr, {
         'mode': 'websocket',
         'port': 3123 + index,
-        'url':  `http://localhost:${3123 + index}`
+        'url':  `http://localhost:${3123 + index}`,
       })
     }
 
@@ -163,15 +163,15 @@ gulp.task('client:js:watch', () => {
         buffer(),
         flatten(),
         sourcemaps.init({
-          'loadMaps': true
+          'loadMaps': true,
         }),
         sourcemaps.write(destination(), {
           'sourceMappingURL': (file) => {
             return `/${file.relative}.map`
-          }
+          },
         }),
         flatten(),
-        gulp.dest(destination())
+        gulp.dest(destination()),
       ]).on('end', () => {
         if (options.target === 'node' && server.child) {
           server.restart()
@@ -181,7 +181,7 @@ gulp.task('client:js:watch', () => {
 
     bify.on('update', (filename) => {
       const walker = walk.walk(path.resolve(process.mainModule.paths[0], '../../../../.tmp'), {
-        'followLinks': false
+        'followLinks': false,
       })
 
       walker.on('file', (root, stat, next) => {
@@ -216,13 +216,37 @@ gulp.task('client:manifest', (done) => {
     'display':          'standalone',
     'orientation':      'any',
     'icons':            [
-      {'src': '/img/openusercss.icon-x16.png', 'sizes': '16x16', 'type': 'image/png'},
-      {'src': '/img/openusercss.icon-x32.png', 'sizes': '32x32', 'type': 'image/png'},
-      {'src': '/img/openusercss.icon-x64.png', 'sizes': '64x64', 'type': 'image/png'},
-      {'src': '/img/openusercss.icon-x128.png', 'sizes': '128x128', 'type': 'image/png'},
-      {'src': '/img/openusercss.icon-x360.png', 'sizes': '360x360', 'type': 'image/png'},
-      {'src': '/img/openusercss.icon-x640.png', 'sizes': '640x640', 'type': 'image/png'}
-    ]
+      {
+        'src':   '/img/openusercss.icon-x16.png',
+        'sizes': '16x16',
+        'type':  'image/png',
+      },
+      {
+        'src':   '/img/openusercss.icon-x32.png',
+        'sizes': '32x32',
+        'type':  'image/png',
+      },
+      {
+        'src':   '/img/openusercss.icon-x64.png',
+        'sizes': '64x64',
+        'type':  'image/png',
+      },
+      {
+        'src':   '/img/openusercss.icon-x128.png',
+        'sizes': '128x128',
+        'type':  'image/png',
+      },
+      {
+        'src':   '/img/openusercss.icon-x360.png',
+        'sizes': '360x360',
+        'type':  'image/png',
+      },
+      {
+        'src':   '/img/openusercss.icon-x640.png',
+        'sizes': '640x640',
+        'type':  'image/png',
+      },
+    ],
   })
   done()
 })

@@ -4,7 +4,7 @@ import vueify from 'vueify'
 import envify from 'loose-envify'
 import extractCss from 'vueify-extract-css'
 import path from 'path'
-import {defaultsDeep} from 'lodash'
+import {defaultsDeep,} from 'lodash'
 import banner from 'browserify-banner'
 import git from 'git-revision'
 import fs from 'fs'
@@ -17,19 +17,19 @@ const babelOptions = {
       'env', {
         'targets': {
           'browsers': [
-            'last 4 versions'
-          ]
-        }
-      }
+            'last 4 versions',
+          ],
+        },
+      },
     ],
-    'stage-3'
-  ]
+    'stage-3',
+  ],
 }
 const revision = {
   'revisionLong':   git('long'),
   'revisionShort':  git('short'),
   'revisionTag':    git('tag'),
-  'revisionBranch': git('branch')
+  'revisionBranch': git('branch'),
 }
 // eslint-disable-next-line no-sync
 const changelog = fs.readFileSync('CHANGELOG.md')
@@ -66,9 +66,9 @@ export const browserifyOpts = (input) => {
                 window.changelog = unescape('${escape(changelog.toString())}');
               }
             }
-          `
-        }
-      ]
+          `,
+        },
+      ],
     ]
   }
 
@@ -76,20 +76,20 @@ export const browserifyOpts = (input) => {
     input.plugin = [
       [
         banner, {
-          'banner': `self.revision = Object.freeze(${JSON.stringify(revision)});`
-        }
-      ]
+          'banner': `self.revision = Object.freeze(${JSON.stringify(revision)});`,
+        },
+      ],
     ]
   }
 
   const options = defaultsDeep(input, {
     'extensions': [
-      '.js'
+      '.js',
     ],
     'standalone':   input.entries[0].split('/')[input.entries[0].split('/').length - 1],
     'fullPaths':    false,
     'cache':        {},
-    'packageCache': {}
+    'packageCache': {},
   })
 
   return options
@@ -112,24 +112,24 @@ export const createBrowserify = (opts) => {
             'targets': {
               'node':     '4',
               'browsers': [
-                'last 4 versions'
-              ]
-            }
-          }
+                'last 4 versions',
+              ],
+            },
+          },
         ],
-        'stage-3'
-      ]
+        'stage-3',
+      ],
     })
     if (process.env.NODE_ENV !== 'development') {
       bify.plugin(extractCss, {
-        'out': path.resolve('.tmp/components.min.css')
+        'out': path.resolve('.tmp/components.min.css'),
       })
     }
     break
   case 'node':
     bify.transform(babelify)
     bify.plugin(extractCss, {
-      'out': '/dev/null'
+      'out': '/dev/null',
     })
     break
   case 'worker':
@@ -140,12 +140,12 @@ export const createBrowserify = (opts) => {
             'targets': {
               'node':     '4',
               'browsers': [
-                'last 4 versions'
-              ]
-            }
-          }
-        ]
-      ]
+                'last 4 versions',
+              ],
+            },
+          },
+        ],
+      ],
     })
     break
   default:

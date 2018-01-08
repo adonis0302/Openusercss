@@ -21,7 +21,7 @@ Vue.use(VeeValidate, {
   'events':        'input|blur',
   'inject':        true,
   'validity':      false,
-  'aria':          true
+  'aria':          true,
 })
 Vue.use(VueRouter)
 Vue.use(VueFilters)
@@ -30,12 +30,12 @@ Vue.component('vue-markdown', VueMarkdown)
 
 Vue.prototype.$anchorAttributes = {
   'target': '_blank',
-  'rel':    'nofollow noopener'
+  'rel':    'nofollow noopener',
 }
 
 export {
   Vue,
   store,
   router,
-  appBase
+  appBase,
 }

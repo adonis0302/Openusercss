@@ -12,7 +12,7 @@ import watchify from 'watchify'
 import path from 'path'
 
 import server from './shared/server'
-import {createBrowserify} from './shared/js'
+import {createBrowserify,} from './shared/js'
 
 const destination = (dest) => {
   if (!dest) {
@@ -23,7 +23,7 @@ const destination = (dest) => {
 }
 
 const sources = {
-  'server': 'src/*.js'
+  'server': 'src/*.js',
 }
 
 gulp.task('server:prod', (done) => {
@@ -32,10 +32,10 @@ gulp.task('server:prod', (done) => {
   const bundles = files.map((entry, index) => {
     const bify = createBrowserify({
       'entries': [
-        entry
+        entry,
       ],
       'debug':  false,
-      'target': 'node'
+      'target': 'node',
     })
 
     return pump([
@@ -44,7 +44,7 @@ gulp.task('server:prod', (done) => {
       source(entry),
       buffer(),
       flatten(),
-      gulp.dest(destination())
+      gulp.dest(destination()),
     ])
   })
 
@@ -57,10 +57,10 @@ gulp.task('server:fast', (done) => {
   const bundles = files.map((entry, index) => {
     const bify = createBrowserify({
       'entries': [
-        entry
+        entry,
       ],
       'debug':  true,
-      'target': 'node'
+      'target': 'node',
     })
 
     return pump([
@@ -70,15 +70,15 @@ gulp.task('server:fast', (done) => {
       flatten(),
       buffer(),
       sourcemaps.init({
-        'loadMaps': true
+        'loadMaps': true,
       }),
       sourcemaps.write(destination(), {
         'sourceMappingURL': (file) => {
           return path.resolve(destination(), `${file.relative}.map`)
-        }
+        },
       }),
       flatten(),
-      gulp.dest(destination())
+      gulp.dest(destination()),
     ])
   })
 
@@ -91,10 +91,10 @@ gulp.task('server:watch', () => {
   const bundles = files.map((entry, index) => {
     const bify = createBrowserify({
       'entries': [
-        entry
+        entry,
       ],
       'debug':  true,
-      'target': 'node'
+      'target': 'node',
     })
 
     bify.plugin(watchify)
@@ -107,15 +107,15 @@ gulp.task('server:watch', () => {
         buffer(),
         flatten(),
         sourcemaps.init({
-          'loadMaps': true
+          'loadMaps': true,
         }),
         sourcemaps.write(destination(), {
           'sourceMappingURL': (file) => {
             return path.resolve(destination(), `${file.relative}.map`)
-          }
+          },
         }),
         flatten(),
-        gulp.dest(destination())
+        gulp.dest(destination()),
       ]).on('end', () => {
         if (server.child) {
           server.restart()

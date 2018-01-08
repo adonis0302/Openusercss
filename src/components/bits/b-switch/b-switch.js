@@ -1,7 +1,7 @@
 export default {
   'model': {
     'prop':  'model',
-    'event': 'change'
+    'event': 'change',
   },
   'props': {
     'id':         String,
@@ -10,14 +10,14 @@ export default {
     'required':   Boolean,
     'type':       String,
     'size':       String,
-    'model':      [String, Number, Boolean, Array],
-    'inputClass': [String, Number, Array, Object],
+    'model':      [String, Number, Boolean, Array,],
+    'inputClass': [String, Number, Array, Object,],
     'trueValue':  true,
     'falseValue': true,
     'value':      {
-      'type':    [String, Number, Boolean],
-      'default': 'on'
-    }
+      'type':    [String, Number, Boolean,],
+      'default': 'on',
+    },
   },
 
   data () {
@@ -29,20 +29,20 @@ export default {
       'checked': this.initCheck(this.model, t, dt),
       dt,
       t,
-      f
+      f,
     }
   },
 
   'computed': {
     classObject () {
-      const {type, size, checked} = this
+      const {type, size, checked,} = this
 
       return {
         [`is-${type}`]: type,
         [`is-${size}`]: size,
-        checked
+        checked,
       }
-    }
+    },
   },
 
   'methods': {
@@ -103,6 +103,6 @@ export default {
     },
     input () {
       this.set(this.checked, this.model, this.t, this.f, this.dt)
-    }
-  }
+    },
+  },
 }

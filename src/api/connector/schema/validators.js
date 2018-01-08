@@ -28,7 +28,7 @@ export default {
       throw new Error('"between" validator must be passed two arguments')
     }
 
-    const [min, max] = numbers
+    const [min, max,] = numbers
 
     if (min > max) {
       throw new Error('minimum value must be passed first')
@@ -37,7 +37,7 @@ export default {
     return (value) => value >= min && value <= max
   },
 
-  'regex': ({preset, validator, optional}) => {
+  'regex': ({preset, validator, optional,}) => {
     let match = null
 
     switch (preset) {
@@ -100,5 +100,5 @@ export default {
     return true
   },
 
-  'isSemver': (version) => !!semver.valid(version)
+  'isSemver': (version) => !!semver.valid(version),
 }
