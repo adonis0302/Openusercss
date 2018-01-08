@@ -1,0 +1,149 @@
+<script>
+  import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
+  import icon from '../icon/icon.vue'
+  import flushImg from '../flush-img/flush-img.vue'
+
+  export default {
+    'components': {
+      'b-footer':    bulma('footer', 'footer'),
+      'b-container': bulma('container', 'div'),
+      'b-content':   bulma('content', 'div'),
+      'b-columns':   bulma('columns', 'div'),
+      'b-column':    bulma('column', 'div'),
+      'b-tile':      bulma('tile', 'div'),
+      'b-box':       bulma('box', 'div'),
+      icon,
+      flushImg,
+    },
+    'computed': {
+      revision () {
+        if (typeof window === 'undefined') {
+          return {}
+        }
+
+        return window.revision
+      },
+      changelog () {
+        if (typeof window === 'undefined') {
+          return ''
+        }
+
+        return window.changelog
+      },
+    },
+    'methods': {
+      showChangelog () {
+        this.$modal.show('changelog-viewer')
+      },
+    },
+  }
+</script>
+
+<style lang="scss" scoped>
+  @import 'node_modules/bulma/sass/utilities/initial-variables';
+  @import '../../../client/scss/autocolor';
+  @import '../../../client/scss/variables';
+
+  @import 'node_modules/bulma/sass/utilities/all';
+  @import 'node_modules/bulma/sass/base/all';
+
+  @import 'node_modules/bulma/sass/layout/footer';
+  @import 'node_modules/bulma/sass/grid/columns';
+  @import 'node_modules/bulma/sass/grid/tiles';
+  @import 'node_modules/bulma/sass/elements/container';
+  @import 'node_modules/bulma/sass/elements/content';
+  @import 'node_modules/bulma/sass/elements/box';
+
+  .footer {
+    padding-bottom: 48px;
+  }
+
+  .is-vertical {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .is-primary-bg {
+    background-color: nth($primary, 1);
+    color: nth($primary, 2);
+  }
+
+  .is-fullheight {
+    height: 100%
+  }
+
+  .patreon-logo {
+    height: 100px;
+    width: 100px;
+  }
+
+  .has-padding {
+    padding: .25rem
+  }
+
+  @import '../../../client/scss/reboot';
+</style>
+
+<template lang="pug">
+  div
+    modal(
+      name="changelog-viewer",
+      height="auto",
+      :scrollable="true"
+    )
+      b-box
+        vue-markdown.content(
+          :source="changelog",
+          :html="true",
+          :anchor-attributes="$anchorAttributes"
+        )
+
+    .is-vertical
+      .is-primary-bg
+        .container
+          b-tile(is-parent, is-paddingless)
+            b-tile(is-child, is-pulled-left)
+              b-box.is-primary-bg(is-borderless, is-shadowless) OpenUserCSS needs your support!
+            b-tile(is-child)
+              a.button.is-patreon.is-pulled-right.is-fullheight(href="//patreon.com/DecentM", target="_blank")
+                | Become a patron on
+                .has-padding
+                flush-img(
+                  source="/img/patreon.icon-x64.png",
+                  placeholder="/img/patreon.icon-x16.png",
+                  height="25px",
+                  width="25px"
+                )
+
+
+              a.button.is-paypal.is-pulled-right.is-fullheight(href="//www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NQE35LHY6NKS6", target="_blank")
+                | Support by PayPal!
+
+      .footer.is-vertical
+        .container
+          .columns
+            .column.has-text-left
+              .tile
+                p
+                  | Copyright&nbsp;&copy;&nbsp;{{new Date().getFullYear()}}&nbsp;
+                  a(href="//github.com/DecentM", target="_blank") DecentM&#32;
+                  | and&#32;
+                  a(href="//github.com/OpenUserCSS/openusercss.org/blob/master/README.md#contributors", target="_blank") Contributors
+              .tile
+                p
+                  a(href="//forums.openusercss.org/topic/5/privacy-policy") Privacy policy
+                  | &#32;|&#32;
+                  a(href="//forums.openusercss.org/topic/6/terms-of-service") Terms of service
+                  | &#32;|&#32;
+                  router-link(to="/notice") Notice
+            .column.has-text-centered
+              a(href="//github.com/OpenUserCSS", target="_blank")
+                icon(icon="github-circle")
+                | GitHub
+            .column.has-text-right
+              router-link(to="/contact")
+                icon(icon="email-variant")
+                | Contact the administrator
+              p Client version: {{revision.revisionShort}}&nbsp;
+                a(@click.prevent="showChangelog") (changelog)
+</template>
