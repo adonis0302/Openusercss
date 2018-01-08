@@ -2,7 +2,7 @@ div.route-root
   .section(slot="form").ouc-form-section
       b-container(style="max-width: 500px;").ouc-centered
         b-box.ouc-form-box
-          form(@submit.prevent="submitRegistration")
+          form(@submit.prevent="submitRegistration").ouc-register-form
             h3 Create your OpenUserCSS account
             hr
             b-tile(is-ancestor)

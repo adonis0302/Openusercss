@@ -1,8 +1,23 @@
 import test from 'ava'
 import {cloneDeep,} from 'lodash'
+import {ObjectID,} from 'mongodb'
+import mutations from '../../src/client/js/store/mutations'
 
-import mutations from '../src/client/js/store/mutations'
-import stateMock from './shared/state-mock'
+const stateMock = {
+  'loading': false,
+  'session': {
+    '_schema':    {},
+    '__typename': 'Session',
+    'ip':         '172.16.44.23',
+    'ua':         'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
+    'token':      'kou7BueghaeHiehaetunahch8e',
+    'user':       {
+      '_schema':    {},
+      '__typename': 'User',
+      '_id':        new ObjectID('5a262a2c3835ee7627db2ef9'),
+    },
+  },
+}
 
 test('login - sets session in state from null', (t) => {
   const state = cloneDeep(stateMock)

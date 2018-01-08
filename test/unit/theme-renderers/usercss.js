@@ -1,18 +1,12 @@
 import test from 'ava'
-import {cloneDeep,} from 'lodash'
 import {ObjectID,} from 'mongodb'
-
-import {
-  buildTheme,
-} from '../src/api/usercss-renderer'
-import stateMock from './shared/state-mock'
+import {buildTheme,} from '../../../src/api/usercss-renderer'
 
 test('buildTheme - throws when nothing is passed', async (t) => {
   await t.throws(buildTheme())
 })
 
 test('buildTheme - correctly builds from theme object', async (t) => {
-  const state = cloneDeep(stateMock)
   const expected = `/* ==userstyle==
 @name asd
 @description test description
@@ -27,8 +21,18 @@ test('buildTheme - correctly builds from theme object', async (t) => {
 @-moz-document regexp(".*openusercss.org.*") {body {content: "yaeee";}}`
 
   const result = await buildTheme({
-    ...state.themes[0],
-    'user': {
+    '_schema':     {},
+    '__typename':  'Theme',
+    '_id':         '5a275431707d23a322cff59f',
+    'title':       'asd',
+    'version':     '1.0.0',
+    'content':     '@-moz-document regexp(".*openusercss.org.*") {body {content: "yaeee";}}',
+    'description': 'test description',
+    'createdAt':   '2017-12-31T09:20:29.234Z',
+    'lastUpdate':  '2017-12-31T09:20:29.234Z',
+    'screenshots': [],
+    'ratings':     [],
+    'user':        {
       '_schema':     {},
       '_id':         new ObjectID('5a262a2c3835ee7627db2ef9'),
       'displayname': 'DecentM',

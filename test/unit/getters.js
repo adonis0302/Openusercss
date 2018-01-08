@@ -1,7 +1,22 @@
 import test from 'ava'
+import {ObjectID,} from 'mongodb'
+import getters from '../../src/client/js/store/getters'
 
-import state from './shared/state-mock'
-import getters from '../src/client/js/store/getters'
+const state = {
+  'loading': false,
+  'session': {
+    '_schema':    {},
+    '__typename': 'Session',
+    'ip':         '172.16.44.23',
+    'ua':         'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36',
+    'token':      'kou7BueghaeHiehaetunahch8e',
+    'user':       {
+      '_schema':    {},
+      '__typename': 'User',
+      '_id':        new ObjectID('5a262a2c3835ee7627db2ef9'),
+    },
+  },
+}
 
 test('actionErrors - returns from state', (t) => {
   const result = getters.actionErrors(state)

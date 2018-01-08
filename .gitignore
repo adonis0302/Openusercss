@@ -6,6 +6,7 @@
 .env.json
 .prod.env
 
+reports
 docker-compose.yml
 bfg.jar
 build
