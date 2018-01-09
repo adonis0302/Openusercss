@@ -12,7 +12,9 @@ export const getTheme = async (query) => {
     })
 
     theme.options = theme.options.filter((option) => {
-      option.value = JSON.stringify(option.value)
+      option.value = JSON.stringify(option.value) || ''
+      option.label = option.label || ''
+      option.name = option.name || ''
 
       return option
     })
