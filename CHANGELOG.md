@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.8.0"></a>
+# [0.8.0](https://github.com/OpenUserCSS/openusercss.org/compare/v0.7.1...v0.8.0) (2018-01-09)
+
+
+### Bug Fixes
+
+* **API:** Raise request body limit to 120k (closes [#56](https://github.com/OpenUserCSS/openusercss.org/issues/56)) ([fa223bf](https://github.com/OpenUserCSS/openusercss.org/commit/fa223bf))
+* **client:** Fix linting issues ([aa1ee58](https://github.com/OpenUserCSS/openusercss.org/commit/aa1ee58))
+
+
+### Features
+
+* **client:** Use usercss-builder to build install event ([546acc9](https://github.com/OpenUserCSS/openusercss.org/commit/546acc9))
+
+
+
 <a name="0.7.1"></a>
 ## [0.7.1](https://github.com/OpenUserCSS/openusercss.org/compare/v0.7.0...v0.7.1) (2018-01-09)
 
