@@ -24,7 +24,7 @@
       }
     },
     created () {
-      this.list = this.value
+      this.list = this.value || []
     },
     'watch': {
       value (newValue) {
