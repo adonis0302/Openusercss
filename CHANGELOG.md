@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.7.0"></a>
+# [0.7.0](https://github.com/OpenUserCSS/openusercss.org/compare/v0.6.3...v0.7.0) (2018-01-09)
+
+
+### Bug Fixes
+
+* **build:** Attempt to push tags right ([08c25e7](https://github.com/OpenUserCSS/openusercss.org/commit/08c25e7))
+
+
+### Features
+
+* **client:** Add theming classes (closes [#35](https://github.com/OpenUserCSS/openusercss.org/issues/35)) ([454a19e](https://github.com/OpenUserCSS/openusercss.org/commit/454a19e))
+
+
+
 <a name="0.6.3"></a>
 ## [0.6.3](https://github.com/OpenUserCSS/openusercss.org/compare/v0.6.2...v0.6.3) (2018-01-08)
 
