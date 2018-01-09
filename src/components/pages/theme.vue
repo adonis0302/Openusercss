@@ -174,21 +174,6 @@
                 throw error
               }
 
-              if (!event.data.enabled) {
-                const error = `${process.extension.name} couldn't enable the installed theme`
-
-                raven.captureException(error)
-                self.$toast.error({
-                  'title':   'Theme installation failed',
-                  'message': error.message,
-                  'timeout': 10000,
-                  'theme':   'ouc',
-                  'layout':  2,
-                })
-
-                throw error
-              }
-
               self.$toast.success({
                 'title':   'Theme installed',
                 'message': `${this.theme.title} was installed by ${process.extension.name} successfully`,
