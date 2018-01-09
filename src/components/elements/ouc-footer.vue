@@ -73,7 +73,7 @@
 </style>
 
 <template lang="pug">
-  div
+  div.ouc-footer-wrapper
     modal(
       name="changelog-viewer",
       height="auto",
@@ -86,12 +86,12 @@
           :anchor-attributes="$anchorAttributes"
         )
 
-    .is-vertical
+    .is-vertical.ouc-im-broke-wrapper
       .is-primary-bg
-        .container
+        .container.ouc-im-broke
           b-tile(is-parent, is-paddingless)
             b-tile(is-child, is-pulled-left)
-              b-box.is-primary-bg(is-borderless, is-shadowless) OpenUserCSS needs your support!
+              b-box.is-primary-bg.ouc-im-broke-begging(is-borderless, is-shadowless) OpenUserCSS needs your support!
             b-tile(is-child)
               a.button.is-patreon.is-pulled-right.is-fullheight(href="//patreon.com/DecentM", target="_blank")
                 | Become a patron on
@@ -103,11 +103,10 @@
                   width="25px"
                 )
 
-
               a.button.is-paypal.is-pulled-right.is-fullheight(href="//www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NQE35LHY6NKS6", target="_blank")
                 | Support by PayPal!
 
-      .footer.is-vertical
+      .footer.is-vertical.ouc-footer-content
         .container
           .columns
             .column.has-text-left

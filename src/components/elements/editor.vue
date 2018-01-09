@@ -186,6 +186,6 @@
 </style>
 
 <template lang="pug">
-  div
+  div.ouc-editor-wrapper
     #editor.ouc-editor
 </template>

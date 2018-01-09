@@ -29,7 +29,7 @@
 </style>
 
 <template lang="pug">
-  b-button(:class="['button', {'is-loading': loading}]")
+  b-button.ouc-button(:class="['button', {'is-loading': loading}]")
     icon(:icon="icon")
     slot(name="content")
 </template>

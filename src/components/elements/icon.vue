@@ -45,6 +45,6 @@
 </style>
 
 <template lang="pug">
-  b-icon
+  b-icon.ouc-icon
     i.mdi(v-bind:class="classValue(icon, size)", :style="`color: ${color}`")
 </template>

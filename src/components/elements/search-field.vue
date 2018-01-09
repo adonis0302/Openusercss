@@ -33,7 +33,7 @@
 </script>
 
 <template lang="pug">
-  b-control(has-icons-left)
+  b-control.ouc-search-field(has-icons-left)
     icon(icon="magnify")
     input.input(name="search", placeholder="Search themes and users", aria-label="Search themes and users", ref="main")
 </template>

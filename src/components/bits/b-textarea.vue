@@ -19,5 +19,5 @@
 </script>
 
 <template lang="pug">
-  textarea(:value="value").textarea
+  textarea(:value="value").textarea.ouc-textarea
 </template>

@@ -61,7 +61,7 @@
 </script>
 
 <template lang="pug">
-  div.route-root
+  div.ouc-route-root
     b-container
       .section
         b-columns(is-multiline)

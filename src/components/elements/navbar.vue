@@ -95,10 +95,10 @@
 </style>
 
 <template lang="pug">
-  div
-    navbar(is-primary).md-shadow--2
+  div.ouc-navbar-wrapper
+    navbar.ouc-navbar(is-primary).md-shadow--2
       b-container
-        navbar-brand
+        navbar-brand.ouc-navbar-brand
           router-link(to="/").navbar-item.no-active
             flush-img(source="/img/openusercss.icon-x64.png", placeholder="/img/openusercss.icon-x16.png", height="36px", width="36px")
             .spacer
@@ -110,7 +110,7 @@
             span
             span
             span
-        navbar-menu(:class="['navbar-menu', 'is-primary', {'is-active': open}]")
+        navbar-menu.ouc-navbar-menu(:class="['navbar-menu', 'is-primary', {'is-active': open}]")
           navbar-start
           navbar-end(@click="close")
             router-link(v-if="session", :to="'/profile/' + currentUser._id").navbar-item

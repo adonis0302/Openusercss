@@ -1,5 +1,5 @@
 mixin user-microdata
-  div(itemtype="Person")
+  div.ouc-microdata(itemtype="Person")
     meta(itemprop="name", :value="user.displayname")
     meta(itemprop="image", :value="user.avatarUrl")
     meta(itemprop="url", :value="'/profile/' + user._id")

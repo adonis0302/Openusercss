@@ -66,7 +66,7 @@
 </style>
 
 <template lang="pug">
-  div.route-root
+  div.ouc-route-root
     .section(slot="form").ouc-form-section
         b-container(style="max-width: 500px;").ouc-centered
           b-box.ouc-form-box

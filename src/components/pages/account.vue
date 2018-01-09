@@ -145,7 +145,7 @@
 
 <template lang="pug">
   mixin account-card(condition, model, title)
-    b-box(:disabled=condition)
+    b-box.ouc-account-card(:disabled=condition)
       b-level
         b-level-left
           h5 #{title}
@@ -157,10 +157,10 @@
       if block
         block
 
-  div.route-root
-    b-container
+  div.ouc-route-root
+    b-container.ouc-account-wrapper
       .section
-        div(v-if="!currentUser._id")
+        div.ouc-logged-out(v-if="!currentUser._id")
           p
             | This page allows you to edit account details,
             | but you're not logged in.
@@ -168,7 +168,7 @@
           p
             router-link.button.is-primary(to="/login") Click here to do so
 
-        form(v-else="!currentUser._id", @submit.prevent="submitAccount")
+        form.ouc-logged-in(v-else="!currentUser._id", @submit.prevent="submitAccount")
           b-tile(is-parent, is-paddingless)
             b-tile(is-child)
               button.button.is-primary.is-pulled-right(

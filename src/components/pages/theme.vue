@@ -209,7 +209,7 @@
 <template lang="pug">
   include ../static/microdata/theme.pug
 
-  div.route-root
+  div.ouc-route-root
     +theme-microdata
 
     modal(name="delete-theme", :draggable="true", height="auto")

@@ -83,7 +83,7 @@
   include ../static/microdata/theme.pug
   include ../static/microdata/user.pug
 
-  div.route-root
+  div.ouc-route-root
     b-container
       .section
         form(@submit.prevent="submitSearch").has-bottom-margin

@@ -113,21 +113,21 @@
 <template lang="pug">
   include ../static/microdata/user.pug
 
-  div.route-root
+  div.ouc-route-root
     +user-microdata
 
-    b-container
-      div
+    b-container.ouc-profile-container
+      div.ouc-profile-wrapper
         .section
           b-level
             b-level-left
               h1 Profile
-            b-level-right(v-if="currentUser && currentUser._id === user._id")
+            b-level-right.ouc-profile-action-buttons(v-if="currentUser && currentUser._id === user._id")
               b-tile(is-parent, is-paddingless)
-                b-tile(is-child)
-                  router-link.button.is-primary(to="/theme/edit") Upload new theme
-                b-tile(is-child)
-                  router-link.button.is-primary(to="/account") Account
+                b-tile.ouc-new-theme-button-wrapper(is-child)
+                  router-link.button.is-primary.ouc-new-theme-button(to="/theme/edit") Upload new theme
+                b-tile.ouc-account-button-wrapper(is-child)
+                  router-link.button.is-primary.ouc-account-button(to="/account") Account
           b-columns
             b-column(is-6)
               div
@@ -138,7 +138,7 @@
                         b-tile(is-child).ouc-user-avatar
                           flush-img(:source="user.avatarUrl", :placeholder="user.smallAvatarUrl", height="185px", align="left")
                       b-tile(is-8)
-                        b-tile(is-parent)
+                        b-tile(is-parent).ouc-user-details
                           b-tile(is-parent)
                             b-tile(is-child, is-parent, is-vertical, is-paddingless)
                               h2 {{user.displayname}}
@@ -147,20 +147,20 @@
 
                 b-box
                   b-level(is-mobile)
-                    b-level-left
+                    b-level-left.ouc-last-seen-wrapper
                       icon(v-if="isOnline(user.lastSeen)", icon="circle", color="#06BC5A")
                       p.ouc-last-seen {{lastOnlineDisplay}}
 
               hr
               b-box
-                .content
-                  vue-markdown(
+                .content.ouc-user-bio-wrapper
+                  vue-markdown.ouc-user-bio(
                     :source="user.bio",
                     :html="false",
                     :anchor-attributes="$anchorAttributes"
                   )
             b-column(is-6)
-              div(v-if="user.donationUrl && user.donationUrl !== ''", is-paddingless)
+              div.ouc-user-donation-wrapper(v-if="user.donationUrl && user.donationUrl !== ''", is-paddingless)
                 a.button.is-primary(:href="user.donationUrl", target="_blank", rel="nofollow noopener")
                   | Support {{user.displayname}}'s themes by donating
                 hr
@@ -181,7 +181,6 @@
                               :show-rating="false",
                               :read-only="true"
                             )
-                          //- p {{ ? "Not rated yet" : averageRating(theme.ratings)}}
                           h6(v-if="theme.createdAt !== theme.lastUpdate") Last updated {{theme.lastUpdate | moment('from', 'now')}}
 
     ouc-footer

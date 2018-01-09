@@ -244,7 +244,7 @@
 </style>
 
 <template lang="pug">
-  div.route-root
+  div.ouc-route-root
     b-container
       .section
         notification(v-if="errors.all().length > 0", icon="alert", color="is-danger").is-danger
@@ -392,10 +392,6 @@
                             placeholder="Default value",
                             v-model="editedTheme.options[index].value"
                           )
-                        //- b-tile(is-child, v-if="option.type === 'select'")
-                          .select.is-fullwidth
-                            select(v-model="editedTheme.options[index].value")
-                              option(v-for="(value, index) in option.value") {{renderObjectOption(value)}}
                         b-tile(has-text-centered, is-child, v-if="option.type === 'checkbox'")
                           .select.is-fullwidth
                             select(v-model="editedTheme.options[index].value")

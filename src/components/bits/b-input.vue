@@ -19,5 +19,5 @@
 </script>
 
 <template lang="pug">
-  input(:value="value").input
+  input(:value="value").input.ouc-input-field
 </template>

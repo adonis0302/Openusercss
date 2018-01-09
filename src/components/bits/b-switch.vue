@@ -198,8 +198,8 @@
 </style>
 
 <template lang="pug">
-  label.switch(:class='classObject')
-    input.checkbox(ref='input', type='checkbox', v-model='checked', @change='input', v-bind='{\
+  label.switch.ouc-switch-label(:class='classObject')
+    input.checkbox.ouc-switch(ref='input', type='checkbox', v-model='checked', @change='input', v-bind='{\
     id,\
     name,\
     value,\

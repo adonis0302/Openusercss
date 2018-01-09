@@ -43,7 +43,7 @@
     v-on:leave="leave",
     v-bind:css="false"
   )
-    b-notification(:class="['notification', color]")
+    b-notification.ouc-notification(:class="['notification', color]")
       b-tile(is-ancestor)
         b-tile(is-1).ouc-icon-wrapper
           icon(:icon="icon")

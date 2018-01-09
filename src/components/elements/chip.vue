@@ -37,7 +37,7 @@
 </style>
 
 <template lang="pug">
-  b-tag
-    flush-img(height="16px", width="16px", :source="favicon", placeholder="/img/openusercss.icon-x16.png")
+  b-tag.ouc-tag
+    flush-img.ouc-tag-image(height="16px", width="16px", :source="favicon", placeholder="/img/openusercss.icon-x16.png")
     slot(name="content")
 </template>

@@ -64,8 +64,8 @@
 </script>
 
 <template lang="pug">
-  div
-    b-tile(v-for="(item, index) in list", is-parent, is-vertical, is-paddingless).has-bottom-margin
+  div.ouc-list-creator-wrapper
+    b-tile.ouc-list-creator-item.has-bottom-margin(v-for="(item, index) in list", is-parent, is-vertical, is-paddingless)
       b-tile
         b-tile(is-child, is-11)
           b-control(v-if="typeof item === 'string'", has-icons-left)
@@ -84,13 +84,13 @@
               )
         b-tile(is-child, is-1)
           button.button.is-pulled-right.is-danger(@click="removeItem(index)", type="button") X
-    b-tile(v-if="supportObjects", is-parent, is-paddingless)
+    b-tile.ouc-list-creator-object-item(v-if="supportObjects", is-parent, is-paddingless)
       b-tile(is-child)
         button.button.is-primary(v-if="!listFull", @click="addItem", type="button") Add string {{itemName}}
       b-tile(is-child)
         button.button.is-primary(v-if="!listFull", @click="addObject", type="button") Add object {{itemName}}
 
-    b-tile(v-if="!supportObjects", is-parent, is-paddingless)
+    b-tile.ouc-list-creator-array-item(v-if="!supportObjects", is-parent, is-paddingless)
       b-tile(is-child)
         button.button.is-primary(v-if="!listFull", @click="addItem", type="button") Add {{itemName}}
 </template>
