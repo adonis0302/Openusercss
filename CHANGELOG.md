@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.9.2"></a>
+## [0.9.2](https://github.com/OpenUserCSS/openusercss.org/compare/v0.9.1...v0.9.2) (2018-01-09)
+
+
+### Bug Fixes
+
+* **API:** Add empty strings for option props if they're null ([b6b28f6](https://github.com/OpenUserCSS/openusercss.org/commit/b6b28f6))
+* **client:** Fix list-creator not showing its buttons ([7f5aaf6](https://github.com/OpenUserCSS/openusercss.org/commit/7f5aaf6))
+
+
+
 <a name="0.9.1"></a>
 ## [0.9.1](https://github.com/OpenUserCSS/openusercss.org/compare/v0.9.0...v0.9.1) (2018-01-09)
 
