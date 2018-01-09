@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.9.0"></a>
+# [0.9.0](https://github.com/OpenUserCSS/openusercss.org/compare/v0.8.1...v0.9.0) (2018-01-09)
+
+
+### Bug Fixes
+
+* Fix newlines causing errors in theme title (closes [#58](https://github.com/OpenUserCSS/openusercss.org/issues/58)) ([148f450](https://github.com/OpenUserCSS/openusercss.org/commit/148f450))
+
+
+### Features
+
+* **API:** Add [@update](https://github.com/update)URL, apparently it's a thing ([f07245a](https://github.com/OpenUserCSS/openusercss.org/commit/f07245a))
+* **client:** Show version tag in the footer ([897e22f](https://github.com/OpenUserCSS/openusercss.org/commit/897e22f))
+
+
+
 <a name="0.8.1"></a>
 ## [0.8.1](https://github.com/OpenUserCSS/openusercss.org/compare/v0.8.0...v0.8.1) (2018-01-09)
 
