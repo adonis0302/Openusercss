@@ -8,8 +8,8 @@ export default async (code) => {
   const comments = code.match(commentsRegex)
   let usercssComment = null
 
-  const hasDefOpen = comments[0].toLowerCase().includes('==userstyle==')
-  const hasDefClose = comments[0].toLowerCase().includes('==/userstyle==')
+  const hasDefOpen = comments && comments[0].toLowerCase().includes('==userstyle==')
+  const hasDefClose = comments && comments[0].toLowerCase().includes('==/userstyle==')
   const hasDef = hasDefOpen && hasDefClose
   const props = {
     'vars': [],

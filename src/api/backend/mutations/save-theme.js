@@ -24,13 +24,7 @@ export default async (root, {
   if (!user.emailVerified) {
     throw new Error('You must verify your e-mail address before uploading themes.')
   }
-  let parsed = null
-
-  try {
-    parsed = await parse(decodeURIComponent(content))
-  } catch (error) {
-    throw new Error('Failed to parse CSS. Is it valid?')
-  }
+  const parsed = await parse(decodeURIComponent(content))
 
   if (!parsed.code) {
     throw new Error('Parse result is empty. Is your CSS valid?')
