@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.9.4"></a>
+## [0.9.4](https://github.com/OpenUserCSS/openusercss.org/compare/v0.9.3...v0.9.4) (2018-01-09)
+
+
+### Bug Fixes
+
+* **client:** Fix screenshot position (closes [#55](https://github.com/OpenUserCSS/openusercss.org/issues/55)) ([4b3c6f5](https://github.com/OpenUserCSS/openusercss.org/commit/4b3c6f5))
+* **client:** The enabled prop isn't actually useful ([d4cbfdf](https://github.com/OpenUserCSS/openusercss.org/commit/d4cbfdf))
+
+
+
 <a name="0.9.3"></a>
 ## [0.9.3](https://github.com/OpenUserCSS/openusercss.org/compare/v0.9.2...v0.9.3) (2018-01-09)
 

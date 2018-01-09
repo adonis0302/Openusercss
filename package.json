@@ -1,6 +1,6 @@
 {
   "name": "openusercss.org",
-  "version": "0.9.3",
+  "version": "0.9.4",
   "description": "OpenUserCSS",
   "main": "src/app.js",
   "scripts": {
