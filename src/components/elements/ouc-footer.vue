@@ -131,6 +131,6 @@
               router-link(to="/contact")
                 icon(icon="email-variant")
                 | Contact the administrator
-              p Client version: {{revision.revisionShort}}&nbsp;
+              p Client version: {{revision.revisionTag}}&nbsp;
                 a(@click.prevent="showChangelog") (changelog)
 </template>
