@@ -41,7 +41,7 @@ export default async (root, {
       throw new Error('No theme found')
     }
 
-    newTheme.title = title
+    newTheme.title = decodeURIComponent(title)
     newTheme.description = decodeURIComponent(description)
     newTheme.version = version
     newTheme.content = parsed.code
@@ -59,7 +59,7 @@ export default async (root, {
       'content':     parsed.code,
       'description': decodeURIComponent(description),
       'options':     parsedOptions,
-      title,
+      'title':       decodeURIComponent(title),
       version,
       screenshots,
     })

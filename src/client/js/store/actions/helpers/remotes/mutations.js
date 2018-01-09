@@ -171,6 +171,7 @@ export const remoteSaveTheme = async (theme, token) => {
     preparedTheme.options[index] = option
   })
 
+  preparedTheme.title = encodeURIComponent(preparedTheme.title)
   preparedTheme.content = encodeURIComponent(preparedTheme.content)
   preparedTheme.screenshots = JSON.stringify(preparedTheme.screenshots || [])
   preparedTheme.options = encodeURIComponent(JSON.stringify(preparedTheme.options || []))
