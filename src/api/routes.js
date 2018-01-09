@@ -22,7 +22,9 @@ const setupRoutes = async () => {
 
   router.use('/theme/:id.user.css', usercsssRenderer)
 
-  router.use('/', bodyParser.json(), graphqlExpress((req, res, next) => ({
+  router.use('/', bodyParser.json({
+    'limit': 120000,
+  }), graphqlExpress((req, res, next) => ({
     'context': {
       ...req,
       ...db,
