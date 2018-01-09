@@ -359,7 +359,7 @@
                       :source="proxyImage(screenshot).large",
                       height="250px",
                       :placeholder="proxyImage(screenshot).small",
-                      align="center"
+                      align="top center"
                     ).carousel-cell
                   b-column
                     b-tile(is-parent, is-paddingless)
