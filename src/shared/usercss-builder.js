@@ -66,6 +66,18 @@ validators.theme = struct({
   '__typename': 'Theme',
 })
 
+let urls = {
+  'api':  'https://api.openusercss.org',
+  'site': 'https://openusercss.org',
+}
+
+if (process.env.NODE_ENV === 'development') {
+  urls = {
+    'api':  'http://localhost:5000',
+    'site': 'http://localhost:5010',
+  }
+}
+
 export const buildTheme = async (rawTheme) => {
   const builtTheme = cloneDeep(rawTheme)
 
@@ -86,9 +98,10 @@ export const buildTheme = async (rawTheme) => {
     `@name ${theme.title}`,
     `@description ${stripDown(theme.description).replace(/\n/, ' - ')}`,
     `@version ${theme.version}`,
-    `@namespace https://openusercss.org/theme/${theme._id}`,
-    `@homepageURL https://openusercss.org/theme/${theme._id}`,
-    `@author ${theme.user.displayname} (https://openusercss.org/profile/${theme.user._id})`,
+    `@namespace ${urls.site}/theme/${theme._id}`,
+    `@homepageURL ${urls.site}/theme/${theme._id}`,
+    `@author ${theme.user.displayname} (${urls.site}/profile/${theme.user._id})`,
+    `@updateURL ${urls.api}/theme/${theme._id}.user.css`,
     '@preprocessor uso',
   ].join('\n')
 
