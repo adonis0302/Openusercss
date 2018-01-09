@@ -1,4 +1,4 @@
-import {getRatings,} from '../translators/get-rating'
+import {getTheme,} from '../translators/get-theme'
 
 export default async (root, {limit,}, {User, Theme, Rating,}) => {
   const upperLimit = 25
@@ -13,7 +13,7 @@ export default async (root, {limit,}, {User, Theme, Rating,}) => {
   try {
     result = await Theme.find({}, {
       limit,
-      'populate': true,
+      'populate': false,
       'sort':     '-ratings',
     })
   } catch (error) {
@@ -25,11 +25,9 @@ export default async (root, {limit,}, {User, Theme, Rating,}) => {
   }
 
   result = await Promise.all(result.map(async (theme) => {
-    theme.ratings = await getRatings({
-      'theme': theme._id,
+    return getTheme({
+      '_id': theme._id,
     })
-
-    return theme
   }))
 
   return result
