@@ -198,8 +198,8 @@
               })
             }
           }
-          window.addEventListener('message', callbackHandler)
 
+          window.addEventListener('message', callbackHandler)
           window.postMessage({
             'type':  'ouc-install-usercss',
             'title': this.theme.title,
@@ -207,6 +207,7 @@
             key,
           }, '*')
         } catch (error) {
+          // eslint-disable-next-line no-console
           console.error(error)
           raven.captureException(error)
         }
