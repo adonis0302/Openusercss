@@ -1,7 +1,9 @@
 <script>
+  // eslint-disable no-console
   import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
   import {mapGetters,} from 'vuex'
   import {formatMoment,} from '../../../src/shared/time'
+  import {buildTheme,} from '../../../src/shared/usercss-builder'
 
   import icon from '../elements/icon.vue'
   import flushImg from '../elements/flush-img.vue'
@@ -9,6 +11,8 @@
   import navbar from '../elements/navbar.vue'
   import notification from '../elements/notification.vue'
   import bInput from '../bits/b-input.vue'
+  import raven from 'raven-js'
+  import hat from 'hat'
 
   export default {
     'components': {
@@ -145,6 +149,68 @@
           window.open(`https://api.openusercss.org/theme/${this.theme._id}.user.css`)
         }
       },
+      async installThemeEvent () {
+        try {
+          const self = this
+          const built = await buildTheme(this.theme)
+          const key = hat()
+
+          const callbackHandler = (event) => {
+            if (event.data && event.data.type === 'ouc-install-callback') {
+              window.removeEventListener('message', callbackHandler)
+
+              if (event.data.key !== key) {
+                const error = new Error(`${process.extension.name} didn't pass the key back correctly`)
+
+                raven.captureException(error)
+                self.$toast.error({
+                  'title':   'Theme installation failed',
+                  'message': error.message,
+                  'timeout': 10000,
+                  'theme':   'ouc',
+                  'layout':  2,
+                })
+
+                throw error
+              }
+
+              if (!event.data.enabled) {
+                const error = `${process.extension.name} couldn't enable the installed theme`
+
+                raven.captureException(error)
+                self.$toast.error({
+                  'title':   'Theme installation failed',
+                  'message': error.message,
+                  'timeout': 10000,
+                  'theme':   'ouc',
+                  'layout':  2,
+                })
+
+                throw error
+              }
+
+              self.$toast.success({
+                'title':   'Theme installed',
+                'message': `${this.theme.title} was installed by ${process.extension.name} successfully`,
+                'timeout': 10000,
+                'theme':   'ouc',
+                'layout':  2,
+              })
+            }
+          }
+          window.addEventListener('message', callbackHandler)
+
+          window.postMessage({
+            'type':  'ouc-install-usercss',
+            'title': this.theme.title,
+            'code':  built,
+            key,
+          }, '*')
+        } catch (error) {
+          console.error(error)
+          raven.captureException(error)
+        }
+      },
     },
     'computed': {
       ...mapGetters([
@@ -270,7 +336,15 @@
                 b-tile
                   b-tile(is-child)
                     .content.is-marginless(is-pulled-right)
-                      button.button.is-primary(v-if="extension", @click="installTheme") Install theme with {{extension.name}}
+                      div(v-if="extension")
+                        button.button.is-primary(
+                          @click="installTheme",
+                          v-if="!extension.capabilities.includes('install-usercss-event')"
+                        ) Install theme with {{extension.name}}
+                        button.button.is-primary(
+                          @click="installThemeEvent",
+                          v-if="extension.capabilities.includes('install-usercss-event')"
+                        ) Install theme with {{extension.name}}
                       button.button.is-primary(v-if="!extension", @click="installTheme") Install theme as usercss
 
           b-columns

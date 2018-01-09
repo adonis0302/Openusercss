@@ -61,6 +61,7 @@ const featuresList = {
     'configure-after-install',
   ],
   'optional': [
+    'install-usercss-event',
     'configure-before-install',
     'builtin-editor',
     'create-usercss',
