@@ -1,6 +1,6 @@
 import User from '../../connector/schema/user'
 import Theme from '../../connector/schema/theme'
-import {getRatings,} from './get-rating'
+import {getTheme,} from './get-theme'
 
 export const getUser = async (query) => {
   const user = await User.findOne(query, {
@@ -11,15 +11,13 @@ export const getUser = async (query) => {
     user.themes = await Theme.find({
       'user': user._id,
     }, {
-      'populate': true,
+      'populate': false,
     })
 
     user.themes = await Promise.all(user.themes.map(async (theme) => {
-      theme.ratings = await getRatings({
-        'theme': theme._id,
+      return getTheme({
+        '_id': theme._id,
       })
-
-      return theme
     }))
   }
 
