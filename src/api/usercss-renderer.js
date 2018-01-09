@@ -79,6 +79,7 @@ export const buildTheme = async (rawTheme) => {
     `@namespace https://openusercss.org/theme/${theme._id}`,
     `@homepageURL https://openusercss.org/theme/${theme._id}`,
     `@author ${theme.user.displayname} (https://openusercss.org/profile/${theme.user._id})`,
+    '@preprocessor uso',
   ].join('\n')
 
   const rawVars = []
