@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.7.1"></a>
+## [0.7.1](https://github.com/OpenUserCSS/openusercss.org/compare/v0.7.0...v0.7.1) (2018-01-09)
+
+
+### Bug Fixes
+
+* **API:** Add uso preprocessor to usercss renderer ([12ab8e4](https://github.com/OpenUserCSS/openusercss.org/commit/12ab8e4))
+
+
+
 <a name="0.7.0"></a>
 # [0.7.0](https://github.com/OpenUserCSS/openusercss.org/compare/v0.6.3...v0.7.0) (2018-01-09)
 
