@@ -2,6 +2,16 @@ import {cloneDeep, uniqBy,} from 'lodash'
 import router from '../../utils/router'
 import {remoteSaveTheme,} from './helpers/remotes/mutations'
 import db, {upsert,} from '../db'
+import {struct,} from 'superstruct'
+
+const validators = {}
+
+validators.option = struct({
+  'type':  'string',
+  'label': 'string',
+  'name':  'string',
+  'value': 'any',
+})
 
 export default async ({commit, getters,}, {readyTheme, redirect,}) => {
   commit('loading', true)
@@ -10,6 +20,10 @@ export default async ({commit, getters,}, {readyTheme, redirect,}) => {
     if (!getters.session) {
       throw new Error('You must be logged in to do this')
     }
+
+    readyTheme.options.forEach((option) => {
+      validators.option(option)
+    })
 
     const themes = db.getCollection('themes')
     const users = db.getCollection('users')
