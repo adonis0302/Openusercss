@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.9.1"></a>
+## [0.9.1](https://github.com/OpenUserCSS/openusercss.org/compare/v0.9.0...v0.9.1) (2018-01-09)
+
+
+### Bug Fixes
+
+* **API:** Improve latest themes and popular themes query ([dd181f6](https://github.com/OpenUserCSS/openusercss.org/commit/dd181f6)), closes [#65](https://github.com/OpenUserCSS/openusercss.org/issues/65)
+
+
+
 <a name="0.9.0"></a>
 # [0.9.0](https://github.com/OpenUserCSS/openusercss.org/compare/v0.8.1...v0.9.0) (2018-01-09)
 
