@@ -1,10 +1,17 @@
 import Theme from '../../connector/schema/theme'
 import {getRatings,} from './get-rating'
+import log from 'chalk-console'
 
 export const getTheme = async (query) => {
-  const theme = await Theme.findOne(query, {
-    'populate': true,
-  })
+  let theme = null
+
+  try {
+    theme = await Theme.findOne(query, {
+      'populate': true,
+    })
+  } catch (error) {
+    log.error(error)
+  }
 
   if (theme) {
     theme.ratings = await getRatings({
