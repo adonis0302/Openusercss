@@ -12,7 +12,9 @@ export default async ({commit, getters,}, {terms, limit, skip,}) => {
     const {search,} = data
 
     search.themes.forEach((theme) => {
-      theme.options = theme.options.filter((option) => {
+      const savedTheme = cloneDeep(theme)
+
+      savedTheme.options = savedTheme.options.filter((option) => {
         let newValue = null
 
         try {
@@ -24,7 +26,6 @@ export default async ({commit, getters,}, {terms, limit, skip,}) => {
         option.value = newValue
         return option
       })
-      const savedTheme = cloneDeep(theme)
 
       savedTheme.user = {
         '_id': theme.user._id,
