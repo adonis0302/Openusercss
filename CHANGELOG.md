@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="0.9.5"></a>
+## [0.9.5](https://github.com/OpenUserCSS/openusercss.org/compare/v0.9.4...v0.9.5) (2018-01-10)
+
+
+### Bug Fixes
+
+* **API:** Work around "Cannot read property toString of undefined" ([b6d3a38](https://github.com/OpenUserCSS/openusercss.org/commit/b6d3a38))
+* **client:** Fix read only object property assignment on search ([76018f4](https://github.com/OpenUserCSS/openusercss.org/commit/76018f4))
+
+
+
 <a name="0.9.4"></a>
 ## [0.9.4](https://github.com/OpenUserCSS/openusercss.org/compare/v0.9.3...v0.9.4) (2018-01-09)
 
