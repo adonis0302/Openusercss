@@ -6,6 +6,10 @@ export default async (req, res, next) => {
     '_id': req.params.id,
   })
 
+  if (!foundTheme.ratings) {
+    foundTheme.ratings = []
+  }
+
   if (foundTheme) {
     const theme = await buildTheme(foundTheme)
 

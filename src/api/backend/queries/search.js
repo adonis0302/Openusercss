@@ -1,27 +1,25 @@
-import {getUser,} from '../translators/get-user'
-import {getTheme,} from '../translators/get-theme'
+import {getUser, getUsers,} from '../translators/get-user'
+import {getTheme, getThemes,} from '../translators/get-theme'
 
 export default async (root, {terms, limit = 10, skip = 0,}, {Theme, User,}) => {
   if (limit > 25 || limit < 1) {
     throw new Error(`limit must be at least 1 and at most 25, got ${limit}`)
   }
 
-  let themeResults = await Theme.find({
+  let themeResults = await getThemes({
     '$text': {
       '$search': terms,
     },
   }, {
-    'populate': true,
     'sort':     '-score',
     limit,
     skip,
   })
-  let userResults = await User.find({
+  let userResults = await getUsers({
     '$text': {
       '$search': terms,
     },
   }, {
-    'populate': true,
     'sort':     '-score',
     limit,
     skip,

@@ -9,23 +9,44 @@ export const getTheme = async (query) => {
     theme = await Theme.findOne(query, {
       'populate': true,
     })
+
+    if (theme) {
+      theme.ratings = await getRatings({
+        'theme': theme._id,
+      }) || []
+
+      theme.options = theme.options.filter((option) => {
+        option.value = JSON.stringify(option.value) || ''
+        option.label = option.label || ''
+        option.name = option.name || ''
+
+        return option
+      })
+    }
   } catch (error) {
     log.error(error)
   }
 
-  if (theme) {
-    theme.ratings = await getRatings({
-      'theme': theme._id,
-    })
+  return theme
+}
 
-    theme.options = theme.options.filter((option) => {
-      option.value = JSON.stringify(option.value) || ''
-      option.label = option.label || ''
-      option.name = option.name || ''
+export const getThemes = async (query, options) => {
+  let themes = null
+  options.populate = false
 
-      return option
-    })
+  try {
+    themes = await Theme.find(query, options)
+
+    if (themes) {
+      themes = await Promise.all(themes.map(async (theme) => {
+        return getTheme({
+          '_id': theme._id,
+        })
+      }))
+    }
+  } catch (error) {
+    log.error(error)
   }
 
-  return theme
+  return themes
 }
