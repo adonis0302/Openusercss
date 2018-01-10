@@ -24,8 +24,8 @@ const init = async () => {
       },
       {
         'weights': {
-          'title':       3,
-          'description': 2,
+          'title':       11,
+          'description': 4,
           'content':     1,
         },
       },
@@ -38,8 +38,8 @@ const init = async () => {
       },
       {
         'weights': {
-          'displayname': 3,
-          'username':    2,
+          'displayname': 5,
+          'username':    3,
           'bio':         1,
         },
       },
