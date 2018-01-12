@@ -1,7 +1,7 @@
 import User from '../../connector/schema/user'
 import Theme from '../../connector/schema/theme'
 import {getTheme,} from './get-theme'
-import log from 'chalk-console'
+import raven from 'raven'
 
 export const getUser = async (query) => {
   const user = await User.findOne(query, {
@@ -27,8 +27,8 @@ export const getUser = async (query) => {
 
 export const getUsers = async (query, options) => {
   let users = null
-  options.populate = false
 
+  options.populate = false
   try {
     users = await User.find(query, options)
     users = Promise.all(users.filter(async (user) => {
@@ -47,7 +47,7 @@ export const getUsers = async (query, options) => {
       }
     }))
   } catch (error) {
-    log.error(error)
+    raven.captureException(error)
   }
 
   return users

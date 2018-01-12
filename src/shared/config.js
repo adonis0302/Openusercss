@@ -10,12 +10,6 @@ import {
   isEqual,
 } from 'lodash'
 
-// Delete ourselves from the require cache, so that different processes
-// can have different configs
-if (require.cache) {
-  Reflect.deleteProperty(require.cache, __filename)
-}
-
 const appPath = path.resolve(process.mainModule.paths[0], '..')
 const defaultConfig = {
   'env':   'production',
@@ -30,28 +24,13 @@ const defaultConfig = {
     },
   },
   'domain':     'openusercss.org',
-  'saltRounds': 15,
+  'saltrounds': 15,
   'database':   {
     'main': 'mongodb://localhost:27017/openusercss-main',
   },
-}
-
-const envConfig = {
-  'env':   process.env.NODE_ENV,
-  'ports': {
-    'api': {
-      'https': process.env.API_HTTPS_PORT,
-      'http':  process.env.API_HTTP_PORT,
-    },
-    'frontend': {
-      'https': process.env.FRONTEND_HTTPS_PORT,
-      'http':  process.env.FRONTEND_HTTP_PORT,
-    },
-  },
-  'domain':     process.env.DOMAIN,
-  'saltRounds': process.env.SALT_ROUNDS,
-  'database':   {
-    'main': process.env.MONGODB_STRING,
+  'sentry': {
+    'webserver': '',
+    'api':       '',
   },
 }
 
@@ -130,7 +109,7 @@ const initConfig = () => {
   })
 
   if (!config.get('version') || !config.get('keypair')) {
-    config.set('env', envConfig.environment || defaultConfig.environment)
+    config.set('env', defaultConfig.environment)
     config.set('keypair', genKeypair())
     config.set('version', newVersion)
   }
@@ -139,7 +118,7 @@ const initConfig = () => {
 }
 
 const ourConfig = initConfig()
-const finalizedConfig = defaultsDeep(envConfig, ourConfig.get(), defaultConfig)
+const finalizedConfig = defaultsDeep(ourConfig.get(), defaultConfig)
 
 export default async () => {
   if (!isEqual(ourConfig.get(), finalizedConfig)) {

@@ -1,8 +1,6 @@
-// @flow
-
+import raven from 'raven'
 import staticConfig from './config'
 import jwt from 'jsonwebtoken'
-import log from 'chalk-console'
 
 export default async (token: String, Session) => {
   const config = await staticConfig()
@@ -24,7 +22,7 @@ export default async (token: String, Session) => {
       ],
     })
   } catch (error) {
-    log.error(error)
+    raven.captureException(error)
     throw new Error('Invalid session')
   }
 

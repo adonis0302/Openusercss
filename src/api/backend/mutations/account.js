@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs'
-import log from 'chalk-console'
+import raven from 'raven'
 import jwt from 'jsonwebtoken'
 import {cloneDeep,} from 'lodash'
 import moment from 'moment'
@@ -47,7 +47,7 @@ const sendEmail = async (locals, {template,}) => {
 export default async (root, {token, email, password, displayname, bio, donationUrl,}, {User, Session,}) => {
   const session = await mustAuthenticate(token, Session)
   const config = await staticConfig()
-  const saltRounds = parseInt(config.get('saltRounds'), 10)
+  const saltRounds = parseInt(config.get('saltrounds'), 10)
   const {user,} = session
   const oldUser = cloneDeep(user)
   let link = null
@@ -116,7 +116,7 @@ export default async (root, {token, email, password, displayname, bio, donationU
     }, {
       'template': 'password-changed',
     })
-    .catch(log.error)
+    .catch(raven.captureException)
   }
 
   if (displayname) {
@@ -128,7 +128,7 @@ export default async (root, {token, email, password, displayname, bio, donationU
     }, {
       'template': 'username-changed',
     })
-    .catch(log.error)
+    .catch(raven.captureException)
   }
 
   if (email) {
@@ -139,7 +139,7 @@ export default async (root, {token, email, password, displayname, bio, donationU
     }, {
       'template': 'email-reverification-previous',
     })
-    .catch(log.error)
+    .catch(raven.captureException)
 
     sendEmail({
       user,
@@ -149,7 +149,7 @@ export default async (root, {token, email, password, displayname, bio, donationU
     }, {
       'template': 'email-reverification-next',
     })
-    .catch(log.error)
+    .catch(raven.captureException)
   }
 
   if (donationUrl && user.donationUrl !== oldUser.donationUrl) {
@@ -160,6 +160,7 @@ export default async (root, {token, email, password, displayname, bio, donationU
     }, {
       'template': 'donation-link-changed',
     })
+    .catch(raven.captureException)
   }
 
   return savedUser
