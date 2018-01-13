@@ -96,7 +96,7 @@ export const buildTheme = async (rawTheme) => {
   const header = [
     '/* ==userstyle==',
     `@name ${theme.title}`,
-    `@description ${stripDown(theme.description).replace(/\n/, ' - ')}`,
+    `@description ${stripDown(theme.description).replace(/\n/g, ' ')}`,
     `@version ${theme.version}`,
     `@namespace ${urls.site}/theme/${theme._id}`,
     `@homepageURL ${urls.site}/theme/${theme._id}`,
