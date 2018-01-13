@@ -54,6 +54,9 @@ export default async (root, {token, email, password, displayname, bio, donationU
 
   // Password resets
   if (password) {
+    raven.captureBreadcrumb({
+      'message': 'Changing password',
+    })
     const salt = await bcrypt.genSalt(saltRounds)
     const hash = await bcrypt.hash(password, salt)
 
@@ -62,6 +65,9 @@ export default async (root, {token, email, password, displayname, bio, donationU
 
   // Username changing
   if (displayname) {
+    raven.captureBreadcrumb({
+      'message': 'Changing displayname',
+    })
     if (user.displayname === displayname) {
       throw new Error('This username is already the one you\'re currently using.')
     }
@@ -72,6 +78,9 @@ export default async (root, {token, email, password, displayname, bio, donationU
 
   // E-mail address changing
   if (email) {
+    raven.captureBreadcrumb({
+      'message': 'Changing email',
+    })
     if (user.email === email) {
       throw new Error('This e-mail address is already the one you\'re currently using')
     }
@@ -94,10 +103,16 @@ export default async (root, {token, email, password, displayname, bio, donationU
   }
 
   if (bio) {
+    raven.captureBreadcrumb({
+      'message': 'Changing bio',
+    })
     user.bio = decodeURIComponent(bio)
   }
 
   if (donationUrl || donationUrl === '') {
+    raven.captureBreadcrumb({
+      'message': 'Changing donationUrl',
+    })
     user.donationUrl = donationUrl
   }
 

@@ -38,10 +38,14 @@ export const getThemes = async (query, options) => {
     themes = await Theme.find(query, options)
 
     if (themes) {
-      themes = await Promise.all(themes.map(async (theme) => {
-        return getTheme({
+      themes = await Promise.all(themes.filter(async (theme) => {
+        const result = await getTheme({
           '_id': theme._id,
         })
+
+        if (result) {
+          return result
+        }
       }))
     }
   } catch (error) {
