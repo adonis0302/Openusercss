@@ -3,11 +3,10 @@
 .sass-cache
 .tmp
 .ignored
+.*.env
 .env.json
-.prod.env
 
 reports
-docker-compose.yml
 bfg.jar
 build
 build.zip

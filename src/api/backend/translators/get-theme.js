@@ -1,6 +1,6 @@
 import Theme from '../../connector/schema/theme'
 import {getRatings,} from './get-rating'
-import log from 'chalk-console'
+import raven from 'raven'
 
 export const getTheme = async (query) => {
   let theme = null
@@ -24,7 +24,7 @@ export const getTheme = async (query) => {
       })
     }
   } catch (error) {
-    log.error(error)
+    raven.captureException(error)
   }
 
   return theme
@@ -32,20 +32,24 @@ export const getTheme = async (query) => {
 
 export const getThemes = async (query, options) => {
   let themes = null
-  options.populate = false
 
+  options.populate = false
   try {
     themes = await Theme.find(query, options)
 
     if (themes) {
-      themes = await Promise.all(themes.map(async (theme) => {
-        return getTheme({
+      themes = await Promise.all(themes.filter(async (theme) => {
+        const result = await getTheme({
           '_id': theme._id,
         })
+
+        if (result) {
+          return result
+        }
       }))
     }
   } catch (error) {
-    log.error(error)
+    raven.captureException(error)
   }
 
   return themes

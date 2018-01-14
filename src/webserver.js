@@ -81,9 +81,10 @@ if (process.env.NODE_ENV === 'development') {
 const init = async () => {
   await auto()
   const app = express()
+  const config = await staticConfig()
 
   if (process.env.NODE_ENV !== 'development') {
-    raven.config('https://121a57831dd44be8af1added345b8c65@sentry.io/264731').install()
+    raven.config(config.get('sentry.webserver')).install()
     app.use(raven.requestHandler())
   }
 
@@ -106,7 +107,6 @@ const init = async () => {
   app.enable('trust proxy')
   app.set('trust proxy', true)
 
-  const config = await staticConfig()
   const clientBuffer = await pify(fs.readFile)(clientPath)
   const client = clientBuffer.toString()
   const renderer = createBundleRenderer(client)
@@ -173,6 +173,7 @@ const init = async () => {
     const httpServer = http.createServer(app)
 
     httpServer.listen(config.get('ports.frontend.http'))
+    log.info(`Webserver started (http): ${config.get('ports.frontend.http')}`)
     servers.push(httpServer)
   }
 
@@ -182,9 +183,8 @@ const init = async () => {
   }, app)
 
   httpsServer.listen(config.get('ports.frontend.https'))
+  log.info(`Webserver started (https): ${config.get('ports.frontend.https')}`)
   servers.push(httpsServer)
-
-  log.info(`Webserver started: ${JSON.stringify(config.get('ports.frontend'))}`)
 
   return true
 }

@@ -1,21 +1,28 @@
-import Rating from '../../connector/schema/rating'
+import raven from 'raven'
 
+import Rating from '../../connector/schema/rating'
 import {getTheme,} from './get-theme'
 import {getUser,} from './get-user'
 
 export const getRating = async (query) => {
-  const rating = await Rating.findOne(query, {
-    'populate': true,
-  })
+  let rating = null
 
-  if (rating) {
-    rating.theme = await getTheme({
-      '_id': rating.theme,
+  try {
+    rating = await Rating.findOne(query, {
+      'populate': true,
     })
 
-    rating.user = await getUser({
-      '_id': rating.user,
-    })
+    if (rating) {
+      rating.theme = await getTheme({
+        '_id': rating.theme,
+      })
+
+      rating.user = await getUser({
+        '_id': rating.user,
+      })
+    }
+  } catch (error) {
+    raven.captureException(error)
   }
 
   return rating

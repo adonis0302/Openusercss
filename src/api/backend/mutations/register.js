@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs'
-import log from 'chalk-console'
+import raven from 'raven'
 import jwt from 'jsonwebtoken'
 import {
   sendEmail,
@@ -37,7 +37,7 @@ const createSendEmail = async ({email, displayname,}) => {
 
 export default async (root, {displayname, email, password,}, {User,}) => {
   const config = await staticConfig()
-  const salt = await bcrypt.genSalt(parseInt(config.get('saltRounds'), 10))
+  const salt = await bcrypt.genSalt(parseInt(config.get('saltrounds'), 10))
   const hash = await bcrypt.hash(password, salt)
   const newUser = User.create({
     'password': hash,
@@ -48,7 +48,7 @@ export default async (root, {displayname, email, password,}, {User,}) => {
   const savedUser = await newUser.save()
 
   createSendEmail(savedUser)
-  .catch(log.error)
+  .catch(raven.captureException)
 
   return savedUser
 }

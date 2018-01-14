@@ -42,9 +42,10 @@ const servers = []
 const init = async () => {
   await auto()
   const app = express()
+  const config = await staticConfig()
 
   if (process.env.NODE_ENV !== 'development') {
-    raven.config('https://1d4b75dc379946cbb9e0dd770cb3f099@sentry.io/264732').install()
+    raven.config(config.get('sentry.api')).install()
     app.use(raven.requestHandler())
   }
 
@@ -64,8 +65,6 @@ const init = async () => {
     },
   }))
 
-  const config = await staticConfig()
-
   app.enable('trust proxy')
   app.set('trust proxy', true)
 
@@ -75,10 +74,11 @@ const init = async () => {
 
   log.info(`API environment: ${app.get('env')}`)
 
-  if (process.env.NODE_ENV === 'development') {
+  if (config.get('env') === 'development') {
     const httpServer = http.createServer(app)
 
     httpServer.listen(config.get('ports.api.http'))
+    log.info(`API started (http): ${JSON.stringify(config.get('ports.api.http'))}`)
     servers.push(httpServer)
   }
 
@@ -95,9 +95,8 @@ const init = async () => {
   }, app)
 
   httpsServer.listen(config.get('ports.api.https'))
+  log.info(`API started (https): ${JSON.stringify(config.get('ports.api.https'))}`)
   servers.push(httpsServer)
-
-  log.info(`API started: ${JSON.stringify(config.get('ports.api'))}`)
 
   return true
 }
@@ -106,14 +105,15 @@ const init = async () => {
   try {
     init()
   } catch (error) {
+    raven.captureException(error)
     log.error(error)
   }
 })()
 
 process.on('unhandledRejection', (error) => {
   log.error(`Unhandled promise rejection in API: ${error.message}`)
-  log.error(error.stack)
-  process.exit(1)
+  raven.captureException(error)
+  log.error(error)
 })
 
 process.on('SIGTERM', () => {

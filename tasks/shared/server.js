@@ -5,6 +5,7 @@ gulp.task('server:run', () => {
   server.listen({
     'path':       './build/manager',
     'killSignal': 'SIGTERM',
+    'env':        process.env,
   })
 })
 
