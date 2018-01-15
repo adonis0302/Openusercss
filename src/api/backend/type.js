@@ -3,7 +3,7 @@ const outputTypeDefs = `
     _id:            ID!
     username:       String!
     displayname:    String!
-    themes:         [Theme]!
+    themes:         [String]!
     avatarUrl:      String!
     smallAvatarUrl: String!
     lastSeen:       String!
@@ -47,7 +47,7 @@ const outputTypeDefs = `
     content:     String!
     createdAt:   String!
     lastUpdate:  String!
-    ratings:     [Rating]!
+    user:        User!
     version:     String!
     screenshots: [String]
     options:     [Option]

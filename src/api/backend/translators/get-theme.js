@@ -1,56 +1,27 @@
 import Theme from '../../connector/schema/theme'
-import {getRatings,} from './get-rating'
-import raven from 'raven'
 
 export const getTheme = async (query) => {
-  let theme = null
-
-  try {
-    theme = await Theme.findOne(query, {
-      'populate': true,
-    })
-
-    if (theme) {
-      theme.ratings = await getRatings({
-        'theme': theme._id,
-      }) || []
-
-      theme.options = theme.options.filter((option) => {
-        option.value = JSON.stringify(option.value) || ''
-        option.label = option.label || ''
-        option.name = option.name || ''
-
-        return option
-      })
-    }
-  } catch (error) {
-    raven.captureException(error)
-  }
-
-  return theme
+  return Theme.findOne(query, {
+    'populate': true,
+  })
 }
 
-export const getThemes = async (query, options) => {
-  let themes = null
-
+export const getThemes = async (query, options = {}) => {
   options.populate = false
-  try {
-    themes = await Theme.find(query, options)
+  const foundThemes = await Theme.find(query, options)
 
-    if (themes) {
-      themes = await Promise.all(themes.filter(async (theme) => {
-        const result = await getTheme({
-          '_id': theme._id,
-        })
+  if (foundThemes) {
+    const themes = await Promise.all(foundThemes.filter(async (theme) => {
+      theme.options = theme.options.filter((option) => {
+        option.value = JSON.stringify(option.value)
+        return option
+      })
 
-        if (result) {
-          return result
-        }
-      }))
-    }
-  } catch (error) {
-    raven.captureException(error)
+      return theme
+    }))
+
+    return themes
   }
 
-  return themes
+  return []
 }
