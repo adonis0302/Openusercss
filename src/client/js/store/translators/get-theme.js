@@ -4,7 +4,9 @@ import {ServerError,} from '../../../../shared/custom-errors'
 import {theme, search,} from '../actions/helpers/queries'
 import {upsert,} from '../db'
 
-const renderOptions = (options) => {
+import {getUser,} from './get-user'
+
+export const renderOptions = (options) => {
   if (!options) {
     return []
   }
@@ -41,6 +43,11 @@ export const getTheme = async (query) => {
   doneTheme.options = renderOptions(doneTheme.options)
   upsert('themes', doneTheme)
 
+  const user = await getUser({
+    'id': doneTheme.user._id,
+  })
+
+  upsert('users', user)
   return doneTheme
 }
 
