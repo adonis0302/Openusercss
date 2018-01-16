@@ -7,7 +7,6 @@ export default async ({commit, getters,}, limit) => {
 
   try {
     const themes = db.getCollection('themes')
-    const users = db.getCollection('users')
     const {data,} = await getPopularThemes(limit)
     const {popularThemes,} = data
     const savedThemes = []
@@ -27,10 +26,6 @@ export default async ({commit, getters,}, limit) => {
         option.value = newValue
         return option
       })
-      upsert(users, savedTheme.user)
-      savedTheme.user = {
-        '_id': theme.user._id,
-      }
 
       savedThemes.push(savedTheme)
       upsert(themes, savedTheme)

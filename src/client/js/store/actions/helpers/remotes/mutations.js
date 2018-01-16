@@ -101,9 +101,6 @@ export const remoteLogin = async ({email, password,}) => {
         ip,
         ua,
         user {
-          themes {
-            ${themePropList}
-          },
           ${userPropList}
         }
       }

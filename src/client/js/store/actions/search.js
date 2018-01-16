@@ -27,23 +27,10 @@ export default async ({commit, getters,}, {terms, limit, skip,}) => {
         return option
       })
 
-      savedTheme.user = {
-        '_id': theme.user._id,
-      }
-
       upsert(themes, savedTheme)
     })
     search.users.forEach((user) => {
-      const savedUser = cloneDeep(user)
-      const userThemes = []
-
-      user.themes.forEach((theme) => {
-        userThemes.push({
-          '_id': theme._id,
-        })
-      })
-      savedUser.themes = userThemes
-      upsert(users, savedUser)
+      upsert(users, user)
     })
     commit('loading', false)
     commit('actionError', null)

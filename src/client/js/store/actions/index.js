@@ -21,59 +21,28 @@ import 'isomorphic-fetch'
 const ssrMode = process.title === 'node'
 const inDev = process.env.NODE_ENV === 'development'
 let networkInterface = null
-let apolloClient = null
+let apiURI = 'https://api.openusercss.org'
 
-if (!ssrMode && inDev) {
-  networkInterface = createBatchingNetworkInterface({
-    'uri': 'http://localhost:5000',
-  })
-
-  apolloClient = new ApolloClient({
-    networkInterface,
-  })
+if (inDev) {
+  apiURI = 'http://localhost:5000'
 }
 
-if (!ssrMode && !inDev) {
-  networkInterface = createBatchingNetworkInterface({
-    'uri': 'https://api.openusercss.org',
-  })
+const link = createHttpLink({
+  'uri': apiURI,
+})
 
-  apolloClient = new ApolloClient({
-    networkInterface,
-  })
-}
+networkInterface = createBatchingNetworkInterface({
+  'uri': apiURI,
+})
 
-if (ssrMode && inDev) {
-  networkInterface = createBatchingNetworkInterface({
-    'uri': 'http://localhost:5000',
-  })
+export const apolloClient = new ApolloClient({
+  'cache':              false,
+  'queryDeduplication': true,
+  link,
+  ssrMode,
+  networkInterface,
+})
 
-  apolloClient = new ApolloClient({
-    'cache': false,
-    'link':  createHttpLink({
-      'uri': 'http://localhost:5000',
-    }),
-    ssrMode,
-    networkInterface,
-  })
-}
-
-if (ssrMode && !inDev) {
-  networkInterface = createBatchingNetworkInterface({
-    'uri': 'https://api.openusercss.org',
-  })
-
-  apolloClient = new ApolloClient({
-    'cache': false,
-    'link':  createHttpLink({
-      'uri': 'https://api.openusercss.org',
-    }),
-    ssrMode,
-    networkInterface,
-  })
-}
-
-export {apolloClient,}
 export default {
   logout,
   login,
