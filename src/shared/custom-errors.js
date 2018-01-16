@@ -17,7 +17,29 @@ export class ExpectedError extends Error {
     preparedMsg = msg.replace(prefixRe, '')
     preparedMsg = msg.replace(gqlRe, '')
 
+    if (prefix) {
+      preparedMsg = `${prefix}: ${preparedMsg}`
+    }
+
     super(preparedMsg)
+  }
+}
+
+export class ServerError extends ExpectedError {
+  constructor ({
+    prefix,
+    message,
+  }) {
+    let msg = message
+
+    if (message instanceof Object) {
+      msg = JSON.stringify(msg, null, 4)
+    }
+
+    super({
+      'prefix':  'Server error',
+      'message': msg,
+    })
   }
 }
 
