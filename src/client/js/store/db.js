@@ -41,18 +41,6 @@ if (process.browser) {
 
 const validators = {}
 
-validators.reference = (typename) => {
-  if (!typename || typeof typename !== 'string') {
-    throw new Error(`typename argument must be a string, got ${typeof typename}: ${JSON.stringify(typename)}`)
-  }
-
-  return struct({
-    '__typename': 'string',
-    '_id':        'string',
-  }, {
-    '__typename': typename,
-  })
-}
 validators.option = struct({
   '__typename': 'string',
   'type':       'string',
@@ -69,16 +57,13 @@ validators.themes = struct({
   'createdAt':   'string',
   'lastUpdate':  'string',
   'description': 'string',
-  'ratings':     [
-    'object',
-  ],
-  'options': [
+  'user':        'string',
+  'options':     [
     validators.option,
   ],
   'screenshots': struct.optional([
     'string',
   ]),
-  'user': validators.reference('User'),
 }, {
   '__typename': 'Theme',
 })
@@ -93,9 +78,6 @@ validators.users = struct({
   'smallAvatarUrl': 'string',
   'bio':            'string',
   'donationUrl':    'string',
-  'themes':         struct.optional([
-    validators.reference('Theme'),
-  ]),
 }, {
   '__typename': 'User',
 })
@@ -106,8 +88,11 @@ if (!db.collections.length) {
 
 export default db
 export const upsert = (wantedCollection, object) => {
-  if (!wantedCollection.name || typeof wantedCollection === 'string') {
-    throw new Error('Upsert must either be passed a string or a collection')
+  const isCollection = !!wantedCollection.name
+  const isString = typeof wantedCollection === 'string'
+
+  if (!isCollection && !isString) {
+    throw new Error(`Upsert must either be passed a string or a collection, got ${JSON.stringify(wantedCollection)} (${typeof wantedCollection})`)
   }
   let collection = null
 
