@@ -36,6 +36,12 @@
     width: 100%;
     z-index: 100;
     height: map-get($kerning, 'navbar-height');
+
+    .container,
+    .navbar-brand,
+    .navbar-burger {
+      height: 100%;
+    }
   }
 
   .body-spacer {
