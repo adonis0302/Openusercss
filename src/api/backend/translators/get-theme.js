@@ -1,9 +1,36 @@
 import Theme from '../../connector/schema/theme'
+import {superstruct,} from 'superstruct'
+
+const struct = superstruct({
+  'types': {
+    'any': () => true,
+  },
+})
+const validators = {}
+
+validators.option = struct({
+  'type':  'string',
+  'label': 'string',
+  'name':  'string',
+  'value': 'string',
+})
 
 export const getTheme = async (query) => {
-  return Theme.findOne(query, {
+  const theme = await Theme.findOne(query, {
     'populate': true,
   })
+
+  theme.options = theme.options.filter((option) => {
+    option.value = JSON.stringify(option.value)
+    try {
+      return validators.option(option)
+    } catch (error) {
+      return ''
+    }
+  })
+  theme.user = theme.user._id
+
+  return theme
 }
 
 export const getThemes = async (query, options = {}) => {
@@ -16,6 +43,7 @@ export const getThemes = async (query, options = {}) => {
         option.value = JSON.stringify(option.value)
         return option
       })
+      theme.user = theme.user._id
 
       return theme
     }))

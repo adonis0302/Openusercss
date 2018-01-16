@@ -24,7 +24,7 @@ export default async (root, {limit,}, {User, Theme, Rating,}) => {
     throw new Error('No theme found')
   }
 
-  result = await Promise.all(result.map(async (theme) => {
+  result = await Promise.all(result.map((theme) => {
     return getTheme({
       '_id': theme._id,
     })
