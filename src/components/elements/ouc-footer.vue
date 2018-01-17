@@ -1,17 +1,9 @@
 <script>
-  import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
   import icon from './icon.vue'
   import flushImg from './flush-img.vue'
 
   export default {
     'components': {
-      'b-footer':    bulma('footer', 'footer'),
-      'b-container': bulma('container', 'div'),
-      'b-content':   bulma('content', 'div'),
-      'b-columns':   bulma('columns', 'div'),
-      'b-column':    bulma('column', 'div'),
-      'b-tile':      bulma('tile', 'div'),
-      'b-box':       bulma('box', 'div'),
       icon,
       flushImg,
     },
@@ -79,7 +71,7 @@
       height="auto",
       :scrollable="true"
     )
-      b-box
+      .box
         vue-markdown.content(
           :source="changelog",
           :html="true",
@@ -89,10 +81,10 @@
     .is-vertical.ouc-im-broke-wrapper
       .is-primary-bg
         .container.ouc-im-broke
-          b-tile(is-parent, is-paddingless)
-            b-tile(is-child, is-pulled-left)
-              b-box.is-primary-bg.ouc-im-broke-begging(is-borderless, is-shadowless) OpenUserCSS needs your support!
-            b-tile(is-child)
+          .tile.is-parent.is-paddingless
+            .tile.is-child.is-pulled-left
+              .box.is-primary-bg.ouc-im-broke-begging.is-borderless.is-shadowless OpenUserCSS needs your support!
+            .tile.is-child
               a.button.is-patreon.is-pulled-right.is-fullheight(href="//patreon.com/DecentM", target="_blank")
                 | Become a patron on
                 .has-padding

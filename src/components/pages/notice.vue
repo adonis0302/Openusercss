@@ -1,14 +1,9 @@
 <script>
-  import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
-
   import oucFooter from '../elements/ouc-footer.vue'
   import navbar from '../elements/navbar.vue'
 
   export default {
     'components': {
-      'b-container': bulma('container', 'div'),
-      'b-content':   bulma('content', 'div'),
-      'b-button':    bulma('button', 'div'),
       oucFooter,
       navbar,
     },
@@ -17,7 +12,7 @@
 
 <template lang="pug">
   div.ouc-route-root
-    b-container
+    .container
       .section
         .content
           h1 Notice

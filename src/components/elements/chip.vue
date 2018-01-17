@@ -1,10 +1,8 @@
 <script>
-  import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
   import flushImg from './flush-img.vue'
 
   export default {
     'components': {
-      'b-tag': bulma('tag', 'div'),
       flushImg,
     },
     'computed': {
@@ -37,7 +35,12 @@
 </style>
 
 <template lang="pug">
-  b-tag.ouc-tag
-    flush-img.ouc-tag-image(height="16px", width="16px", :source="favicon", placeholder="/img/openusercss.icon-x16.png")
+  .tag.ouc-tag
+    flush-img.ouc-tag-image(
+      height="16px",
+      width="16px",
+      :source="favicon",
+      placeholder="/img/openusercss.icon-x16.png"
+    )
     slot(name="content")
 </template>

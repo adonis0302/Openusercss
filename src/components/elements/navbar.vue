@@ -1,5 +1,4 @@
 <script>
-  import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
   import {mapGetters, mapActions,} from 'vuex'
 
   import flushImg from './flush-img.vue'
@@ -7,18 +6,6 @@
 
   export default {
     'components': {
-      'navbar':          bulma('navbar', 'nav'),
-      'navbar-brand':    bulma('navbar-brand', 'div'),
-      'navbar-menu':     bulma('navbar-menu', 'div'),
-      'navbar-burger':   bulma('navbar-burger', 'div'),
-      'navbar-start':    bulma('navbar-start', 'div'),
-      'navbar-end':      bulma('navbar-end', 'div'),
-      'navbar-item':     bulma('navbar-item', 'div'),
-      'navbar-link':     bulma('navbar-link', 'div'),
-      'navbar-dropdown': bulma('navbar-dropdown', 'div'),
-      'navbar-divider':  bulma('navbar-divider', 'div'),
-      'b-container':     bulma('container', 'div'),
-      'b-tag':           bulma('tag', 'div'),
       icon,
       flushImg,
     },
@@ -96,23 +83,23 @@
 
 <template lang="pug">
   div.ouc-navbar-wrapper
-    navbar.ouc-navbar(is-primary).md-shadow--2
-      b-container
-        navbar-brand.ouc-navbar-brand
+    .navbar.ouc-navbar.is-primary.md-shadow--2
+      .container
+        .navbar-brand.ouc-navbar-brand
           router-link(to="/").navbar-item.no-active
             flush-img(source="/img/openusercss.icon-x64.png", placeholder="/img/openusercss.icon-x16.png", height="36px", width="36px")
             .spacer
             span OpenUserCSS
             .spacer
-            b-tag(is-secondary)
+            .tag.is-secondary
               | Alpha!
-          navbar-burger(@click="toggleOpen")
+          .navbar-burger(@click="toggleOpen")
             span
             span
             span
-        navbar-menu.ouc-navbar-menu(:class="['navbar-menu', 'is-primary', {'is-active': open}]")
-          navbar-start
-          navbar-end(@click="close")
+        .navbar-menu.is-primary.ouc-navbar-menu(:class="{'is-active': open}")
+          .navbar-start
+          .navbar-end(@click="close")
             router-link(v-if="session", :to="'/profile/' + currentUser._id").navbar-item
               icon(icon="account")
               | Welcome, {{currentUser.displayname}}

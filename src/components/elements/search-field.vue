@@ -1,5 +1,4 @@
 <script>
-  import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
   import icon from './icon.vue'
 
   export default {
@@ -8,9 +7,6 @@
       'value',
     ],
     'components': {
-      'b-field':   bulma('field', 'div'),
-      'b-label':   bulma('label', 'label'),
-      'b-control': bulma('control', 'div'),
       icon,
     },
     mounted () {
@@ -33,7 +29,7 @@
 </script>
 
 <template lang="pug">
-  b-control.ouc-search-field(has-icons-left)
+  .control.ouc-search-field.has-icons-left
     icon(icon="magnify")
     input.input(name="search", placeholder="Search themes and users", aria-label="Search themes and users", ref="main")
 </template>

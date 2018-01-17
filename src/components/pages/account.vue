@@ -1,5 +1,4 @@
 <script>
-  import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
   import {mapGetters,} from 'vuex'
   import {forOwn,} from 'lodash'
 
@@ -15,15 +14,6 @@
 
   export default {
     'components': {
-      'b-container':   bulma('container', 'div'),
-      'b-columns':     bulma('columns', 'div'),
-      'b-column':      bulma('column', 'div'),
-      'b-tile':        bulma('tile', 'div'),
-      'b-box':         bulma('box', 'div'),
-      'b-level':       bulma('level', 'div'),
-      'b-level-left':  bulma('level-left', 'div'),
-      'b-level-right': bulma('level-right', 'div'),
-      'b-control':     bulma('control', 'div'),
       oucFooter,
       spinner,
       notification,
@@ -145,11 +135,11 @@
 
 <template lang="pug">
   mixin account-card(condition, model, title)
-    b-box.ouc-account-card(:disabled=condition)
-      b-level
-        b-level-left
+    .box.ouc-account-card(:disabled=condition)
+      .level
+        .level-left
           h5 #{title}
-        b-level-right
+        .level-right
           label
             icon(v-if=condition, icon="lock")
             icon(v-else=condition, icon="lock-open-outline")
@@ -158,7 +148,7 @@
         block
 
   div.ouc-route-root
-    b-container.ouc-account-wrapper
+    .container.ouc-account-wrapper
       .section
         div.ouc-logged-out(v-if="!currentUser._id")
           p
@@ -169,8 +159,8 @@
             router-link.button.is-primary(to="/login") Click here to do so
 
         form.ouc-logged-in(v-else="!currentUser._id", @submit.prevent="submitAccount")
-          b-tile(is-parent, is-paddingless)
-            b-tile(is-child)
+          .tile.is-parent.is-paddingless
+            .tile.is-child
               button.button.is-primary.is-pulled-right(
                 type="submit",
                 :disabled="this.editingCount === 0",
@@ -178,20 +168,20 @@
               ) Save unlocked account details
 
           br
-          b-columns
-            b-column(is-6)
+          .columns
+            .column.is-6
               .content
                 h3 Account details
 
               hr
               +account-card("!editing.email", "editing.email", "E-mail address")
-                b-tile(is-parent, is-vertical, is-paddingless)
-                  b-tile
-                    b-tile(is-child, is-3)
+                .tile.is-parent.is-vertical.is-paddingless
+                  .tile
+                    .tile.is-child.is-3
                       .content
                         p Change to
-                    b-tile(is-child, is-9)
-                      b-control
+                    .tile.is-child.is-9
+                      .control
                         b-input(
                           name="email",
                           v-model="account.email",
@@ -201,8 +191,8 @@
                           :class="{'is-danger': errors.has('email')}",
                         )
                   br
-                  b-tile
-                    b-tile(is-child)
+                  .tile
+                    .tile.is-child
                       button.button.is-primary(
                         type="button",
                         :class="{'is-loading': loading}",
@@ -212,12 +202,12 @@
                         | Resend verification e-mail to the current address
 
               +account-card("!editing.password", "editing.password", "Passphrase")
-                b-tile(is-parent, is-vertical, is-paddingless)
-                  b-tile(is-child)
+                .tile.is-parent.is-vertical.is-paddingless
+                  .tile.is-child
                     .content
                       p Change to
-                  b-tile(is-child)
-                    b-control
+                  .tile.is-child
+                    .control
                       b-input(
                         name="password",
                         type="password",
@@ -230,7 +220,7 @@
                         aria-label="registration passphrase"
                       )
                     br
-                    b-control
+                    .control
                       b-input(
                         name="passwordVerify",
                         type="password",
@@ -243,44 +233,44 @@
                         aria-label="registration passphrase again"
                       )
 
-            b-column(is-6)
+            .column(is-6)
               .content
                 h3 Profile settings
               hr
               +account-card("!editing.donationUrl", "editing.donationUrl", "Donation link")
-                b-tile(is-parent, is-vertical, is-paddingless)
-                  b-tile
-                    b-tile(is-child, is-3)
+                .tile.is-parent.is-vertical.is-paddingless
+                  .tile
+                    .tile.is-child.is-3
                       .content
                         p Currently
-                    b-tile(is-child, is-9)
-                      b-control
+                    .tile.is-child.is-9
+                      .control
                         b-input(:value="currentUser.donationUrl", disabled)
                   br
-                  b-tile
-                    b-tile(is-child, is-3)
+                  .tile
+                    .tile.is-child.is-3
                       .content
                         p Change to
-                    b-tile(is-child, is-9)
-                      b-control
+                    .tile.is-child.is-9
+                      .control
                         b-input(v-model="account.donationUrl", :disabled="!editing.donationUrl")
 
               +account-card("!editing.displayname", "editing.displayname", "Username")
-                b-tile(is-parent, is-vertical, is-paddingless)
-                  b-tile
-                    b-tile(is-child, is-3)
+                .tile.is-parent.is-vertical.is-paddingless
+                  .tile
+                    .tile.is-child.is-3
                       .content
                         p Currently
-                    b-tile(is-child, is-9)
-                      b-control
+                    .tile.is-child.is-9
+                      .control
                         b-input(:value="currentUser.displayname", disabled)
                   br
-                  b-tile
-                    b-tile(is-child, is-3)
+                  .tile
+                    .tile.is-child.is-3
                       .content
                         p Change to
-                    b-tile(is-child, is-9)
-                      b-control
+                    .tile.is-child.is-9
+                      .control
                         b-input(
                           name="displayname"
                           v-model="account.displayname",
@@ -291,7 +281,7 @@
                         )
 
               +account-card("!editing.bio", "editing.bio", "Bio")
-                b-control
+                .control
                   b-textarea(
                     name="bio",
                     v-model="account.bio",
@@ -302,7 +292,7 @@
                   )
 
                 br
-                b-box(:disabled="!editing.bio")
+                .box(:disabled="!editing.bio")
                   .content
                     vue-markdown(
                       :source="account.bio",

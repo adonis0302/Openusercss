@@ -1,5 +1,4 @@
 <script>
-  import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
   import {mapGetters,} from 'vuex'
 
   import oucFooter from '../elements/ouc-footer.vue'
@@ -10,11 +9,6 @@
   export default {
     'errorStatus': 404,
     'components':  {
-      'b-container': bulma('container', 'div'),
-      'b-columns':   bulma('columns', 'div'),
-      'b-column':    bulma('column', 'div'),
-      'b-box':       bulma('box', 'div'),
-      'b-tile':      bulma('tile', 'div'),
       oucFooter,
       navbar,
       icon,
@@ -34,10 +28,10 @@
 
 <template lang="pug">
   div.ouc-route-root
-    b-container
+    .container
       .section
-        b-columns
-          b-column
+        .columns
+          .column
             h1 Not found
             hr
             p Route "{{$route.fullPath}}" is not attached to any particular page.
@@ -47,13 +41,13 @@
             p Or if you're going back to the Internet, take these with you:
               icon(icon="shield-outline")
               icon(icon="sword")
-          b-column
-            b-column(v-for="(theme, index) in limitBy(themes, 3)")
+          .column
+            .column(v-for="(theme, index) in limitBy(themes, 3)")
               theme-card(:data-index="index", direction="horizontal", card-class="is-primary", :theme-id="theme._id").has-bottom-margin
-                b-tile(slot="content", is-parent)
-                  b-tile(is-child)
-                    b-columns
-                      b-column
+                .tile.is-parent(slot="content")
+                  .tile.is-child
+                    .columns
+                      .column
                         h4 {{theme.title}}
                         br
                         h6 By {{theme.user.displayname}}

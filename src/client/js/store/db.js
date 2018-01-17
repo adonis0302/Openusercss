@@ -105,9 +105,10 @@ export const upsert = (wantedCollection, object) => {
   }
 
   const validate = validators[collection.name]
+  let item = null
 
   try {
-    validate(object)
+    item = validate(object)
   } catch (error) {
     if (object instanceof Array) {
       throw new Error('upsert item must not be an array')
@@ -117,12 +118,12 @@ export const upsert = (wantedCollection, object) => {
   }
 
   try {
-    collection.update(object)
+    collection.update(item)
   } catch (err) {
     collection.findAndRemove({
       '_id': object._id,
     })
-    collection.insert(object)
+    collection.insert(item)
   }
 
   return object

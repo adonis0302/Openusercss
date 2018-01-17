@@ -1,5 +1,4 @@
 <script>
-  import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
   import {mapGetters,} from 'vuex'
 
   import oucFooter from '../elements/ouc-footer.vue'
@@ -12,19 +11,6 @@
 
   export default {
     'components': {
-      'b-columns':   bulma('columns', 'div'),
-      'b-column':    bulma('column', 'div'),
-      'b-box':       bulma('box', 'div'),
-      'b-container': bulma('container', 'div'),
-      'b-field':     bulma('field', 'div'),
-      'b-label':     bulma('label', 'label'),
-      'b-textarea':  bulma('textarea', 'textarea'),
-      'b-select':    bulma('select', 'select'),
-      'b-control':   bulma('control', 'div'),
-      'b-checkbox':  bulma('checkbox', 'checkbox'),
-      'b-radio':     bulma('radio', 'radio'),
-      'b-help':      bulma('help', 'p'),
-      'b-tile':      bulma('tile', 'div'),
       oucButton,
       icon,
       notification,
@@ -64,16 +50,16 @@
 <template lang="pug">
   div.ouc-route-root
     .section(slot="form").ouc-form-section
-        b-container(style="max-width: 500px;").ouc-centered
-          b-box.ouc-form-box
+        .container(style="max-width: 500px;").ouc-centered
+          .box.ouc-form-box
             form(@submit.prevent="submitLogin").ouc-login-form
               h3 Log in to OpenUserCSS
               hr
-              b-tile(is-ancestor)
-                b-tile(is-parent, is-vertical)
-                  b-tile(is-child)
-                    b-field
-                      b-control(has-icons-left)
+              .tile.is-ancestor
+                .tile.is-parent.is-vertical
+                  .tile.is-child
+                    .field
+                      .control.has-icons-left
                         icon(icon="mail-ru")
                         b-input(
                           type="email",
@@ -85,11 +71,11 @@
                           data-vv-as="e-mail",
                           aria-label="login e-mail"
                         )
-                  b-tile(is-child)
-                    b-columns
-                      b-column
-                        b-field
-                          b-control(has-icons-left)
+                  .tile.is-child
+                    .columns
+                      .column
+                        .field
+                          .control.has-icons-left
                             icon(icon="lock")
                             b-input(
                               type="password",
@@ -101,9 +87,10 @@
                               data-vv-as="passphrase",
                               aria-label="login passphrase"
                             )
-                  b-tile(is-parent, is-vertical, is-paddingless)
+                  .tile.is-parent.is-vertical.is-paddingless
                     ouc-button(icon="account-plus").is-primary
                       p(slot="content") Login
+                    hr(v-show="errors.any()")
                     notification(v-show="errors.any()", icon="alert", color="is-danger").is-danger
                       div(slot="content")
                         ul

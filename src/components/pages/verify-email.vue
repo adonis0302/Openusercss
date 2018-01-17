@@ -1,5 +1,4 @@
 <script>
-  import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
   import {mapGetters,} from 'vuex'
 
   import spinner from '../elements/spinner.vue'
@@ -8,14 +7,6 @@
 
   export default {
     'components': {
-      'b-section':   bulma('section', 'div'),
-      'b-container': bulma('container', 'div'),
-      'b-columns':   bulma('columns', 'div'),
-      'b-column':    bulma('column', 'div'),
-      'b-tile':      bulma('tile', 'div'),
-      'b-box':       bulma('box', 'div'),
-      'b-content':   bulma('content', 'div'),
-      'b-button':    bulma('button', 'button'),
       oucFooter,
       notification,
       spinner,
@@ -64,9 +55,9 @@
 
 <template lang="pug">
   div.ouc-route-root
-    b-container
-      b-section
-        b-box.mw500.is-centered(v-show="loading")
+    .container
+      .section
+        .box.mw500.is-centered(v-show="loading")
           div
             h3 Verifying your e-mail address...
             hr
@@ -75,11 +66,11 @@
               :size="100"
             )
         div(v-show="success !== null")
-          b-box.bg-success.mw500.is-centered(v-show="!loading && success === true")
+          .box.bg-success.mw500.is-centered(v-show="!loading && success === true")
             p Your e-mail address was successfully verified
-          b-box.bg-danger.mw500.is-centered(v-show="!loading && success === false")
+          .box.bg-danger.mw500.is-centered(v-show="!loading && success === false")
             p E-mail address verification failed
-          b-box.bg-danger.mw500.is-centered(v-show="!loading && success !== false && !success")
+          .box.bg-danger.mw500.is-centered(v-show="!loading && success !== false && !success")
             p An error occurred while verifying your address
 
     ouc-footer

@@ -1,6 +1,5 @@
 <script>
   // eslint-disable no-console
-  import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
   import {mapGetters,} from 'vuex'
   import {formatMoment,} from '../../../src/shared/time'
   import {buildTheme,} from '../../../src/shared/usercss-builder'
@@ -16,28 +15,6 @@
 
   export default {
     'components': {
-      'b-tile':              bulma('tile', 'div'),
-      'b-container':         bulma('container', 'div'),
-      'b-container-fluid':   bulma('container-fluid', 'div'),
-      'b-box':               bulma('box', 'div'),
-      'b-columns':           bulma('columns', 'div'),
-      'b-column':            bulma('column', 'div'),
-      'b-level':             bulma('level', 'div'),
-      'b-level-left':        bulma('level-left', 'div'),
-      'b-level-right':       bulma('level-right', 'div'),
-      'b-modal':             bulma('modal', 'div'),
-      'b-modal-background':  bulma('modal-background', 'div'),
-      'b-modal-content':     bulma('modal-content', 'div'),
-      'b-modal-close':       bulma('modal-close', 'div'),
-      'b-control':           bulma('control', 'div'),
-      'b-card':              bulma('card', 'div'),
-      'b-card-header':       bulma('card-header', 'div'),
-      'b-card-header-title': bulma('card-header-title', 'div'),
-      'b-card-header-icon':  bulma('card-header-icon', 'div'),
-      'b-card-image':        bulma('card-image', 'div'),
-      'b-card-content':      bulma('card-content', 'div'),
-      'b-card-footer':       bulma('card-footer', 'div'),
-      'b-card-footer-item':  bulma('card-footer-item', 'div'),
       oucFooter,
       navbar,
       flushImg,
@@ -266,12 +243,12 @@
 
     modal(name="delete-theme", :draggable="true", height="auto")
       form(@submit.prevent="deleteTheme")
-        b-card(is-unselectable)
-          b-card-header
-            b-card-header-title
+        .card.is-unselectable
+          .card-header
+            .card-header-title
               .content
                 h3.is-marginless Confirm theme deletion
-          b-card-content
+          .card-content
             .content
               p
                 | Title: {{theme.title}}
@@ -281,7 +258,7 @@
                 | Last updated: {{theme.lastUpdate | moment('MMMM DD, YYYY (ZZ)')}}
               hr
               p Please type your theme's title here to confirm:
-              b-control(has-icons-left)
+              .control.has-icons-left
                 icon(icon="delete")
                 b-input(
                   name="confirmTitle",
@@ -289,11 +266,11 @@
                   aria-label="confirm theme title",
                   :placeholder="theme.title"
                 )
-          b-card-footer
-            b-card-footer-item(is-paddingless)
-              button.button(type="submit", is-danger, is-fullbleed, :disabled="theme.title !== confirmTitle") Delete theme
-            b-card-footer-item(is-paddingless)
-              button.button(type="reset", @click="cancelDelete", is-fullbleed, is-borderless) Cancel
+          .card-footer
+            .card-footer-item.is-paddingless
+              button.button.is-danger.is-fullbleed(type="submit", :disabled="theme.title !== confirmTitle") Delete theme
+            .card-footer-item.is-paddingless
+              button.button.is-fullbleed.is-borderless(type="reset", @click="cancelDelete") Cancel
 
     modal(
       name="source-viewer",
@@ -301,27 +278,27 @@
       :scrollable="true",
       @closed="closeSource"
     )
-      b-tile(is-parent, is-paddingless)
-        b-tile(is-child)
+      .tile(is-parent, is-paddingless)
+        .tile(is-child)
           code {{theme.content}}
 
-    b-container(:inert="showingModal")
+    .container(:inert="showingModal")
       div
         .section
-          b-level
-            b-level-left(is-marginless)
+          .level
+            .level-left.is-marginless
               h1 {{theme.title}}
-            b-level-right
-              b-tile(is-parent, is-paddingless)
-                b-tile(is-child, v-if="currentUser && theme.user._id === currentUser._id")
-                  .content(is-marginless, is-pulled-right)
+            .level-right
+              .tile.is-parent.is-paddingless
+                .tile.is-child(v-if="currentUser && theme.user._id === currentUser._id")
+                  .content.is-marginless.is-pulled-right
                     button.button.is-danger(@click="confirmDeleteTheme") Delete theme
-                b-tile(is-child, v-if="currentUser && theme.user._id === currentUser._id")
-                  .is-marginless(is-pulled-right)
+                .tile.is-child(v-if="currentUser && theme.user._id === currentUser._id")
+                  .is-marginless.is-pulled-right
                     router-link.button.is-primary(:to="'/theme/edit/' + theme._id") Edit theme
-                b-tile
-                  b-tile(is-child)
-                    .content.is-marginless(is-pulled-right)
+                .tile
+                  .tile.is-child
+                    .content.is-marginless.is-pulled-right
                       div(v-if="extension")
                         button.button.is-primary(
                           @click="installTheme",
@@ -333,10 +310,10 @@
                         ) Install theme with {{extension.name}}
                       button.button.is-primary(v-if="!extension", @click="installTheme") Install theme as usercss
 
-          b-columns
-            b-column(is-6)
+          .columns
+            .column.is-6
               div
-                b-box(is-paddingless, is-marginless).ouc-theme-card
+                .box.is-paddingless.is-marginless.ouc-theme-card
                   flickity.carousel(ref="flickity", :options="flickityOptions")
                     flush-img(
                       v-if="hasScreenshots(theme)",
@@ -346,11 +323,11 @@
                       :placeholder="proxyImage(screenshot).small",
                       align="top center"
                     ).carousel-cell
-                  b-column
-                    b-tile(is-parent, is-paddingless)
-                      b-tile(is-child, is-parent, is-vertical)
-                        b-level(is-marginless)
-                          b-level-left
+                  .column
+                    .tile.is-parent.is-paddingless
+                      .tile.is-child.is-parent.is-vertical
+                        .level.is-marginless
+                          .level-left
                             router-link(:to="'/profile/' + theme.user._id")
                               button.button.is-primary
                                 p Visit {{theme.user.displayname}}'s profile
@@ -365,10 +342,10 @@
                         p Version: {{theme.version}}
                         div(v-if="currentUser._id")
                           br
-                          b-level
-                            b-level-left
+                          .level
+                            .level-left
                               p Rate this theme:
-                            b-level-right
+                            .level-right
                               star-rating(
                                 :rating="averageRating(theme.ratings)",
                                 :item-size="25",
@@ -376,19 +353,19 @@
                                 @rating-selected="sendRating"
                               )
 
-              b-box
+              .box
                 vue-markdown(
                   :source="theme.description",
                   :html="false",
                   :anchor-attributes="$anchorAttributes"
                 )
-            b-column(is-6)
+            .column.is-6
               h3 Theme options
               p A preview of options you can set in your extension
               hr
-              b-columns(is-multiline)
-                b-column(is-6, v-for="option in theme.options")
-                  b-box
+              .columns.is-multiline
+                .column.is-6(v-for="option in theme.options")
+                  .box
                     b {{option.label}}
                     p Type: {{option.type}}
                     p(v-if="option.possibleValues && option.possibleValues.length") {{option.possibleValues}}

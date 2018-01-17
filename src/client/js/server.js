@@ -4,6 +4,7 @@ import {
   store,
   router,
   appBase,
+  mixins,
 } from './utils/vue'
 import db from './store/db'
 import raven from 'raven-js'
@@ -22,6 +23,7 @@ export default (context) => {
     const app = new Vue({
       store,
       router,
+      mixins,
       ...appBase,
     })
 

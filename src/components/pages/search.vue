@@ -1,5 +1,4 @@
 <script>
-  import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
   import {mapGetters,} from 'vuex'
 
   import oucFooter from '../elements/ouc-footer.vue'
@@ -11,12 +10,6 @@
 
   export default {
     'components': {
-      'b-container': bulma('container', 'div'),
-      'b-columns':   bulma('columns', 'div'),
-      'b-column':    bulma('column', 'div'),
-      'b-tile':      bulma('tile', 'div'),
-      'b-box':       bulma('box', 'div'),
-      'b-content':   bulma('content', 'div'),
       oucFooter,
       navbar,
       searchField,
@@ -84,49 +77,49 @@
   include ../static/microdata/user.pug
 
   div.ouc-route-root
-    b-container
+    .container
       .section
         form(@submit.prevent="submitSearch").has-bottom-margin
-          b-columns
-            b-column(is-11)
+          .columns
+            .column.is-11
               search-field(
                 v-model="query",
                 :value="query",
                 @input="queryChange"
               )
-            b-column(is-1)
+            .column.is-1
               button.button(type="submit", :class="['button', 'is-primary', 'is-pulled-right', {'is-loading': loading}]") Search
         div(v-if="results")
-          b-columns
-            b-column(is-4)
+          .columns
+            .column.is-4
               div(v-if="!results.users.length")
                 p No users found
               div(v-for="user in results.users")
                 +user-microdata
 
                 router-link(:to="'/profile/' + user._id")
-                  b-box(is-paddingless, is-marginless).ouc-user-card
-                    b-tile(is-parent, is-paddingless)
-                      b-tile(is-4)
-                        b-tile(is-child).ouc-user-avatar
+                  .box.is-paddingless.is-marginless.ouc-user-card
+                    .tile.is-parent.is-paddingless
+                      .tile.is-4
+                        .tile.is-child.ouc-user-avatar
                           flush-img(:source="user.avatarUrl", :placeholder="user.smallAvatarUrl", height="90px", align="left")
-                      b-tile(is-8, is-parent)
-                        b-columns(is-vcentered)
-                          b-column
-                            b-content
+                      .tile.is-8.is-parent
+                        .columns.is-vcentered
+                          .column
+                            .content
                               h4 {{user.displayname}}
                               p Themes: {{user.themes.length}}
 
-            b-column(is-8)
+            .column.is-8
               div(v-if="!results.themes.length")
                 p No themes found
               div(v-for="theme in results.themes").has-bottom-margin
                 +theme-microdata
 
                 theme-card(:data-index="index", :small="true", direction="horizontal", card-class="is-primary", :theme-id="theme._id")
-                  b-tile(slot="content", is-parent)
-                    b-columns
-                      b-column
+                  .tile.is-parent(slot="content")
+                    .columns
+                      .column
                         h4 {{theme.title}}
                         br
                         p(v-if="averageRating(theme.ratings) === 0") Not rated yet

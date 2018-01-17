@@ -1,5 +1,4 @@
 <script>
-  import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
   import {decode,} from 'he'
 
   import oucFooter from '../elements/ouc-footer.vue'
@@ -7,9 +6,6 @@
 
   export default {
     'components': {
-      'b-container': bulma('container', 'div'),
-      'b-content':   bulma('content', 'div'),
-      'b-button':    bulma('button', 'div'),
       oucFooter,
       navbar,
     },
@@ -31,9 +27,9 @@
 
 <template lang="pug">
   div.ouc-route-root
-    b-container
+    .container
       .section
-        b-content
+        .content
           h1 Contact
           hr
           p
@@ -62,5 +58,6 @@
               p.is-inline
                 | If you need to message me privately for other reasons, my email is&nbsp;
                 p.is-inline.is-unselectable(:class="[{'has-text-reversed': showing}]") {{email}}
+
     ouc-footer
 </template>

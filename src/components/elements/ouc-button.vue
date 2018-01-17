@@ -1,12 +1,9 @@
 <script>
-  import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
   import {mapGetters,} from 'vuex'
-
   import icon from './icon.vue'
 
   export default {
     'components': {
-      'b-button': bulma('button', 'button'),
       icon,
     },
     'computed': mapGetters([
@@ -22,14 +19,14 @@
 </script>
 
 <style lang="scss" scoped>
-  button {
+  .button {
     height: 64px !important;
     width: 100%;
   }
 </style>
 
 <template lang="pug">
-  b-button.ouc-button(:class="['button', {'is-loading': loading}]")
+  button.button.ouc-button(:class="{'is-loading': loading}")
     icon(:icon="icon")
     slot(name="content")
 </template>

@@ -13948,10 +13948,6 @@ void-elements@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
 
-vue-bulma-components@^1:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/vue-bulma-components/-/vue-bulma-components-1.5.0.tgz#f96651cdf31189f23f52d9fabd3561ece371ffc3"
-
 vue-codemirror-lite@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/vue-codemirror-lite/-/vue-codemirror-lite-1.0.3.tgz#41313265fe92e62646aab22f3c991dd6f84f4807"

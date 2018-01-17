@@ -1,12 +1,9 @@
 <script>
-  import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
   import icon from './icon.vue'
   import {LeftRight,} from '../../../src/shared/animations'
 
   export default {
     'components': {
-      'b-notification': bulma('notification', 'div'),
-      'b-tile':         bulma('tile', 'div'),
       icon,
     },
     'methods': new LeftRight(),
@@ -43,10 +40,10 @@
     v-on:leave="leave",
     v-bind:css="false"
   )
-    b-notification.ouc-notification(:class="['notification', color]")
-      b-tile(is-ancestor)
-        b-tile(is-1).ouc-icon-wrapper
+    .notification.ouc-notification(:class="color")
+      .tile.is-ancestor
+        .tile.is-1.ouc-icon-wrapper
           icon(:icon="icon")
-        b-tile
+        .tile
           slot(name="content")
 </template>

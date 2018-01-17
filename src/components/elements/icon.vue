@@ -1,6 +1,4 @@
 <script>
-  import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
-
   export default {
     'props': {
       'icon': {
@@ -19,9 +17,6 @@
       'classValue': (iconName, size) => {
         return `mdi-${iconName} mdi-${size}px`
       },
-    },
-    'components': {
-      'b-icon': bulma('icon', 'span'),
     },
   }
 </script>
@@ -45,6 +40,6 @@
 </style>
 
 <template lang="pug">
-  b-icon.ouc-icon
+  .icon.ouc-icon
     i.mdi(v-bind:class="classValue(icon, size)", :style="`color: ${color}`")
 </template>

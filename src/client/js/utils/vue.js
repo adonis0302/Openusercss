@@ -7,8 +7,9 @@ import VueMarkdown from 'vue-markdown'
 
 import router from './router'
 import store from '../store'
-
 import appBase from '../../../components/pages/app-base.vue'
+
+const mixins = []
 
 Vue.use(VeeValidate, {
   'errorBagName':  'errors',
@@ -38,4 +39,5 @@ export {
   store,
   router,
   appBase,
+  mixins,
 }

@@ -1,6 +1,4 @@
 <script>
-  import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
-
   import oucFooter from '../elements/ouc-footer.vue'
   import navbar from '../elements/navbar.vue'
   import icon from '../elements/icon.vue'
@@ -8,10 +6,6 @@
 
   export default {
     'components': {
-      'b-container': bulma('container', 'div'),
-      'b-content':   bulma('content', 'div'),
-      'b-button':    bulma('button', 'div'),
-      'b-box':       bulma('box', 'div'),
       oucFooter,
       navbar,
       icon,
@@ -45,7 +39,7 @@
 
 <template lang="pug">
   div.ouc-route-root
-    b-container
+    .container
       .section
         .content
           p
@@ -58,7 +52,7 @@
           h1 Installing themes
 
         hr
-        b-box.is-warning(v-if="!extension")
+        .box.is-warning(v-if="!extension")
           p
             icon(icon="alert")
             a(href="https://add0n.com/stylus.html", target="_blank", rel="nofollow noopener")
@@ -66,7 +60,7 @@
               | or an error occurred.
               | Click here to install Stylus to be able to use themes!
         div(v-if="extension")
-          b-box.is-primary
+          .box.is-primary
             p(v-if="extension.version")
               icon(icon="puzzle")
               | Detected extension: {{extension.name}}, version {{extension.version}}. You're good to go!

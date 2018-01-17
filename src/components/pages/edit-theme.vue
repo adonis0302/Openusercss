@@ -1,5 +1,4 @@
 <script>
-  import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
   import noSSR from 'vue-no-ssr'
   import {mapGetters,} from 'vuex'
   import semver from 'semver'
@@ -34,22 +33,7 @@
 
   export default {
     'components': {
-      'b-columns':     bulma('columns', 'div'),
-      'b-column':      bulma('column', 'div'),
-      'b-box':         bulma('box', 'div'),
-      'b-container':   bulma('container', 'div'),
-      'b-field':       bulma('field', 'div'),
-      'b-label':       bulma('label', 'label'),
-      'b-select':      bulma('select', 'select'),
-      'b-control':     bulma('control', 'div'),
-      'b-checkbox':    bulma('checkbox', 'input'),
-      'b-radio':       bulma('radio', 'radio'),
-      'b-help':        bulma('help', 'p'),
-      'b-tile':        bulma('tile', 'div'),
-      'b-level':       bulma('level', 'div'),
-      'b-level-left':  bulma('level-left', 'div'),
-      'b-level-right': bulma('level-right', 'div'),
-      'no-ssr':        noSSR,
+      noSSR,
       oucFooter,
       navbar,
       icon,
@@ -245,15 +229,15 @@
 
 <template lang="pug">
   div.ouc-route-root
-    b-container
+    .container
       .section
         notification(v-if="errors.all().length > 0", icon="alert", color="is-danger").is-danger
           div(slot="content")
             p(v-for="error in errors.all()") {{error}}
 
         form(slot="form", @submit.prevent="submit").ouc-new-theme-form
-          b-tile.ouc-new-theme-header(is-parent, is-paddingless)
-            b-tile(is-6, is-child)
+          .tile.ouc-new-theme-header.is-parent.is-paddingless
+            .tile.is-6.is-child
               h1.is-inline(v-if="$route.params.id") Editing:&nbsp;
               h1.is-inline(v-else="$route.params.id") Creating:&nbsp;
               b-input.is-inline.is-size-7(
@@ -265,7 +249,7 @@
                 :class="['input', {'is-danger': errors.has('title')}]"
               )
 
-            b-tile(is-6, is-child)
+            .tile.is-6.is-child
               button.button.is-pulled-right(
                 type="submit",
                 is-primary,
@@ -273,12 +257,12 @@
               ) Save theme
 
           br
-          b-columns(is-multiline)
-            b-column(is-12)
-              b-columns
-                b-column(is-6)
-                  b-field
-                    b-control
+          .columns.is-multiline
+            .column.is-12
+              .columns
+                .column.is-6
+                  .field
+                    .control
                       b-textarea(
                         type="text",
                         name="description",
@@ -287,8 +271,8 @@
                         v-model="editedTheme.description",
                         :class="['input', {'is-danger': errors.has('description')}]"
                       )
-                b-column(is-6)
-                  b-box(is-fullheight)
+                .column.is-6
+                  .box.is-fullheight
                     .content
                       vue-markdown(
                         :source="editedTheme.description",
@@ -296,11 +280,11 @@
                         :anchor-attributes="anchorAttributes"
                       )
 
-            b-column(is-7)
-              b-tile(is-parent, is-paddingless, is-vertical)
-                b-tile(is-child)
-                  b-field
-                    b-control(has-icons-left)
+            .column.is-7
+              .tile.is-parent.is-paddingless.is-vertical
+                .tile.is-child
+                  .field
+                    .control.has-icons-left
                       icon(icon="update")
                       b-input(
                         type="text",
@@ -311,7 +295,7 @@
                         :class="['input', {'is-danger': errors.has('version')}]"
                       )
 
-                b-tile(is-child)
+                .tile.is-child
                   list-creator(
                     icon="earth",
                     :max-items="10",
@@ -320,8 +304,8 @@
                     placeholder="Paste a URL to your image here"
                   ).has-bottom-margin
 
-                b-tile.ouc-new-theme-editor(is-child)
-                  b-box(is-paddingless)
+                .tile.ouc-new-theme-editor.is-child
+                  .box.is-paddingless
                     no-ssr
                       editor(
                         @input="parseUserCSS",
@@ -331,84 +315,84 @@
                         :class="{'is-danger': errors.has('content')}"
                       )
 
-            b-column(is-5)
-              b-tile(is-parent, is-vertical)
-                b-tile
-                  b-tile(is-child, is-6)
+            .column.is-5
+              .tile.is-parent.is-vertical
+                .tile
+                  .tile.is-child.is-6
                     button.button.is-primary.is-fullwidth(
                       type="button",
                       @click="addOption('text')"
                     ) Add text option
-                  b-tile(is-child, is-6)
+                  .tileis-child.is-6
                     button.button.is-primary.is-fullwidth(
                       type="button",
                       @click="addOption('color')"
                     ) Add color option
-                b-tile
-                  b-tile(is-child, is-6)
+                .tile
+                  .tileis-child.is-6
                     button.button.is-primary.is-fullwidth(
                       type="button",
                       @click="addOption('checkbox')"
                     ) Add checkbox option
-                  b-tile(is-child, is-6)
+                  .tileis-child.is-6
                     button.button.is-primary.is-fullwidth(
                       type="button",
                       @click="addOption('select')"
                     ) Add dropdown option
 
                 br
-                b-tile(is-parent, is-paddingless, is-vertical)
-                  b-tile(v-for="(option, index) in editedTheme.options", is-child)
-                    b-box(is-fullwidth)
-                      b-level(is-marginless)
-                        b-level-left
+                .tile.is-parent.is-paddingless.is-vertical
+                  .tile.is-child(v-for="(option, index) in editedTheme.options")
+                    .box.is-fullwidth
+                      .level.is-marginless
+                        .level-left
                           p {{properCase(option.type)}} option
-                        b-level-right
+                        .level-right
                           button.button.is-danger(
                             type="button",
                             @click="removeOption(index)"
                           )
                             icon(icon="close")
                       br
-                      b-tile(is-parent, is-paddingless)
-                        b-tile(is-child)
+                      .tile.is-parent.is-paddingless
+                        .tile.is-child
                           b-input(
                             type="text",
                             :name="option.type + '-' + index + '-' + 'label'",
                             placeholder="Option label",
                             v-model="editedTheme.options[index].label"
                           )
-                        b-tile(is-child)
+                        .tile.is-child
                           b-input(
                             type="text",
                             :name="option.type + '-' + index + '-' + 'name'",
                             placeholder="Variable name",
                             v-model="editedTheme.options[index].name"
                           )
-                        b-tile(is-child, v-if="option.type === 'text'")
+                        .tile.is-child(v-if="option.type === 'text'")
                           b-input(
                             type="text",
                             :name="option.type + '-' + index + '-' + 'value'",
                             placeholder="Default value",
                             v-model="editedTheme.options[index].value"
                           )
-                        b-tile(has-text-centered, is-child, v-if="option.type === 'checkbox'")
+                        .tile.has-text-centered.is-child(v-if="option.type === 'checkbox'")
                           .select.is-fullwidth
                             select(v-model="editedTheme.options[index].value")
                               option(value="checked") Checked
                               option(value="unchecked") Unchecked
 
-                      b-tile(is-parent, is-paddingless, is-vertical, v-if="option.type === 'color'")
+                      .tile.is-parent.is-paddingless.is-vertical(v-if="option.type === 'color'")
                         hr
-                        b-tile(is-child)
+                        .tile.is-child
                           p Default:
-                        b-tile(is-child)
+                        .tile.is-child
                           color-picker.is-fullwidth(
                             :value="createColorsObject(option.value)",
                             @input="(event) => updateColor(event, index)"
                           )
 
-                      b-tile(is-parent, is-paddingless, is-vertical, v-if="option.type === 'select'")
+                      .tile.is-parent.is-paddingless.is-vertical(v-if="option.type === 'select'")
                         hr
                         list-creator(
                           v-model="editedTheme.options[index].value",

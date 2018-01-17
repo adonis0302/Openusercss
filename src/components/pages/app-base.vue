@@ -1,19 +1,10 @@
 <script>
-  import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
   import navbar from '../elements/navbar.vue'
   import {LeftRight,} from '../../shared/animations'
   import {mapGetters, mapMutations,} from 'vuex'
 
   export default {
     'components': {
-      'b-box':         bulma('box', 'div'),
-      'b-level':       bulma('level', 'div'),
-      'b-level-left':  bulma('level-left', 'div'),
-      'b-level-right': bulma('level-right', 'div'),
-      'b-tag':         bulma('tag', 'div'),
-      'b-container':   bulma('container', 'div'),
-      'b-columns':     bulma('columns', 'div'),
-      'b-column':      bulma('column', 'div'),
       navbar,
     },
     beforeMount () {

@@ -1,5 +1,4 @@
 <script>
-  import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
   import {mapGetters,} from 'vuex'
   import moment from 'moment'
 
@@ -12,15 +11,6 @@
 
   export default {
     'components': {
-      'b-tile':            bulma('tile', 'div'),
-      'b-container':       bulma('container', 'div'),
-      'b-container-fluid': bulma('container-fluid', 'div'),
-      'b-box':             bulma('box', 'div'),
-      'b-columns':         bulma('columns', 'div'),
-      'b-column':          bulma('column', 'div'),
-      'b-level':           bulma('level', 'div'),
-      'b-level-left':      bulma('level-left', 'div'),
-      'b-level-right':     bulma('level-right', 'div'),
       oucFooter,
       navbar,
       themeCard,
@@ -116,61 +106,61 @@
   div.ouc-route-root
     +user-microdata
 
-    b-container.ouc-profile-container
+    .container.ouc-profile-container
       div.ouc-profile-wrapper
         .section
-          b-level
-            b-level-left
+          .level
+            .level-left
               h1 Profile
-            b-level-right.ouc-profile-action-buttons(v-if="currentUser && currentUser._id === user._id")
-              b-tile(is-parent, is-paddingless)
-                b-tile.ouc-new-theme-button-wrapper(is-child)
+            .level-right.ouc-profile-action-buttons(v-if="currentUser && currentUser._id === user._id")
+              .tile.is-parent.is-paddingless
+                .tile.ouc-new-theme-button-wrapper.is-child
                   router-link.button.is-primary.ouc-new-theme-button(to="/theme/edit") Upload new theme
-                b-tile.ouc-account-button-wrapper(is-child)
+                .tile.ouc-account-button-wrapper.is-child
                   router-link.button.is-primary.ouc-account-button(to="/account") Account
-          b-columns
-            b-column(is-6)
+          .columns
+            .column.is-6
               div
-                b-box(is-paddingless, is-marginless).ouc-user-card
-                  b-column(is-paddingless)
-                    b-tile(is-parent, is-paddingless)
-                      b-tile(is-4)
-                        b-tile(is-child).ouc-user-avatar
+                .box.is-paddingless.is-marginless.ouc-user-card
+                  .column.is-paddingless
+                    .tile.is-parent.is-paddingless
+                      .tile.is-4
+                        .tile.is-child.ouc-user-avatar
                           flush-img(:source="user.avatarUrl", :placeholder="user.smallAvatarUrl", height="185px", align="left")
-                      b-tile(is-8)
-                        b-tile(is-parent).ouc-user-details
-                          b-tile(is-parent)
-                            b-tile(is-child, is-parent, is-vertical, is-paddingless)
+                      .tile.is-8
+                        .tile.is-parent.ouc-user-details
+                          .tile.is-parent
+                            .tile.is-child.is-parent.is-vertical.is-paddingless
                               h2 {{user.displayname}}
                               br
                               p Themes: {{user.themes ? user.themes.length : 0}}
 
-                b-box
-                  b-level(is-mobile)
-                    b-level-left.ouc-last-seen-wrapper
+                .box
+                  .level.is-mobile
+                    .level-left.ouc-last-seen-wrapper
                       icon(v-if="isOnline(user.lastSeen)", icon="circle", color="#06BC5A")
                       p.ouc-last-seen {{lastOnlineDisplay}}
 
               hr
-              b-box
+              .box
                 .content.ouc-user-bio-wrapper
                   vue-markdown.ouc-user-bio(
                     :source="user.bio",
                     :html="false",
                     :anchor-attributes="$anchorAttributes"
                   )
-            b-column(is-6)
+            .column.is-6
               div.ouc-user-donation-wrapper(v-if="user.donationUrl && user.donationUrl !== ''", is-paddingless)
                 a.button.is-primary(:href="user.donationUrl", target="_blank", rel="nofollow noopener")
                   | Support {{user.displayname}}'s themes by donating
                 hr
 
-              b-columns(is-multiline)
-                b-column(is-6, v-for="(theme, index) in user.themes")
+              .columns.is-multiline
+                .column.is-6(v-for="(theme, index) in user.themes")
                   theme-card(:data-index="index", :small="true", direction="horizontal", card-class="is-primary", :theme-id="theme._id").has-bottom-margin
-                    b-tile(slot="content", is-parent)
-                      b-columns
-                        b-column
+                    .tile.is-parent(slot="content")
+                      .columns
+                        .column
                           h4 {{theme.title}}
                           br
                           p(v-if="averageRating(theme.ratings) === 0") Not rated yet

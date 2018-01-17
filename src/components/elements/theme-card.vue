@@ -1,23 +1,9 @@
 <script>
-  import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
   import icon from './icon.vue'
   import {LeftRight,} from '../../../src/shared/animations'
 
   export default {
     'components': {
-      'b-card':              bulma('card', 'div'),
-      'b-card-header':       bulma('card-header', 'div'),
-      'b-card-header-title': bulma('card-header-title', 'div'),
-      'b-card-header-icon':  bulma('card-header-icon', 'div'),
-      'b-card-image':        bulma('card-image', 'div'),
-      'b-card-content':      bulma('card-content', 'div'),
-      'b-card-footer':       bulma('card-footer', 'div'),
-      'b-card-footer-item':  bulma('card-footer-item', 'div'),
-      'b-media':             bulma('media', 'div'),
-      'b-media-left':        bulma('media-left', 'div'),
-      'b-media-content':     bulma('media-content', 'div'),
-      'b-tile':              bulma('tile', 'div'),
-      'b-box':               bulma('box', 'div'),
       icon,
     },
     'methods': new LeftRight(),
@@ -78,8 +64,8 @@
     :css="false"
   )
     router-link(:class="cardClass", :to="'/theme/' + themeId")
-      b-box(is-paddingless).ouc-theme-card
-        b-tile(is-parent, is-paddingless)
-          b-tile(is-child).ouc-theme-container
+      .box(is-paddingless).ouc-theme-card
+        .tile(is-parent, is-paddingless)
+          .tile(is-child).ouc-theme-container
             slot(name="content").ouc-theme-slot
 </template>

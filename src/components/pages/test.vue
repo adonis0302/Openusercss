@@ -1,15 +1,10 @@
 <script>
-  import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
-
   import oucFooter from '../elements/ouc-footer.vue'
   import spinner from '../elements/spinner.vue'
   import flushImg from '../elements/flush-img.vue'
 
   export default {
     'components': {
-      'b-container': bulma('container', 'div'),
-      'b-columns':   bulma('columns', 'div'),
-      'b-column':    bulma('column', 'div'),
       oucFooter,
       spinner,
       flushImg,
@@ -62,17 +57,17 @@
 
 <template lang="pug">
   div.ouc-route-root
-    b-container
+    .container
       .section
-        b-columns(is-multiline)
-          b-column(is-2)
+        .columns.is-multiline
+          .column.is-2
             div
               p Spinner:
               spinner(:size="50", :spinning="spinning")
               div(style="background-color: black")
                 spinner(:size="50", :spinning="spinning")
 
-          b-column(is-2)
+          .column.is-2
             p Notifications:
             button.button(@click="showInfo") Info
             button.button(@click="showSuccess") Success

@@ -1,5 +1,4 @@
 <script>
-  import {bulmaComponentGenerator as bulma,} from 'vue-bulma-components'
   import {mapGetters,} from 'vuex'
 
   import oucFooter from '../elements/ouc-footer.vue'
@@ -12,11 +11,6 @@
 
   export default {
     'components': {
-      'b-tile':      bulma('tile', 'div'),
-      'b-container': bulma('container', 'div'),
-      'b-columns':   bulma('columns', 'div'),
-      'b-column':    bulma('column', 'div'),
-      'b-box':       bulma('box', 'div'),
       searchField,
       oucFooter,
       themeCard,
@@ -100,14 +94,14 @@
 
 <template lang="pug">
   div.ouc-route-root
-    b-container
+    .container
       div
         .section
-          b-columns
-            b-column
+          .columns
+            .column
               h2.has-bottom-margin Newest themes
-              b-columns(is-multiline)
-                b-column(is-6, v-for="(theme, index) in limitBy(latestThemes, 6)")
+              .columns.is-multiline
+                .column.is-6(v-for="(theme, index) in limitBy(latestThemes, 6)")
                     theme-card(
                       :small="true",
                       :theme-id="theme._id",
@@ -116,9 +110,9 @@
                       card-class="is-primary",
                       itemtype="SoftwareApplication"
                     ).has-bottom-margin
-                      b-tile(slot="content", is-parent)
-                        b-columns
-                          b-column
+                      .tile.is-parent(slot="content")
+                        .columns
+                          .column
                             h4(itemprop="name") {{theme.title}}
                             h6(itemprop="author", itemtype="Person") by {{theme.user.displayname}}
                               meta(itemprop="name", :value="theme.user.displayname")
@@ -128,13 +122,13 @@
                             meta(itemprop="dateModified", :value="theme.lastUpdate")
                             meta(itemprop="url", :value="'/theme/' + theme._id")
 
-            b-column
+            .column
               h2.has-bottom-margin Popular themes
-              b-columns(is-multiline)
-                b-column(is-6, v-for="(theme, index) in limitBy(popularThemes, 6)")
+              .columns.is-multiline
+                .column.is-6(v-for="(theme, index) in limitBy(popularThemes, 6)")
                   theme-card(:small="true", :theme-id="theme._id", :data-index="index", direction="horizontal", card-class="is-primary").has-bottom-margin
-                    b-tile(slot="content", is-parent)
-                      b-tile(is-child)
+                    .tile.is-parent(slot="content")
+                      .tile.is-child
                         h4 {{theme.title}}
                         div(v-if="averageRating(theme.ratings) !== 0")
                           br
