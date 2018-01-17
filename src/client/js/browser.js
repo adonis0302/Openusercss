@@ -7,8 +7,6 @@ import iziToast from 'izitoast'
 import raven from 'raven-js'
 import {StarRating,} from 'vue-rate-it'
 import ravenVue from 'raven-js/plugins/vue'
-import hat from 'hat'
-import {struct,} from 'superstruct'
 
 import VueModal from 'vue-js-modal'
 import VueFlickity from 'vue-flickity'
@@ -31,105 +29,8 @@ if (process.env.NODE_ENV !== 'development') {
   .setTagsContext(window.revision)
 }
 
-const key = hat()
-const responseValidator = struct({
-  'type':      'string',
-  'key':       'string',
-  'extension': {
-    'name':         'string',
-    'version':      'string?',
-    'capabilities': [
-      'string?',
-    ],
-  },
-})
-const questionValidator = struct({
-  'type':         'string',
-  'key':          'string',
-  'revision':     'object',
-  'featuresList': {
-    'required': [
-      'string',
-    ],
-    'optional': [
-      'string',
-    ],
-  },
-})
-const featuresList = {
-  'required': [
-    'install-usercss',
-    'configure-after-install',
-  ],
-  'optional': [
-    'install-usercss-event',
-    'configure-before-install',
-    'builtin-editor',
-    'create-usercss',
-    'edit-usercss',
-    'import-moz-export',
-    'export-moz-export',
-    'update-manual',
-    'update-auto',
-    'export-json-backups',
-    'import-json-backups',
-    'manage-local',
-    'search-remote',
-    'query-api',
-    'mutate-api',
-  ],
-}
-
 const polyfills = async () => {
   return runPolyfills()
-}
-const sendHandshakeQuestion = () => {
-  window.postMessage(questionValidator({
-    'type':     'ouc-handshake-question',
-    'revision': window.revision,
-    featuresList,
-    key,
-  }), '*')
-}
-const attachHandshakeListeners = () => {
-  window.addEventListener('message', (event) => {
-    try {
-      if (event.data && event.data.type === 'ouc-begin-handshake') {
-        sendHandshakeQuestion()
-      }
-
-      if (event.data && event.data.type === 'ouc-handshake-response') {
-        const response = responseValidator(event.data)
-        const missingFeatures = []
-
-        featuresList.required.forEach((feature) => {
-          if (!response.extension.capabilities.includes(feature)) {
-            missingFeatures.push(feature)
-          }
-        })
-
-        if (missingFeatures.length) {
-          throw new Error([
-            `${response.extension.name} ${response.extension.version} is not capable of the following features:`,
-            `${missingFeatures.join('\n')}`,
-          ].join('\n'))
-        }
-
-        if (response.key !== key) {
-          throw new Error([
-            'Response key doesn\'t match.\n',
-            `Expected: ${key}`,
-            `Received: ${response.key}`,
-            `Raw data: ${JSON.stringify(response, null, 2)}`,
-          ].join('\n'))
-        }
-
-        process.extension = response.extension
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  })
 }
 
 const mountApp = async () => {
@@ -146,9 +47,6 @@ const mountApp = async () => {
 
 const main = async () => {
   const polyfillsResult = await polyfills()
-
-  attachHandshakeListeners()
-  sendHandshakeQuestion()
 
   process.animating = []
   process.averageFps = 0
@@ -178,18 +76,16 @@ const main = async () => {
       }
 
       process.averageFps = Math.floor(divide(sum(process.fpsHistory), process.fpsHistory.length))
+
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/worker.js')
+        .catch((error) => {
+          log.error(error)
+          raven.captureException(error)
+        })
+      }
     })
   })
-
-  if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/worker.js')
-      .catch((error) => {
-        log.error(error)
-        raven.captureException(error)
-      })
-    })
-  }
 }
 
 main()
