@@ -30,7 +30,7 @@
   }
 
   const updateImage = async (self, Image) => {
-    self.loading = true
+    self.isLoading = true
     const $images = self.$el.querySelectorAll('.ouc-flush-img-root > .img-container')
 
     unloaded($images)
@@ -39,14 +39,14 @@
 
     try {
       await loadImage(self.smallsrc, Image)
-      self.loading = false
+      self.isLoading = false
       await loadImage(self.originalsrc, Image)
       loaded($images)
     } catch (error) {
       self.smallsrc = '/img/image-error-x128.png'
       self.originalsrc = '/img/image-error-x960.png'
       await loadImage(self.smallsrc, Image)
-      self.loading = false
+      self.isLoading = false
       await loadImage(self.originalsrc, Image)
       loaded($images)
     }
@@ -60,7 +60,7 @@
     },
     data () {
       return {
-        'loading':     true,
+        'isLoading':   true,
         'smallsrc':    this.placeholder,
         'originalsrc': this.source,
       }

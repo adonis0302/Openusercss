@@ -15,7 +15,6 @@ import {
   store,
   router,
   appBase,
-  mixins,
 } from './utils/vue'
 import db from './store/db'
 import {runPolyfills,} from './utils/features'
@@ -37,7 +36,6 @@ const mountApp = async () => {
   const app = new Vue({
     store,
     router,
-    mixins,
     ...appBase,
   })
 

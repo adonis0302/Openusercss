@@ -1,6 +1,5 @@
 <script>
   import noSSR from 'vue-no-ssr'
-  import {mapGetters,} from 'vuex'
   import semver from 'semver'
   import {cloneDeep, concat,} from 'lodash'
   import {Chrome as colorPicker,} from 'vue-color'
@@ -163,11 +162,6 @@
       },
     },
     'computed': {
-      ...mapGetters([
-        'actionErrors',
-        'currentUser',
-        'loading',
-      ]),
       theme () {
         if (!this.$route.params.id) {
           return {}

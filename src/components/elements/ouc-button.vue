@@ -1,14 +1,10 @@
 <script>
-  import {mapGetters,} from 'vuex'
   import icon from './icon.vue'
 
   export default {
     'components': {
       icon,
     },
-    'computed': mapGetters([
-      'loading',
-    ]),
     'props': {
       'icon': {
         'type':    String,

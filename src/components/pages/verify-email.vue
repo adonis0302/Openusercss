@@ -1,6 +1,4 @@
 <script>
-  import {mapGetters,} from 'vuex'
-
   import spinner from '../elements/spinner.vue'
   import oucFooter from '../elements/ouc-footer.vue'
   import notification from '../elements/notification.vue'
@@ -23,9 +21,6 @@
 
       this.success = verifyEmail
     },
-    'computed': mapGetters([
-      'loading',
-    ]),
   }
 </script>
 

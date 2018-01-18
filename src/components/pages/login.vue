@@ -1,6 +1,4 @@
 <script>
-  import {mapGetters,} from 'vuex'
-
   import oucFooter from '../elements/ouc-footer.vue'
   import navbar from '../elements/navbar.vue'
 
@@ -35,9 +33,6 @@
         }
       },
     },
-    'computed': mapGetters([
-      'actionErrors',
-    ]),
   }
 </script>
 

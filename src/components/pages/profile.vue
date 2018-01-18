@@ -1,5 +1,4 @@
 <script>
-  import {mapGetters,} from 'vuex'
   import moment from 'moment'
 
   import icon from '../elements/icon.vue'
@@ -60,11 +59,6 @@
       }
     },
     'computed': {
-      ...mapGetters([
-        'currentUser',
-        'actionErrors',
-        'themes',
-      ]),
       'user': {
         'cache': false,
         get () {

@@ -1,5 +1,4 @@
 <script>
-  import {mapGetters,} from 'vuex'
   import {forOwn,} from 'lodash'
 
   import spinner from '../elements/spinner.vue'
@@ -82,12 +81,6 @@
       },
     },
     'computed': {
-      ...mapGetters([
-        'currentUser',
-        'session',
-        'actionErrors',
-        'loading',
-      ]),
       editingCount () {
         let result = 0
 

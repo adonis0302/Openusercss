@@ -1,6 +1,5 @@
 <script>
   // eslint-disable no-console
-  import {mapGetters,} from 'vuex'
   import {formatMoment,} from '../../../src/shared/time'
   import {buildTheme,} from '../../../src/shared/usercss-builder'
 
@@ -176,11 +175,6 @@
       },
     },
     'computed': {
-      ...mapGetters([
-        'actionErrors',
-        'themes',
-        'currentUser',
-      ]),
       extension () {
         return process.extension
       },

@@ -23,11 +23,6 @@
         return window.changelog
       },
     },
-    'methods': {
-      showChangelog () {
-        this.$modal.show('changelog-viewer')
-      },
-    },
   }
 </script>
 
@@ -124,5 +119,5 @@
                 icon(icon="email-variant")
                 | Contact the administrator
               p Client version: {{revision.revisionTag}}&nbsp;
-                a(@click.prevent="showChangelog") (changelog)
+                a(@click.prevent="$modal.show('changelog-viewer')") (changelog)
 </template>

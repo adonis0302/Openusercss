@@ -1,6 +1,4 @@
 <script>
-  import {mapGetters, mapActions,} from 'vuex'
-
   import flushImg from './flush-img.vue'
   import icon from './icon.vue'
 
@@ -10,9 +8,6 @@
       flushImg,
     },
     'methods': {
-      ...mapActions([
-        'logout',
-      ]),
       toggleOpen () {
         this.open = !this.open
       },
@@ -25,10 +20,6 @@
         'open': false,
       }
     },
-    'computed': mapGetters([
-      'session',
-      'currentUser',
-    ]),
   }
 </script>
 

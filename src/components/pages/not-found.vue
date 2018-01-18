@@ -1,6 +1,4 @@
 <script>
-  import {mapGetters,} from 'vuex'
-
   import oucFooter from '../elements/ouc-footer.vue'
   import navbar from '../elements/navbar.vue'
   import icon from '../elements/icon.vue'
@@ -16,12 +14,6 @@
     },
     beforeMount () {
       this.$store.dispatch('getLatestThemes', 3)
-    },
-    'computed': {
-      ...mapGetters([
-        'actionErrors',
-        'themes',
-      ]),
     },
   }
 </script>

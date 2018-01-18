@@ -1,7 +1,6 @@
 <script>
   import navbar from '../elements/navbar.vue'
   import {LeftRight,} from '../../shared/animations'
-  import {mapGetters, mapMutations,} from 'vuex'
 
   export default {
     'components': {
@@ -19,14 +18,7 @@
     },
     'methods': {
       ...new LeftRight('easeOutCubic'),
-      ...mapMutations([
-        'clearCache',
-      ]),
     },
-    'computed': mapGetters([
-      'session',
-      'loading',
-    ]),
   }
 </script>
 

@@ -1,6 +1,4 @@
 <script>
-  import {mapGetters,} from 'vuex'
-
   import flushImg from '../elements/flush-img.vue'
   import icon from '../elements/icon.vue'
   import notification from '../elements/notification.vue'
@@ -30,9 +28,6 @@
         },
       }
     },
-    'computed': mapGetters([
-      'actionErrors',
-    ]),
     'methods': {
       async submitRegistration () {
         const validated = await this.$validator.validateAll()
