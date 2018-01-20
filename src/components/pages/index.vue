@@ -1,4 +1,6 @@
 <script>
+  import {cloneDeep,} from 'lodash'
+
   import oucFooter from '../elements/ouc-footer.vue'
   import navbar from '../elements/navbar.vue'
   import searchField from '../elements/search-field.vue'
@@ -45,41 +47,49 @@
         return result
       },
     },
-    'computed': {
+    'asyncComputed': {
       'latestThemes': {
-        'cache': false,
-        get () {
-          const result = this.$db.getCollection('themes').chain()
+        'cache':   false,
+        'default': [],
+        async get () {
+          const self = this
+          const result = this.$db.getCollection('themes').chain().find()
           const themes = result
-          .find()
           .simplesort('createdAt', true)
           .data()
 
-          themes.forEach((theme, index) => {
-            themes[index].user = this.$db.getCollection('users').findOne({
-              '_id': themes[index].user._id,
-            })
-          })
+          if (themes) {
+            const finalThemes = await Promise.all(themes.filter(async (theme) => {
+              theme.user = await self.getUser(theme.user)
+              return theme
+            }))
 
-          return themes
+            return finalThemes
+          }
+
+          return []
         },
       },
       'popularThemes': {
-        'cache': false,
-        get () {
-          const result = this.$db.getCollection('themes').chain()
+        'cache':   false,
+        'default': [],
+        async get () {
+          const self = this
+          const result = this.$db.getCollection('themes').chain().find()
           const themes = result
-          .find()
           .simplesort('ratings', true)
           .data()
 
-          themes.forEach((theme, index) => {
-            themes[index].user = this.$db.getCollection('users').findOne({
-              '_id': themes[index].user._id,
-            })
-          })
+          if (themes) {
+            const finalThemes = await Promise.all(themes.filter(async (theme) => {
+              theme.user = await self.getUser(theme.user)
+              return theme
+            }))
 
-          return themes
+            return finalThemes
+          }
+
+          return []
         },
       },
     },
@@ -105,6 +115,7 @@
                       itemtype="SoftwareApplication"
                     ).has-bottom-margin
                       .tile.is-parent(slot="content")
+                        p {{theme}}
                         .columns
                           .column
                             h4(itemprop="name") {{theme.title}}

@@ -42,7 +42,7 @@
       }
     },
     async beforeMount () {
-      await this.$store.dispatch('getFullTheme', this.$route.params.id)
+      await this.getTheme(this.$route.params.id)
 
       this.$refs.flickity.rerender()
     },
@@ -175,29 +175,24 @@
       },
     },
     'computed': {
-      extension () {
-        return process.extension
-      },
       'theme': {
         'cache': false,
         get () {
           const theme = this.$db.getCollection('themes').findOne({
             '_id': this.$route.params.id,
-          }) || {}
-          let userId = 0
+          })
 
-          if (theme.user && theme.user._id) {
-            userId = theme.user._id
-          }
-
+          return theme || {}
+        },
+      },
+      'user': {
+        'cache': false,
+        get () {
           const user = this.$db.getCollection('users').findOne({
-            '_id': userId,
-          }) || {}
+            '_id': this.theme.user,
+          })
 
-          return {
-            ...theme,
-            user,
-          }
+          return user || {}
         },
       },
     },
@@ -272,8 +267,8 @@
       :scrollable="true",
       @closed="closeSource"
     )
-      .tile(is-parent, is-paddingless)
-        .tile(is-child)
+      .tile.is-parent.is-paddingless
+        .tile.is-child
           code {{theme.content}}
 
     .container(:inert="showingModal")
@@ -284,10 +279,10 @@
               h1 {{theme.title}}
             .level-right
               .tile.is-parent.is-paddingless
-                .tile.is-child(v-if="currentUser && theme.user._id === currentUser._id")
+                .tile.is-child(v-if="currentUser && user._id === currentUser._id")
                   .content.is-marginless.is-pulled-right
                     button.button.is-danger(@click="confirmDeleteTheme") Delete theme
-                .tile.is-child(v-if="currentUser && theme.user._id === currentUser._id")
+                .tile.is-child(v-if="currentUser && user._id === currentUser._id")
                   .is-marginless.is-pulled-right
                     router-link.button.is-primary(:to="'/theme/edit/' + theme._id") Edit theme
                 .tile
@@ -322,9 +317,9 @@
                       .tile.is-child.is-parent.is-vertical
                         .level.is-marginless
                           .level-left
-                            router-link(:to="'/profile/' + theme.user._id")
+                            router-link(:to="'/profile/' + user._id")
                               button.button.is-primary
-                                p Visit {{theme.user.displayname}}'s profile
+                                p Visit {{user.displayname}}'s profile
                             button.button.is-primary(
                               @click="viewSource"
                             ) View source
