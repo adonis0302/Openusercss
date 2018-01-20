@@ -187,10 +187,6 @@
   version "0.10.2"
   resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-0.10.2.tgz#d7c79acbaa17453b6681c80c34b38fcb10c4c08c"
 
-"@types/zen-observable@0.5.3":
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/@types/zen-observable/-/zen-observable-0.5.3.tgz#91b728599544efbb7386d8b6633693a3c2e7ade5"
-
 JSONStream@^1.0.3, JSONStream@^1.0.4:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/JSONStream/-/JSONStream-1.3.2.tgz#c102371b6ec3a7cf3b847ca00c20bb0fce4c6dea"
@@ -427,20 +423,6 @@ apollo-link-core@^0.5.0:
     graphql-tag "^2.4.2"
     zen-observable-ts "^0.4.4"
 
-apollo-link-http@^1.3.2:
-  version "1.3.2"
-  resolved "https://registry.yarnpkg.com/apollo-link-http/-/apollo-link-http-1.3.2.tgz#63537ee5ecf9c004efb0317f1222b7dbc6f21559"
-  dependencies:
-    apollo-link "^1.0.7"
-
-apollo-link@^1.0.7:
-  version "1.0.7"
-  resolved "https://registry.yarnpkg.com/apollo-link/-/apollo-link-1.0.7.tgz#42cd38a7378332fc3e41a214ff6a6e5e703a556f"
-  dependencies:
-    "@types/zen-observable" "0.5.3"
-    apollo-utilities "^1.0.0"
-    zen-observable "^0.6.0"
-
 apollo-server-core@^1.3.2:
   version "1.3.2"
   resolved "https://registry.yarnpkg.com/apollo-server-core/-/apollo-server-core-1.3.2.tgz#f36855a3ebdc2d77b8b9c454380bf1d706105ffc"
@@ -466,7 +448,7 @@ apollo-tracing@^0.1.0:
   dependencies:
     graphql-extensions "^0.0.x"
 
-apollo-utilities@^1.0.0, apollo-utilities@^1.0.1:
+apollo-utilities@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/apollo-utilities/-/apollo-utilities-1.0.3.tgz#bf435277609850dd442cf1d5c2e8bc6655eaa943"
 
@@ -13948,6 +13930,10 @@ void-elements@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
 
+vue-async-computed@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/vue-async-computed/-/vue-async-computed-3.3.1.tgz#9d754e649ccabef97e7e3932f1bc097a66a23db7"
+
 vue-codemirror-lite@^1.0.2:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/vue-codemirror-lite/-/vue-codemirror-lite-1.0.3.tgz#41313265fe92e62646aab22f3c991dd6f84f4807"
@@ -14681,10 +14667,6 @@ yeast@0.1.2:
 zen-observable-ts@^0.4.4:
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/zen-observable-ts/-/zen-observable-ts-0.4.4.tgz#c244c71eaebef79a985ccf9895bc90307a6e9712"
-
-zen-observable@^0.6.0:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/zen-observable/-/zen-observable-0.6.1.tgz#01dbed3bc8d02cbe9ee1112c83e04c807f647244"
 
 zip-stream@^1.2.0:
   version "1.2.0"
