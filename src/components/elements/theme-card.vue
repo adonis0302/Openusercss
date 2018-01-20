@@ -64,8 +64,8 @@
     :css="false"
   )
     router-link(:class="cardClass", :to="'/theme/' + themeId")
-      .box(is-paddingless).ouc-theme-card
-        .tile(is-parent, is-paddingless)
-          .tile(is-child).ouc-theme-container
+      .box.is-paddingless.ouc-theme-card
+        .tile.is-parent.is-paddingless
+          .tile.is-child.ouc-theme-container
             slot(name="content").ouc-theme-slot
 </template>
