@@ -1,5 +1,6 @@
 import VueRouter from 'vue-router'
 import store from '../store'
+import {getTheme,} from './vue'
 
 import indexRoute from '../../../components/pages/index.vue'
 import searchRoute from '../../../components/pages/search.vue'
@@ -73,7 +74,7 @@ export const routerOptions = {
       'component': profileRoute,
       beforeEnter (to, from, next) {
         if (process.title === 'node') {
-          store.dispatch('getFullUser', to.params.id)
+          getTheme(to.params.id)
           .then(next)
           .catch(next)
         } else {
@@ -90,7 +91,7 @@ export const routerOptions = {
         }
 
         if (process.title === 'node') {
-          store.dispatch('getFullTheme', to.params.id)
+          getTheme(to.params.id)
           .then(next)
           .catch(next)
         } else {
@@ -103,7 +104,7 @@ export const routerOptions = {
       'component': themeRoute,
       beforeEnter (to, from, next) {
         if (process.title === 'node') {
-          store.dispatch('getFullTheme', to.params.id)
+          getTheme(to.params.id)
           .then(next)
           .catch(next)
         } else {

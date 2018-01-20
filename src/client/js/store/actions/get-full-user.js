@@ -1,6 +1,10 @@
 import {getUser,} from '../translators/get-user'
 
 export default async ({commit, getters,}, id) => {
+  console.warn([
+    'The getFullUser action is depracated, use the one',
+    'attached to the Vue instance!',
+  ].join('\n'))
   commit('loading', true)
 
   try {

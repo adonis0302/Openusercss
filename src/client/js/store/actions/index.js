@@ -1,5 +1,4 @@
 import ApolloClient, {createBatchingNetworkInterface,} from 'apollo-client'
-import {createHttpLink,} from 'apollo-link-http'
 
 import verifyToken from './verify-token'
 import logout from './remote-logout'
@@ -27,10 +26,6 @@ if (inDev) {
   apiURI = 'http://localhost:5000'
 }
 
-const link = createHttpLink({
-  'uri': apiURI,
-})
-
 networkInterface = createBatchingNetworkInterface({
   'uri': apiURI,
 })
@@ -38,7 +33,6 @@ networkInterface = createBatchingNetworkInterface({
 export const apolloClient = new ApolloClient({
   'cache':              false,
   'queryDeduplication': true,
-  link,
   ssrMode,
   networkInterface,
 })

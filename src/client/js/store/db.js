@@ -7,6 +7,56 @@ const struct = superstruct({
   },
 })
 
+const validators = {}
+
+validators.option = struct({
+  '__typename': 'string',
+  'type':       'string',
+  'label':      'string',
+  'name':       'string',
+  'value':      'any',
+})
+validators.themes = struct({
+  'meta':        'object?',
+  '$loki':       'number?',
+  '__typename':  'string?',
+  '_id':         'string',
+  'title':       'string',
+  'version':     'string',
+  'content':     'string',
+  'createdAt':   'string',
+  'lastUpdate':  'string',
+  'description': 'string',
+  'user':        'string',
+  'ratings':     struct.optional([
+    'any',
+  ]),
+  'options': [
+    validators.option,
+  ],
+  'screenshots': struct.optional([
+    'string',
+  ]),
+}, {
+  '__typename': 'Theme',
+})
+validators.users = struct({
+  'meta':           'object?',
+  '$loki':          'number?',
+  '__typename':     'string?',
+  '_id':            'string',
+  'username':       'string',
+  'displayname':    'string',
+  'lastSeen':       'string',
+  'lastSeenReason': 'string',
+  'avatarUrl':      'string',
+  'smallAvatarUrl': 'string',
+  'bio':            'string',
+  'donationUrl':    'string',
+}, {
+  '__typename': 'User',
+})
+
 let db = null
 const initialize = () => {
   if (!db) {
@@ -19,6 +69,23 @@ const initialize = () => {
   if (!db.getCollection('themes')) {
     db.addCollection('themes')
   }
+
+  // Remove items from the db that don't fit the schema
+  db.getCollection('themes').find().forEach((theme) => {
+    try {
+      validators.themes(theme)
+    } catch (error) {
+      db.getCollection('themes').remove(theme)
+    }
+  })
+
+  db.getCollection('users').find().forEach((user) => {
+    try {
+      validators.users(user)
+    } catch (error) {
+      db.getCollection('users').remove(user)
+    }
+  })
 }
 
 if (process.browser) {
@@ -38,49 +105,6 @@ if (process.browser) {
     'autosave':         false,
   })
 }
-
-const validators = {}
-
-validators.option = struct({
-  '__typename': 'string',
-  'type':       'string',
-  'label':      'string',
-  'name':       'string',
-  'value':      'any',
-})
-validators.themes = struct({
-  '__typename':  'string?',
-  '_id':         'string',
-  'title':       'string',
-  'version':     'string',
-  'content':     'string',
-  'createdAt':   'string',
-  'lastUpdate':  'string',
-  'description': 'string',
-  'user':        'string',
-  'options':     [
-    validators.option,
-  ],
-  'screenshots': struct.optional([
-    'string',
-  ]),
-}, {
-  '__typename': 'Theme',
-})
-validators.users = struct({
-  '__typename':     'string?',
-  '_id':            'string',
-  'username':       'string',
-  'displayname':    'string',
-  'lastSeen':       'string',
-  'lastSeenReason': 'string',
-  'avatarUrl':      'string',
-  'smallAvatarUrl': 'string',
-  'bio':            'string',
-  'donationUrl':    'string',
-}, {
-  '__typename': 'User',
-})
 
 if (!db.collections.length) {
   initialize()

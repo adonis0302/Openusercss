@@ -1,6 +1,10 @@
 import {getTheme,} from '../translators/get-theme'
 
 export default async ({commit, getters,}, id) => {
+  console.warn([
+    'The getFullTheme action is depracated, use the one',
+    'attached to the Vue instance!',
+  ].join('\n'))
   commit('loading', true)
 
   try {
