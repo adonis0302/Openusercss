@@ -23,8 +23,8 @@ mixin theme-microdata
     meta(v-for="screenshot in theme.screenshots", itemprop="screenshot", :value="screenshot")
 
     div(itemprop="author", itemtype="Person")
-      meta(itemprop="name", :value="theme.user.displayname")
-      meta(itemprop="url", :value="'/profile/' + theme.user._id")
+      meta(itemprop="name", :value="user.displayname")
+      meta(itemprop="url", :value="'/profile/' + user._id")
 
     div(itemprop="softwareAddOn", itemtype="SoftwareApplication")
       meta(itemprop="name", value="Stylus")

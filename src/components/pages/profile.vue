@@ -18,7 +18,6 @@
       notification,
     },
     beforeMount () {
-      this.$store.dispatch('getFullUser', this.$route.params.id)
       this.timeInterval = setInterval(() => {
         this.time = moment()
       }, 20000)
@@ -65,24 +64,14 @@
           const user = this.$db.getCollection('users').findOne({
             '_id': this.$route.params.id,
           })
-          const userThemes = []
 
-          if (user && user.themes) {
-            user.themes.forEach((theme) => {
-              if (theme) {
-                const userTheme = this.$db.getCollection('themes').findOne({
-                  '_id': theme._id,
-                })
-
-                userThemes.push(userTheme)
-              }
+          if (user) {
+            user.themes = this.$db.getCollection('themes').find({
+              'user': user._id,
             })
           }
 
-          return {
-            ...user,
-            'themes': userThemes,
-          }
+          return user || {}
         },
       },
       lastOnlineDisplay () {

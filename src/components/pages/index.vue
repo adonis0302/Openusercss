@@ -1,6 +1,4 @@
 <script>
-  import {cloneDeep,} from 'lodash'
-
   import oucFooter from '../elements/ouc-footer.vue'
   import navbar from '../elements/navbar.vue'
   import searchField from '../elements/search-field.vue'
@@ -115,7 +113,6 @@
                       itemtype="SoftwareApplication"
                     ).has-bottom-margin
                       .tile.is-parent(slot="content")
-                        p {{theme}}
                         .columns
                           .column
                             h4(itemprop="name") {{theme.title}}

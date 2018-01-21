@@ -41,11 +41,6 @@
         this.options = JSON.parse(decodeURIComponent(this.$route.params.options))
       }
     },
-    async beforeMount () {
-      await this.getTheme(this.$route.params.id)
-
-      this.$refs.flickity.rerender()
-    },
     mounted () {
       if (this.options.viewingSource) {
         this.viewSource()
@@ -174,25 +169,23 @@
         }
       },
     },
-    'computed': {
+    'asyncComputed': {
       'theme': {
-        'cache': false,
-        get () {
-          const theme = this.$db.getCollection('themes').findOne({
+        'cache':   false,
+        'default': {},
+        async get () {
+          return this.$db.getCollection('themes').findOne({
             '_id': this.$route.params.id,
           })
-
-          return theme || {}
         },
       },
       'user': {
-        'cache': false,
-        get () {
-          const user = this.$db.getCollection('users').findOne({
+        'cache':   false,
+        'default': {},
+        async get () {
+          return this.$db.getCollection('users').findOne({
             '_id': this.theme.user,
           })
-
-          return user || {}
         },
       },
     },
