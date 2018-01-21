@@ -20,21 +20,23 @@ export const getTheme = async (query) => {
     'populate': true,
   })
 
-  theme.options = theme.options.filter((option) => {
-    option.value = JSON.stringify(option.value)
-    try {
-      return validators.option(option)
-    } catch (error) {
-      return ''
-    }
-  })
-  theme.user = theme.user._id
+  if (theme) {
+    theme.options = theme.options.filter((option) => {
+      option.value = JSON.stringify(option.value)
+      try {
+        return validators.option(option)
+      } catch (error) {
+        return ''
+      }
+    })
+    theme.user = theme.user._id
+  }
 
   return theme
 }
 
 export const getThemes = async (query, options = {}) => {
-  options.populate = false
+  options.populate = true
   const foundThemes = await Theme.find(query, options)
 
   if (foundThemes) {
