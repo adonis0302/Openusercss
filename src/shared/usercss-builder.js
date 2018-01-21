@@ -78,13 +78,13 @@ if (process.env.NODE_ENV === 'development') {
   }
 }
 
-export const buildTheme = async (rawTheme) => {
+export const buildTheme = async (rawTheme, user) => {
   const builtTheme = cloneDeep(rawTheme)
 
   Reflect.deleteProperty(builtTheme, 'meta')
   Reflect.deleteProperty(builtTheme, '$loki')
   builtTheme._id = rawTheme._id
-  builtTheme.user = pick(rawTheme.user, [
+  builtTheme.user = pick(user, [
     '_schema',
     '__typename',
     '_id',
