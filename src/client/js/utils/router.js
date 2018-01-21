@@ -1,6 +1,7 @@
 import VueRouter from 'vue-router'
+import raven from 'raven-js'
 import store from '../store'
-import {getTheme,} from './vue'
+import {getTheme, getUser,} from './vue'
 
 import indexRoute from '../../../components/pages/index.vue'
 import searchRoute from '../../../components/pages/search.vue'
@@ -33,6 +34,11 @@ export const routerOptions = {
           .then(next)
           .catch(next)
         } else {
+          Promise.all([
+            store.dispatch('getLatestThemes', 6),
+            store.dispatch('getPopularThemes', 6),
+          ])
+          .catch(raven.captureException)
           return next()
         }
       },
@@ -74,10 +80,12 @@ export const routerOptions = {
       'component': profileRoute,
       beforeEnter (to, from, next) {
         if (process.title === 'node') {
-          getTheme(to.params.id)
+          getUser(to.params.id)
           .then(next)
           .catch(next)
         } else {
+          getUser(to.params.id)
+          .catch(raven.captureException)
           return next()
         }
       },
@@ -95,6 +103,8 @@ export const routerOptions = {
           .then(next)
           .catch(next)
         } else {
+          getTheme(to.params.id)
+          .catch(raven.captureException)
           return next()
         }
       },
@@ -108,6 +118,8 @@ export const routerOptions = {
           .then(next)
           .catch(next)
         } else {
+          getTheme(to.params.id)
+          .catch(raven.captureException)
           return next()
         }
       },

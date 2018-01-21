@@ -39,27 +39,20 @@ const renderOptions = (options) => {
   })
 }
 
-export const getUser = async (query) => {
+export const getUser = async (id) => {
   const users = db.getCollection('users')
-
-  if (query._id === 'undefined') {
-    return {}
-  }
-  let doneQuery = query
-
-  if (typeof query === 'string') {
-    doneQuery = {
-      '_id': query,
-    }
-  }
-  const existing = users.findOne(doneQuery)
+  const existing = users.findOne({
+    '_id': id.toString(),
+  })
 
   if (!existing) {
     let userResult = null
 
     try {
       userResult = await apolloClient.query({
-        'query': userQuery(query),
+        'query': userQuery({
+          'id': id.toString(),
+        }),
       })
     } catch (error) {
       throw new ServerError({
@@ -72,30 +65,25 @@ export const getUser = async (query) => {
     upsert('users', doneUser)
   }
 
-  return users.findOne(query) || {}
+  return users.findOne({
+    '_id': id.toString(),
+  }) || {}
 }
 
-export const getTheme = async (query) => {
+export const getTheme = async (id) => {
   const themes = db.getCollection('themes')
-
-  if (query._id === 'undefined') {
-    return {}
-  }
-  let doneQuery = query
-
-  if (typeof query === 'string') {
-    doneQuery = {
-      '_id': query,
-    }
-  }
-  const existing = themes.findOne(doneQuery)
+  const existing = themes.findOne({
+    '_id': id.toString(),
+  })
 
   if (!existing) {
     let themeResult = null
 
     try {
       themeResult = await apolloClient.query({
-        'query': themeQuery(query),
+        'query': themeQuery({
+          'id': id.toString(),
+        }),
       })
     } catch (error) {
       throw new ServerError({
@@ -109,11 +97,13 @@ export const getTheme = async (query) => {
     upsert('themes', doneTheme)
   }
 
-  getUser({
-    'id': themes.findOne(query).user,
-  })
+  getUser(themes.findOne({
+    '_id': id.toString(),
+  }).user)
 
-  return themes.findOne(query) || {}
+  return themes.findOne({
+    '_id': id.toString(),
+  }) || {}
 }
 
 Vue.use(VeeValidate, {
@@ -171,7 +161,11 @@ Vue.mixin({
       'getPopularThemes',
     ]),
 
+    getTheme,
+    getUser,
+
     getIterable (collectionName, input) {
+      console.warn('getIterable is deprecated, use getTheme or getUser')
       if (typeof collectionName !== 'string') {
         throw new Error(`collectionName must be a string, got ${JSON.stringify(collectionName)}`)
       }
@@ -188,9 +182,6 @@ Vue.mixin({
 
       return db.getCollection(collectionName).chain().find(query)
     },
-
-    getTheme,
-    getUser,
   },
 })
 

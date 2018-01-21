@@ -1,3 +1,4 @@
+/* eslint no-console:0 */
 import Loki from 'lokijs'
 import {superstruct,} from 'superstruct'
 
@@ -75,6 +76,7 @@ const initialize = () => {
     try {
       validators.themes(theme)
     } catch (error) {
+      console.warn(`Removing theme ${theme._id} from cache, because it failed validation - ${error}`)
       db.getCollection('themes').remove(theme)
     }
   })
@@ -83,6 +85,7 @@ const initialize = () => {
     try {
       validators.users(user)
     } catch (error) {
+      console.warn(`Removing user ${user._id} from cache, because it failed validation - ${error}`)
       db.getCollection('users').remove(user)
     }
   })
