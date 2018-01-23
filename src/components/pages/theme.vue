@@ -99,7 +99,7 @@
       deleteTheme () {
         this.$store.dispatch('deleteTheme', {
           'id':       this.theme._id,
-          'redirect': `/profile/${this.theme.user._id}`,
+          'redirect': `/profile/${this.user._id}`,
         })
       },
       viewSource () {
@@ -174,15 +174,25 @@
         'cache':   false,
         'default': {},
         async get () {
-          return this.$db.getCollection('themes').findOne({
+          const result = this.$db.getCollection('themes').findOne({
             '_id': this.$route.params.id,
           })
+
+          if (!result) {
+            return {}
+          }
+
+          return result
         },
       },
       'user': {
         'cache':   false,
         'default': {},
         async get () {
+          if (!this.theme) {
+            return {}
+          }
+
           return this.$db.getCollection('users').findOne({
             '_id': this.theme.user,
           })

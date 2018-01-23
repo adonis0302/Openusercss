@@ -1,12 +1,11 @@
 import {cloneDeep,} from 'lodash'
 import {getPopularThemes,} from './helpers/remotes/queries'
-import db, {upsert,} from '../db'
+import {upsert,} from '../db'
 
 export default async ({commit, getters,}, limit) => {
   commit('loading', true)
 
   try {
-    const themes = db.getCollection('themes')
     const {data,} = await getPopularThemes(limit)
     const {popularThemes,} = data
     const savedThemes = []
@@ -28,7 +27,7 @@ export default async ({commit, getters,}, limit) => {
       })
 
       savedThemes.push(savedTheme)
-      upsert(themes, savedTheme)
+      upsert('themes', savedTheme)
     })
     commit('loading', false)
     commit('actionError', null)

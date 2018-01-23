@@ -1,13 +1,12 @@
 import {cloneDeep,} from 'lodash'
 import {getLatestThemes,} from './helpers/remotes/queries'
-import db, {upsert,} from '../db'
+import {upsert,} from '../db'
 import {renderOptions,} from '../translators/get-theme'
 
 export default async ({commit, getters,}, id) => {
   commit('loading', true)
 
   try {
-    const themes = db.getCollection('themes')
     const {data,} = await getLatestThemes(id)
     const {latestThemes,} = data
 
@@ -16,7 +15,7 @@ export default async ({commit, getters,}, id) => {
 
       savedTheme.options = renderOptions(savedTheme.options)
 
-      upsert(themes, savedTheme)
+      upsert('themes', savedTheme)
     })
     commit('loading', false)
     commit('actionError', null)
