@@ -124,7 +124,7 @@ export const upsert = (wantedCollection, object) => {
   let collection = null
 
   if (wantedCollection.name) {
-    collection = db.getCollection(wantedCollection.name)
+    collection = wantedCollection
   } else if (typeof wantedCollection === 'string') {
     collection = db.getCollection(wantedCollection)
   } else {
@@ -132,26 +132,14 @@ export const upsert = (wantedCollection, object) => {
   }
 
   const validate = validators[collection.name]
-  let item = null
+  const item = validate(object)
 
-  try {
-    item = validate(object)
-  } catch (error) {
-    if (object instanceof Array) {
-      throw new Error('upsert item must not be an array')
-    }
+  console.log(JSON.stringify(item))
 
-    throw error
-  }
-
-  try {
-    collection.update(item)
-  } catch (err) {
-    collection.findAndRemove({
-      '_id': object._id,
-    })
-    collection.insert(item)
-  }
+  collection.findAndRemove({
+    '_id': item._id,
+  })
+  collection.insert(item)
 
   return object
 }
