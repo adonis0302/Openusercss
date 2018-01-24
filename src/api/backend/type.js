@@ -70,6 +70,7 @@ const rootTypeDefs = `
   type Query {
     verifyToken(token: String!): Session!
     theme(id: ID!): Theme!
+    themes(query: String!): [Theme]!
     user(id: ID!): User!
     search(terms: String!, limit: Int, skip: Int): Results!
     latestThemes(limit: Int): [Theme]!
