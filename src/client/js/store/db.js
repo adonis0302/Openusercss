@@ -1,6 +1,7 @@
 /* eslint no-console:0 */
 import Loki from 'lokijs'
 import {superstruct,} from 'superstruct'
+import {cloneDeep,} from 'lodash'
 
 const struct = superstruct({
   'types': {
@@ -18,8 +19,6 @@ validators.option = struct({
   'value':      'any',
 })
 validators.themes = struct({
-  'meta':        'object?',
-  '$loki':       'number?',
   '__typename':  'string?',
   '_id':         'string',
   'title':       'string',
@@ -42,8 +41,6 @@ validators.themes = struct({
   '__typename': 'Theme',
 })
 validators.users = struct({
-  'meta':           'object?',
-  '$loki':          'number?',
   '__typename':     'string?',
   '_id':            'string',
   'username':       'string',
@@ -72,22 +69,25 @@ const initialize = () => {
   }
 
   // Remove items from the db that don't fit the schema
-  db.getCollection('themes').find().forEach((theme) => {
-    try {
-      validators.themes(theme)
-    } catch (error) {
-      console.warn(`Removing theme ${theme._id} from cache, because it failed validation - ${error}`)
-      db.getCollection('themes').remove(theme)
-    }
-  })
+  db.collections.forEach((collection) => {
+    const validate = validators[collection.name]
 
-  db.getCollection('users').find().forEach((user) => {
-    try {
-      validators.users(user)
-    } catch (error) {
-      console.warn(`Removing user ${user._id} from cache, because it failed validation - ${error}`)
-      db.getCollection('users').remove(user)
-    }
+    collection.find().forEach((item) => {
+      const itemClone = cloneDeep(item)
+
+      Reflect.deleteProperty(itemClone, 'meta')
+      Reflect.deleteProperty(itemClone, '$loki')
+
+      try {
+        validate(itemClone)
+      } catch (error) {
+        console.warn([
+          `Removing ${itemClone.__typename} ${item._id} from cache, because it failed validation`,
+          error,
+        ].join('\n'))
+        collection.remove(item)
+      }
+    })
   })
 }
 
@@ -133,8 +133,6 @@ export const upsert = (wantedCollection, object) => {
 
   const validate = validators[collection.name]
   const item = validate(object)
-
-  console.log(JSON.stringify(item))
 
   collection.findAndRemove({
     '_id': item._id,
