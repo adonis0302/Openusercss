@@ -49,6 +49,14 @@ export const theme = ({id,}) => gql(`
   }
 `)
 
+export const themes = ({query,}) => gql(`
+  query {
+    themes(query: "${query}") {
+      ${themePropList}
+    }
+  }
+`)
+
 export const user = ({id,}) => gql(`
   query {
     user(id: "${id}") {

@@ -1,7 +1,10 @@
 import {cloneDeep,} from 'lodash'
 import {apolloClient,} from '../actions'
 import {ServerError,} from '../../../../shared/custom-errors'
-import {theme, search,} from '../actions/helpers/queries'
+import {
+  theme,
+  themes,
+} from '../actions/helpers/queries'
 import {upsert,} from '../db'
 
 import {getUser,} from './get-user'
@@ -52,11 +55,13 @@ export const getTheme = async (query) => {
 }
 
 export const getThemes = async (query) => {
-  let searchResults = null
+  let results = null
 
   try {
-    searchResults = await apolloClient.query({
-      'query': search(query),
+    results = await apolloClient.query({
+      'query': themes({
+        'query': escape(JSON.stringify(query)),
+      }),
     })
   } catch (error) {
     throw new ServerError({
@@ -64,12 +69,12 @@ export const getThemes = async (query) => {
     })
   }
 
-  searchResults.themes = searchResults.themes.filter((themeResult) => {
+  results.themes = results.themes.filter((themeResult) => {
     themeResult.options = renderOptions(themeResult.options)
     upsert('themes', themeResult)
 
     return themeResult
   })
 
-  return searchResults.themes
+  return results.themes
 }
