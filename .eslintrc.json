@@ -146,7 +146,7 @@
     "no-new-object": 2,
     "no-ternary": 2,
     "no-trailing-spaces": 2,
-    "no-underscore-dangle": [2, {"allow": ["_id", "_options"]}],
+    "no-underscore-dangle": [2, {"allow": ["_id", "_options", "__typename"]}],
     "no-unneeded-ternary": 2,
     "object-curly-spacing": [2,"never",{"arraysInObjects":true,"objectsInObjects":true}],
     "one-var": 2,
