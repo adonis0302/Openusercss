@@ -174,9 +174,7 @@
         'cache':   false,
         'default': {},
         async get () {
-          const result = this.$db.getCollection('themes').findOne({
-            '_id': this.$route.params.id,
-          })
+          const result = await this.getTheme(this.$route.params.id)
 
           if (!result) {
             return {}
@@ -189,13 +187,11 @@
         'cache':   false,
         'default': {},
         async get () {
-          if (!this.theme) {
+          if (!this.theme || !this.theme.user) {
             return {}
           }
 
-          return this.$db.getCollection('users').findOne({
-            '_id': this.theme.user,
-          })
+          return this.getUser(this.theme.user._id || this.theme.user,)
         },
       },
     },

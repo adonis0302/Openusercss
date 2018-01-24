@@ -65,12 +65,6 @@
             '_id': this.$route.params.id,
           })
 
-          if (user) {
-            user.themes = this.$db.getCollection('themes').find({
-              'user': user._id,
-            })
-          }
-
           return user || {}
         },
       },
@@ -78,6 +72,15 @@
         const user = this.user
 
         return `Last seen ${user.lastSeenReason}, ${moment(this.time).to(user.lastSeen)}`
+      },
+    },
+    'asyncComputed': {
+      'themes': {
+        'cache':   false,
+        'default': [],
+        async get () {
+          return []
+        },
       },
     },
   }
@@ -116,7 +119,7 @@
                             .tile.is-child.is-parent.is-vertical.is-paddingless
                               h2 {{user.displayname}}
                               br
-                              p Themes: {{user.themes ? user.themes.length : 0}}
+                              p Themes: {{themes ? themes.length : 0}}
 
                 .box
                   .level.is-mobile
@@ -139,7 +142,7 @@
                 hr
 
               .columns.is-multiline
-                .column.is-6(v-for="(theme, index) in user.themes")
+                .column.is-6(v-for="(theme, index) in themes")
                   theme-card(:data-index="index", :small="true", direction="horizontal", card-class="is-primary", :theme-id="theme._id").has-bottom-margin
                     .tile.is-parent(slot="content")
                       .columns
