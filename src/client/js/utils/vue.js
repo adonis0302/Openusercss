@@ -14,6 +14,7 @@ import router from './router'
 import store from '../store'
 import db, {upsert,} from '../store/db'
 import {apolloClient,} from '../store/actions'
+import {getThemes,} from '../store/translators/get-theme'
 
 import {
   theme as themeQuery,
@@ -162,6 +163,7 @@ Vue.mixin({
     ]),
 
     getTheme,
+    getThemes,
     getUser,
 
     getIterable (collectionName, input) {

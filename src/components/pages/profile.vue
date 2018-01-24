@@ -79,7 +79,9 @@
         'cache':   false,
         'default': [],
         async get () {
-          return []
+          return this.getThemes({
+            'user': this.user._id,
+          })
         },
       },
     },
