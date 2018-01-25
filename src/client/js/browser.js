@@ -18,6 +18,7 @@ import {
 } from './utils/vue'
 import db from './store/db'
 import {runPolyfills,} from './utils/features'
+import {runIntegration,} from './utils/extension-hook'
 
 if (process.env.NODE_ENV !== 'development') {
   raven.config('https://37715e4819864017ba7c02d05eb5cb75@sentry.io/264718', {
@@ -60,7 +61,9 @@ const main = async () => {
   Vue.component('flickity', VueFlickity)
   Vue.component('star-rating', StarRating)
 
+  runIntegration()
   await mountApp()
+
   const fps = new FpsEmitter(1000)
 
   window.addEventListener('load', () => {

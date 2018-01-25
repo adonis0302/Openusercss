@@ -1,7 +1,8 @@
 <script>
   // eslint-disable no-console
-  import {formatMoment,} from '../../../src/shared/time'
-  import {buildTheme,} from '../../../src/shared/usercss-builder'
+  import {formatMoment,} from '../../shared/time'
+  import {buildTheme,} from '../../shared/usercss-builder'
+  import {isInstalled,} from '../../client/js/utils/extension-hook'
 
   import icon from '../elements/icon.vue'
   import flushImg from '../elements/flush-img.vue'
@@ -123,7 +124,8 @@
       async installThemeEvent () {
         try {
           const self = this
-          const built = await buildTheme(this.theme)
+
+          const built = await buildTheme(this.theme, this.user)
           const key = hat()
 
           const callbackHandler = (event) => {
@@ -170,6 +172,17 @@
       },
     },
     'asyncComputed': {
+      'extensionData': {
+        'cache':   false,
+        'default': {},
+        async get () {
+          if (!process.browser) {
+            return {}
+          }
+
+          return isInstalled(this.theme)
+        },
+      },
       'theme': {
         'cache':   false,
         'default': {},
@@ -290,12 +303,14 @@
                       div(v-if="extension")
                         button.button.is-primary(
                           @click="installTheme",
-                          v-if="!extension.capabilities.includes('install-usercss-event')"
-                        ) Install theme with {{extension.name}}
+                          v-if="!extension.capabilities.includes('event:install-usercss')"
+                        )
+                          div(v-if="!extensionData.installed") Install with {{extension.name}}
+                          div(v-if="extensionData.installed") Reinstall with {{extension.name}}
                         button.button.is-primary(
                           @click="installThemeEvent",
-                          v-if="extension.capabilities.includes('install-usercss-event')"
-                        ) Install theme with {{extension.name}}
+                          v-if="extension.capabilities.includes('event:install-usercss')"
+                        ) Quick install with {{extension.name}}
                       button.button.is-primary(v-if="!extension", @click="installTheme") Install theme as usercss
 
           .columns

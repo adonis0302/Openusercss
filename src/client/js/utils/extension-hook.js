@@ -34,7 +34,8 @@ const featuresList = {
     'configure-after-install',
   ],
   'optional': [
-    'install-usercss-event',
+    'event:install-usercss',
+    'event:is-installed',
     'configure-before-install',
     'builtin-editor',
     'create-usercss',
@@ -101,6 +102,28 @@ const attachHandshakeListeners = () => {
     }
   })
 }
+
+export const isInstalled = ({_id, title,}) => new Promise((resolve, reject) => {
+  let namespace = `https://openusercss.org/theme/${_id}`
+  const responseHandler = (event) => {
+    if (event.data && event.data.type === 'ouc-is-installed-response') {
+      window.removeEventListener('message', responseHandler)
+      resolve(event.data.style)
+    }
+  }
+
+  if (process.env.NODE_ENV === 'development') {
+    namespace = `http://localhost:5010/theme/${_id}`
+  }
+
+  window.postMessage({
+    'type': 'ouc-is-installed',
+    'name': title,
+    namespace,
+  }, '*')
+
+  window.addEventListener('message', responseHandler)
+})
 
 export const runIntegration = async () => {
   attachHandshakeListeners()
