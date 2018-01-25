@@ -1,4 +1,5 @@
 <script>
+  import {cloneDeep,} from 'lodash'
   import oucFooter from '../elements/ouc-footer.vue'
   import navbar from '../elements/navbar.vue'
   import searchField from '../elements/search-field.vue'
@@ -58,8 +59,12 @@
 
           if (themes) {
             const finalThemes = await Promise.all(themes.filter(async (theme) => {
-              theme.user = await self.getUser(theme.user)
-              return theme
+              if (theme.user) {
+                const finalTheme = cloneDeep(theme)
+
+                finalTheme.user = await self.getUser(theme.user)
+                return finalTheme
+              }
             }))
 
             return finalThemes
@@ -80,8 +85,12 @@
 
           if (themes) {
             const finalThemes = await Promise.all(themes.filter(async (theme) => {
-              theme.user = await self.getUser(theme.user)
-              return theme
+              if (theme.user) {
+                const finalTheme = cloneDeep(theme)
+
+                finalTheme.user = await self.getUser(theme.user)
+                return finalTheme
+              }
             }))
 
             return finalThemes
