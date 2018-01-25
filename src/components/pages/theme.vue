@@ -291,10 +291,10 @@
               h1 {{theme.title}}
             .level-right
               .tile.is-parent.is-paddingless
-                .tile.is-child(v-if="currentUser && user._id === currentUser._id")
+                .tile.is-child(v-if="user._id === currentUser._id")
                   .content.is-marginless.is-pulled-right
                     button.button.is-danger(@click="confirmDeleteTheme") Delete theme
-                .tile.is-child(v-if="currentUser && user._id === currentUser._id")
+                .tile.is-child(v-if="user._id === currentUser._id")
                   .is-marginless.is-pulled-right
                     router-link.button.is-primary(:to="'/theme/edit/' + theme._id") Edit theme
                 .tile
@@ -304,13 +304,13 @@
                         button.button.is-primary(
                           @click="installTheme",
                           v-if="!extension.capabilities.includes('event:install-usercss')"
-                        )
-                          div(v-if="!extensionData.installed") Install with {{extension.name}}
-                          div(v-if="extensionData.installed") Reinstall with {{extension.name}}
+                        ) Install with {{extension.name}}
                         button.button.is-primary(
                           @click="installThemeEvent",
                           v-if="extension.capabilities.includes('event:install-usercss')"
-                        ) Quick install with {{extension.name}}
+                        )
+                          div(v-if="!extensionData.installed") Install with {{extension.name}}
+                          div(v-if="extensionData.installed") Reinstall with {{extension.name}}
                       button.button.is-primary(v-if="!extension", @click="installTheme") Install theme as usercss
 
           .columns

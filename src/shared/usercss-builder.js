@@ -60,8 +60,7 @@ validators.theme = struct({
   'options':     [
     validators.option,
   ],
-  'ratings': 'array',
-  'user':    validators.user,
+  'user': validators.user,
 }, {
   '__typename': 'Theme',
 })
