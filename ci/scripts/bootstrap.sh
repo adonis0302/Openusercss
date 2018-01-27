@@ -39,13 +39,13 @@ print_details() {
 }
 
 prepare() {
-  echo "Moving cached node_modules to repository"
-  mv npm-repo-cache/node_modules repo/node_modules
+  echo "Linking cached node_modules to repository"
+  ln -s npm-repo-cache/node_modules repo/node_modules
 
   cd repo
   print_details
 
-  yarn --frozen-lockfile --non-interactive
+  yarn --frozen-lockfile --non-interactive --modules-folder npm-repo-cache/node_modules
 }
 
 dependencies() {
