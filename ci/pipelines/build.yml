@@ -23,7 +23,7 @@ jobs:
       trigger: true
     - get: npm-repo-cache
 
-- name: build:prod
+- name: test
   plan:
   - get: repo
     trigger: true
@@ -32,17 +32,23 @@ jobs:
   - get: npm-repo-cache
     passed:
       - cache
-  - task: build
-    file: repo/ci/tasks/build/prod.yml
+  - task: test:end-to-end
+    file: repo/ci/tasks/test/end-to-end.yml
+  - task: test:api
+    file: repo/ci/tasks/test/api.yml
+  - task: test:unit
+    file: repo/ci/tasks/test/unit.yml
 
-- name: build:fast
+- name: build
   plan:
   - get: repo
     trigger: true
     passed:
-      - cache
+      - test
   - get: npm-repo-cache
     passed:
       - cache
-  - task: build
+  - task: build:prod
+    file: repo/ci/tasks/build/prod.yml
+  - task: build:fast
     file: repo/ci/tasks/build/fast.yml
