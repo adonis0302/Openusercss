@@ -38,7 +38,14 @@ print_details() {
   echo
 }
 
+install_packages() {
+  echo "Installing package(s):" "$@"
+  apk --update add $@ --no-progress
+}
+
 prepare() {
+  install_packages git
+
   echo "Linking cached node_modules to repository"
   ln -s npm-repo-cache/node_modules repo/node_modules
 
@@ -56,7 +63,7 @@ prepare() {
 
 dependencies() {
   echo
-  echo "Installing package(s):" "$@"
-  apk --update add $@ --no-progress
+  echo "Installing package(s):" "git $@"
+  install_packages $@
   prepare
 }

@@ -7,11 +7,13 @@ inputs:
 
 image_resource:
   type: docker-image
-  source: {repository: mhart/alpine-node}
+  source:
+    repository: mhart/alpine-node
 
 run:
   path: sh
-  args: [repo/ci/scripts/test/unit.sh]
+  args:
+    - repo/ci/scripts/test/unit.sh
 
 params:
   NODE_ENV: production

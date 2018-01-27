@@ -1,5 +1,5 @@
 #!/bin/sh
 source repo/ci/scripts/bootstrap.sh
-dependencies git
+prepare
 
 npm run test:api
