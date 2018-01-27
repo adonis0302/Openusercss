@@ -12,6 +12,7 @@ bfg.jar
 build.zip
 secrets.json
 bkup.*
+/fly
 
 # Created by https://www.gitignore.io/api/node,linux
 
