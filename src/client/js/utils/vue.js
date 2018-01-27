@@ -167,6 +167,7 @@ Vue.mixin({
     getUser,
 
     getIterable (collectionName, input) {
+      // eslint-disable-next-line no-console
       console.warn('getIterable is deprecated, use getTheme or getUser')
       if (typeof collectionName !== 'string') {
         throw new Error(`collectionName must be a string, got ${JSON.stringify(collectionName)}`)

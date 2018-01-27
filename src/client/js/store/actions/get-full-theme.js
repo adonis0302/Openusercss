@@ -1,6 +1,7 @@
 import {getTheme,} from '../translators/get-theme'
 
 export default async ({commit, getters,}, id) => {
+  // eslint-disable-next-line no-console
   console.warn([
     'The getFullTheme action is depracated, use the one',
     'attached to the Vue instance!',
