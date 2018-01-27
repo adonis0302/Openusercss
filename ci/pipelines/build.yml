@@ -1,0 +1,47 @@
+resource_types:
+  - name: npm-cache
+    type: docker-image
+    source: {repository: ymedlop/npm-cache-resource}
+
+resources:
+- name: npm-repo-cache
+  type: npm-cache
+  source:
+    <<: *repo-source
+    yarn-support: true
+    paths:
+      - package.json
+      - yarn.lock
+
+- name: repo
+  type: git
+  source: &repo-source
+    uri: https://github.com/OpenUserCSS/openusercss.org.git
+    branch: master
+
+jobs:
+- name: cache
+  plan:
+    - get: repo
+      trigger: true
+    - get: npm-repo-cache
+
+- name: build:prod
+  plan:
+  - get: repo
+  - get: npm-repo-cache
+    trigger: true
+    passed:
+      - cache
+  - task: build
+    file: repo/ci/tasks/build/prod.yml
+
+- name: build:fast
+  plan:
+  - get: repo
+  - get: npm-repo-cache
+    trigger: true
+    passed:
+      - cache
+  - task: build
+    file: repo/ci/tasks/build/fast.yml
