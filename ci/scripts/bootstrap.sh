@@ -5,6 +5,13 @@ PATH=$PATH":repo/node_modules/.bin:node_modules/.bin"
 print_details() {
   echo
   echo '=========================================================='
+  echo 'ls: '
+  ls repo
+
+  printf 'Cached node_modules size: '
+  du -shL repo/node_modules 2> /dev/null
+
+  echo '=========================================================='
   uname -nrom
 
   printf 'Build date: '
@@ -39,6 +46,7 @@ print_details() {
 }
 
 install_packages() {
+  echo
   echo "Installing package(s):" "$@"
   apk --update add $@ --no-progress
 }
@@ -48,9 +56,9 @@ prepare() {
 
   echo "Linking cached node_modules to repository"
   ln -s npm-repo-cache/node_modules repo/node_modules
+  print_details
 
   cd repo
-  print_details
 
   yarn \
     --silent \
@@ -62,8 +70,6 @@ prepare() {
 }
 
 dependencies() {
-  echo
-  echo "Installing package(s):" "git $@"
   install_packages $@
   prepare
 }
