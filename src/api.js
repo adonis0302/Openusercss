@@ -121,6 +121,7 @@ process.on('SIGTERM', () => {
   servers.forEach((server) => {
     server.close()
   })
+  process.exit(15)
 })
 
 process.on('SIGINT', () => {
@@ -128,6 +129,7 @@ process.on('SIGINT', () => {
   servers.forEach((server) => {
     server.close()
   })
+  process.exit(2)
 })
 
 process.on('exit', () => {
