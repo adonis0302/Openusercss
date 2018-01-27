@@ -1,5 +1,6 @@
 # OpenUserCSS  
-[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat)](#contributors)
+[![Build status](https://concourse.decentm.com/api/v1/teams/openusercss/pipelines/build/badge)](https://concourse.decentm.com/teams/openusercss/pipelines/build)
 
 by [@DecentM](https://github.com/DecentM) and [contributors](https://github.com/OpenUserCSS/openusercss.org/graphs/contributors)  
 OpenUserCSS is a website where you can upload and find themes for websites, to change how they look.  
