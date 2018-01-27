@@ -33,13 +33,7 @@ test('buildTheme - correctly builds from theme object', async (t) => {
     'createdAt':   '2017-12-31T09:20:29.234Z',
     'lastUpdate':  '2017-12-31T09:20:29.234Z',
     'screenshots': [],
-    'ratings':     [],
-    'user':        {
-      '_schema':     {},
-      '_id':         new ObjectID('5a262a2c3835ee7627db2ef9'),
-      'displayname': 'DecentM',
-    },
-    'options': [
+    'options':     [
       {
         'type':  'text',
         'value': 'hello',
@@ -47,6 +41,10 @@ test('buildTheme - correctly builds from theme object', async (t) => {
         'label': 'My Title',
       },
     ],
+  }, {
+    '_schema':     {},
+    '_id':         new ObjectID('5a262a2c3835ee7627db2ef9'),
+    'displayname': 'DecentM',
   })
 
   t.deepEqual(result, expected)
