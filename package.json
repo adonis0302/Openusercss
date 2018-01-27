@@ -8,30 +8,36 @@
     "contrib:generate": "all-contributors generate",
     "clean": "rimraf build .tmp && mkdir build .tmp",
     "commitmsg": "commitlint -e $GIT_PARAMS",
-    "prebuild:prod": "npm run clean",
-    "selenium:update": "webdriver-manager clean && webdriver-manager update --versions.chrome 2.34",
+    "selenium:update": "webdriver-manager update --versions.chrome 2.34",
     "selenium:start": "webdriver-manager start --quiet --detach --versions.chrome 2.34",
     "selenium:stop": "webdriver-manager shutdown",
+    "prebuild:prod": "npm run clean",
     "build:prod": "env-cmd ./.prod.env gulp build:prod",
     "prebuild:fast": "npm run clean",
     "build:fast": "env-cmd ./.dev.env gulp build:fast",
     "prewatch:dirty": "npm run clean",
     "watch:dirty": "env-cmd ./.dev.env gulp watch",
-    "stash": "git stash -u -k && echo '\nYour changes have been stashed\nIf your commit fails, use \"git stash pop\" to restore them'",
-    "unstash": "git stash pop",
     "start:prod": "env-cmd ./.prod.env node build/manager",
     "start:dev": "env-cmd ./.dev.env node build/manager",
+    "start-api:dev": "env-cmd ./.dev.env node build/api",
+    "start-api:prod": "env-cmd ./.prod.env node build/api",
     "start": "npm run start:dev",
     "predocker": "npm run build:prod",
     "docker": "docker build . -t decentm/openusercss",
     "postdocker": "docker push decentm/openusercss",
     "watch": "nodemon -q --delay 0.25 -w tasks -w gulpfile.babel.js --exec 'npm run watch:dirty'",
-    "release": "standard-version && git add -A && npm run c && npm run stash && concurrently --raw 'git push --follow-tags origin master' 'npm run docker'; npm run unstash",
+    "prerelease": "standard-version",
+    "release": "npm run docker",
+    "postrelease": "git push --follow-tags origin master",
     "lint:dry": "eslint --ext .js,.vue --ignore-path .gitignore src tasks test",
     "lint": "eslint --ext .js,.vue --fix --ignore-path .gitignore src tasks test",
-    "pretest": "npm run stash && npm run selenium:update && npm run selenium:start",
-    "test": "concurrently --raw --kill-others -s last 'npm start' 'npm run lint && ava'",
-    "posttest": "concurrently --raw 'npm run selenium:stop' 'npm run unstash'",
+    "pretest:e2e": "npm run selenium:update && npm run selenium:start",
+    "test:e2e": "ava test/end-to-end",
+    "posttest:e2e": "npm run selenium:stop",
+    "test:unit": "ava test/unit",
+    "pretest:api": "npm run clean && env-cmd ./.dev.env gulp shared:fast server:views server:email-templates server:fast",
+    "test:api": "concurrently --raw --kill-others -s first 'npm run start-api:dev' 'wait-port -o silent 5000 && ava test/api'",
+    "test": "npm run lint && npm run test:unit",
     "test:watch": "nodemon --delay 0.25 --watch package.json --watch test --exec 'npm t'",
     "commit": "git-cz",
     "c": "npm run commit"
@@ -41,11 +47,6 @@
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
-    }
-  },
-  "standard-version": {
-    "skip": {
-      "commit": true
     }
   },
   "ava": {
@@ -252,6 +253,7 @@
     "vue-template-compiler": "^2.5.2",
     "vue2-filters": "^0.2.2",
     "vuex": "^3",
-    "vuex-persist": "^1"
+    "vuex-persist": "^1",
+    "wait-port": "^0.2.2"
   }
 }
