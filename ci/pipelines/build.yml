@@ -22,10 +22,10 @@ resources:
     uri: https://github.com/OpenUserCSS/openusercss.org.git
     branch: master
 
-- name: pr
-  type: pull-request
-  source:
-    repo: OpenUserCSS/openusercss.org
+#- name: pr
+#  type: pull-request
+#  source:
+#    repo: OpenUserCSS/openusercss.org
 
 jobs:
 - name: cache
@@ -35,6 +35,7 @@ jobs:
     - get: npm-repo-cache
 
 - name: test
+  public: true
   plan:
   - get: repo
     trigger: true
@@ -51,6 +52,7 @@ jobs:
     file: repo/ci/tasks/test/unit.yml
 
 - name: build
+  public: true
   plan:
   - get: repo
     trigger: true
