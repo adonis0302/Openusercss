@@ -9,9 +9,6 @@ resources:
   source:
     <<: *repo-source
     yarn-support: true
-    paths:
-      - package.json
-      - yarn.lock
 
 - name: repo
   type: git
@@ -29,32 +26,35 @@ jobs:
 - name: test:unit
   plan:
   - get: repo
+    trigger: true
     passed:
       - cache
   - get: npm-repo-cache
-    trigger: true
-    passed: [cache]
+    passed:
+      - cache
   - task: test:unit
     file: repo/ci/tasks/test/unit.yml
 
 - name: test:api
   plan:
   - get: repo
+    trigger: true
     passed:
       - cache
   - get: npm-repo-cache
-    trigger: true
-    passed: [cache]
+    passed:
+      - cache
   - task: test:api
     file: repo/ci/tasks/test/api.yml
 
 - name: test:end-to-end
   plan:
   - get: repo
+    trigger: true
     passed:
       - cache
   - get: npm-repo-cache
-    trigger: true
-    passed: [cache]
+    passed:
+      - cache
   - task: test:end-to-end
     file: repo/ci/tasks/test/end-to-end.yml

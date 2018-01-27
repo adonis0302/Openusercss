@@ -1,6 +1,6 @@
 #!/bin/echo This file must be sourced:
 set -e
-PATH=$PATH":code/node_modules/.bin"
+PATH=$PATH":repo/node_modules/.bin:node_modules/.bin"
 
 print_details() {
   echo
@@ -39,6 +39,9 @@ print_details() {
 }
 
 prepare() {
+  echo "Moving cached node_modules to repository"
+  mv npm-repo-cache/node_modules repo/node_modules
+
   cd repo
   print_details
 

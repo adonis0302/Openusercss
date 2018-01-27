@@ -9,9 +9,6 @@ resources:
   source:
     <<: *repo-source
     yarn-support: true
-    paths:
-      - package.json
-      - yarn.lock
 
 - name: repo
   type: git
@@ -29,10 +26,10 @@ jobs:
 - name: build:prod
   plan:
   - get: repo
+    trigger: true
     passed:
       - cache
   - get: npm-repo-cache
-    trigger: true
     passed:
       - cache
   - task: build
@@ -41,10 +38,10 @@ jobs:
 - name: build:fast
   plan:
   - get: repo
+    trigger: true
     passed:
       - cache
   - get: npm-repo-cache
-    trigger: true
     passed:
       - cache
   - task: build
