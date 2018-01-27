@@ -29,6 +29,8 @@ jobs:
 - name: build:prod
   plan:
   - get: repo
+    passed:
+      - cache
   - get: npm-repo-cache
     trigger: true
     passed:
@@ -39,6 +41,8 @@ jobs:
 - name: build:fast
   plan:
   - get: repo
+    passed:
+      - cache
   - get: npm-repo-cache
     trigger: true
     passed:

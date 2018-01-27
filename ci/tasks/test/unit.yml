@@ -13,4 +13,4 @@ run:
   args: [repo/ci/scripts/test/unit.sh]
 
 params:
-  NODE_ENV: development
+  NODE_ENV: production
