@@ -45,7 +45,13 @@ prepare() {
   cd repo
   print_details
 
-  yarn --frozen-lockfile --non-interactive --modules-folder npm-repo-cache/node_modules
+  yarn \
+    --silent \
+    --frozen-lockfile \
+    --non-interactive \
+    --modules-folder npm-repo-cache/node_modules \
+    --network-timeout 10000 \
+    --network-concurrency 3
 }
 
 dependencies() {
