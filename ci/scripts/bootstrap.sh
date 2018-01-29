@@ -8,8 +8,15 @@ print_details() {
   echo 'ls: '
   ls repo
 
-  printf 'Cached node_modules size: '
-  du -shL repo/node_modules 2> /dev/null
+  echo
+  if [ -d "npm-repo-cache/node_modules" ]; then
+    printf 'Cached node_modules size: '
+    du -sh npm-repo-cache/node_modules
+  else
+    echo "Module cache not found, yarn will rebuild."
+    echo "Cache contents:"
+    ls npm-repo-cache
+  fi
 
   echo '=========================================================='
   uname -nrom
@@ -66,7 +73,9 @@ prepare() {
     --non-interactive \
     --modules-folder npm-repo-cache/node_modules \
     --network-timeout 10000 \
-    --network-concurrency 3
+    --network-concurrency 3 \
+    --production=false \
+    --no-progress
 }
 
 dependencies() {
