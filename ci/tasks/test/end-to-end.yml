@@ -13,7 +13,12 @@ image_resource:
 run:
   path: sh
   args:
-    - repo/ci/scripts/test/end-to-end.sh
+    - -exc
+    - |
+      source repo/ci/scripts/bootstrap.sh
+      dependencies openjdk8-jre
+      npm run build:fast
+      npm run test:e2e
 
 params:
   NODE_ENV: production

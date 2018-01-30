@@ -32,7 +32,7 @@
     "lint:dry": "eslint --ext .js,.vue --ignore-path .gitignore src tasks test",
     "lint": "eslint --ext .js,.vue --fix --ignore-path .gitignore src tasks test",
     "pretest:e2e": "npm run selenium:update && npm run selenium:start",
-    "test:e2e": "ava test/end-to-end",
+    "test:e2e": "concurrently --raw --kill-others -s first 'npm start' 'wait-port -o silent 5010 && ava test/end-to-end'",
     "posttest:e2e": "npm run selenium:stop",
     "test:unit": "ava test/unit",
     "pretest:api": "npm run clean && env-cmd ./.dev.env gulp shared:fast server:views server:email-templates server:fast",

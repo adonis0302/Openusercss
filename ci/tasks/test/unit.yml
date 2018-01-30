@@ -13,7 +13,11 @@ image_resource:
 run:
   path: sh
   args:
-    - repo/ci/scripts/test/unit.sh
+    - -exc
+    - |
+      source repo/ci/scripts/bootstrap.sh
+      prepare
+      npm run test:unit
 
 params:
   NODE_ENV: production

@@ -64,6 +64,6 @@ test.serial('visits /search', async (t) => {
 
 test.serial('goes to forums', async (t) => {
   await client.click('.navbar a[href="//forums.openusercss.org"]')
-  await client.waitForVisible('[itemtype="http://www.schema.org/ItemList"]')
+  await client.waitForVisible('a.navigation-link[href="//openusercss.org"]')
   t.true(await client.getUrl() === 'https://forums.openusercss.org/')
 })
