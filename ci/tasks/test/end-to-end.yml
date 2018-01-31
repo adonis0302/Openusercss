@@ -3,7 +3,9 @@ platform: linux
 
 inputs:
   - name: repo
-  - name: npm-repo-cache
+
+caches:
+- path: repo/node_modules
 
 image_resource:
   type: docker-image
@@ -15,7 +17,9 @@ run:
   args:
     - -exc
     - |
-      source repo/ci/scripts/bootstrap.sh
+      mkdir -p .tmp
+      wget https://raw.githubusercontent.com/OpenUserCSS/openusercss.org/master/ci/scripts/bootstrap.sh -O .tmp/bootstrap.sh
+      source .tmp/bootstrap.sh
       dependencies openjdk8-jre
       npm run build:fast
       npm run test:e2e

@@ -1,49 +1,16 @@
-resource_types:
-  - name: npm-cache
-    type: docker-image
-    source:
-      repository: ymedlop/npm-cache-resource
-
-  - name: pull-request
-    type: docker-image
-    source:
-      repository: jtarchie/pr
-
 resources:
-- name: npm-repo-cache
-  type: npm-cache
-  source:
-    <<: *repo-source
-    yarn-support: true
-
 - name: repo
   type: git
-  source: &repo-source
+  source:
     uri: https://github.com/OpenUserCSS/openusercss.org.git
     branch: master
 
-#- name: pr
-#  type: pull-request
-#  source:
-#    repo: OpenUserCSS/openusercss.org
-
 jobs:
-- name: cache
-  plan:
-    - get: repo
-      trigger: true
-    - get: npm-repo-cache
-
 - name: test
   public: true
   plan:
   - get: repo
     trigger: true
-    passed:
-      - cache
-  - get: npm-repo-cache
-    passed:
-      - cache
   - task: test:end-to-end
     file: repo/ci/tasks/test/end-to-end.yml
   - task: test:api
@@ -58,9 +25,6 @@ jobs:
     trigger: true
     passed:
       - test
-  - get: npm-repo-cache
-    passed:
-      - cache
   - task: build:prod
     file: repo/ci/tasks/build/prod.yml
   - task: build:fast
