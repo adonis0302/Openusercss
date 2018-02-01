@@ -11,12 +11,12 @@ jobs:
   plan:
   - get: repo
     trigger: true
-  - task: test:end-to-end
-    file: repo/ci/tasks/test/end-to-end.yml
-  - task: test:api
-    file: repo/ci/tasks/test/api.yml
   - task: test:unit
     file: repo/ci/tasks/test/unit.yml
+  - task: test:api
+    file: repo/ci/tasks/test/api.yml
+  - task: test:end-to-end
+    file: repo/ci/tasks/test/end-to-end.yml
 
 - name: build
   public: true
@@ -25,7 +25,7 @@ jobs:
     trigger: true
     passed:
       - test
-  - task: build:prod
-    file: repo/ci/tasks/build/prod.yml
   - task: build:fast
     file: repo/ci/tasks/build/fast.yml
+  - task: build:prod
+    file: repo/ci/tasks/build/prod.yml
