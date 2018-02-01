@@ -3,7 +3,7 @@ set -e
 PATH=$PATH":repo/node_modules/.bin:node_modules/.bin"
 
 print_details() {
-  ls -a repo
+  ls -a .
   uname -nrom
   date
   pwd
@@ -12,9 +12,10 @@ print_details() {
   node --version
   git --version
   busybox --help | head -1
-  echo $NODE_ENV
+  echo "NODE_ENV:" $NODE_ENV
   whoami
   cat /etc/*-release
+  git status
 }
 
 install_packages() {
@@ -22,10 +23,10 @@ install_packages() {
 }
 
 prepare() {
+  cd repo
+
   install_packages git
   print_details
-
-  cd repo
 
   yarn \
     --silent \
