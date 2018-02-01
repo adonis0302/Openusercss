@@ -17,9 +17,7 @@ run:
   args:
     - -exc
     - |
-      mkdir -p .tmp
-      wget https://raw.githubusercontent.com/OpenUserCSS/openusercss.org/master/ci/scripts/bootstrap.sh -O .tmp/bootstrap.sh
-      source .tmp/bootstrap.sh
+      source repo/ci/scripts/bootstrap.sh
       dependencies openjdk8-jre
       npm run build:fast
       npm run test:e2e

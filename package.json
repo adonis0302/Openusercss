@@ -15,7 +15,7 @@
     "build:prod": "env-cmd ./.prod.env gulp build:prod",
     "prebuild:fast": "npm run clean",
     "build:fast": "env-cmd ./.dev.env gulp build:fast",
-    "build-api:fast": "env-cmd ./.dev.env gulp api:fast",
+    "build-api:fast": "env-cmd ./.dev.env gulp server:email-templates shared:fast server:fast",
     "prewatch:dirty": "npm run clean",
     "watch:dirty": "env-cmd ./.dev.env gulp watch",
     "start:prod": "env-cmd ./.prod.env node build/manager",
