@@ -51,9 +51,9 @@ export const sendEmail = async ({to, template, locals,}) => {
   const config = await staticConfig()
   const transportOptions = {
     'host':       config.get('mail.smtp.host'),
-    'port':       config.get('mail.smtp.port'),
-    'secure':     config.get('mail.smtp.secure'),
-    'requireTls': config.get('mail.smtp.requireTls'),
+    'port':       parseInt(config.get('mail.smtp.port'), 10),
+    'secure':     config.get('mail.smtp.secure') === 'true',
+    'requireTls': config.get('mail.smtp.requiretls') === 'true',
     'auth':       {
       'user': config.get('mail.user'),
       'pass': config.get('mail.pass'),
@@ -69,8 +69,8 @@ export const sendEmail = async ({to, template, locals,}) => {
         'relativeTo': resourcePath,
       },
     },
-    'send':    true,
-    'preview': false,
+    'send':    config.get('env') === 'production',
+    'preview': config.get('env') === 'development',
     'message': {
       'from': 'notifications@openusercss.org',
     },
