@@ -4,6 +4,9 @@ platform: linux
 inputs:
   - name: repo
 
+outputs:
+  - name: repo
+
 caches:
 - path: repo/node_modules
 

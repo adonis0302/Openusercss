@@ -32,6 +32,16 @@ const defaultConfig = {
     'webserver': '',
     'api':       '',
   },
+  'mail': {
+    'smtp': {
+      'host':       'localhost',
+      'port':       '25',
+      'secure':     false,
+      'requireTls': false,
+    },
+    'user': '',
+    'pass': '',
+  },
 }
 
 const genKeypair = () => {
@@ -120,30 +130,30 @@ const initConfig = () => {
 const ourConfig = initConfig()
 const finalizedConfig = defaultsDeep(ourConfig.get(), defaultConfig)
 
-export default async () => {
-  if (!isEqual(ourConfig.get(), finalizedConfig)) {
-    log.warn([
-      'Environment discrepancy',
-      'Your configuration doesn\'t match your environment',
-      'Resetting to new value based on environment',
-    ].join('\n\t'))
-    ourConfig.set(finalizedConfig)
-  }
+if (!isEqual(ourConfig.get(), finalizedConfig)) {
+  log.warn([
+    'Environment discrepancy',
+    'Your configuration doesn\'t match your environment',
+    'Resetting to new value based on environment',
+  ].join('\n\t'))
+  ourConfig.set(finalizedConfig)
+}
 
-  forOwn(process.env, (envValue, envName) => {
-    const valid = !!envName.match('_')
+forOwn(process.env, (envValue, envName) => {
+  const valid = !!envName.match('_')
 
-    if (valid) {
-      const ours = envName.split('_')[0] === 'OUC'
+  if (valid) {
+    const ours = envName.split('_')[0] === 'OUC'
 
-      if (ours) {
-        const nameArray = envName.toLowerCase().split('_')
+    if (ours) {
+      const nameArray = envName.toLowerCase().split('_')
 
-        nameArray.splice(0, 1)
-        ourConfig.set(nameArray.join('.'), envValue)
-      }
+      nameArray.splice(0, 1)
+      ourConfig.set(nameArray.join('.'), envValue)
     }
-  })
+  }
+})
 
+export default async () => {
   return ourConfig
 }

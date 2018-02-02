@@ -36,7 +36,6 @@
     "test:e2e": "concurrently --raw --kill-others -s first 'npm start' 'wait-port -o silent 5010 && ava test/end-to-end'",
     "posttest:e2e": "npm run selenium:stop",
     "test:unit": "ava test/unit",
-    "pretest:api": "npm run clean && env-cmd ./.dev.env gulp shared:fast server:views server:email-templates server:fast",
     "test:api": "concurrently --raw --kill-others -s first 'npm run start-api:dev' 'wait-port -o silent 5000 && ava test/api'",
     "test": "npm run lint && npm run test:unit",
     "test:watch": "nodemon --delay 0.25 --watch package.json --watch test --exec 'npm t'",

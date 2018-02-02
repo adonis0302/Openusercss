@@ -4,6 +4,9 @@ platform: linux
 inputs:
   - name: repo
 
+outputs:
+  - name: repo
+
 caches:
 - path: repo/node_modules
 
@@ -19,7 +22,6 @@ run:
     - |
       source repo/ci/scripts/bootstrap.sh
       prepare
-      npm run build-api:fast
       npm run test:api
 
 params:

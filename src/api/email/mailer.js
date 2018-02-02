@@ -2,7 +2,7 @@ import Email from 'email-templates'
 import nodemailer from 'nodemailer'
 import pify from 'pify'
 import path from 'path'
-import account from '../.env'
+import staticConfig from '../../shared/config'
 
 export const createTestAccount = async () => {
   const testAccount = await pify(nodemailer.createTestAccount)
@@ -48,14 +48,15 @@ export const createTestTransport = async () => {
 }
 
 export const sendEmail = async ({to, template, locals,}) => {
+  const config = await staticConfig()
   const transportOptions = {
-    'host':       account.smtp.host,
-    'port':       account.smtp.port,
-    'secure':     account.smtp.secure,
-    'requireTls': true,
+    'host':       config.get('mail.smtp.host'),
+    'port':       config.get('mail.smtp.port'),
+    'secure':     config.get('mail.smtp.secure'),
+    'requireTls': config.get('mail.smtp.requireTls'),
     'auth':       {
-      'user': account.user,
-      'pass': account.pass,
+      'user': config.get('mail.user'),
+      'pass': config.get('mail.pass'),
     },
   }
   const transport = await createTransport(transportOptions)
