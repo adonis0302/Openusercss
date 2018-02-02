@@ -1,4 +1,5 @@
 import bcrypt from 'bcryptjs'
+import log from 'chalk-console'
 import raven from 'raven'
 import jwt from 'jsonwebtoken'
 import {
@@ -48,7 +49,10 @@ export default async (root, {displayname, email, password,}, {User,}) => {
   const savedUser = await newUser.save()
 
   createSendEmail(savedUser)
-  .catch(raven.captureException)
+  .catch((error) => {
+    log.error(error.stack)
+    raven.captureException(error)
+  })
 
   return savedUser
 }
