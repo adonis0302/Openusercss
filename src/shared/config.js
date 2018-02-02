@@ -12,7 +12,7 @@ import {
 
 const appPath = path.resolve(process.mainModule.paths[0], '..')
 const defaultConfig = {
-  'env':   'production',
+  'env':   process.env.NODE_ENV,
   'ports': {
     'api': {
       'https': 5001,
@@ -37,7 +37,7 @@ const defaultConfig = {
       'host':       'localhost',
       'port':       '25',
       'secure':     false,
-      'requireTls': false,
+      'requiretls': false,
     },
     'user': '',
     'pass': '',
@@ -111,15 +111,23 @@ const initConfig = () => {
     secretsConfig.set('version', newVersion)
   }
 
-  const config = new Conf({
-    'configName':    'config',
-    'cwd':           path.join(appPath, 'data'),
-    'encryptionKey': secretsConfig.get('configKey'),
-    'defaults':      defaultConfig,
-  })
+  const confOptions = {
+    'configName': 'config',
+    'cwd':        path.join(appPath, 'data'),
+    'defaults':   defaultConfig,
+  }
 
-  if (!config.get('version') || !config.get('keypair')) {
-    config.set('env', defaultConfig.environment)
+  if (process.env.NODE_ENV !== 'development') {
+    confOptions.encryptionKey = secretsConfig.get('configKey')
+  }
+
+  const config = new Conf(confOptions)
+
+  if (
+    !config.get('version')
+    || !config.get('keypair')
+    || !config.get('version')
+  ) {
     config.set('keypair', genKeypair())
     config.set('version', newVersion)
   }
