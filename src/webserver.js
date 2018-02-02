@@ -63,19 +63,10 @@ const cspOptions = {
     'fontSrc': [
       'data:',
     ],
+    'workerSrc': [
+      "'self'",
+    ],
   },
-}
-
-if (process.env.NODE_ENV === 'development') {
-  cspOptions.directives.defaultSrc.push('localhost')
-  cspOptions.directives.imgSrc.push('localhost')
-  cspOptions.directives.connectSrc.push('localhost:*')
-  cspOptions.directives.connectSrc.push('ws://localhost:*')
-  cspOptions.directives.scriptSrc = [
-    ...cspOptions.directives.scriptSrc,
-    "'unsafe-inline'",
-    "'unsafe-eval'",
-  ]
 }
 
 const init = async () => {
@@ -83,7 +74,19 @@ const init = async () => {
   const app = express()
   const config = await staticConfig()
 
-  if (process.env.NODE_ENV !== 'development') {
+  if (config.get('env') === 'development') {
+    cspOptions.directives.defaultSrc.push('localhost')
+    cspOptions.directives.imgSrc.push('localhost')
+    cspOptions.directives.connectSrc.push('localhost:*')
+    cspOptions.directives.connectSrc.push('ws://localhost:*')
+    cspOptions.directives.scriptSrc = [
+      ...cspOptions.directives.scriptSrc,
+      "'unsafe-inline'",
+      "'unsafe-eval'",
+    ]
+  }
+
+  if (config.get('env') !== 'development') {
     raven.config(config.get('sentry.webserver')).install()
     app.use(raven.requestHandler())
   }

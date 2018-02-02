@@ -23,28 +23,28 @@ const cspOptions = {
   },
 }
 
-if (process.env.NODE_ENV === 'development') {
-  cspOptions.directives.defaultSrc.push('localhost')
-  cspOptions.directives.scriptSrc = [
-    ...cspOptions.directives.defaultSrc,
-    "'unsafe-inline'",
-    'unpkg.com',
-    'cdn.jsdelivr.net',
-  ]
-  cspOptions.directives.styleSrc = [
-    ...cspOptions.directives.defaultSrc,
-    "'unsafe-inline'",
-    'unpkg.com',
-  ]
-}
-
 const servers = []
 const init = async () => {
   await auto()
   const app = express()
   const config = await staticConfig()
 
-  if (process.env.NODE_ENV !== 'development') {
+  if (config.get('env') === 'development') {
+    cspOptions.directives.defaultSrc.push('localhost')
+    cspOptions.directives.scriptSrc = [
+      ...cspOptions.directives.defaultSrc,
+      "'unsafe-inline'",
+      'unpkg.com',
+      'cdn.jsdelivr.net',
+    ]
+    cspOptions.directives.styleSrc = [
+      ...cspOptions.directives.defaultSrc,
+      "'unsafe-inline'",
+      'unpkg.com',
+    ]
+  }
+
+  if (config.get('env') !== 'development') {
     raven.config(config.get('sentry.api')).install()
     app.use(raven.requestHandler())
   }
@@ -84,7 +84,7 @@ const init = async () => {
 
   // Here, we re-run the above if statement,
   // because the minifier will remove everything in that in a prod build.
-  if (process.env.NODE_ENV !== 'development') {
+  if (config.get('env') !== 'development') {
     app.use(morgan('combined'))
     app.use(raven.errorHandler())
   }
@@ -106,14 +106,14 @@ const init = async () => {
     init()
   } catch (error) {
     raven.captureException(error)
-    log.error(error)
+    log.error(error.stack)
   }
 })()
 
 process.on('unhandledRejection', (error) => {
   log.error(`Unhandled promise rejection in API: ${error.message}`)
-  raven.captureException(error)
-  log.error(error)
+  log.error(error.stack)
+  process.exit(1)
 })
 
 process.on('SIGTERM', () => {
