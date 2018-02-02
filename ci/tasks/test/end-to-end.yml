@@ -22,7 +22,6 @@ run:
     - |
       source repo/ci/scripts/bootstrap.sh
       dependencies openjdk8-jre
-      npm run build:fast
       npm run test:e2e
 
 params:
