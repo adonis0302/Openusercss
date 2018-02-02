@@ -4,6 +4,7 @@ import log from 'chalk-console'
 import path from 'path'
 import {forOwn,} from 'lodash'
 import respawn from 'respawn'
+import staticConfig from './shared/config'
 
 log.info('Manager process starting')
 
@@ -16,7 +17,7 @@ const startList = {
 const startProcesses = (list) => {
   const started = []
 
-  forOwn(list, async (value, key) => {
+  forOwn(list, (value, key) => {
     log.info(`Manager starting ${key}`)
     const child = respawn([
       'node',
@@ -40,18 +41,39 @@ const startProcesses = (list) => {
 }
 
 const stopProcesses = (processes) => {
-  const stopped = []
+  const stops = Promise.all(processes.filter((child) => {
+    return new Promise((resolve, reject) => {
+      log.info(`Manager stopping ${child.name}`)
+      child.stop(() => {
+        log.info(`Manager stopped ${child.name}`)
+        resolve()
+      })
+    })
+  }))
 
-  forOwn(processes, (child, key) => {
-    log.info(`Manager stopping ${child.name}`)
-    child.stop()
-    stopped.push(child)
-  })
-
-  return stopped
+  return stops
 }
 
-const children = startProcesses(startList)
+let children = null
+const init = async () => {
+  const config = await staticConfig()
+  const configEnv = config.get('env')
+
+  if (configEnv.toString() !== process.env.NODE_ENV.toString()) {
+    log.error([
+      'Environment error',
+      `This instance of the application is configured for ${configEnv}.`,
+      `The current environment is ${process.env.NODE_ENV}.`,
+      'The current configuration must be reset in order to boot.',
+    ].join('\n\t'))
+
+    process.exit(1)
+  }
+
+  children = startProcesses(startList)
+}
+
+init()
 
 process.on('unhandledRejection', (error) => {
   log.error(`Unhandled promise rejection in Manager: ${error.message}`)
