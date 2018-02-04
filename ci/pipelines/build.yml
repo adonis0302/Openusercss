@@ -29,6 +29,7 @@ jobs:
     trigger: true
     passed:
       - build:prod
+      - build:fast
   - task: test:unit
     file: repo/ci/tasks/test/unit.yml
   - task: test:api
