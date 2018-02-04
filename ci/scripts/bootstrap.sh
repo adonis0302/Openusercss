@@ -3,8 +3,8 @@ set -e
 PATH=$PATH":repo/node_modules/.bin:node_modules/.bin"
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=true
 
-exit_not_git() {
-  echo "Not a git repository"
+error() {
+  echo "$@"
   exit 1
 }
 
@@ -13,15 +13,15 @@ print_details() {
   uname -nrom
   date
   pwd
-  yarn --version
-  npm --version
-  node --version
-  git --version
-  busybox --help | head -1
+  yarn --version || error "yarn isn't installed"
+  npm --version || error "npm isn't installed"
+  node --version || error "node.js isn't installed"
+  git --version || error "git isn't installed"
+  busybox --help | head -1 || error "Busybox isn't installed"
   echo "NODE_ENV:" $NODE_ENV
   whoami
-  cat /etc/*-release
-  git status || exit_not_git
+  cat /etc/*-release || error "Failed to read distribution release file"
+  git status || error "Not a git repository"
 }
 
 install_packages() {
