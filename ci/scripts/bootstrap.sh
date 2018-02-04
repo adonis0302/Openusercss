@@ -1,6 +1,12 @@
 #!/bin/echo This file must be sourced:
 set -e
 PATH=$PATH":repo/node_modules/.bin:node_modules/.bin"
+export GIT_DISCOVERY_ACROSS_FILESYSTEM=true
+
+exit_not_git() {
+  echo "Not a git repository"
+  exit 1
+}
 
 print_details() {
   ls -a .
@@ -15,7 +21,7 @@ print_details() {
   echo "NODE_ENV:" $NODE_ENV
   whoami
   cat /etc/*-release
-  git status || git init
+  git status || exit_not_git
 }
 
 install_packages() {
