@@ -98,6 +98,7 @@
     "flexibility": "^2",
     "fps-emitter": "^1.0.0",
     "glob": "^7",
+    "graphql-request": "^1.4.1",
     "graphql-tag": "^2",
     "gulp": "https://github.com/gulpjs/gulp#4.0",
     "gulp-babel": "^7",
