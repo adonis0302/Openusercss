@@ -3,7 +3,6 @@ import pump from 'pump'
 import merge from 'merge-stream'
 import buffer from 'gulp-buffer'
 import filter from 'gulp-filter'
-import prettyError from 'gulp-prettyerror'
 import path from 'path'
 import {
   remember,
@@ -46,8 +45,8 @@ const sources = {
   'email': [
     'src/client/scss/email.scss',
   ],
-  'css': [
-    '.tmp/*.min.css',
+  'components': [
+    '.tmp/components.min.css',
   ],
   'icons': [
     'src/client/img/*.icon.*',
@@ -107,7 +106,6 @@ gulp.task('client:media:prod', (done) => {
   ])
 
   const finalImageStream = pump([
-    prettyError(),
     merge(backgroundsStream, iconStream, elementStream),
     imagemin([
       imagemin.gifsicle({
@@ -130,14 +128,8 @@ gulp.task('client:media:prod', (done) => {
     gulp.dest(destination('img')),
   ])
 
-  const componentCssStream = pump([
-    prettyError(),
-    gulp.src(sources.css),
-  ])
-
   const finalCssStream = pump([
-    prettyError(),
-    merge(fontStream, sassStream, componentCssStream),
+    merge(fontStream, sassStream, gulp.src(sources.components)),
     sass(),
     buffer(),
     concat('bundle.min.css'),
@@ -219,7 +211,6 @@ gulp.task('client:media:fast', (done) => {
   ])
 
   const finalImageStream = pump([
-    prettyError(),
     merge(backgroundsStream, iconStream, elementStream),
     flatten(),
     merge(
@@ -230,14 +221,8 @@ gulp.task('client:media:fast', (done) => {
     gulp.dest(destination('img')),
   ])
 
-  const componentCssStream = pump([
-    prettyError(),
-    gulp.src(sources.css),
-  ])
-
   const finalCssStream = pump([
-    prettyError(),
-    merge(fontStream, sassStream, componentCssStream),
+    merge(fontStream, sassStream, gulp.src(sources.components)),
     remember('fonts'),
     sass(),
     buffer(),
@@ -250,9 +235,8 @@ gulp.task('client:media:fast', (done) => {
   return merge(finalCssStream, finalImageStream)
 })
 
-gulp.task('client:media:email', (done) => {
+gulp.task('client:media:email', () => {
   return pump([
-    prettyError(),
     gulp.src(sources.email),
     sass(),
     buffer(),

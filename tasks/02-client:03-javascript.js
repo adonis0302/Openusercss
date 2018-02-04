@@ -4,12 +4,10 @@ import glob from 'glob'
 import source from 'vinyl-source-stream'
 import pwaManifest from 'pwa-manifest'
 import path from 'path'
-import prettyError from 'gulp-prettyerror'
 import gutil from 'gulp-util'
 import flatten from 'gulp-flatten'
 import buffer from 'gulp-buffer'
 import sourcemaps from 'gulp-sourcemaps'
-import minify from 'gulp-minify'
 import optimize from 'gulp-optimize-js'
 import watchify from 'watchify'
 import hmr from 'browserify-hmr'
@@ -38,7 +36,7 @@ gulp.task('client:js:prod', () => {
       'entries': [
         entry,
       ],
-      'debug':  true,
+      'debug':  false,
       'target': 'browser',
     }
 
@@ -51,19 +49,10 @@ gulp.task('client:js:prod', () => {
     const bify = createBrowserify(options)
 
     return pump([
-      prettyError(),
       bify.bundle(),
       source(entry),
       buffer(),
       optimize(),
-      minify({
-        'ext': {
-          'src': '.js',
-          'min': '.js',
-        },
-        'noSource': true,
-        'mangle':   false,
-      }),
       flatten(),
       sourcemaps.init({
         'loadMaps': true,
@@ -102,7 +91,6 @@ gulp.task('client:js:fast', () => {
     const bify = createBrowserify(options)
 
     return pump([
-      prettyError(),
       bify.bundle(),
       source(entry),
       buffer(),
@@ -155,7 +143,6 @@ gulp.task('client:js:watch', () => {
 
     const bundle = () => {
       return pump([
-        prettyError(),
         bify.bundle(),
         source(entry),
         buffer(),

@@ -7,6 +7,7 @@ import banner from 'browserify-banner'
 import git from 'git-revision'
 import fs from 'fs'
 import pug from 'pug'
+import uglifyify from 'uglifyify'
 
 const babelOptions = {
   'presets': [
@@ -106,6 +107,12 @@ export const createBrowserify = (opts) => {
       },
     },
   })
+
+  if (!opts.debug) {
+    bify.transform(uglifyify, {
+      'global': true,
+    })
+  }
 
   bify.transform(envify, process.env)
 
