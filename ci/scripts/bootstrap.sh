@@ -30,18 +30,8 @@ install_packages() {
 
 prepare() {
   cd repo
-
-  echo 'NODE_ENV=development
-        OUC_ENV=development
-
-        OUC_DATABASE_MAIN=mongodb://localhost:27017/openusercss-main
-        OUC_DOMAIN=localhost
-        OUC_SALTROUNDS=10
-
-        OUC_PORTS_API_HTTPS=5001
-        OUC_PORTS_API_HTTP=5000
-        OUC_PORTS_FRONTEND_HTTPS=5011
-        OUC_PORTS_FRONTEND_HTTP=5010' > .dev.env
+  cp .dev.env.default .dev.env
+  cp .prod.env.default .prod.env
 
   install_packages git $@
   print_details
