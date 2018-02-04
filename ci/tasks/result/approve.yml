@@ -16,10 +16,7 @@ run:
   path: sh
   args:
     - -exc
-    - |
-      source repo/ci/scripts/bootstrap.sh
-      prepare
-      npm run test:api
+    - du -cksh repo/build/*
 
 params:
   NODE_ENV: production
