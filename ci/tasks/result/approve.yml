@@ -16,7 +16,8 @@ run:
   path: sh
   args:
     - -exc
-    - du -cksh repo/build/*
+    - du -cksh repo/build
+    - du -cksh repo/src
 
 params:
   NODE_ENV: production

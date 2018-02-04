@@ -40,8 +40,7 @@ prepare() {
     --non-interactive \
     --network-timeout 10000 \
     --network-concurrency 3 \
-    --production=false \
-    --no-progress
+    --production=false
 }
 
 dependencies() {
