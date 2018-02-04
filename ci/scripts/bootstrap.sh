@@ -15,7 +15,7 @@ print_details() {
   echo "NODE_ENV:" $NODE_ENV
   whoami
   cat /etc/*-release
-  git status
+  git status || git init
 }
 
 install_packages() {
@@ -25,7 +25,7 @@ install_packages() {
 prepare() {
   cd repo
 
-  install_packages git
+  install_packages git $@
   print_details
 
   yarn \
@@ -39,6 +39,5 @@ prepare() {
 }
 
 dependencies() {
-  install_packages $@
-  prepare
+  prepare $@
 }
