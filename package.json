@@ -56,8 +56,8 @@
   },
   "devDependencies": {
     "@babel/register": "7.0.0-beta.35",
-    "@commitlint/cli": "^5.2.3",
-    "@commitlint/config-conventional": "^5.2.3",
+    "@commitlint/cli": "^6",
+    "@commitlint/config-conventional": "^6",
     "all-contributors-cli": "^4.10.1",
     "ava": "^0.24.0",
     "babel-cli": "^6",
@@ -138,6 +138,7 @@
     "postcss-flexibility": "^2",
     "postcss-will-change": "^2.0.0",
     "postcss-will-change-transition": "^1.2.0",
+    "pre-commit": "^1.2.2",
     "pug-include-glob": "^0",
     "pug-lint": "^2",
     "pug-lint-config-emarsys": "^2",
