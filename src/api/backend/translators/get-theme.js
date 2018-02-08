@@ -17,7 +17,7 @@ validators.option = struct({
 
 export const getTheme = async (query) => {
   const theme = await Theme.findOne(query, {
-    'populate': true,
+    'populate': false,
   })
 
   if (theme) {
@@ -29,7 +29,6 @@ export const getTheme = async (query) => {
         return ''
       }
     })
-    theme.user = theme.user._id
   }
 
   return theme
