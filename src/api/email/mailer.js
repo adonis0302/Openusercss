@@ -48,6 +48,7 @@ export const createTestTransport = async () => {
 }
 
 export const sendEmail = async ({to, template, locals,}) => {
+  let transport = null
   const config = await staticConfig()
   const transportOptions = {
     'host':       config.get('mail.smtp.host'),
@@ -59,7 +60,13 @@ export const sendEmail = async ({to, template, locals,}) => {
       'pass': config.get('mail.pass'),
     },
   }
-  const transport = await createTransport(transportOptions)
+
+  if (config.get('env') === 'development') {
+    transport = await createTestTransport()
+  } else {
+    transport = await createTransport(transportOptions)
+  }
+
   const resourcePath = path.resolve('./static')
   const email = new Email({
     'juice':          true,
