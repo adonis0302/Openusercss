@@ -21,7 +21,6 @@ run:
       dependencies mongodb
       mkdir -p /data/db
       /usr/bin/mongod --quiet --syslog --noauth --fork
-      npm run build-api:fast
       npm run test:api
 
 params:

@@ -18,7 +18,9 @@ run:
     - -exc
     - |
       source repo/ci/scripts/bootstrap.sh
-      dependencies openjdk8-jre
+      dependencies mongodb
+      mkdir -p /data/db
+      /usr/bin/mongod --quiet --syslog --noauth --fork
       npm run test:e2e
 
 params:
