@@ -6,7 +6,7 @@ export default async (root, {id,}, {User, Theme,}) => {
   })
 
   if (!result) {
-    throw new Error('No theme found')
+    throw new Error(`No theme found with id ${id}`)
   }
 
   return result
