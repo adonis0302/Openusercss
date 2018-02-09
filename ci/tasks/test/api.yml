@@ -25,5 +25,5 @@ run:
       npm run test:api
 
 params:
-  NODE_ENV: production
+  NODE_ENV: development
   CI: true

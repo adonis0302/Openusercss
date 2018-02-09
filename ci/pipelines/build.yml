@@ -14,21 +14,12 @@ jobs:
   - task: build:fast
     file: repo/ci/tasks/build/fast.yml
 
-- name: build:prod
-  public: true
-  plan:
-  - get: repo
-    trigger: true
-  - task: build:prod
-    file: repo/ci/tasks/build/prod.yml
-
 - name: test
   public: true
   plan:
   - get: repo
     trigger: true
     passed:
-      - build:prod
       - build:fast
   - task: test:unit
     file: repo/ci/tasks/test/unit.yml

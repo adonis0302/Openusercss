@@ -22,5 +22,5 @@ run:
       npm run build:prod
 
 params:
-  NODE_ENV: production
+  NODE_ENV: development
   CI: true
