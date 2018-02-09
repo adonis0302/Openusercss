@@ -1,28 +1,25 @@
 import test from 'ava'
-import {remote,} from 'webdriverio'
+import Nightmare from 'nightmare'
 
-const client = remote({
-  'desiredCapabilities': {
-    'browserName': 'chrome',
-  },
+const client = new Nightmare({
+  'waitTimeout':      7000,
+  'gotoTimeout':      7000,
+  'loadTimeout':      7000,
+  'executionTimeout': 13000,
+  'show':             !process.env.CI,
 })
 
 test.before(async (t) => {
-  return client.init()
-  .setViewportSize({
-    'width':  1280,
-    'height': 720,
-  })
-  .url('http://localhost:5010')
-  .waitForVisible('.ouc-app-root')
-})
-
-test.after.always(async (t) => {
-  return client.end()
+  return client
+  .viewport(1280, 720)
+  .goto('http://localhost:5010')
+  .wait('.ouc-app-root')
 })
 
 test.serial('contains items text', async (t) => {
-  const navbar = await client.getText('.navbar')
+  const navbar = await client.evaluate(() => {
+    return document.querySelector('.navbar').innerHTML
+  })
 
   t.true(navbar.includes('Home'))
   t.true(navbar.includes('Log in'))
@@ -33,10 +30,13 @@ test.serial('contains items text', async (t) => {
 
 test.serial('visits /login', async (t) => {
   await client.click('.navbar a[href="/login"]')
-  t.true(await client.getUrl() === 'http://localhost:5010/login')
-  await client.waitForVisible('.ouc-login-form')
-  const loginForm = await client.getText('.ouc-login-form')
-  const loginButton = await client.getText('.ouc-login-form .button')
+  await client.wait('.ouc-login-form')
+  const loginForm = await client.evaluate(() => {
+    return document.querySelector('.ouc-login-form').innerHTML
+  })
+  const loginButton = await client.evaluate(() => {
+    return document.querySelector('.ouc-login-form .button').innerHTML
+  })
 
   t.true(loginForm.includes('Log in to OpenUserCSS'))
   t.true(loginButton.includes('Login'))
@@ -44,10 +44,13 @@ test.serial('visits /login', async (t) => {
 
 test.serial('visits /register', async (t) => {
   await client.click('.navbar a[href="/register"]')
-  t.true(await client.getUrl() === 'http://localhost:5010/register')
-  await client.waitForVisible('.ouc-register-form')
-  const registerForm = await client.getText('.ouc-register-form')
-  const registerButton = await client.getText('.ouc-register-form .button')
+  await client.wait('.ouc-register-form')
+  const registerForm = await client.evaluate(() => {
+    return document.querySelector('.ouc-register-form').innerHTML
+  })
+  const registerButton = await client.evaluate(() => {
+    return document.querySelector('.ouc-register-form .button').innerHTML
+  })
 
   t.true(registerForm.includes('Create your OpenUserCSS account'))
   t.true(registerButton.includes('Register'))
@@ -55,15 +58,18 @@ test.serial('visits /register', async (t) => {
 
 test.serial('visits /search', async (t) => {
   await client.click('.navbar a[href="/search"]')
-  t.true(await client.getUrl() === 'http://localhost:5010/search')
-  await client.waitForVisible('input[name="search"]')
-  const searchInput = await client.getHTML('input[name="search"]')
+  await client.wait('input[name="search"]')
+  const searchInput = await client.evaluate(() => {
+    return document.querySelector('.ouc-search-field').innerHTML
+  })
 
   t.true(searchInput.includes('placeholder="Search themes and users"'))
 })
 
 test.serial('goes to forums', async (t) => {
   await client.click('.navbar a[href="//forums.openusercss.org"]')
-  await client.waitForVisible('a.navigation-link[href="//openusercss.org"]')
-  t.true(await client.getUrl() === 'https://forums.openusercss.org/')
+  await client.wait('a.navigation-link[href="//openusercss.org"]')
+  const url = await client.evaluate(() => location.href)
+
+  t.is(url, 'https://forums.openusercss.org/')
 })

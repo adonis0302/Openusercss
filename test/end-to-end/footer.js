@@ -1,32 +1,29 @@
 import test from 'ava'
-import {remote,} from 'webdriverio'
+import Nightmare from 'nightmare'
 
-const client = remote({
-  'desiredCapabilities': {
-    'browserName': 'chrome',
-  },
+const client = new Nightmare({
+  'waitTimeout':      7000,
+  'gotoTimeout':      7000,
+  'loadTimeout':      7000,
+  'executionTimeout': 13000,
+  'show':             !process.env.CI,
 })
 
 test.before(async (t) => {
-  return client.init()
-  .setViewportSize({
-    'width':  1280,
-    'height': 720,
-  })
-  .url('http://localhost:5010')
-  .waitForVisible('.ouc-app-root')
-})
-
-test.after.always(async (t) => {
-  return client.end()
+  return client
+  .viewport(1280, 720)
+  .goto('http://localhost:5010')
+  .wait('.ouc-app-root')
 })
 
 test.serial('footer contains correct text', async (t) => {
-  await client.waitForVisible('.footer')
-  const footerContent = await client.getText('.footer')
+  await client.wait('.footer')
+  const footerContent = await client.evaluate(() => {
+    return document.querySelector('.footer').innerHTML
+  })
 
-  t.true(footerContent.includes('Copyright © 2018 DecentM and Contributors'))
-  t.true(footerContent.includes('Privacy policy | Terms of service | Notice'))
+  t.truthy(footerContent.match(/Copyright&nbsp;©/g))
+  t.truthy(footerContent.match(/<a href=\"\/\/forums.openusercss.org\/topic\/5\/privacy-policy\" data-v-[0-9,a-z]{8}=\"\">Privacy policy<\/a>/g))
   t.true(footerContent.includes('GitHub'))
   t.true(footerContent.includes('Contact the administrator'))
 })

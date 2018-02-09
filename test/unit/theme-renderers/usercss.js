@@ -11,10 +11,10 @@ test('buildTheme - correctly builds from theme object', async (t) => {
 @name asd
 @description test description
 @version 1.0.0
-@namespace https://openusercss.org/theme/5a275431707d23a322cff59f
-@homepageURL https://openusercss.org/theme/5a275431707d23a322cff59f
-@author DecentM (https://openusercss.org/profile/5a262a2c3835ee7627db2ef9)
-@updateURL https://api.openusercss.org/theme/5a275431707d23a322cff59f.user.css
+@namespace http://localhost:5010/theme/5a275431707d23a322cff59f
+@homepageURL http://localhost:5010/theme/5a275431707d23a322cff59f
+@author DecentM (http://localhost:5010/profile/5a262a2c3835ee7627db2ef9)
+@updateURL http://localhost:5000/theme/5a275431707d23a322cff59f.user.css
 @preprocessor uso
 
 @var text thing "My Title" hello
