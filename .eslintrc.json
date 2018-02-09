@@ -8,7 +8,8 @@
     "vue",
     "security",
     "async",
-    "flowtype"
+    "flowtype",
+    "ava"
   ],
   "extends": [
     "standard",

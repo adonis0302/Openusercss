@@ -10,6 +10,10 @@ import {
   isEqual,
 } from 'lodash'
 
+if (process.env.NODE_ENV === 'test') {
+  process.env.NODE_ENV = 'development'
+}
+
 const appPath = path.resolve(process.mainModule.paths[0], '..')
 const defaultConfig = {
   'env':   process.env.NODE_ENV,
@@ -45,7 +49,10 @@ const defaultConfig = {
 }
 
 const genKeypair = () => {
-  log.warn('A new keypair is being generated. All users will be logged out when the app starts.')
+  log.warn([
+    `A new keypair is being generated for ${process.env.NODE_ENV}.`,
+    'All users will be logged out when the app starts.',
+  ].join('\n'))
   let pem = null
 
   if (process.env.NODE_ENV !== 'development') {
@@ -126,7 +133,6 @@ const initConfig = () => {
   if (
     !config.get('version')
     || !config.get('keypair')
-    || !config.get('version')
   ) {
     config.set('keypair', genKeypair())
     config.set('version', newVersion)
@@ -140,9 +146,8 @@ const finalizedConfig = defaultsDeep(ourConfig.get(), defaultConfig)
 
 if (!isEqual(ourConfig.get(), finalizedConfig)) {
   log.warn([
-    'Environment discrepancy',
-    'Your configuration doesn\'t match your environment',
-    'Resetting to new value based on environment',
+    'Discrepancy in finalized configuration',
+    'Resetting to new value',
   ].join('\n\t'))
   ourConfig.set(finalizedConfig)
 }
@@ -157,10 +162,19 @@ forOwn(process.env, (envValue, envName) => {
       const nameArray = envName.toLowerCase().split('_')
 
       nameArray.splice(0, 1)
-      ourConfig.set(nameArray.join('.'), envValue)
+
+      if (ourConfig.get(nameArray.join('.')) !== envValue) {
+        log.info(`Resetting configuration value for ${nameArray.join('.')} based on environment`)
+        ourConfig.set(nameArray.join('.'), envValue)
+      }
     }
   }
 })
+
+log.info([
+  'Initialized configuration in',
+  ourConfig.path,
+].join('\n\t'))
 
 export default async () => {
   return ourConfig
