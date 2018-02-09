@@ -70,7 +70,10 @@ let urls = {
   'site': 'https://openusercss.org',
 }
 
-if (process.env.NODE_ENV === 'development') {
+if (
+  process.env.NODE_ENV === 'development'
+  || process.env.NODE_ENV === 'test'
+) {
   urls = {
     'api':  'http://localhost:5000',
     'site': 'http://localhost:5010',
