@@ -29,6 +29,7 @@
     "postrelease": "git push --follow-tags origin master",
     "lint:dry": "eslint --ext .js,.vue --ignore-path .gitignore src tasks test",
     "lint": "eslint --ext .js,.vue --fix --ignore-path .gitignore src tasks test",
+    "pretest:e2e": "npm run build:fast",
     "test:e2e": "concurrently --raw --kill-others -s first 'npm start' 'wait-port -o silent 5010 && ava test/end-to-end'",
     "test:unit": "ava test/unit",
     "test:api": "concurrently --raw --kill-others -s first 'npm run start-api:dev' 'wait-port -o silent 5000 && ava --serial test/api'",
