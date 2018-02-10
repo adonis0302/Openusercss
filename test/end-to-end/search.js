@@ -2,6 +2,7 @@ import test from 'ava'
 import Nightmare from 'nightmare'
 import hat from 'hat'
 import path from 'path'
+import log from 'chalk-console'
 
 const clientOptions = {
   'waitTimeout':      7000,
@@ -18,10 +19,18 @@ if (process.env.CI) {
 const client = new Nightmare(clientOptions)
 
 test.before(async (t) => {
-  return client
-  .viewport(1280, 720)
-  .goto('http://localhost:5010/search')
-  .wait('.ouc-app-root')
+  let result = null
+
+  try {
+    result = client
+    .viewport(1280, 720)
+    .goto('http://localhost:5010/search')
+    .wait('.ouc-app-root')
+  } catch (error) {
+    log.error(error.stack)
+  }
+
+  return result
 })
 
 test.serial('updates URL', async (t) => {
