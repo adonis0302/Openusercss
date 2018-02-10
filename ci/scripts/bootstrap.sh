@@ -28,6 +28,11 @@ install_packages() {
   apk --update add $@ --no-progress
 }
 
+virtual_display() {
+  export DISPLAY=':99.0'
+  Xvfb :99 -screen 0 1366x768x24 > /dev/null 2>&1 &
+}
+
 prepare() {
   cd repo
   cp .dev.env.default .dev.env
@@ -35,6 +40,8 @@ prepare() {
 
   install_packages git $@
   print_details
+
+  apk info xvfb > /dev/null && virtual_display
 
   yarn \
     --silent \

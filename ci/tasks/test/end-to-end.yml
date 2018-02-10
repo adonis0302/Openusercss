@@ -18,7 +18,7 @@ run:
     - -exc
     - |
       source repo/ci/scripts/bootstrap.sh
-      dependencies mongodb
+      dependencies mongodb xvfb
       mkdir -p /data/db
       /usr/bin/mongod --quiet --syslog --noauth --fork
       npm run test:e2e
