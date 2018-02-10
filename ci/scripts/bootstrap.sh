@@ -30,7 +30,11 @@ install_packages() {
 
 virtual_display() {
   export DISPLAY=':99.0'
-  Xvfb :99 -screen 0 1366x768x24 > /dev/null 2>&1 &
+  Xvfb :99 -ac +iglx -screen 0 1366x768x24 -nolisten tcp & xvfb=$!
+
+  printf "Starting virtual display.."
+  while [  1 -gt $xvfb  ]; do printf "."; sleep 1; done
+  printf "xvfb started\n\n"
 }
 
 prepare() {
@@ -41,7 +45,7 @@ prepare() {
   install_packages git $@
   print_details
 
-  apk info xvfb > /dev/null && virtual_display
+  apk info xvfb > /dev/null && virtual_display || echo "xvfb isn't installed, no virtual display"
 
   yarn \
     --silent \
