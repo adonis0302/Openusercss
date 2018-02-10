@@ -3,12 +3,12 @@ set -e
 PATH=$PATH":repo/node_modules/.bin:node_modules/.bin"
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=true
 
-error() {
+error () {
   echo "$@"
   exit 1
 }
 
-print_details() {
+print_details () {
   ls -a .
   uname -nrom
   date
@@ -24,28 +24,17 @@ print_details() {
   git status || error "Not a git repository"
 }
 
-install_packages() {
+install_packages () {
   apk --update add $@ --no-progress
 }
 
-virtual_display() {
-  export DISPLAY=':99.0'
-  Xvfb :99 -ac +iglx -screen 0 1366x768x24 -nolisten tcp & xvfb=$!
-
-  printf "Starting virtual display.."
-  while [  1 -gt $xvfb  ]; do printf "."; sleep 1; done
-  printf "xvfb started\n\n"
-}
-
-prepare() {
+prepare () {
   cd repo
   cp .dev.env.default .dev.env
   cp .prod.env.default .prod.env
 
   install_packages git $@
   print_details
-
-  apk info xvfb > /dev/null && virtual_display || echo "xvfb isn't installed, no virtual display"
 
   yarn \
     --silent \
@@ -56,6 +45,6 @@ prepare() {
     --production=false
 }
 
-dependencies() {
+dependencies () {
   prepare $@
 }

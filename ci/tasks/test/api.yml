@@ -21,7 +21,7 @@ run:
       dependencies mongodb
       mkdir -p /data/db
       /usr/bin/mongod --quiet --syslog --noauth --fork
-      npm run test:api
+      repo/ci/scripts/xvfb-run.sh npm run test:api
 
 params:
   NODE_ENV: development
