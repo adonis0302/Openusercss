@@ -1,14 +1,21 @@
 import test from 'ava'
 import Nightmare from 'nightmare'
 import hat from 'hat'
+import path from 'path'
 
-const client = new Nightmare({
+const clientOptions = {
   'waitTimeout':      7000,
   'gotoTimeout':      7000,
   'loadTimeout':      7000,
   'executionTimeout': 13000,
   'show':             !process.env.CI,
-})
+}
+
+if (process.env.CI) {
+  clientOptions.electronPath = path.resolve('node_modules/.bin/electron')
+}
+
+const client = new Nightmare(clientOptions)
 
 test.before(async (t) => {
   return client
