@@ -40,6 +40,7 @@ test.serial('updates URL', async (t) => {
   await client.type('input[name="search"]', randomValue)
   const url = await client.evaluate(() => location.href)
 
+  await client.screenshot(path.resolve('screenshots/test/end-to-end/search:updates-url.png'))
   t.is(url, `http://localhost:5010/search/${randomValue}`)
 })
 
@@ -48,5 +49,6 @@ test.serial('input is URI encoded', async (t) => {
   await client.type('input[name="search"]', 'hello world')
   const url = await client.evaluate(() => location.href)
 
+  await client.screenshot(path.resolve('screenshots/test/end-to-end/search:input-is-URI-encoded.png'))
   t.is(url, 'http://localhost:5010/search/hello%20world')
 })

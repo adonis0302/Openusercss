@@ -6,13 +6,13 @@
 .*.env
 .env.json
 
-reports
-bfg.jar
+/reports
+/bfg.jar
 /build
-build.zip
 secrets.json
 bkup.*
 /fly
+/screenshots
 
 # Created by https://www.gitignore.io/api/node,linux
 
