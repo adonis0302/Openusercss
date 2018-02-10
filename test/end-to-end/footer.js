@@ -8,7 +8,7 @@ const clientOptions = {
   'gotoTimeout':      7000,
   'loadTimeout':      7000,
   'executionTimeout': 13000,
-  'show':             !process.env.CI,
+  'show':             true,
 }
 
 if (process.env.CI) {

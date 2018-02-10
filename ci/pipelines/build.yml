@@ -11,12 +11,8 @@ jobs:
   plan:
   - get: repo
     trigger: true
-  - task: test:unit
-    file: repo/ci/tasks/test/unit.yml
-  - task: test:api
-    file: repo/ci/tasks/test/api.yml
-  - task: test:end-to-end
-    file: repo/ci/tasks/test/end-to-end.yml
+  - task: test:ci
+    file: repo/ci/tasks/test.yml
 
 - name: approve
   public: true

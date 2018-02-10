@@ -18,10 +18,10 @@ run:
     - -exc
     - |
       source repo/ci/scripts/bootstrap.sh
-      dependencies mongodb xvfb
+      dependencies mongodb
       mkdir -p /data/db
       /usr/bin/mongod --quiet --syslog --noauth --fork
-      npm run test:e2e
+      npm run test:unit test:api
 
 params:
   NODE_ENV: development
