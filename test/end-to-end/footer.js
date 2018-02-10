@@ -30,7 +30,7 @@ test.serial('footer contains correct text', async (t) => {
   })
 
   t.truthy(footerContent.match(/Copyright&nbsp;©/g))
-  t.truthy(footerContent.match(/<a href=\"\/\/forums.openusercss.org\/topic\/5\/privacy-policy\" data-v-[0-9,a-z]{8}=\"\">Privacy policy<\/a>/g))
+  t.truthy(footerContent.match(/forums.openusercss.org\/topic\/5\/privacy-policy.*Privacy policy/g))
   t.true(footerContent.includes('GitHub'))
   t.true(footerContent.includes('Contact the administrator'))
 })
