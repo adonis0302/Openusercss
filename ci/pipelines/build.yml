@@ -6,28 +6,17 @@ resources:
     branch: master
 
 jobs:
-- name: build:fast
-  public: true
-  plan:
-  - get: repo
-    trigger: true
-  - task: build:fast
-    file: repo/ci/tasks/build/fast.yml
-
 - name: test
   public: true
   plan:
   - get: repo
     trigger: true
-    passed:
-      - build:fast
   - task: test:unit
     file: repo/ci/tasks/test/unit.yml
   - task: test:api
     file: repo/ci/tasks/test/api.yml
   - task: test:end-to-end
     file: repo/ci/tasks/test/end-to-end.yml
-  - put: repo
 
 - name: approve
   public: true

@@ -16,7 +16,6 @@ run:
   path: sh
   args:
     - -exc
-    - du -cksh repo/build
     - du -cksh repo/src
 
 params:
