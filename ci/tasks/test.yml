@@ -21,7 +21,8 @@ run:
       dependencies mongodb
       mkdir -p /data/db
       /usr/bin/mongod --quiet --syslog --noauth --fork
-      npm run test:unit test:api
+      npm run test:unit
+      npm run test:api
 
 params:
   NODE_ENV: development

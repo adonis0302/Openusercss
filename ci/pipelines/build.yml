@@ -22,4 +22,4 @@ jobs:
     passed:
       - test
   - task: approve
-    file: repo/ci/tasks/result/approve.yml
+    file: repo/ci/tasks/approve.yml

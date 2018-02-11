@@ -18,8 +18,11 @@ run:
     - -exc
     - |
       source repo/ci/scripts/bootstrap.sh
+      source repo/ci/scripts/approve.sh
       prepare
+      approve_pre
       npm run build:fast
+      approve_post
 
 params:
   NODE_ENV: development

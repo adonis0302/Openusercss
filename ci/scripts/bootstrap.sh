@@ -1,6 +1,7 @@
 #!/bin/echo This file must be sourced:
 set -e
 PATH=$PATH":repo/node_modules/.bin:node_modules/.bin"
+BOOTSTRAP=true
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=true
 
 error () {
