@@ -19,7 +19,7 @@ run:
     - |
       source repo/ci/scripts/bootstrap.sh
       source repo/ci/scripts/approve.sh
-      prepare
+      dependencies python make g++ krb5-dev
       approve_pre
       npm run build:fast
       approve_post
