@@ -18,7 +18,7 @@
     },
     'data': () => {
       return {
-        'login': {
+        'loginData': {
           'email':    '',
           'password': '',
         },
@@ -59,9 +59,10 @@
                         b-input(
                           type="email",
                           name="email",
+                          autocomplete="email",
                           placeholder="E-mail",
                           v-validate.disable="'required|email'",
-                          v-model.lazy="login.email",
+                          v-model.lazy="loginData.email",
                           :class="{'input': true, 'is-danger': errors.has('email') }",
                           data-vv-as="e-mail",
                           aria-label="login e-mail"
@@ -75,9 +76,10 @@
                             b-input(
                               type="password",
                               name="password",
+                              autocomplete="current-password",
                               placeholder="Passphrase",
                               v-validate.disable="'required'",
-                              v-model.lazy="login.password"
+                              v-model.lazy="loginData.password"
                               :class="{'input': true, 'is-danger': errors.has('password') }",
                               data-vv-as="passphrase",
                               aria-label="login passphrase"

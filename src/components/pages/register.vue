@@ -20,7 +20,7 @@
     },
     data () {
       return {
-        'register': {
+        'registerData': {
           'displayname':    '',
           'password':       '',
           'passwordVerify': '',
@@ -63,9 +63,10 @@
                         b-input(
                           type="email",
                           name="email",
+                          autocomplete="email",
                           placeholder="E-mail",
                           v-validate.disable="'required|email'",
-                          v-model="register.email",
+                          v-model="registerData.email",
                           :class="{'input': true, 'is-danger': errors.has('email') }",
                           data-vv-as="e-mail",
                           aria-label="registration e-mail"
@@ -77,9 +78,10 @@
                         b-input(
                           type="text",
                           name="displayname",
+                          autocomplete="username",
                           placeholder="Username",
                           v-validate.disable="'required|alpha_num'",
-                          v-model="register.displayname"
+                          v-model="registerData.displayname"
                           :class="{'input': true, 'is-danger': errors.has('displayname') }",
                           data-vv-as="displayname",
                           aria-label="registration displayname"
@@ -93,9 +95,10 @@
                             b-input(
                               type="password",
                               name="password",
+                              autocomplete="new-password",
                               placeholder="Passphrase",
                               v-validate.disable="'required'",
-                              v-model="register.password",
+                              v-model="registerData.password",
                               :class="{'input': true, 'is-danger': errors.has('password') }",
                               data-vv-as="passphrase",
                               aria-label="registration passphrase"
@@ -107,9 +110,10 @@
                             b-input(
                               type="password",
                               name="passwordVerify",
+                              autocomplete="new-password",
                               placeholder="Verify passphrase",
                               v-validate.disable="'required|confirmed:password'",
-                              v-model="register.passwordVerify",
+                              v-model="registerData.passwordVerify",
                               :class="{'input': true, 'is-danger': errors.has('passwordVerify') }",
                               data-vv-as="passphrase verification",
                               aria-label="registration passphrase, again"
