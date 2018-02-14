@@ -36,6 +36,7 @@ const cspOptions = {
       'openusercss.org',
       'openusercss.com',
       'sentry.io',
+      'pwk.decentm.com',
     ],
     'styleSrc': [
       "'self'",
@@ -49,6 +50,7 @@ const cspOptions = {
       'imageproxy.openusercss.org',
       'imageproxy.openusercss.com',
       'gravatar.com',
+      'pwk.decentm.com',
     ],
     'connectSrc': [
       'openusercss.org',
@@ -59,6 +61,7 @@ const cspOptions = {
       'imageproxy.openusercss.com',
       'gravatar.com',
       'sentry.io',
+      'pwk.decentm.com',
     ],
     'fontSrc': [
       'data:',

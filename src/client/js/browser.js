@@ -7,6 +7,7 @@ import iziToast from 'izitoast'
 import raven from 'raven-js'
 import {StarRating,} from 'vue-rate-it'
 import ravenVue from 'raven-js/plugins/vue'
+import {initMatomo,} from './utils/matomo'
 
 import VueModal from 'vue-js-modal'
 import VueFlickity from 'vue-flickity'
@@ -63,6 +64,7 @@ const main = async () => {
 
   runIntegration()
   await mountApp()
+  await initMatomo()
 
   const fps = new FpsEmitter(1000)
 
