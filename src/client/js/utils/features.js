@@ -84,7 +84,7 @@ export const runPolyfills = async () => {
     supports.shim()
     ranPolyfills.push('supports')
   }
-  if (!(Modernizr.flexbox && Modernizr.flexbox)) {
+  if (!Modernizr.flexbox) {
     flexibility(document.documentElement)
     ranPolyfills.push('flexibility')
   }
