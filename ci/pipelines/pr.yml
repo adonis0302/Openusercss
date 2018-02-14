@@ -1,0 +1,60 @@
+resource_types:
+- name: pull-request
+  type: docker-image
+  source:
+    repository: jtarchie/pr
+
+resources:
+- name: repo
+  type: git
+  source:
+    uri: https://github.com/OpenUserCSS/openusercss.org.git
+    branch: master
+
+- name: pr
+  type: pull-request
+  source:
+    repo: OpenUserCSS/openusercss.org
+    access_token: ((githubPersonalToken))
+
+jobs:
+- name: test
+  public: true
+  plan:
+  - get: pr
+    trigger: true
+  - put: pr
+    params:
+      path: pr
+      status: pending
+
+  - get: repo
+  - task: test:ci
+    file: repo/ci/tasks/test.yml
+
+  on_failure:
+    put: pr
+    params:
+      path: pr
+      status: failure
+
+- name: approve
+  public: true
+  plan:
+  - get: repo
+    trigger: true
+    passed:
+      - test
+  - task: approve
+    file: repo/ci/tasks/approve.yml
+
+  on_success:
+      put: pr
+      params:
+        path: pr
+        status: success
+  on_failure:
+    put: pr
+    params:
+      path: pr
+      status: failure
