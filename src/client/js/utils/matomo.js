@@ -3,8 +3,6 @@ if (typeof window !== 'undefined') {
 
   window._paq.push(['setDoNotTrack', true,])
   window._paq.push([ 'disableCookies', ])
-  window._paq.push([ 'trackPageView', ])
-  window._paq.push([ 'enableLinkTracking', ])
 }
 
 export const initMatomo = () => new Promise((resolve, reject) => {

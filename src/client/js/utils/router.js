@@ -138,6 +138,7 @@ const router = new VueRouter(routerOptions)
 
 router.beforeEach((to, from, next) => {
   if (process.browser) {
+    window._paq.push(['deleteCustomVariables', 'page',])
     window._paq.push(['setCustomUrl', to.path,])
     window._paq.push(['setReferrerUrl', from.path,])
     window._paq.push([ 'enableLinkTracking', ])
