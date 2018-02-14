@@ -63,7 +63,6 @@ export default async (root, {
       version,
       screenshots,
     })
-    user.themes.push(newTheme)
   }
 
   const savedTheme = await newTheme.save()

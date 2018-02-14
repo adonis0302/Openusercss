@@ -33,7 +33,7 @@
         const validated = await this.$validator.validateAll()
 
         if (validated) {
-          this.$store.dispatch('register', this.register)
+          this.$store.dispatch('register', this.registerData)
         }
       },
     },

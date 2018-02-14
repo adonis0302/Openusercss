@@ -186,9 +186,6 @@ export const remoteSaveTheme = async (theme, token) => {
         token: "${token}"
       ) {
         ${themePropList}
-        user {
-          ${userPropList}
-        }
       }
     }
   `)

@@ -29,7 +29,7 @@
         const validated = await this.$validator.validateAll()
 
         if (validated) {
-          await this.$store.dispatch('login', this.login)
+          await this.$store.dispatch('login', this.loginData)
         }
       },
     },
