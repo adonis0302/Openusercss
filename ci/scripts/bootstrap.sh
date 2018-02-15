@@ -30,7 +30,9 @@ install_packages () {
 }
 
 prepare () {
+  ls -a .
   cd repo
+
   cp .dev.env.default .dev.env
   cp .prod.env.default .prod.env
 

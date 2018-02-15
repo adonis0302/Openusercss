@@ -40,6 +40,12 @@ jobs:
       path: pr
       status: failure
 
+  on_abort:
+    put: pr
+    params:
+      path: pr
+      status: failure
+
 - name: approve
   public: true
   plan:
@@ -62,7 +68,14 @@ jobs:
     params:
       path: pr
       status: success
+
   on_failure:
+    put: pr
+    params:
+      path: pr
+      status: failure
+
+  on_abort:
     put: pr
     params:
       path: pr
