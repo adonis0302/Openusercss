@@ -15,6 +15,12 @@ When you send your first Pull Request,
 When submitting an issue/bug, take a look at [the issue list](https://github.com/OpenUserCSS/openusercss.org/issues?utf8=%E2%9C%93&q=is%3Aissue) to see if your issue was already posted.  
 I also recommend reading [this great writeup](https://www.chiark.greenend.org.uk/~sgtatham/bugs.html) by Simon Tatham, the author of PuTTY and [a bunch of other free software](https://www.chiark.greenend.org.uk/~sgtatham/)!
 
+## Creating Pull Requests
+Before submitting, please read the comments placed inside the text editor.  
+You're writing the changelog with every PR, so try to only include one feature or
+bugfix in one. I'd prefer multiple, smaller PRs that have clearly defined scopes
+than a large one that has tons of content.
+
 ## Setting up your development environment  
 1. Install the git command line client using your package manager, or from ([https://git-scm.com/downloads](https://git-scm.com/downloads))
 1. Install NodeJS using your package manager, or from [https://nodejs.org/en/download/](https://nodejs.org/en/download/) (use either the latest, or the latest LTS version)
