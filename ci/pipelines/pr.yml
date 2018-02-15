@@ -16,6 +16,8 @@ resources:
   source:
     repo: OpenUserCSS/openusercss.org
     access_token: ((githubPersonalToken))
+    username: ((githubUsername))
+    password: ((githubPassword))
 
 jobs:
 - name: test
@@ -41,18 +43,25 @@ jobs:
 - name: approve
   public: true
   plan:
-  - get: repo
+  - get: pr
     trigger: true
+    passed:
+      - test
+  - put: pr
+    params:
+      path: pr
+      status: pending
+  - get: repo
     passed:
       - test
   - task: approve
     file: repo/ci/tasks/approve.yml
 
   on_success:
-      put: pr
-      params:
-        path: pr
-        status: success
+    put: pr
+    params:
+      path: pr
+      status: success
   on_failure:
     put: pr
     params:
