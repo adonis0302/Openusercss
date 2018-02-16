@@ -29,17 +29,6 @@ install_packages () {
   apk --update add $@ --no-progress
 }
 
-yarn () {
-  yarn \
-    --silent \
-    --frozen-lockfile \
-    --non-interactive \
-    --network-timeout 10000 \
-    --network-concurrency 3 \
-    --production=false \
-    $@
-}
-
 in_repo () {
   cp .dev.env.default .dev.env
   cp .prod.env.default .prod.env
@@ -47,11 +36,23 @@ in_repo () {
   echo COVERALLS_REPO_TOKEN=\"\" >> .dev.env
   echo COVERALLS_REPO_TOKEN=\"\" >> .prod.env
 
-  env-cmd .dev.env yarn
+  env-cmd .dev.env yarn \
+    --silent \
+    --frozen-lockfile \
+    --non-interactive \
+    --network-timeout 10000 \
+    --network-concurrency 3 \
+    --production=false
 }
 
 prepare () {
-  COVERALLS_REPO_TOKEN="" yarn global add env-cmd
+  COVERALLS_REPO_TOKEN="" yarn global add env-cmd \
+    --silent \
+    --frozen-lockfile \
+    --non-interactive \
+    --network-timeout 10000 \
+    --network-concurrency 3 \
+    --production=false
 
   install_packages git $@
   print_details
