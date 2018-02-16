@@ -1,1 +1,0 @@
-This build has failed approval. Please check the buid log for errors!

@@ -42,7 +42,7 @@ jobs:
       path: pr
       status: success
       context: test
-      comment: repo/ci/messages/test-success.txt
+      comment: messages/test-success.md
 
   on_failure:
     put: pr
@@ -50,7 +50,7 @@ jobs:
       path: pr
       status: failure
       context: test
-      comment: repo/ci/messages/test-failed.txt
+      comment: messages/test-failed.md
 
   on_abort:
     put: pr
@@ -58,7 +58,7 @@ jobs:
       path: pr
       status: failure
       context: test
-      comment: repo/ci/messages/aborted.txt
+      comment: messages/aborted.md
 
 - name: approve
   public: true
@@ -85,7 +85,7 @@ jobs:
       path: pr
       status: success
       context: approve
-      comment: repo/ci/messages/approve-success.txt
+      comment: messages/approve-success.md
 
   on_failure:
     put: pr
@@ -93,7 +93,7 @@ jobs:
       path: pr
       status: failure
       context: approve
-      comment: repo/ci/messages/approve-failed.txt
+      comment: messages/approve-failed.md
 
   on_abort:
     put: pr
@@ -101,4 +101,4 @@ jobs:
       path: pr
       status: failure
       context: approve
-      comment: repo/ci/messages/aborted.txt
+      comment: messages/aborted.md

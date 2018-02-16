@@ -3,6 +3,7 @@ set -ex
 export PATH=$PATH":repo/node_modules/.bin:node_modules/.bin"
 export BOOTSTRAP=true
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=true
+export BUILD_START=$(date +%s)
 
 error () {
   echo "$@"
@@ -28,32 +29,35 @@ install_packages () {
   apk --update add $@ --no-progress
 }
 
-yarn_install () {
-  COVERALLS_REPO_TOKEN="" yarn \
+yarn () {
+  yarn \
     --silent \
     --frozen-lockfile \
     --non-interactive \
     --network-timeout 10000 \
     --network-concurrency 3 \
-    --production=false
+    --production=false \
+    $@
 }
 
 in_repo () {
   cp .dev.env.default .dev.env
   cp .prod.env.default .prod.env
 
-  yarn_install
+  echo COVERALLS_REPO_TOKEN=\"\" >> .dev.env
+  echo COVERALLS_REPO_TOKEN=\"\" >> .prod.env
+
+  env-cmd .dev.env yarn
 }
 
 prepare () {
+  COVERALLS_REPO_TOKEN="" yarn global add env-cmd
+
   install_packages git $@
   print_details
 
   if [ -d "pr" ]; then
     cd pr
-    echo COVERALLS_REPO_TOKEN=\"\" >> .dev.env.default
-    echo COVERALLS_REPO_TOKEN=\"\" >> .prod.env.default
-
     git status || error "Not a git repository"
     in_repo
     cd -
@@ -65,6 +69,37 @@ prepare () {
     in_repo
     cd -
   fi
+}
+
+prepare_comment () {
+  # $1: comment step
+  # - approve
+  # - test
+  # $2: comment type
+  # - success
+  # - failed
+  # $3: finished date
+  # $4: comment extra - optional
+
+  cp repo/ci/messages messages
+
+  case $1 in
+    "approve") ;;
+    "test") ;;
+    *) error 'First argument for prepare_comment must be one of ["approve", "test"]'
+  esac
+
+  case $2 in
+    "success") ;;
+    "failed") ;;
+    *) error 'Second argument for prepare_comment must be one of ["success", "failed"]'
+  esac
+
+  if [ $3 =~ '^[0-9]+$' ]; then
+    error 'Third argument for prepare_comment must be a number (use `date +%s`)'
+  fi
+
+  echo "Time: **$(($3 - $BUILD_START)) seconds**  \n$4" >> "messages/$1-$2.md"
 }
 
 dependencies () {
