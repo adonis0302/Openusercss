@@ -36,6 +36,14 @@ jobs:
   - task: test:ci
     file: repo/ci/tasks/test.yml
 
+  on_success:
+    put: pr
+    params:
+      path: pr
+      status: success
+      context: test
+      comment: repo/ci/messages/test-success.txt
+
   on_failure:
     put: pr
     params:
@@ -77,7 +85,7 @@ jobs:
       path: pr
       status: success
       context: approve
-      comment: repo/ci/messages/success.txt
+      comment: repo/ci/messages/approve-success.txt
 
   on_failure:
     put: pr
