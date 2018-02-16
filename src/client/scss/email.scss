@@ -12,8 +12,6 @@
 $background: map-get($colors, 'background');
 
 *:not(.button) {
-  background-color: nth($background, 1);
-  color: nth($background, 2);
   background-color: nth($background, 1) !important;
   color: nth($background, 2) !important;
 }
@@ -24,8 +22,6 @@ body {
 
 .button,
 .button * {
-  background-color: nth($primary, 1);
-  color: nth($primary, 2);
   background-color: nth($primary, 1) !important;
   color: nth($primary, 2) !important;
 }
@@ -124,10 +120,10 @@ html,
     width: 47%;
 
     &:first-child {
-      margin-right: 3%
+      margin-right: 3%;
     }
     &:last-child {
-      margin-left: 3%
+      margin-left: 3%;
     }
   }
 }

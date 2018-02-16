@@ -77,10 +77,10 @@ $primary: map-get($colors, 'primary');
   }
 
   > .ouc-noscript-attribution {
-    position: fixed;
     bottom: .5rem;
-    right: 1.5rem;
     padding: .5rem;
+    position: fixed;
+    right: 1.5rem;
     z-index: 1;
 
     > a {
