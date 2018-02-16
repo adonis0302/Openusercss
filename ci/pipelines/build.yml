@@ -8,6 +8,7 @@ resources:
 jobs:
 - name: test
   public: true
+  build_logs_to_retain: 100
   plan:
   - get: repo
     trigger: true
@@ -16,6 +17,7 @@ jobs:
 
 - name: approve
   public: true
+  build_logs_to_retain: 100
   plan:
   - get: repo
     trigger: true

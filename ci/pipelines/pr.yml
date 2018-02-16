@@ -22,6 +22,7 @@ resources:
 jobs:
 - name: test
   public: true
+  build_logs_to_retain: 100
   plan:
   - get: pr
     version: every
@@ -62,6 +63,7 @@ jobs:
 
 - name: approve
   public: true
+  build_logs_to_retain: 100
   plan:
   - get: pr
     trigger: true
