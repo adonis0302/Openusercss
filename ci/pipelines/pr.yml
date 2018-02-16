@@ -24,11 +24,13 @@ jobs:
   public: true
   plan:
   - get: pr
+    version: every
     trigger: true
   - put: pr
     params:
       path: pr
       status: pending
+      context: test
 
   - get: repo
   - task: test:ci
@@ -39,12 +41,16 @@ jobs:
     params:
       path: pr
       status: failure
+      context: test
+      comment: repo/ci/messages/test-failed.txt
 
   on_abort:
     put: pr
     params:
       path: pr
       status: failure
+      context: test
+      comment: repo/ci/messages/aborted.txt
 
 - name: approve
   public: true
@@ -57,6 +63,8 @@ jobs:
     params:
       path: pr
       status: pending
+      context: approve
+
   - get: repo
     passed:
       - test
@@ -68,15 +76,21 @@ jobs:
     params:
       path: pr
       status: success
+      context: approve
+      comment: repo/ci/messages/success.txt
 
   on_failure:
     put: pr
     params:
       path: pr
       status: failure
+      context: approve
+      comment: repo/ci/messages/approve-failed.txt
 
   on_abort:
     put: pr
     params:
       path: pr
       status: failure
+      context: approve
+      comment: repo/ci/messages/aborted.txt
