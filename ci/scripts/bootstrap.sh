@@ -22,7 +22,6 @@ print_details () {
   echo "NODE_ENV:" $NODE_ENV
   whoami
   cat /etc/*-release || error "Failed to read distribution release file"
-  git status || error "Not a git repository"
 }
 
 install_packages () {
@@ -55,12 +54,14 @@ prepare () {
     echo COVERALLS_REPO_TOKEN=\"\" >> .dev.env.default
     echo COVERALLS_REPO_TOKEN=\"\" >> .prod.env.default
 
+    git status || error "Not a git repository"
     in_repo
     cd -
   fi
 
   if [ -d "repo" ]; then
     cd repo
+    git status || error "Not a git repository"
     in_repo
     cd -
   fi

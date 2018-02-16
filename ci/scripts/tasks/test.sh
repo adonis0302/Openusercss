@@ -1,5 +1,5 @@
 #!/bin/sh
-source ../bootstrap.sh
+source repo/ci/scripts/bootstrap.sh
 
 dependencies mongodb
 mkdir -p /data/db

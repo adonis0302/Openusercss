@@ -18,14 +18,7 @@ image_resource:
 run:
   path: sh
   args:
-    - -exc
-    - |
-      source repo/ci/scripts/bootstrap.sh
-      dependencies mongodb
-      mkdir -p /data/db
-      /usr/bin/mongod --quiet --syslog --noauth --fork
-      env-cmd .dev.env npm run test:ci
-      nyc report --reporter=text-lcov | coveralls
+    - repo/ci/scripts/tasks/test.sh
 
 params:
   NODE_ENV: development

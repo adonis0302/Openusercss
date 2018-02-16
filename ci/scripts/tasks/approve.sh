@@ -1,6 +1,6 @@
 #!/bin/sh
-source ../bootstrap.sh
-source ../approve.sh
+source repo/ci/scripts/tasks/bootstrap.sh
+source repo/ci/scripts/tasks/approve.sh
 
 dependencies python make g++ krb5-dev
 
