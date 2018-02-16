@@ -27,6 +27,7 @@
   [![Waffle in-progress](https://img.shields.io/waffle/label/OpenUserCSS/openusercss.org/in%20progress.svg)](https://waffle.io/OpenUserCSS/openusercss.org)
   [![Depencency status](https://pyup.io/repos/github/OpenUserCSS/openusercss.org/shield.svg)](https://pyup.io/repos/github/OpenUserCSS/openusercss.org/)
   [![Codacy grade](https://api.codacy.com/project/badge/Grade/ffb7a2a953d9425889a472028a3df30a)](https://www.codacy.com/app/DecentM/openusercss.org)
+  [![Coverage Status](https://coveralls.io/repos/github/OpenUserCSS/openusercss.org/badge.svg?branch=master)](https://coveralls.io/github/OpenUserCSS/openusercss.org?branch=master)
   
   by [@DecentM](https://github.com/DecentM) and [contributors](https://github.com/OpenUserCSS/openusercss.org/graphs/contributors)  
   A website where you can upload and find themes for websites to change how they look  

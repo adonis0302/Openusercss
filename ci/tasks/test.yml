@@ -21,9 +21,11 @@ run:
       dependencies mongodb
       mkdir -p /data/db
       /usr/bin/mongod --quiet --syslog --noauth --fork
-      npm run test:unit
-      npm run test:api
+      npm run test:ci
+      nyc report --reporter=text-lcov | coveralls
 
 params:
   NODE_ENV: development
   CI: true
+  COVERALLS_SERVICE_NAME: DecentM's Concourse
+  COVERALLS_REPO_TOKEN: ((coverallsToken))
