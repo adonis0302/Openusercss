@@ -8,6 +8,7 @@ inputs:
 
 caches:
 - path: repo/node_modules
+- path: ci/node_modules
 
 image_resource:
   type: docker-image
@@ -23,7 +24,7 @@ run:
       dependencies mongodb
       mkdir -p /data/db
       /usr/bin/mongod --quiet --syslog --noauth --fork
-      npm run test:ci
+      env-cmd .dev.env npm run test:ci
       nyc report --reporter=text-lcov | coveralls
 
 params:

@@ -1,7 +1,7 @@
 #!/bin/echo This file must be sourced:
-set -e
-PATH=$PATH":repo/node_modules/.bin:node_modules/.bin"
-BOOTSTRAP=true
+set -ex
+export PATH=$PATH":repo/node_modules/.bin:node_modules/.bin"
+export BOOTSTRAP=true
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=true
 
 error () {
@@ -29,23 +29,41 @@ install_packages () {
   apk --update add $@ --no-progress
 }
 
-prepare () {
-  ls -a .
-  cd repo
-
-  cp .dev.env.default .dev.env
-  cp .prod.env.default .prod.env
-
-  install_packages git $@
-  print_details
-
-  yarn \
+yarn_install () {
+  COVERALLS_REPO_TOKEN="" yarn \
     --silent \
     --frozen-lockfile \
     --non-interactive \
     --network-timeout 10000 \
     --network-concurrency 3 \
     --production=false
+}
+
+in_repo () {
+  cp .dev.env.default .dev.env
+  cp .prod.env.default .prod.env
+
+  yarn_install
+}
+
+prepare () {
+  install_packages git $@
+  print_details
+
+  if [ -d "pr" ]; then
+    cd pr
+    echo COVERALLS_REPO_TOKEN=\"\" >> .dev.env.default
+    echo COVERALLS_REPO_TOKEN=\"\" >> .prod.env.default
+
+    in_repo
+    cd -
+  fi
+
+  if [ -d "repo" ]; then
+    cd repo
+    in_repo
+    cd -
+  fi
 }
 
 dependencies () {

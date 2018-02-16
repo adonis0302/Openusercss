@@ -8,6 +8,7 @@ inputs:
 
 caches:
 - path: repo/node_modules
+- path: ci/node_modules
 
 image_resource:
   type: docker-image
@@ -17,14 +18,7 @@ image_resource:
 run:
   path: sh
   args:
-    - -exc
-    - |
-      source repo/ci/scripts/bootstrap.sh
-      source repo/ci/scripts/approve.sh
-      dependencies python make g++ krb5-dev
-      approve_pre
-      npm run build:fast
-      approve_post
+    - repo/ci/scripts/tasks/approve.sh
 
 params:
   NODE_ENV: development
