@@ -4,6 +4,7 @@ export PATH=$PATH":repo/node_modules/.bin:node_modules/.bin"
 export BOOTSTRAP=true
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=true
 export BUILD_START=$(date +%s)
+export BUILD_PATH=$(pwd)
 
 error () {
   echo "$@"
@@ -82,7 +83,7 @@ prepare_comment () {
   # $3: finished date
   # $4: comment extra - optional
 
-  cp repo/ci/messages messages
+  cd $BUILD_PATH
 
   case $1 in
     "approve") ;;
@@ -96,11 +97,11 @@ prepare_comment () {
     *) error 'Second argument for prepare_comment must be one of ["success", "failed"]'
   esac
 
-  if [ $3 =~ '^[0-9]+$' ]; then
-    error 'Third argument for prepare_comment must be a number (use `date +%s`)'
+  if [ $3 -lt 1 ]; then
+    error "Third argument for prepare_comment must be a number that's larger than 1 (use `date +%s`)"
   fi
 
-  echo "Time: **$(($3 - $BUILD_START)) seconds**  \n$4" >> "messages/$1-$2.md"
+  echo "Time: **$(($3 - $BUILD_START)) seconds**  \n$4" >> "repo/ci/messages/$1-$2.md"
 }
 
 dependencies () {
