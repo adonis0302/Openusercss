@@ -5,7 +5,13 @@ dependencies mongodb
 mkdir -p /data/db
 /usr/bin/mongod --quiet --syslog --noauth --fork
 
-cd pr || cd repo || error "Neither repo or pr inputs exist"
+if [ -z "$(ls -A pr)" ]; then
+  cd pr
+else
+  cd repo
+fi
 
 env-cmd .dev.env npm run test:ci
 nyc report --reporter=text-lcov | coveralls
+
+cd -

@@ -4,8 +4,14 @@ source repo/ci/scripts/approve.sh
 
 dependencies python make g++ krb5-dev
 
-cd pr || cd repo || error "Neither repo or pr inputs exist"
+if [ -z "$(ls -A pr)" ]; then
+  cd pr
+else
+  cd repo
+fi
 
 approve_pre
 env-cmd .dev.env npm run build:fast
 approve_post
+
+cd -
