@@ -1,1 +1,1 @@
-<img src="https://raw.githubusercontent.com/OpenUserCSS/openusercss.org/master/ci/images/cross.png" alt="Cross" height=10></img> | Step **test** has failed. Please check the buid log for errors! Please check the build log for details!
+Step **test** has failed. Please check the buid log for errors! Please check the build log for details! <img src="https://raw.githubusercontent.com/OpenUserCSS/openusercss.org/master/ci/images/cross.png" alt="Cross" height="20" width="20" align="right"></img>

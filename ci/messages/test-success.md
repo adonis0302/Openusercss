@@ -1,1 +1,1 @@
-<img src="https://raw.githubusercontent.com/OpenUserCSS/openusercss.org/master/ci/images/tick.png" alt="Tick" height=10></img> | Step **test** for this PR has finished without error.
+Step **test** for this PR has finished without error. <img src="https://raw.githubusercontent.com/OpenUserCSS/openusercss.org/master/ci/images/tick.png" alt="Tick" height="20" width="20" align="right"></img>

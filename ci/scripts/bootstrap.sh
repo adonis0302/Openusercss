@@ -62,14 +62,14 @@ prepare () {
   install_packages git $@
   print_details
 
-  if [ -d "pr" ]; then
+  if [ -z "$(ls -A pr)" ]; then
     cd pr
     git status || error "Not a git repository"
     in_repo
     cd -
   fi
 
-  if [ -d "repo" ]; then
+  if [ -z "$(ls -A repo)" ]; then
     cd repo
     git status || error "Not a git repository"
     in_repo
