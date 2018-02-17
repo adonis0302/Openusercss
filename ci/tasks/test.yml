@@ -8,7 +8,7 @@ inputs:
 
 caches:
 - path: repo/node_modules
-- path: ci/node_modules
+- path: pr/node_modules
 
 image_resource:
   type: docker-image
