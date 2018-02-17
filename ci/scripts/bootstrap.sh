@@ -73,37 +73,6 @@ prepare () {
   fi
 }
 
-prepare_comment () {
-  # $1: comment step
-  # - approve
-  # - test
-  # $2: comment type
-  # - success
-  # - failed
-  # $3: finished date
-  # $4: comment extra - optional
-
-  cd $BUILD_PATH
-
-  case $1 in
-    "approve") ;;
-    "test") ;;
-    *) error 'First argument for prepare_comment must be one of ["approve", "test"]'
-  esac
-
-  case $2 in
-    "success") ;;
-    "failed") ;;
-    *) error 'Second argument for prepare_comment must be one of ["success", "failed"]'
-  esac
-
-  if [ $3 -lt 1 ]; then
-    error "Third argument for prepare_comment must be a number that's larger than 1 (use `date +%s`)"
-  fi
-
-  echo "Time: **$(($3 - $BUILD_START)) seconds**  \n$4" >> "repo/ci/messages/$1-$2.md"
-}
-
 dependencies () {
   prepare $@
 }

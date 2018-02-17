@@ -1,1 +1,1 @@
-This build has been manually aborted and thus the pipeline failed.  
+<img src="https://raw.githubusercontent.com/OpenUserCSS/openusercss.org/master/ci/images/cross.png" alt="Cross" height=10></img> | This build has been manually aborted and thus the pipeline has failed.
