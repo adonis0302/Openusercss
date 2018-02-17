@@ -6,6 +6,10 @@ export GIT_DISCOVERY_ACROSS_FILESYSTEM=true
 export BUILD_START=$(date +%s)
 export BUILD_PATH=$(pwd)
 
+if [ -z "$CI_BRANCH" ]; then
+  export CI_BRANCH="master"
+fi
+
 error () {
   echo "$@"
   exit 1
