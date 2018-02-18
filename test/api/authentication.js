@@ -49,13 +49,14 @@ test('login session', async (t) => {
     }
   `)
   const decodedToken = jsonwebtoken.decode(loginData.login.token)
+  const config = await staticConfig()
 
   t.true(loginData.login.user._id === userId)
   t.true(ObjectID.isValid(loginData.login._id))
   t.true(ObjectID.isValid(loginData.login.user._id))
   t.truthy(loginData.login.token)
   t.true(decodedToken.userId === userId)
-  t.true(decodedToken.iss === 'localhost')
+  t.true(decodedToken.iss === config.get('domain'))
 })
 
 test('querying user id gives back username', async (t) => {
