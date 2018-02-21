@@ -1,6 +1,4 @@
 import raven from 'raven'
-import {getUsers,} from '../translators/get-user'
-import {getThemes,} from '../translators/get-theme'
 
 export default async (root, {terms, limit = 10, skip = 0,}, {Theme, User,}) => {
   if (limit > 25 || limit < 1) {
@@ -8,21 +6,23 @@ export default async (root, {terms, limit = 10, skip = 0,}, {Theme, User,}) => {
   }
 
   try {
-    const themeResults = await getThemes({
+    const themeResults = await Theme.find({
       '$text': {
         '$search': terms,
       },
     }, {
-      'sort': '-score',
+      'populate': true,
+      'sort':     '-score',
       limit,
       skip,
     })
-    const userResults = await getUsers({
+    const userResults = await User.find({
       '$text': {
         '$search': terms,
       },
     }, {
-      'sort': '-score',
+      'populate': true,
+      'sort':     '-score',
       limit,
       skip,
     })

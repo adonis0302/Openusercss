@@ -1,12 +1,12 @@
-import {getUser,} from '../translators/get-user'
-
 export default async (root, {id,}, {Session, Theme, User, Rating,}) => {
-  const foundUser = await getUser({
+  const foundUser = await User.findOne({
     '_id': id,
+  }, {
+    'populate': true,
   })
 
   if (!foundUser) {
-    throw new Error('No user found')
+    throw new Error(`No user found by ID ${id}`)
   }
 
   return foundUser

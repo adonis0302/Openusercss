@@ -3,7 +3,6 @@ const outputTypeDefs = `
     _id:            ID!
     username:       String!
     displayname:    String!
-    themes:         [String]!
     avatarUrl:      String!
     smallAvatarUrl: String!
     lastSeen:       String!
@@ -25,11 +24,10 @@ const outputTypeDefs = `
   }
 
   type Option {
-    type: String!
+    type:  String!
     label: String!
-    name: String!
+    name:  String!
     value: String!
-    possibleValues: String @deprecated
   }
 
   type Rating {
@@ -47,13 +45,12 @@ const outputTypeDefs = `
     content:     String!
     createdAt:   String!
     lastUpdate:  String!
-    user:        String!
     version:     String!
     screenshots: [String]
     options:     [Option]
   }
 
-  type Results {
+  type SearchResults {
     users:  [User]
     themes: [Theme]
   }
@@ -66,16 +63,46 @@ const outputTypeDefs = `
   }
 `
 
+const inputTypeDefs = `
+  input ThemeQuery {
+    id:   ID
+    user: String
+  }
+`
+
 const rootTypeDefs = `
   type Query {
-    verifyToken(token: String!): Session!
-    theme(id: ID!): Theme!
-    themes(query: String!): [Theme]!
-    user(id: ID!): User!
-    search(terms: String!, limit: Int, skip: Int): Results!
-    latestThemes(limit: Int): [Theme]!
+    verifyToken(
+      token: String!
+    ): Session!
+
+    theme(
+      id: ID!
+    ): Theme!
+
+    themes(
+      query: ThemeQuery!
+    ): [Theme]!
+
+    user(
+      id: ID!
+    ): User!
+
+    search(
+      terms: String!
+      limit: Int
+      skip:  Int
+    ): SearchResults!
+
+    latestThemes(
+      limit: Int
+    ): [Theme]!
+
     version: Version!
-    popularThemes(limit: Int): [Theme]!
+
+    popularThemes(
+      limit: Int
+    ): [Theme]!
   }
 
   type Mutation {
@@ -85,12 +112,12 @@ const rootTypeDefs = `
 
     register(
       displayname: String!
-      email: String!
-      password: String!
+      email:       String!
+      password:    String!
     ): User!
 
     login(
-      email: String!
+      email:    String!
       password: String!
     ): Session!
 
@@ -137,5 +164,6 @@ const rootTypeDefs = `
 
 export default `
   ${outputTypeDefs}
+  ${inputTypeDefs}
   ${rootTypeDefs}
 `

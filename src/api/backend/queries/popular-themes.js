@@ -1,5 +1,3 @@
-import {getTheme,} from '../translators/get-theme'
-
 export default async (root, {limit,}, {User, Theme, Rating,}) => {
   const upperLimit = 25
   const lowerLimit = 1
@@ -13,7 +11,7 @@ export default async (root, {limit,}, {User, Theme, Rating,}) => {
   try {
     result = await Theme.find({}, {
       limit,
-      'populate': false,
+      'populate': true,
       'sort':     '-ratings',
     })
   } catch (error) {
@@ -21,14 +19,8 @@ export default async (root, {limit,}, {User, Theme, Rating,}) => {
   }
 
   if (!result) {
-    throw new Error('No theme found')
+    throw new Error('No popular themes found')
   }
-
-  result = await Promise.all(result.map((theme) => {
-    return getTheme({
-      '_id': theme._id,
-    })
-  }))
 
   return result
 }

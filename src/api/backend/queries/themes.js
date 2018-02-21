@@ -1,8 +1,7 @@
-import {getThemes,} from '../translators/get-theme'
-
 export default async (root, {query,}, {User, Theme,}) => {
-  const doneQuery = JSON.parse(unescape(query))
-  const result = await getThemes(doneQuery)
+  const result = await Theme.find(query, {
+    'populate': true,
+  })
 
   if (!result) {
     throw new Error('No themes found')
