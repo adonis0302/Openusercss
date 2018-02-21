@@ -5,10 +5,7 @@ export BOOTSTRAP=true
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=true
 export BUILD_START=$(date +%s)
 export BUILD_PATH=$(pwd)
-
-if [ -z "$CI_BRANCH" ]; then
-  export CI_BRANCH="master"
-fi
+export CI_BRANCH="master"
 
 error () {
   echo "$@"
@@ -62,19 +59,23 @@ prepare () {
   install_packages git $@
   print_details
 
-  if [ -z "$(ls -A pr)" ]; then
+  if [ -e pr/package.json ]; then
     cd pr
     git status || error "Not a git repository"
+    export CI_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
     in_repo
     cd -
   fi
 
-  if [ -z "$(ls -A repo)" ]; then
+  if [ -e repo/package.json ]; then
     cd repo
     git status || error "Not a git repository"
     in_repo
     cd -
   fi
+
+  echo "Prepare to test branch $CI_BRANCH"
 }
 
 dependencies () {
