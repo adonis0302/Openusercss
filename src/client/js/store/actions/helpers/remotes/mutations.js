@@ -8,11 +8,11 @@ const {AuthenticationError,} = expected
 
 export const remoteRate = async ({id, value,}, token) => {
   const mutation = gql(`
-    mutation {
+    mutation($token: String!, $id: ID!, $value: Int!) {
       rate (
-        token: "${token}"
-        id: "${id}"
-        value: ${value}
+        token: $token
+        id: $id
+        value: $value
       ) {
         ${themePropList}
       }
@@ -21,6 +21,11 @@ export const remoteRate = async ({id, value,}, token) => {
 
   return apolloClient.mutate({
     mutation,
+    'variables': {
+      token,
+      id,
+      value,
+    },
   })
 }
 
@@ -60,20 +65,23 @@ export const remoteAccount = async (accountData, token) => {
 
 export const remoteSendVerify = async ({token,}) => {
   const mutation = gql(`
-    mutation {
-      resendVerification(token: "${token}")
+    mutation($token: String!) {
+      resendVerification(token: $token)
     }
   `)
 
   return apolloClient.mutate({
     mutation,
+    'variables': {
+      token,
+    },
   })
 }
 
 export const verifyEmail = async (token) => {
   const mutation = gql(`
-    mutation {
-      verifyEmail(token: "${token}")
+    mutation($token: String!) {
+      verifyEmail(token: $token)
     }
   `)
   let result = null
@@ -81,6 +89,9 @@ export const verifyEmail = async (token) => {
   try {
     result = await apolloClient.mutate({
       mutation,
+      'variables': {
+        token,
+      },
     })
   } catch (error) {
     result = {
@@ -95,8 +106,8 @@ export const verifyEmail = async (token) => {
 
 export const remoteLogin = async ({email, password,}) => {
   const mutation = gql(`
-    mutation {
-      login(email: "${email}", password: "${password}") {
+    mutation($email: String!, $password: String!) {
+      login(email: $email, password: $password) {
         token,
         ip,
         ua,
@@ -111,6 +122,10 @@ export const remoteLogin = async ({email, password,}) => {
   try {
     session = await apolloClient.mutate({
       mutation,
+      'variables': {
+        email,
+        password,
+      },
     })
   } catch (error) {
     throw new AuthenticationError(error.message)
@@ -121,14 +136,17 @@ export const remoteLogin = async ({email, password,}) => {
 
 export const remoteLogout = async (token) => {
   const mutation = gql(`
-    mutation {
-      logout(token: "${token}")
+    mutation($token: String!) {
+      logout(token: $token)
     }
   `)
 
   try {
     const result = await apolloClient.mutate({
       mutation,
+      'variables': {
+        token,
+      },
     })
 
     if (!result.data.logout) {
@@ -143,14 +161,19 @@ export const remoteLogout = async (token) => {
 
 export const remoteRegister = async ({email, password, displayname,}) => {
   const mutation = gql(`
-    mutation {
-      register(displayname: "${displayname}", email: "${email}", password: "${password}") {
+    mutation($displayname: String!, $email: String!, $password: String!) {
+      register(displayname: $displayname, email: $email, password: $password) {
         ${userPropList}
       }
     }
   `)
   const result = await apolloClient.mutate({
     mutation,
+    'variables': {
+      displayname,
+      email,
+      password,
+    },
   })
 
   return result
@@ -175,31 +198,48 @@ export const remoteSaveTheme = async (theme, token) => {
   preparedTheme.description = encodeURIComponent(preparedTheme.description)
 
   const newMutation = gql(`
-    mutation {
+    mutation(
+      $title: String!
+      $description: String!
+      $content: String!
+      $version: String!
+      $screenshots: [String]!
+      $options: String!
+      $token: String!
+    ) {
       theme(
-        title: "${preparedTheme.title}",
-        description: "${preparedTheme.description}",
-        content: "${preparedTheme.content}",
-        version: "${preparedTheme.version}",
-        screenshots: ${preparedTheme.screenshots},
-        options: "${preparedTheme.options}",
-        token: "${token}"
+        title: $title
+        description: $description
+        content: $content
+        version: $version
+        screenshots: $screenshots
+        options: $options
+        token: $token
       ) {
         ${themePropList}
       }
     }
   `)
   const existingMutation = gql(`
-    mutation {
+    mutation(
+      $title: String!
+      $description: String!
+      $content: String!
+      $version: String!
+      $screenshots: [String]!
+      $options: String!
+      $token: String!
+      $id: ID!
+    ) {
       theme(
-        id: "${preparedTheme._id}",
-        title: "${preparedTheme.title}",
-        description: "${preparedTheme.description}",
-        content: "${preparedTheme.content}",
-        version: "${preparedTheme.version}",
-        screenshots: ${preparedTheme.screenshots},
-        options: "${preparedTheme.options}",
-        token: "${token}"
+        id: $id,
+        title: $title
+        description: $description
+        content: $content
+        version: $version
+        screenshots: $screenshots
+        options: $options
+        token: $token
       ) {
         ${themePropList}
         user {
@@ -218,6 +258,16 @@ export const remoteSaveTheme = async (theme, token) => {
 
   savedTheme = await apolloClient.mutate({
     mutation,
+    'variables': {
+      'id':          preparedTheme._id,
+      'title':       preparedTheme.title,
+      'description': preparedTheme.description,
+      'content':     preparedTheme.content,
+      'version':     preparedTheme.version,
+      'screenshots': preparedTheme.screenshots,
+      'options':     preparedTheme.options,
+      token,
+    },
   })
 
   return savedTheme
@@ -225,8 +275,8 @@ export const remoteSaveTheme = async (theme, token) => {
 
 export const deleteTheme = async (id, token) => {
   const mutation = gql(`
-    mutation {
-      deleteTheme(id: "${id}", token: "${token}")
+    mutation($id: ID!, $token: String!) {
+      deleteTheme(id: $id, token: $token)
     }
   `)
   let success = null
@@ -234,6 +284,10 @@ export const deleteTheme = async (id, token) => {
   try {
     success = await apolloClient.mutate({
       mutation,
+      'variables': {
+        id,
+        token,
+      },
     })
   } catch (error) {
     throw new AuthenticationError(error.message)

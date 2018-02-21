@@ -18,28 +18,6 @@ validators.option = struct({
   'name':       'string',
   'value':      'any',
 })
-validators.themes = struct({
-  '__typename':  'string?',
-  '_id':         'string',
-  'title':       'string',
-  'version':     'string',
-  'content':     'string',
-  'createdAt':   'string',
-  'lastUpdate':  'string',
-  'description': 'string',
-  'user':        'string',
-  'ratings':     struct.optional([
-    'any',
-  ]),
-  'options': [
-    validators.option,
-  ],
-  'screenshots': struct.optional([
-    'string',
-  ]),
-}, {
-  '__typename': 'Theme',
-})
 validators.users = struct({
   '__typename':     'string?',
   '_id':            'string',
@@ -53,6 +31,28 @@ validators.users = struct({
   'donationUrl':    'string',
 }, {
   '__typename': 'User',
+})
+validators.themes = struct({
+  '__typename':  'string?',
+  '_id':         'string',
+  'title':       'string',
+  'version':     'string',
+  'content':     'string',
+  'createdAt':   'string',
+  'lastUpdate':  'string',
+  'description': 'string',
+  'user':        validators.users,
+  'ratings':     struct.optional([
+    'any',
+  ]),
+  'options': [
+    validators.option,
+  ],
+  'screenshots': struct.optional([
+    'string',
+  ]),
+}, {
+  '__typename': 'Theme',
 })
 
 let db = null

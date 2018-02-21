@@ -1,23 +1,5 @@
 import gql from 'graphql-tag'
 
-export const themePropList = `
-  _id
-  title
-  description
-  content
-  createdAt
-  lastUpdate
-  version
-  screenshots
-  user
-  options {
-    type
-    label
-    name
-    value
-  }
-`
-
 export const userPropList = `
   _id
   displayname
@@ -30,60 +12,85 @@ export const userPropList = `
   donationUrl
 `
 
-export const verifyToken = ({token,}) => gql(`{
-  verifyToken(token: "${token}") {
-    user {
+export const themePropList = `
+  _id
+  title
+  description
+  content
+  createdAt
+  lastUpdate
+  version
+  screenshots
+  user {
+    ${userPropList}
+  }
+  options {
+    type
+    label
+    name
+    value
+  }
+`
+
+export const verifyToken = gql(`
+  query($token: String!) {
+    verifyToken(token: $token) {
+      user {
+        ${userPropList}
+      }
+      token
+      ip
+      ua
+    }
+  }`)
+
+export const theme = gql(`
+  query($id: ID!) {
+    theme(id: $id) {
+      ${themePropList}
+    }
+  }
+`)
+
+export const themes = gql(`
+  query($query: ThemeQuery!) {
+    themes(query: $query) {
+      ${themePropList}
+    }
+  }
+`)
+
+export const user = gql(`
+  query($id: ID!) {
+    user(id: $id) {
       ${userPropList}
     }
-    token
-    ip
-    ua
   }
-}`)
+`)
 
-export const theme = ({id,}) => gql(`
-  query {
-    theme(id: "${id}") {
+export const latestThemes = gql(`
+  query($limit: Int!) {
+    latestThemes(limit: $limit) {
       ${themePropList}
     }
   }
 `)
 
-export const themes = ({query,}) => gql(`
-  query {
-    themes(query: "${query}") {
+export const popularThemes = gql(`
+  query($limit: Int!) {
+    popularThemes(limit: $limit) {
       ${themePropList}
     }
   }
 `)
 
-export const user = ({id,}) => gql(`
-  query {
-    user(id: "${id}") {
-      ${userPropList}
-    }
-  }
-`)
-
-export const latestThemes = ({limit,}) => gql(`
-  query {
-    latestThemes(limit: ${limit}) {
-      ${themePropList}
-    }
-  }
-`)
-
-export const popularThemes = ({limit,}) => gql(`
-  query {
-    popularThemes(limit: ${limit}) {
-      ${themePropList}
-    }
-  }
-`)
-
-export const search = ({terms, limit, skip,}) => gql(`
-  query {
-    search(terms: "${terms}", limit: ${limit}, skip: ${skip}) {
+export const search = gql(`
+  query(
+    $terms: String!
+    $limit: Int
+    $skip:  Int
+  ) {
+    search(terms: $terms, limit: $limit, skip: $skip) {
       users {
         ${userPropList}
       },

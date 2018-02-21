@@ -1,4 +1,3 @@
-import gql from 'graphql-tag'
 import {cloneDeep,} from 'lodash'
 import {ExpectedError,} from '../../../../../../shared/custom-errors'
 import {apolloClient,} from '../../'
@@ -11,27 +10,6 @@ import {
   search as searchQuery,
   popularThemes as popularThemesQuery,
 } from '../queries'
-
-export const deleteTheme = async (id, token) => {
-  const mutation = gql(`
-    mutation {
-      deleteTheme(id: "${id}", token: "${token}")
-    }
-  `)
-  let success = null
-
-  try {
-    success = await apolloClient.mutate({
-      mutation,
-    })
-  } catch (error) {
-    throw new ExpectedError({
-      'message': error.message,
-    })
-  }
-
-  return success
-}
 
 export const verifyToken = async (token) => {
   let result = null

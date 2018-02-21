@@ -4,29 +4,31 @@ import {ServerError,} from '../../../../shared/custom-errors'
 import {user, search,} from '../actions/helpers/queries'
 import {upsert,} from '../db'
 
-export const getUser = async (query) => {
+export const getUser = async (id) => {
   let userResult = null
 
   try {
     userResult = await apolloClient.query({
-      'query': user(query),
+      'query':     user,
+      'variables': {
+        id,
+      },
     })
   } catch (error) {
     throw new ServerError(error)
   }
 
-  const doneUser = cloneDeep(userResult.data.user)
-
   upsert('users', cloneDeep(userResult.data.user))
-  return doneUser
+  return userResult.data.user
 }
 
-export const getUsers = async (query) => {
+export const getUsers = async (variables) => {
   let searchResults = null
 
   try {
     searchResults = await apolloClient.query({
-      'query': search(query),
+      'query': search,
+      variables,
     })
   } catch (error) {
     throw new ServerError({

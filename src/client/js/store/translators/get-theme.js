@@ -33,7 +33,10 @@ export const getTheme = async (query) => {
 
   try {
     themeResult = await apolloClient.query({
-      'query': theme(query),
+      'query':     theme,
+      'variables': {
+        query,
+      },
     })
   } catch (error) {
     throw new ServerError({
@@ -59,14 +62,19 @@ export const getThemes = async (query) => {
 
   try {
     results = await apolloClient.query({
-      'query': themes({
-        'query': escape(JSON.stringify(query)),
-      }),
+      'query':     themes,
+      'variables': {
+        query,
+      },
     })
   } catch (error) {
     throw new ServerError({
       'message': error.message,
     })
+  }
+
+  if (!results.themes) {
+    return []
   }
 
   results.themes = results.themes.filter((themeResult) => {

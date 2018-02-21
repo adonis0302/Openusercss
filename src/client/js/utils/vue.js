@@ -8,13 +8,13 @@ import VueAsyncComputed from 'vue-async-computed'
 import lodash, {cloneDeep,} from 'lodash'
 import {mapGetters, mapActions,} from 'vuex'
 
+import {getThemes,} from '../store/translators/get-theme'
 import {ServerError,} from '../../../shared/custom-errors'
 import appBase from '../../../components/pages/app-base.vue'
 import router from './router'
 import store from '../store'
 import db, {upsert,} from '../store/db'
 import {apolloClient,} from '../store/actions'
-import {getThemes,} from '../store/translators/get-theme'
 
 import {
   theme as themeQuery,
@@ -51,9 +51,10 @@ export const getUser = async (id) => {
 
     try {
       userResult = await apolloClient.query({
-        'query': userQuery({
-          'id': id.toString(),
-        }),
+        'query':     userQuery,
+        'variables': {
+          id,
+        },
       })
     } catch (error) {
       throw new ServerError({
@@ -82,9 +83,10 @@ export const getTheme = async (id) => {
 
     try {
       themeResult = await apolloClient.query({
-        'query': themeQuery({
-          'id': id.toString(),
-        }),
+        'query':     themeQuery,
+        'variables': {
+          id,
+        },
       })
     } catch (error) {
       throw new ServerError({
@@ -97,10 +99,6 @@ export const getTheme = async (id) => {
     doneTheme.options = renderOptions(doneTheme.options)
     upsert('themes', doneTheme)
   }
-
-  getUser(themes.findOne({
-    '_id': id.toString(),
-  }).user)
 
   return themes.findOne({
     '_id': id.toString(),
