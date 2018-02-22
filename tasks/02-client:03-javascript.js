@@ -67,7 +67,7 @@ gulp.task('client:js:prod', () => {
     ])
   })
 
-  return merge(bundles)
+  return merge(...bundles)
 })
 
 gulp.task('client:js:fast', () => {
@@ -108,7 +108,7 @@ gulp.task('client:js:fast', () => {
     ])
   })
 
-  return merge(bundles)
+  return merge(...bundles)
 })
 
 gulp.task('client:js:watch', () => {
@@ -172,7 +172,7 @@ gulp.task('client:js:watch', () => {
     return bundle()
   })
 
-  return merge(bundles)
+  return merge(...bundles)
 })
 
 gulp.task('client:manifest', (done) => {

@@ -17,18 +17,18 @@ const destination = (dest) => {
   return path.resolve('./build/', dest)
 }
 
-gulp.task('shared:fast', (done) => {
-  pump([
+gulp.task('shared:fast', () => {
+  return pump([
     gulp.src(sources.shared),
     babel(),
     gulp.dest(destination('shared')),
-  ]).on('end', done)
+  ])
 })
 
-gulp.task('shared:prod', (done) => {
-  pump([
+gulp.task('shared:prod', () => {
+  return pump([
     gulp.src(sources.shared),
     babel(),
     gulp.dest(destination('shared')),
-  ]).on('end', done)
+  ])
 })

@@ -15,16 +15,16 @@ const sources = {
   'emails': './src/emails/**/*.pug',
 }
 
-gulp.task('server:views', (done) => {
-  pump([
+gulp.task('server:views', () => {
+  return pump([
     gulp.src(sources.views),
     gulp.dest(destination('views')),
-  ]).on('end', done)
+  ])
 })
 
-gulp.task('server:email-templates', (done) => {
-  pump([
+gulp.task('server:email-templates', () => {
+  return pump([
     gulp.src(sources.emails),
     gulp.dest(destination('emails')),
-  ]).on('end', done)
+  ])
 })

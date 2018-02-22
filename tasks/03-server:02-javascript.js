@@ -22,7 +22,7 @@ const sources = {
   'server': 'src/*.js',
 }
 
-gulp.task('server:prod', (done) => {
+gulp.task('server:prod', () => {
   const files = glob.sync(sources.server)
 
   const bundles = files.map((entry, index) => {
@@ -41,10 +41,10 @@ gulp.task('server:prod', (done) => {
     ])
   })
 
-  return merge(bundles)
+  return merge(...bundles)
 })
 
-gulp.task('server:fast', (done) => {
+gulp.task('server:fast', () => {
   const files = glob.sync(sources.server)
 
   const bundles = files.map((entry, index) => {
@@ -63,7 +63,7 @@ gulp.task('server:fast', (done) => {
     ])
   })
 
-  return merge(bundles)
+  return merge(...bundles)
 })
 
 gulp.task('server:watch', () => {
@@ -100,5 +100,5 @@ gulp.task('server:watch', () => {
     return bundle()
   })
 
-  return merge(bundles)
+  return merge(...bundles)
 })
