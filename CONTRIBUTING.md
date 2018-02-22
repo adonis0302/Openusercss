@@ -11,6 +11,22 @@ When you send your first Pull Request,
 
 > For what to put in place of {{type}}, [look here](https://github.com/jfmengels/all-contributors-cli#addupdate-contributors)
 
+## Quick start
+
+OpenUserCSS is mainly written in Javascript, but you don't necessarily have to
+know it to contribute something. Here's an overview of some of the technologies
+used and their paths:
+
+| Tech | Path(s) |
+| -----| ------- |
+| Gulp | `gulpfile.babel.js` <br> `tasks/` |
+| css/scss | `src/client/scss/` <br> `<style>` tags in `.vue` files in `src/components/(bits|elements|pages)`
+| Express.js | `api.js` <br> `webserver.js` |
+| Concourse | `ci/pipelines/` <br> `ci/tasks/` |
+| Shell scripting | `ci/scripts/` |
+| Backend (databases, schemas) | `src/api/connector/` <br> `src/api/backend/` |
+| Testing (AVA, Nightmare.js) | `test/` |
+
 ## Submitting issues  
 When submitting an issue/bug, take a look at [the issue list](https://github.com/OpenUserCSS/openusercss.org/issues?utf8=%E2%9C%93&q=is%3Aissue) to see if your issue was already posted.  
 I also recommend reading [this great writeup](https://www.chiark.greenend.org.uk/~sgtatham/bugs.html) by Simon Tatham, the author of PuTTY and [a bunch of other free software](https://www.chiark.greenend.org.uk/~sgtatham/)!
