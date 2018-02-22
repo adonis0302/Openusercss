@@ -1,6 +1,5 @@
 import staticConfig from '../../../shared/config'
 import {expected,} from '../../../shared/custom-errors'
-import {getUser,} from '../translators/get-user'
 import jwt from 'jsonwebtoken'
 import moment from 'moment'
 import bcrypt from 'bcryptjs'

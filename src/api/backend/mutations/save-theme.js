@@ -1,9 +1,6 @@
 import {findIndex,} from 'lodash'
 import mustAuthenticate from '../../../shared/enforce-session'
 import parse from '../../../shared/usercss-parser'
-import {getTheme,} from '../translators/get-theme'
-import {getUser,} from '../translators/get-user'
-import {getRatings,} from '../translators/get-rating'
 
 export default async (root, {
   token,

@@ -1,8 +1,5 @@
 import {ObjectID,} from 'mongodb'
 import mustAuthenticate from '../../../shared/enforce-session'
-import {getUser,} from '../translators/get-user'
-import {getTheme,} from '../translators/get-theme'
-import {getRating,} from '../translators/get-rating'
 
 export default async (root, {token, id, value,}, {Session, Theme, Rating, User,}) => {
   const session = await mustAuthenticate(token, Session)

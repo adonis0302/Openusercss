@@ -1,13 +1,11 @@
-import {getTheme,} from './backend/translators/get-theme'
-import {getUser,} from './backend/translators/get-user'
+import Theme from './connector/schema/theme'
 import {buildTheme,} from '../shared/usercss-builder'
 
 export default async (req, res, next) => {
-  const foundTheme = await getTheme({
+  const foundTheme = await Theme.findOne({
     '_id': req.params.id,
-  })
-  const user = await getUser({
-    '_id': foundTheme.user,
+  }, {
+    'populate': true,
   })
 
   if (!foundTheme.ratings) {
@@ -15,7 +13,7 @@ export default async (req, res, next) => {
   }
 
   if (foundTheme) {
-    const theme = await buildTheme(foundTheme, user)
+    const theme = await buildTheme(foundTheme, foundTheme.user)
 
     res.type('css')
     res.send(theme)

@@ -1,5 +1,4 @@
 import mustAuthenticate from '../../../shared/enforce-session'
-import {getTheme,} from '../translators/get-theme'
 
 export default async (root, {token, id,}, {Session, Theme,}) => {
   const session = await mustAuthenticate(token, Session)

@@ -1,4 +1,3 @@
-// @flow
 import 'babel-polyfill'
 
 import express from 'express'

@@ -1,7 +1,6 @@
 import staticConfig from '../../../shared/config'
 import jwt from 'jsonwebtoken'
 import pify from 'pify'
-import {getUser,} from '../translators/get-user'
 
 export default async (root, {token,}, {User,}) => {
   const config = await staticConfig()
