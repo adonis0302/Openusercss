@@ -39,7 +39,9 @@
     "test": "npm run lint && npm run test:unit",
     "test:watch": "nodemon --delay 0.25 --watch package.json --watch test --exec 'npm t'",
     "commit": "git-cz",
-    "c": "npm run commit"
+    "c": "npm run commit",
+    "postmerge": "yarn --silent --frozen-lockfile --non-interactive --production=false",
+    "postcommit": "yarn --silent --frozen-lockfile --non-interactive --production=false"
   },
   "author": "DecentM",
   "license": "GPL-3.0",
