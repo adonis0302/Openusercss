@@ -16,9 +16,7 @@
         process,
       }
     },
-    'methods': {
-      ...new LeftRight('easeOutCubic'),
-    },
+    'methods': new LeftRight('easeOutCubic'),
   }
 </script>
 

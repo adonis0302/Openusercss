@@ -204,7 +204,7 @@
             return {}
           }
 
-          return this.getUser(this.theme.user._id || this.theme.user,)
+          return this.theme.user
         },
       },
     },

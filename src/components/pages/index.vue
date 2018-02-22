@@ -1,5 +1,4 @@
 <script>
-  import {cloneDeep,} from 'lodash'
   import oucFooter from '../elements/ouc-footer.vue'
   import navbar from '../elements/navbar.vue'
   import searchField from '../elements/search-field.vue'
@@ -17,10 +16,6 @@
       navbar,
       chip,
       notification,
-    },
-    beforeMount () {
-      this.$store.dispatch('getLatestThemes', 6)
-      this.$store.dispatch('getPopularThemes', 6)
     },
     'methods': {
       averageRating (array) {
@@ -51,52 +46,24 @@
         'cache':   false,
         'default': [],
         async get () {
-          const self = this
           const result = this.$db.getCollection('themes').chain().find()
           const themes = result
           .simplesort('createdAt', true)
           .data()
 
-          if (themes) {
-            const finalThemes = await Promise.all(themes.filter(async (theme) => {
-              if (theme.user) {
-                const finalTheme = cloneDeep(theme)
-
-                finalTheme.user = await self.getUser(theme.user)
-                return finalTheme
-              }
-            }))
-
-            return finalThemes
-          }
-
-          return []
+          return themes || []
         },
       },
       'popularThemes': {
         'cache':   false,
         'default': [],
         async get () {
-          const self = this
           const result = this.$db.getCollection('themes').chain().find()
           const themes = result
           .simplesort('ratings', true)
           .data()
 
-          if (themes) {
-            const finalThemes = await Promise.all(themes.filter(async (theme) => {
-              if (theme.user) {
-                const finalTheme = cloneDeep(theme)
-
-                finalTheme.user = await self.getUser(theme.user)
-                return finalTheme
-              }
-            }))
-
-            return finalThemes
-          }
-
-          return []
+          return themes || []
         },
       },
     },
