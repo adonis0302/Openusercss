@@ -6,7 +6,7 @@ Thank you for contributing your time, resources and expertise to the project!
 OpenUserCSS is released under the GNU General Public License v3.0. As such, all contributions must be released under the same license.  
 
 When you send your first Pull Request,
-- You'll be asked to sign the OpenUserCSS CLA. If you want to read it first, [please head here](https://i.imgur.com/AwVkfSI.png).  
+- You'll be asked to sign the OpenUserCSS CLA. If you want to read it first, [please head here](https://gist.github.com/DecentM/bf9d2df39a15da19470301cbefff7a3a).  
 - Please run `npm run contrib:add -- {{your GitHub username}} {{type}}` to add yourself to the contributors list in [README.md](https://github.com/OpenUserCSS/openusercss.org#contributing)
 
 > For what to put in place of {{type}}, [look here](https://github.com/jfmengels/all-contributors-cli#addupdate-contributors)
