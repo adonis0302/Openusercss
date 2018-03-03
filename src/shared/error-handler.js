@@ -1,4 +1,3 @@
-// @flow
 import PrettyError from 'pretty-error'
 import log from 'chalk-console'
 import raven from 'raven-js'

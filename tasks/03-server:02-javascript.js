@@ -1,104 +1,39 @@
 import gulp from 'gulp'
 import pump from 'pump'
-import glob from 'glob'
-import source from 'vinyl-source-stream'
-import merge from 'merge-stream'
-import gutil from 'gulp-util'
-import watchify from 'watchify'
-import path from 'path'
 
-import server from './shared/server'
-import {createBrowserify,} from './shared/js'
-
-const destination = (dest) => {
-  if (!dest) {
-    return path.resolve('./build/')
-  }
-
-  return path.resolve('./build/', dest)
-}
-
-const sources = {
-  'server': 'src/*.js',
-}
+import webpack from 'webpack'
+import webpackStream from 'webpack-stream'
+import webpackConfig from '../server.webpack.config.babel'
 
 gulp.task('server:prod', () => {
-  const files = glob.sync(sources.server)
-
-  const bundles = files.map((entry, index) => {
-    const bify = createBrowserify({
-      'entries': [
-        entry,
-      ],
-      'debug':  false,
-      'target': 'node',
-    })
-
-    return pump([
-      bify.bundle(),
-      source(entry.split('/').reverse()[0]),
-      gulp.dest(destination()),
-    ])
-  })
-
-  return merge(...bundles)
+  return pump([
+    gulp.src('./src/*.js'),
+    webpackStream(webpackConfig({
+      'env':   'production',
+      'watch': false,
+    }), webpack),
+    gulp.dest('./build'),
+  ])
 })
 
 gulp.task('server:fast', () => {
-  const files = glob.sync(sources.server)
-
-  const bundles = files.map((entry, index) => {
-    const bify = createBrowserify({
-      'entries': [
-        entry,
-      ],
-      'debug':  true,
-      'target': 'node',
-    })
-
-    return pump([
-      bify.bundle(),
-      source(entry.split('/').reverse()[0]),
-      gulp.dest(destination()),
-    ])
-  })
-
-  return merge(...bundles)
+  return pump([
+    gulp.src('./src/*.js'),
+    webpackStream(webpackConfig({
+      'env':   'development',
+      'watch': false,
+    }), webpack),
+    gulp.dest('./build'),
+  ])
 })
 
 gulp.task('server:watch', () => {
-  const files = glob.sync(sources.server)
-
-  const bundles = files.map((entry, index) => {
-    const bify = createBrowserify({
-      'entries': [
-        entry,
-      ],
-      'debug':  true,
-      'target': 'node',
-    })
-
-    bify.plugin(watchify)
-
-    const bundle = () => {
-      return pump([
-        bify.bundle(),
-        source(entry.split('/').reverse()[0]),
-        gulp.dest(destination()),
-      ]).on('end', () => {
-        if (server.child) {
-          server.restart()
-        }
-      })
-    }
-
-    bify.on('update', bundle)
-    bify.on('log', (content) => {
-      gutil.log(`Server (${entry}): ${content}`)
-    })
-
-    return bundle()
-  })
-
-  return merge(...bundles)
+  return pump([
+    gulp.src('./src/*.js'),
+    webpackStream(webpackConfig({
+      'env':   'development',
+      'watch': true,
+    }), webpack),
+    gulp.dest('./build'),
+  ])
 })

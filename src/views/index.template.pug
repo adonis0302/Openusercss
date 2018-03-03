@@ -1,4 +1,11 @@
 extends layouts/main
 
 block page
-  app !{appHTML}
+  if appHTML
+    app !{appHTML}
+  else
+    p
+      code appHTML
+      | is undefined in the pug scope.
+      br
+      | This means that an unknown error occurred while rendering the application.

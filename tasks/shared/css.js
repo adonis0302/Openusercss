@@ -9,7 +9,7 @@ import ellipsis from 'postcss-ellipsis'
 import cssnano from 'cssnano'
 import advancedPreset from 'cssnano-preset-advanced'
 import {appConfig,} from './config'
-import {processObject,} from './js'
+import processObject from '../../src/shared/process-object'
 
 const customPreset = advancedPreset({
   'discardComments':     false,

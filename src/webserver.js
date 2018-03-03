@@ -1,4 +1,3 @@
-// @flow
 import 'babel-polyfill'
 
 import {createBundleRenderer,} from 'vue-server-renderer'
@@ -15,13 +14,13 @@ import pug from 'pug'
 import helmet from 'helmet'
 import schemas from 'posthtml-schemas'
 import raven from 'raven'
-import {auto,} from './shared/error-handler'
+import ErrorHtmlRenderer from 'error-html'
 
 import staticConfig from './shared/config'
 
 const servers = []
 const basePath = path.resolve(process.mainModule.paths[0], '..')
-const clientPath = path.join(basePath, '/static/server.js')
+const clientPath = path.join(basePath, '/server.bundle.min.js')
 const templatePath = path.join(basePath, '/views/index.template.pug')
 
 const cspOptions = {
@@ -72,8 +71,43 @@ const cspOptions = {
   },
 }
 
+const errorRenderer = new ErrorHtmlRenderer({
+  'appPath': process.cwd(),
+})
+
+const errorHtml = (error) => {
+  const head = [
+    '<html>',
+    '<body>',
+  ].join('\n')
+  const foot = [
+    '</body>',
+    '</html>',
+  ].join('\n')
+  let html = [
+    head,
+    '<h1>An error occurred</h1>',
+    '<h2>while rendering the error message</h2>',
+    '<h3>that would tell you why the</h3>',
+    '<h4>error message</h4>',
+    '<h5>couldn\'t be rendered.</h5>',
+    foot,
+  ].join('\n')
+
+  try {
+    html = [
+      head,
+      errorRenderer.render(error),
+      foot,
+    ].join('\n')
+  } catch (err) {
+    html = errorHtml(err)
+  }
+
+  return html
+}
+
 const init = async () => {
-  await auto()
   const app = express()
   const config = await staticConfig()
 
@@ -138,10 +172,18 @@ const init = async () => {
 
     appStream.on('end', async () => {
       res.type('html')
-      const pugHTML = pug.renderFile(templatePath, {
-        req,
-        appHTML,
-      })
+      let pugHTML = ''
+
+      try {
+        pugHTML = pug.renderFile(templatePath, {
+          req,
+          appHTML,
+        })
+      } catch (error) {
+        log.error(error)
+        pugHTML = errorHtml(error)
+      }
+
       const {
         html,
       } = await schemas.process(pugHTML)
@@ -150,19 +192,13 @@ const init = async () => {
       res.end()
     })
 
-    appStream.on('error', async (err) => {
+    appStream.on('error', (err) => {
       log.error('Failed to render client, sending shell HTML:')
       log.error(err.stack)
       res.status(err.code || 500)
-
       res.type('html')
-      const pugHTML = pug.renderFile(templatePath, {
-        req,
-        appHTML,
-      })
-      const {
-        html,
-      } = await schemas.process(pugHTML)
+
+      const html = errorHtml(err)
 
       res.write(html)
       res.end()

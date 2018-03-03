@@ -1,26 +1,10 @@
 import VueRouter from 'vue-router'
 import raven from 'raven-js'
-import store from '../store'
-import {getTheme, getUser,} from './vue'
-
-import indexRoute from '../../../components/pages/index.vue'
-import searchRoute from '../../../components/pages/search.vue'
-import loginRoute from '../../../components/pages/login.vue'
-import registerRoute from '../../../components/pages/register.vue'
-import verifyEmailRoute from '../../../components/pages/verify-email.vue'
-import profileRoute from '../../../components/pages/profile.vue'
-import themeEditorRoute from '../../../components/pages/edit-theme.vue'
-import themeRoute from '../../../components/pages/theme.vue'
-import contactRoute from '../../../components/pages/contact.vue'
-import testRoute from '../../../components/pages/test.vue'
-import accountRoute from '../../../components/pages/account.vue'
-import noticeRoute from '../../../components/pages/notice.vue'
-import helpRoute from '../../../components/pages/help.vue'
 
 import notFoundRoute from '../../../components/pages/not-found.vue'
 
-export const routerOptions = {
-  'mode':   'history',
+const routerOptions = {
+  /* 'mode':   'history',
   'routes': [
     {
       'path':      '/',
@@ -127,41 +111,14 @@ export const routerOptions = {
     {
       'path':      '/test',
       'component': testRoute,
-    },
+    }, */
+  'mode':   'history',
+  'routes': [
     {
       'path':      '*',
       'component': notFoundRoute,
     },
   ],
 }
-const router = new VueRouter(routerOptions)
 
-router.beforeEach((to, from, next) => {
-  if (process.browser) {
-    window._paq.push(['deleteCustomVariables', 'page',])
-    window._paq.push(['setCustomUrl', to.path,])
-    window._paq.push(['setReferrerUrl', from.path,])
-    window._paq.push([ 'enableLinkTracking', ])
-    window._paq.push([ 'trackPageView', ])
-  }
-
-  if (
-    process.browser
-    && 'serviceWorker' in navigator
-    && navigator.serviceWorker.controller
-    && 'MessageChannel' in window
-  ) {
-    const {port2,} = new window.MessageChannel()
-
-    navigator.serviceWorker.controller.postMessage({
-      'action': 'cache-route',
-      'route':  to.path,
-    }, [
-      port2,
-    ])
-  }
-
-  next()
-})
-
-export default router
+export default new VueRouter(routerOptions)

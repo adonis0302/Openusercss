@@ -9,8 +9,8 @@ mixin metas
   link(rel="manifest", href="/manifest.json")
 
 mixin assets
-  script(type="text/javascript", src="/browser.js", defer)
-  link(type="text/css", rel='stylesheet', href='/css/bundle.min.css')
+  script(type="text/javascript", src="/browser.bundle.min.js", defer)
+  //- link(type="text/css", rel='stylesheet', href='/css/bundle.min.css')
 
 mixin frame
   doctype html
@@ -20,8 +20,8 @@ mixin frame
       +metas
       +assets
       body
-        //- include ../partials/loading-indicator
-        //- include ../partials/noscript
+        include ../partials/loading-indicator
+        include ../partials/noscript
         if block
           block
 

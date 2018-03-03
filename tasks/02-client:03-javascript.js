@@ -1,24 +1,11 @@
 import gulp from 'gulp'
 import pump from 'pump'
-import glob from 'glob'
-import source from 'vinyl-source-stream'
 import pwaManifest from 'pwa-manifest'
 import path from 'path'
-import gutil from 'gulp-util'
-import flatten from 'gulp-flatten'
-import buffer from 'gulp-buffer'
-import sourcemaps from 'gulp-sourcemaps'
-import optimize from 'gulp-optimize-js'
-import watchify from 'watchify'
-import hmr from 'browserify-hmr'
-import merge from 'merge-stream'
 
-import server from './shared/server'
-import {createBrowserify,} from './shared/js'
-
-const sources = {
-  'client': 'src/client/js/*.js',
-}
+import webpack from 'webpack'
+import webpackStream from 'webpack-stream'
+import webpackConfig from '../client.webpack.config.babel'
 
 const destination = (dest) => {
   if (!dest) {
@@ -29,150 +16,36 @@ const destination = (dest) => {
 }
 
 gulp.task('client:js:prod', () => {
-  const files = glob.sync(sources.client)
-
-  const bundles = files.map((entry, index) => {
-    const options = {
-      'entries': [
-        entry,
-      ],
-      'debug':  false,
-      'target': 'browser',
-    }
-
-    if (entry.indexOf('server') !== -1) {
-      options.target = 'node'
-    }
-    if (entry.indexOf('worker') !== -1) {
-      options.target = 'worker'
-    }
-    const bify = createBrowserify(options)
-
-    return pump([
-      bify.bundle(),
-      source(entry),
-      buffer(),
-      optimize(),
-      flatten(),
-      sourcemaps.init({
-        'loadMaps': true,
-      }),
-      sourcemaps.write(destination(), {
-        'sourceMappingURL': (file) => {
-          return `/${file.relative}.map`
-        },
-      }),
-      flatten(),
-      gulp.dest(destination()),
-    ])
-  })
-
-  return merge(...bundles)
+  return pump([
+    gulp.src('./src/client/js/*.js'),
+    webpackStream(webpackConfig({
+      'watch': false,
+      'env':   'production',
+    }), webpack),
+    gulp.dest('./build/static'),
+  ])
 })
 
 gulp.task('client:js:fast', () => {
-  const files = glob.sync(sources.client)
-
-  const bundles = files.map((entry, index) => {
-    const options = {
-      'entries': [
-        entry,
-      ],
-      'debug':  true,
-      'target': 'browser',
-    }
-
-    if (entry.indexOf('server') !== -1) {
-      options.target = 'node'
-    }
-    if (entry.indexOf('worker') !== -1) {
-      options.target = 'worker'
-    }
-    const bify = createBrowserify(options)
-
-    return pump([
-      bify.bundle(),
-      source(entry),
-      buffer(),
-      flatten(),
-      sourcemaps.init({
-        'loadMaps': true,
-      }),
-      sourcemaps.write(destination(), {
-        'sourceMappingURL': (file) => {
-          return `/${file.relative}.map`
-        },
-      }),
-      flatten(),
-      gulp.dest(destination()),
-    ])
-  })
-
-  return merge(...bundles)
+  return pump([
+    gulp.src('./src/client/js/*.js'),
+    webpackStream(webpackConfig({
+      'watch': false,
+      'env':   'development',
+    }), webpack),
+    gulp.dest('./build/static'),
+  ])
 })
 
 gulp.task('client:js:watch', () => {
-  const files = glob.sync(sources.client)
-
-  const bundles = files.map((entry, index) => {
-    const options = {
-      'entries': [
-        entry,
-      ],
-      'debug':  true,
-      'target': 'browser',
-    }
-
-    if (entry.indexOf('server') !== -1) {
-      options.target = 'node'
-    }
-    if (entry.indexOf('worker') !== -1) {
-      options.target = 'worker'
-    }
-
-    const bify = createBrowserify(options)
-
-    bify.plugin(watchify)
-    if (options.target === 'browser') {
-      bify.plugin(hmr, {
-        'mode': 'websocket',
-        'port': 3123 + index,
-        'url':  `http://localhost:${3123 + index}`,
-      })
-    }
-
-    const bundle = () => {
-      return pump([
-        bify.bundle(),
-        source(entry),
-        buffer(),
-        flatten(),
-        sourcemaps.init({
-          'loadMaps': true,
-        }),
-        sourcemaps.write(destination(), {
-          'sourceMappingURL': (file) => {
-            return `/${file.relative}.map`
-          },
-        }),
-        flatten(),
-        gulp.dest(destination()),
-      ]).on('end', () => {
-        if (options.target === 'node' && server.child) {
-          server.restart()
-        }
-      })
-    }
-
-    bify.on('update', bundle)
-    bify.on('log', (content) => {
-      gutil.log(`Client (${entry}): ${content}`)
-    })
-
-    return bundle()
-  })
-
-  return merge(...bundles)
+  return pump([
+    gulp.src('./src/client/js/*.js'),
+    webpackStream(webpackConfig({
+      'watch': true,
+      'env':   'development',
+    }), webpack),
+    gulp.dest('./build/static'),
+  ])
 })
 
 gulp.task('client:manifest', (done) => {
@@ -223,13 +96,11 @@ gulp.task('client:manifest', (done) => {
 })
 
 gulp.task('client:fast', gulp.parallel(
-  'client:media:email',
-  gulp.series('client:js:fast', 'client:media:fast'),
-  'client:manifest'
+  'client:js:fast',
+  'client:manifest',
 ))
 
 gulp.task('client:prod', gulp.parallel(
-  'client:media:email',
-  gulp.series('client:js:prod', 'client:media:prod'),
-  'client:manifest'
+  'client:js:prod',
+  'client:manifest',
 ))

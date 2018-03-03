@@ -13,11 +13,9 @@ import VueModal from 'vue-js-modal'
 import VueFlickity from 'vue-flickity'
 import {
   Vue,
-  store,
   router,
   appBase,
 } from './utils/vue'
-import db from './store/db'
 import {runPolyfills,} from './utils/features'
 import {runIntegration,} from './utils/extension-hook'
 
@@ -36,7 +34,6 @@ const polyfills = async () => {
 
 const mountApp = async () => {
   const app = new Vue({
-    store,
     router,
     ...appBase,
   })
@@ -52,11 +49,9 @@ const main = async () => {
   process.averageFps = 0
   process.fpsHistory = []
   process.polyfills = polyfillsResult
-  process.db = db
   process.extension = null
 
   Vue.prototype.$toast = iziToast
-  Vue.prototype.$db = db
 
   Vue.use(VueModal)
   Vue.component('flickity', VueFlickity)
@@ -79,15 +74,15 @@ const main = async () => {
       }
 
       process.averageFps = Math.floor(divide(sum(process.fpsHistory), process.fpsHistory.length))
-
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/worker.js')
-        .catch((error) => {
-          log.error(error)
-          raven.captureException(error)
-        })
-      }
     })
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/worker.js')
+      .catch((error) => {
+        log.error(error)
+        raven.captureException(error)
+      })
+    }
   })
 }
 

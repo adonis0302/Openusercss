@@ -7,7 +7,6 @@ import corser from 'corser'
 
 import staticConfig from './shared/config'
 import setupRoutes from './api/routes'
-import {auto,} from './shared/error-handler'
 
 import http from 'http'
 import https from 'https'
@@ -24,7 +23,6 @@ const cspOptions = {
 
 const servers = []
 const init = async () => {
-  await auto()
   const app = express()
   const config = await staticConfig()
 

@@ -1,6 +1,5 @@
 #!/bin/ash
-set -e
+set -ex
 
 cd /ouc
-NODE_ENV=production node manager.js
-
+/usr/bin/supervisord -n -c /etc/supervisord.conf

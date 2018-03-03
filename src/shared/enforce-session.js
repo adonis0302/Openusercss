@@ -2,7 +2,7 @@ import raven from 'raven'
 import staticConfig from './config'
 import jwt from 'jsonwebtoken'
 
-export default async (token: String, Session) => {
+export default async (token, Session) => {
   const config = await staticConfig()
   let session = null
 

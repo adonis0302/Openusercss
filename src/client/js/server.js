@@ -1,11 +1,9 @@
 import 'babel-polyfill'
 import {
   Vue,
-  store,
   router,
   appBase,
 } from './utils/vue'
-import db from './store/db'
 import raven from 'raven-js'
 import ravenVue from 'raven-js/plugins/vue'
 
@@ -15,12 +13,9 @@ if (process.env.NODE_ENV !== 'development') {
   .install()
 }
 
-Vue.prototype.$db = db
-
 export default (context) => {
   return new Promise((resolve, reject) => {
     const app = new Vue({
-      store,
       router,
       ...appBase,
     })
