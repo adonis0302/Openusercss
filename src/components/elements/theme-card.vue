@@ -1,13 +1,6 @@
 <script>
-  import icon from './icon.vue'
-  import {LeftRight,} from '../../../src/shared/animations'
-
   export default {
-    'components': {
-      icon,
-    },
-    'methods': new LeftRight(),
-    'props':   {
+    'props': {
       'direction': {
         'type':    String,
         'default': 'vertical',
@@ -57,15 +50,9 @@
 </style>
 
 <template lang="pug">
-  transition(
-    appear,
-    @before-enter="beforeAppear",
-    @enter="appear",
-    :css="false"
-  )
-    router-link(:class="cardClass", :to="'/theme/' + themeId")
-      .box.is-paddingless.ouc-theme-card
-        .tile.is-parent.is-paddingless
-          .tile.is-child.ouc-theme-container
-            slot(name="content").ouc-theme-slot
+  nuxt-link(:class="cardClass", :to="'/theme/' + themeId")
+    .box.is-paddingless.ouc-theme-card
+      .tile.is-parent.is-paddingless
+        .tile.is-child.ouc-theme-container
+          slot(name="content").ouc-theme-slot
 </template>

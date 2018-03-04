@@ -1,14 +1,9 @@
 <script>
-  import icon from './icon.vue'
-
   export default {
     'props': [
       'lazy',
       'value',
     ],
-    'components': {
-      icon,
-    },
     mounted () {
       if (this.lazy) {
         this.$refs.main.onchange = () => {
@@ -30,6 +25,6 @@
 
 <template lang="pug">
   .control.ouc-search-field.has-icons-left
-    icon(icon="magnify")
+    fa-icon(icon="search")
     input.input(name="search", placeholder="Search themes and users", aria-label="Search themes and users", ref="main")
 </template>

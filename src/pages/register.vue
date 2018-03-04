@@ -1,19 +1,15 @@
 <script>
-  import flushImg from '../elements/flush-img.vue'
-  import icon from '../elements/icon.vue'
-  import notification from '../elements/notification.vue'
-  import oucButton from '../elements/ouc-button.vue'
-  import bInput from '../bits/b-input.vue'
+  import notification from '../components/elements/notification.vue'
+  import oucButton from '../components/elements/ouc-button.vue'
+  import bInput from '../components/bits/b-input.vue'
 
-  import oucFooter from '../elements/ouc-footer.vue'
-  import navbar from '../elements/navbar.vue'
+  import oucFooter from '../components/elements/ouc-footer.vue'
+  import navbar from '../components/elements/navbar.vue'
 
   export default {
     'components': {
       oucButton,
       bInput,
-      flushImg,
-      icon,
       notification,
       oucFooter,
       navbar,
@@ -74,7 +70,7 @@
                   .tile.is-child
                     .field
                       .control.has-icons-left
-                        icon(icon="account")
+                        fa-icon(name="account")
                         b-input(
                           type="text",
                           name="displayname",
@@ -91,7 +87,7 @@
                       .column
                         .field
                           .control.has-icons-left
-                            icon(icon="lock")
+                            fa-icon(name="lock")
                             b-input(
                               type="password",
                               name="password",
@@ -106,7 +102,7 @@
                       .column
                         .field
                           .control.has-icons-left
-                            icon(icon="lock-plus")
+                            fa-icon(name="lock-plus")
                             b-input(
                               type="password",
                               name="passwordVerify",

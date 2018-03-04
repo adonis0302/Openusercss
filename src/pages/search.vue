@@ -1,10 +1,9 @@
 <script>
-  import oucFooter from '../elements/ouc-footer.vue'
-  import navbar from '../elements/navbar.vue'
-  import searchField from '../elements/search-field.vue'
-  import notification from '../elements/notification.vue'
-  import themeCard from '../elements/theme-card.vue'
-  import flushImg from '../elements/flush-img.vue'
+  import oucFooter from '../components/elements/ouc-footer.vue'
+  import navbar from '../components/elements/navbar.vue'
+  import searchField from '../components/elements/search-field.vue'
+  import notification from '../components/elements/notification.vue'
+  import themeCard from '../components/elements/theme-card.vue'
 
   export default {
     'components': {
@@ -13,7 +12,6 @@
       searchField,
       notification,
       themeCard,
-      flushImg,
     },
     data () {
       return {
@@ -67,8 +65,8 @@
 </script>
 
 <template lang="pug">
-  include ../static/microdata/theme.pug
-  include ../static/microdata/user.pug
+  include ../components/static/microdata/theme.pug
+  include ../components/static/microdata/user.pug
 
   div.ouc-route-root
     .container
@@ -96,7 +94,6 @@
                     .tile.is-parent.is-paddingless
                       .tile.is-4
                         .tile.is-child.ouc-user-avatar
-                          flush-img(:source="user.avatarUrl", :placeholder="user.smallAvatarUrl", height="90px", align="left")
                       .tile.is-8.is-parent
                         .columns.is-vcentered
                           .column

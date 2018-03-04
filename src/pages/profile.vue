@@ -1,20 +1,16 @@
 <script>
   import moment from 'moment'
 
-  import icon from '../elements/icon.vue'
-  import themeCard from '../elements/theme-card.vue'
-  import flushImg from '../elements/flush-img.vue'
-  import oucFooter from '../elements/ouc-footer.vue'
-  import navbar from '../elements/navbar.vue'
-  import notification from '../elements/notification.vue'
+  import themeCard from '../components/elements/theme-card.vue'
+  import oucFooter from '../components/elements/ouc-footer.vue'
+  import navbar from '../components/elements/navbar.vue'
+  import notification from '../components/elements/notification.vue'
 
   export default {
     'components': {
       oucFooter,
       navbar,
       themeCard,
-      flushImg,
-      icon,
       notification,
     },
     beforeMount () {
@@ -74,22 +70,11 @@
         return `Last seen ${user.lastSeenReason}, ${moment(this.time).to(user.lastSeen)}`
       },
     },
-    'asyncComputed': {
-      'themes': {
-        'cache':   false,
-        'default': [],
-        async get () {
-          return this.getThemes({
-            'user': this.user._id,
-          })
-        },
-      },
-    },
   }
 </script>
 
 <template lang="pug">
-  include ../static/microdata/user.pug
+  include ../components/static/microdata/user.pug
 
   div.ouc-route-root
     +user-microdata
@@ -114,7 +99,6 @@
                     .tile.is-parent.is-paddingless
                       .tile.is-4
                         .tile.is-child.ouc-user-avatar
-                          flush-img(:source="user.avatarUrl", :placeholder="user.smallAvatarUrl", height="185px", align="left")
                       .tile.is-8
                         .tile.is-parent.ouc-user-details
                           .tile.is-parent
@@ -126,7 +110,7 @@
                 .box
                   .level.is-mobile
                     .level-left.ouc-last-seen-wrapper
-                      icon(v-if="isOnline(user.lastSeen)", icon="circle", color="#06BC5A")
+                      fa-icon(v-if="isOnline(user.lastSeen)", name="circle", color="#06BC5A")
                       p.ouc-last-seen {{lastOnlineDisplay}}
 
               hr

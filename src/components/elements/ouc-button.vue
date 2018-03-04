@@ -1,10 +1,5 @@
 <script>
-  import icon from './icon.vue'
-
   export default {
-    'components': {
-      icon,
-    },
     'props': {
       'icon': {
         'type':    String,
@@ -23,6 +18,6 @@
 
 <template lang="pug">
   button.button.ouc-button(:class="{'is-loading': loading}")
-    icon(:icon="icon")
+    material(:name="icon")
     slot(name="content")
 </template>

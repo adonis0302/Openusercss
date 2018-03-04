@@ -1,15 +1,14 @@
 <script>
   import {forOwn,} from 'lodash'
 
-  import spinner from '../elements/spinner.vue'
-  import oucFooter from '../elements/ouc-footer.vue'
-  import notification from '../elements/notification.vue'
-  import oucButton from '../elements/ouc-button.vue'
-  import icon from '../elements/icon.vue'
+  import spinner from '../components/elements/spinner.vue'
+  import oucFooter from '../components/elements/ouc-footer.vue'
+  import notification from '../components/elements/notification.vue'
+  import oucButton from '../components/elements/ouc-button.vue'
 
-  import bInput from '../bits/b-input.vue'
-  import bTextarea from '../bits/b-textarea.vue'
-  import bSwitch from '../bits/b-switch.vue'
+  import bInput from '../components/bits/b-input.vue'
+  import bTextarea from '../components/bits/b-textarea.vue'
+  import bSwitch from '../components/bits/b-switch.vue'
 
   export default {
     'components': {
@@ -20,7 +19,6 @@
       oucButton,
       bTextarea,
       bSwitch,
-      icon,
     },
     data () {
       return {
@@ -98,8 +96,8 @@
 
 <style lang="scss" scoped>
   @import 'node_modules/bulma/sass/utilities/initial-variables';
-  @import '../../client/scss/autocolor';
-  @import '../../client/scss/variables';
+  @import '../client/scss/autocolor';
+  @import '../client/scss/variables';
 
   .mw500 {
     max-width: 500px;
@@ -134,8 +132,8 @@
           h5 #{title}
         .level-right
           label
-            icon(v-if=condition, icon="lock")
-            icon(v-else=condition, icon="lock-open-outline")
+            fa-icon(v-if=condition, name="lock")
+            fa-icon(v-else=condition, name="lock-open-outline")
             b-switch(v-model=model)
       if block
         block

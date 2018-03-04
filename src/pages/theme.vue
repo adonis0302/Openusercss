@@ -1,15 +1,11 @@
 <script>
-  // eslint-disable no-console
-  import {formatMoment,} from '../../shared/time'
-  import {buildTheme,} from '../../shared/usercss-builder'
-  import {isInstalled,} from '../../client/js/utils/extension-hook'
+  import {formatMoment,} from '../shared/time'
+  import {buildTheme,} from '../shared/usercss-builder'
 
-  import icon from '../elements/icon.vue'
-  import flushImg from '../elements/flush-img.vue'
-  import oucFooter from '../elements/ouc-footer.vue'
-  import navbar from '../elements/navbar.vue'
-  import notification from '../elements/notification.vue'
-  import bInput from '../bits/b-input.vue'
+  import oucFooter from '../components/elements/ouc-footer.vue'
+  import navbar from '../components/elements/navbar.vue'
+  import notification from '../components/elements/notification.vue'
+  import bInput from '../components/bits/b-input.vue'
   import raven from 'raven-js'
   import hat from 'hat'
 
@@ -17,8 +13,6 @@
     'components': {
       oucFooter,
       navbar,
-      flushImg,
-      icon,
       notification,
       bInput,
     },
@@ -171,50 +165,13 @@
         }
       },
     },
-    'asyncComputed': {
-      'extensionData': {
-        'cache':   false,
-        'default': {},
-        async get () {
-          if (!process.browser) {
-            return {}
-          }
-
-          return isInstalled(this.theme)
-        },
-      },
-      'theme': {
-        'cache':   false,
-        'default': {},
-        async get () {
-          const result = await this.getTheme(this.$route.params.id)
-
-          if (!result) {
-            return {}
-          }
-
-          return result
-        },
-      },
-      'user': {
-        'cache':   false,
-        'default': {},
-        async get () {
-          if (!this.theme || !this.theme.user) {
-            return {}
-          }
-
-          return this.theme.user
-        },
-      },
-    },
   }
 </script>
 
 <style lang="scss" scoped>
   @import 'node_modules/bulma/sass/utilities/initial-variables';
-  @import '../../client/scss/autocolor';
-  @import '../../client/scss/variables';
+  @import '../client/scss/autocolor';
+  @import '../client/scss/variables';
 
   code {
     display: block;
@@ -237,7 +194,7 @@
 </style>
 
 <template lang="pug">
-  include ../static/microdata/theme.pug
+  include ../components/static/microdata/theme.pug
 
   div.ouc-route-root
     +theme-microdata
@@ -260,7 +217,7 @@
               hr
               p Please type your theme's title here to confirm:
               .control.has-icons-left
-                icon(icon="delete")
+                fa-icon(name="delete")
                 b-input(
                   name="confirmTitle",
                   v-model="confirmTitle",
@@ -317,15 +274,7 @@
             .column.is-6
               div
                 .box.is-paddingless.is-marginless.ouc-theme-card
-                  flickity.carousel(ref="flickity", :options="flickityOptions")
-                    flush-img(
-                      v-if="hasScreenshots(theme)",
-                      v-for="screenshot in theme.screenshots",
-                      :source="proxyImage(screenshot).large",
-                      height="250px",
-                      :placeholder="proxyImage(screenshot).small",
-                      align="top center"
-                    ).carousel-cell
+                  //- flickity.carousel(ref="flickity", :options="flickityOptions")
                   .column
                     .tile.is-parent.is-paddingless
                       .tile.is-child.is-parent.is-vertical

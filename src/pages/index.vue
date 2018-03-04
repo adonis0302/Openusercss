@@ -1,18 +1,22 @@
 <script>
-  import oucFooter from '../elements/ouc-footer.vue'
-  import navbar from '../elements/navbar.vue'
-  import searchField from '../elements/search-field.vue'
-  import chip from '../elements/chip.vue'
-  import themeCard from '../elements/theme-card.vue'
-  import flushImg from '../elements/flush-img.vue'
-  import notification from '../elements/notification.vue'
+  import oucFooter from '../components/elements/ouc-footer.vue'
+  import navbar from '../components/elements/navbar.vue'
+  import searchField from '../components/elements/search-field.vue'
+  import chip from '../components/elements/chip.vue'
+  import themeCard from '../components/elements/theme-card.vue'
+  import notification from '../components/elements/notification.vue'
 
   export default {
+    data () {
+      return {
+        'latestThemes':  [],
+        'popularThemes': [],
+      }
+    },
     'components': {
       searchField,
       oucFooter,
       themeCard,
-      flushImg,
       navbar,
       chip,
       notification,
@@ -39,32 +43,6 @@
           return 0
         }
         return result
-      },
-    },
-    'asyncComputed': {
-      'latestThemes': {
-        'cache':   false,
-        'default': [],
-        async get () {
-          const result = this.$db.getCollection('themes').chain().find()
-          const themes = result
-          .simplesort('createdAt', true)
-          .data()
-
-          return themes || []
-        },
-      },
-      'popularThemes': {
-        'cache':   false,
-        'default': [],
-        async get () {
-          const result = this.$db.getCollection('themes').chain().find()
-          const themes = result
-          .simplesort('ratings', true)
-          .data()
-
-          return themes || []
-        },
       },
     },
   }

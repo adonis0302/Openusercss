@@ -5,6 +5,7 @@
 .ignored
 .*.env
 .env.json
+.nuxt
 
 /reports
 /bfg.jar

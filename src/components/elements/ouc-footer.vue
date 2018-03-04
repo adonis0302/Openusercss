@@ -1,12 +1,5 @@
 <script>
-  import icon from './icon.vue'
-  import flushImg from './flush-img.vue'
-
   export default {
-    'components': {
-      icon,
-      flushImg,
-    },
     'computed': {
       revision () {
         if (typeof window === 'undefined') {
@@ -83,12 +76,6 @@
               a.button.is-patreon.is-pulled-right.is-fullheight(href="//patreon.com/DecentM", target="_blank")
                 | Become a patron on
                 .has-padding
-                flush-img(
-                  source="/img/patreon.icon-x64.png",
-                  placeholder="/img/patreon.icon-x16.png",
-                  height="25px",
-                  width="25px"
-                )
 
               a.button.is-paypal.is-pulled-right.is-fullheight(href="//www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NQE35LHY6NKS6", target="_blank")
                 | Support by PayPal!
@@ -112,12 +99,12 @@
                   router-link(to="/notice") Notice
             .column.has-text-centered
               a(href="//github.com/OpenUserCSS", target="_blank")
-                icon(icon="github-circle")
+                fa-icon(icon="code-branch")
                 | GitHub
             .column.has-text-right
               router-link(to="/contact")
-                icon(icon="email-variant")
+                fa-icon(icon="envelope")
                 | Contact the administrator
-              p Client version: {{revision.revisionTag}}&nbsp;
+              //- p Client version: {{revision.revisionTag}}&nbsp;
                 a(@click.prevent="$modal.show('changelog-viewer')") (changelog)
 </template>

@@ -1,14 +1,12 @@
 <script>
-  import oucFooter from '../elements/ouc-footer.vue'
-  import navbar from '../elements/navbar.vue'
-  import icon from '../elements/icon.vue'
-  import notification from '../elements/notification.vue'
+  import oucFooter from '../components/elements/ouc-footer.vue'
+  import navbar from '../components/elements/navbar.vue'
+  import notification from '../components/elements/notification.vue'
 
   export default {
     'components': {
       oucFooter,
       navbar,
-      icon,
       notification,
     },
     'computed': {
@@ -21,8 +19,8 @@
 
 <style lang="scss" scoped>
   @import 'node_modules/bulma/sass/utilities/initial-variables';
-  @import '../../client/scss/autocolor';
-  @import '../../client/scss/variables';
+  @import '../client/scss/autocolor';
+  @import '../client/scss/variables';
 
   .box {
     &.is-warning {
@@ -54,7 +52,7 @@
         hr
         .box.is-warning(v-if="!extension")
           p
-            icon(icon="alert")
+            fa-icon(name="alert")
             a(href="https://add0n.com/stylus.html", target="_blank", rel="nofollow noopener")
               | You don't seem to have a compatible extension installed,
               | or an error occurred.
@@ -62,10 +60,10 @@
         div(v-if="extension")
           .box.is-primary
             p(v-if="extension.version")
-              icon(icon="puzzle")
+              fa-icon(name="puzzle")
               | Detected extension: {{extension.name}}, version {{extension.version}}. You're good to go!
             p(v-if="!extension.version")
-              icon(icon="puzzle")
+              fa-icon(name="puzzle")
               | Detected extension: {{extension.name}}. You're good to go!
 
           p Here's some info about what you can do with {{extension.name}}:
@@ -118,7 +116,7 @@
               | For further help, please drop us a line&nbsp;
               a(href="//forums.openusercss.org", target="_blank") on our community forums
               | , or visit&nbsp;
-              router-link(to="/contact") the contact page
+              nuxt-link(to="/contact") the contact page
 
     ouc-footer
 </template>

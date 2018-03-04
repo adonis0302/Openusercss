@@ -3,19 +3,18 @@
   import semver from 'semver'
   import {cloneDeep, concat,} from 'lodash'
   import {Chrome as colorPicker,} from 'vue-color'
-  import parse from '../../shared/usercss-parser'
+  import parse from '../shared/usercss-parser'
   import raven from 'raven-js'
 
-  import oucFooter from '../elements/ouc-footer.vue'
-  import navbar from '../elements/navbar.vue'
-  import icon from '../elements/icon.vue'
-  import notification from '../elements/notification.vue'
-  import editor from '../elements/editor.vue'
-  import listCreator from '../elements/list-creator.vue'
+  import oucFooter from '../components/elements/ouc-footer.vue'
+  import navbar from '../components/elements/navbar.vue'
+  import notification from '../components/elements/notification.vue'
+  import editor from '../components/elements/editor.vue'
+  import listCreator from '../components/elements/list-creator.vue'
 
-  import bInput from '../bits/b-input.vue'
-  import bTextarea from '../bits/b-textarea.vue'
-  import bSwitch from '../bits/b-switch.vue'
+  import bInput from '../components/bits/b-input.vue'
+  import bTextarea from '../components/bits/b-textarea.vue'
+  import bSwitch from '../components/bits/b-switch.vue'
 
   const customDictionary = {
     'en': {
@@ -35,7 +34,6 @@
       noSSR,
       oucFooter,
       navbar,
-      icon,
       notification,
       editor,
       bInput,
@@ -177,8 +175,8 @@
 
 <style lang="scss" scoped>
   @import 'node_modules/bulma/sass/utilities/initial-variables';
-  @import '../../client/scss/autocolor';
-  @import '../../client/scss/variables';
+  @import '../client/scss/autocolor';
+  @import '../client/scss/variables';
 
   textarea[name="description"] {
     resize: vertical;
@@ -279,7 +277,7 @@
                 .tile.is-child
                   .field
                     .control.has-icons-left
-                      icon(icon="update")
+                      fa-icon(name="update")
                       b-input(
                         type="text",
                         name="version",

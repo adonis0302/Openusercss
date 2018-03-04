@@ -1,10 +1,5 @@
 <script>
-  import flushImg from './flush-img.vue'
-
   export default {
-    'components': {
-      flushImg,
-    },
     'computed': {
       favicon () {
         return `//${this.host}/favicon.ico`
@@ -36,11 +31,5 @@
 
 <template lang="pug">
   .tag.ouc-tag
-    flush-img.ouc-tag-image(
-      height="16px",
-      width="16px",
-      :source="favicon",
-      placeholder="/img/openusercss.icon-x16.png"
-    )
     slot(name="content")
 </template>

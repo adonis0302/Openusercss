@@ -1,16 +1,14 @@
 <script>
-  import oucFooter from '../elements/ouc-footer.vue'
-  import navbar from '../elements/navbar.vue'
+  import oucFooter from '../components/elements/ouc-footer.vue'
+  import navbar from '../components/elements/navbar.vue'
 
-  import icon from '../elements/icon.vue'
-  import notification from '../elements/notification.vue'
-  import oucButton from '../elements/ouc-button.vue'
-  import bInput from '../bits/b-input.vue'
+  import notification from '../components/elements/notification.vue'
+  import oucButton from '../components/elements/ouc-button.vue'
+  import bInput from '../components/bits/b-input.vue'
 
   export default {
     'components': {
       oucButton,
-      icon,
       notification,
       oucFooter,
       navbar,
@@ -55,7 +53,7 @@
                   .tile.is-child
                     .field
                       .control.has-icons-left
-                        icon(icon="mail-ru")
+                        fa-icon(name="mail-ru")
                         b-input(
                           type="email",
                           name="email",
@@ -72,7 +70,7 @@
                       .column
                         .field
                           .control.has-icons-left
-                            icon(icon="lock")
+                            fa-icon(name="lock")
                             b-input(
                               type="password",
                               name="password",

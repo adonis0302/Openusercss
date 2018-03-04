@@ -1,12 +1,7 @@
 <script>
-  import flushImg from './flush-img.vue'
-  import icon from './icon.vue'
+  import {mapGetters,} from 'vuex'
 
   export default {
-    'components': {
-      icon,
-      flushImg,
-    },
     'methods': {
       toggleOpen () {
         this.open = !this.open
@@ -15,6 +10,9 @@
         this.open = false
       },
     },
+    'computed': mapGetters({
+      'session': 'user/session',
+    }),
     data () {
       return {
         'open': false,
@@ -66,12 +64,12 @@
   }
 
   .navbar-item:not(.no-active) {
-    &.router-link-exact-active {
+    &.nuxt-link-exact-active {
       background-color: nth($background, 1);
       color: nth($background, 2);
     }
 
-    &:not(.router-link-exact-active):not(:hover) {
+    &:not(.nuxt-link-exact-active):not(:hover) {
       background-color: nth($primary, 1);
       color: nth($primary, 2);
     }
@@ -83,8 +81,7 @@
     .navbar.ouc-navbar.is-primary.md-shadow--2
       .container
         .navbar-brand.ouc-navbar-brand
-          router-link(to="/").navbar-item.no-active
-            flush-img(source="/img/openusercss.icon-x64.png", placeholder="/img/openusercss.icon-x16.png", height="36px", width="36px")
+          nuxt-link(to="/").navbar-item.no-active
             .spacer
             span OpenUserCSS
             .spacer
@@ -97,29 +94,29 @@
         .navbar-menu.is-primary.ouc-navbar-menu(:class="{'is-active': open}")
           .navbar-start
           .navbar-end(@click="close")
-            router-link(v-if="session", :to="'/profile/' + currentUser._id").navbar-item
-              icon(icon="account")
+            nuxt-link(v-if="session", :to="'/profile/' + currentUser._id").navbar-item
+              fa-icon(icon="account")
               | Welcome, {{currentUser.displayname}}
             a(v-if="session", @click.prevent="logout").navbar-item
-              icon(icon="logout")
+              fa-icon(icon="sign-out")
               | Log out
-            router-link(to="/").navbar-item
-              icon(icon="home")
+            nuxt-link(to="/").navbar-item
+              fa-icon(icon="home")
               | Home
-            router-link(v-if="!session", to="/login").navbar-item
-              icon(icon="login")
+            nuxt-link(v-if="!session", to="/login").navbar-item
+              fa-icon(icon="sign-in-alt")
               | Log in
-            router-link(v-if="!session", to="/register").navbar-item
-              icon(icon="account-plus")
+            nuxt-link(v-if="!session", to="/register").navbar-item
+              fa-icon(icon="user-plus")
               | Register
-            router-link(to="/search").navbar-item
-              icon(icon="magnify")
+            nuxt-link(to="/search").navbar-item
+              fa-icon(icon="search")
               | Search
             a(href="//forums.openusercss.org").navbar-item
-              icon(icon="forum")
+              fa-icon(icon="users")
               | Forums
-            router-link(to="/help").navbar-item
-              icon(icon="help-circle")
+            nuxt-link(to="/help").navbar-item
+              fa-icon(icon="question-circle")
               | Help
 
     .body-spacer

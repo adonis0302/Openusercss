@@ -1,11 +1,7 @@
 <script>
-  import icon from './icon.vue'
   import {LeftRight,} from '../../../src/shared/animations'
 
   export default {
-    'components': {
-      icon,
-    },
     'methods': new LeftRight(),
     'props':   {
       'icon': {
@@ -43,7 +39,7 @@
     .notification.ouc-notification(:class="color")
       .tile.is-ancestor
         .tile.is-1.ouc-icon-wrapper
-          icon(:icon="icon")
+          fa-icon(:name="icon")
         .tile
           slot(name="content")
 </template>

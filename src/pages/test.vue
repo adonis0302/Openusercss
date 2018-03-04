@@ -1,13 +1,11 @@
 <script>
-  import oucFooter from '../elements/ouc-footer.vue'
-  import spinner from '../elements/spinner.vue'
-  import flushImg from '../elements/flush-img.vue'
+  import oucFooter from '../components/elements/ouc-footer.vue'
+  import spinner from '../components/elements/spinner.vue'
 
   export default {
     'components': {
       oucFooter,
       spinner,
-      flushImg,
     },
     data () {
       return {

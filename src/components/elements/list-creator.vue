@@ -1,11 +1,9 @@
 <script>
   import bInput from '../bits/b-input.vue'
-  import icon from './icon.vue'
 
   export default {
     'components': {
       bInput,
-      icon,
     },
     'props': [
       'itemName',
@@ -66,7 +64,7 @@
       .tile
         .tile(is-child, is-11)
           .control(v-if="typeof item === 'string'", has-icons-left)
-            icon(:icon="icon")
+            fa-icon(:name="icon")
             b-input(
               v-model="list[index]",
               @input="changeItem",
@@ -74,7 +72,7 @@
             )
           .tile(v-if="typeof item === 'object' && supportObjects")
             .control(v-for="(value, key) in item", v-if="key !== '__typename'", has-icons-left)
-              icon(:icon="icon")
+              fa-icon(:name="icon")
               b-input(
                 v-model="list[index][key]",
                 @input="changeItem"

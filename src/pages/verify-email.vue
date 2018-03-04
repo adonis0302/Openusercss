@@ -1,7 +1,7 @@
 <script>
-  import spinner from '../elements/spinner.vue'
-  import oucFooter from '../elements/ouc-footer.vue'
-  import notification from '../elements/notification.vue'
+  import spinner from '../components/elements/spinner.vue'
+  import oucFooter from '../components/elements/ouc-footer.vue'
+  import notification from '../components/elements/notification.vue'
 
   export default {
     'components': {
@@ -26,8 +26,8 @@
 
 <style lang="scss" scoped>
   @import 'node_modules/bulma/sass/utilities/initial-variables';
-  @import '../../client/scss/autocolor';
-  @import '../../client/scss/variables';
+  @import '../client/scss/autocolor';
+  @import '../client/scss/variables';
 
   .mw500 {
     max-width: 500px;
