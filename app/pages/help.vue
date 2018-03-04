@@ -19,8 +19,8 @@
 
 <style lang="scss" scoped>
   @import 'node_modules/bulma/sass/utilities/initial-variables';
-  @import '../client/scss/autocolor';
-  @import '../client/scss/variables';
+  @import '../scss/autocolor';
+  @import '../scss/variables';
 
   .box {
     &.is-warning {

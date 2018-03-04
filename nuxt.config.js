@@ -21,7 +21,7 @@ const postcss = [
 ]
 
 module.exports = {
-  'srcDir': './src',
+  'srcDir': './app',
   'head':   {
     'titleTemplate': '%s - OpenUserCSS',
     'meta':          [
@@ -35,7 +35,7 @@ module.exports = {
     'height':      '3px',
   },
   'css': [
-    '~/client/scss/main.scss',
+    '~/scss/main.scss',
   ],
   'plugins': [
     '~/plugins/vue-moment',

@@ -25,8 +25,8 @@
 
 <style lang="scss" scoped>
   @import 'node_modules/bulma/sass/utilities/initial-variables';
-  @import '../../client/scss/autocolor';
-  @import '../../client/scss/variables';
+  @import '../../scss/autocolor';
+  @import '../../scss/variables';
 
   $background: map-get($colors, 'background');
 
@@ -46,7 +46,7 @@
     z-index: 2;
   }
 
-  @import '../../client/scss/reboot';
+  @import '../../scss/reboot';
 </style>
 
 <template lang="pug">
