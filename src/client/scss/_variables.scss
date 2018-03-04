@@ -34,7 +34,7 @@ $layout: (
 );
 
 $animations: (
-  "animation-function": ease-in-out-quart,
+  "animation-function": cubic-bezier(.6,.01,.6,.99),
   "shorttime":          .3s,
   "longtime":           1s
 );
@@ -109,12 +109,12 @@ $blue:	        map-get($tones, 'blue');
 $purple:	      map-get($tones, 'purple');
 $red:	          map-get($tones, 'red');
 
-$primary: map-get($colors,   'primary');
+$primary:   map-get($colors, 'primary');
 $secondary: map-get($colors, 'secondary');
-$info: map-get($colors,      'secondary');
-$success: map-get($colors,   'success');
-$danger: map-get($colors,    'danger');
-$warning: map-get($colors,   'warning');
+$info:      map-get($colors, 'secondary');
+$success:   map-get($colors, 'success');
+$danger:    map-get($colors, 'danger');
+$warning:   map-get($colors, 'warning');
 
 $text: nth(map-get($colors, 'body'), 2);
 $link: nth(map-get($colors, 'body'), 2);
@@ -127,4 +127,4 @@ $radius:        map-get($kerning, 'radius');
 $radius-large:  map-get($kerning, 'radius-large');
 
 $easing: map-get($animations, 'animation-function');
-$speed: map-get($animations, 'shorttime');
+$speed:  map-get($animations, 'shorttime');

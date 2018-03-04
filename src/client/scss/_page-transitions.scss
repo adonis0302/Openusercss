@@ -1,0 +1,19 @@
+.ouc-route-root {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition-property: clip-path, transform;
+  transition-duration: map-get($animations, 'shorttime');;
+  transition-timing-function: map-get($animations, 'animation-function');
+}
+
+.page-enter {
+  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+  transform: translateX(-50px);
+}
+.page-leave-to {
+  clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+  transform: translateX(50px);
+}
