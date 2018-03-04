@@ -6,8 +6,8 @@ Thank you for contributing your time, resources and expertise to the project!
 OpenUserCSS is released under the GNU General Public License v3.0. As such, all contributions must be released under the same license.  
 
 When you send your first Pull Request,
-- You'll be asked to sign the OpenUserCSS CLA. If you want to read it first, [please head here](https://gist.github.com/DecentM/bf9d2df39a15da19470301cbefff7a3a).  
-- Please run `npm run contrib:add -- {{your GitHub username}} {{type}}` to add yourself to the contributors list in [README.md](https://github.com/OpenUserCSS/openusercss.org#contributing)
+- You'll be asked to sign the OpenUserCSS CLA. If you want to read it first, [please head here](https://i.imgur.com/AwVkfSI.png).  
+- Please run `yarn contrib:add -- {{your GitHub username}} {{type}}` to add yourself to the contributors list in [README.md](https://github.com/OpenUserCSS/openusercss.org#contributing)
 
 > For what to put in place of {{type}}, [look here](https://github.com/jfmengels/all-contributors-cli#addupdate-contributors)
 
@@ -45,14 +45,14 @@ than a large one that has tons of content.
 1. Clone the repo with `git clone https://github.com/<your username>/openusercss.org.git .`
 1. Type `yarn` to install all the required dependencies into the node_modules directory
 1. (optinally) Add `./node_modules/.bin` into your $PATH, as all required binaries are there
-1. Type `npm run watch` to start the development server with live reload
+1. Type `yarn watch` to start the development server with live reload
 1. Hack away!  
 
 ## Running tests
 There are three types of tests you can run:
-- Unit tests - `npm run test:unit`/`yarn run test:unit`
-- API tests - `npm run test:api`/`yarn run test:api`
-- End-to-end tests - `npm run test:e2e`/`yarn run test:e2e`
+- Unit tests - `yarn test:unit`/`yarn run test:unit`
+- API tests - `yarn test:api`/`yarn run test:api`
+- End-to-end tests - `yarn test:e2e`/`yarn run test:e2e`
 
 When you submit the Pull Request, an automated system will run these tests and validate the PR. Running the rest of the tests is optional, but I recommend doing it before pushing anyway.
 
@@ -60,6 +60,6 @@ When you submit the Pull Request, an automated system will run these tests and v
 This project follows the `standard` commit message convention. For example:  
 `feat(client): Display short revision id + branch in footer`  
 
-If you don't want to type this format manually, you can use `npm run c` or `git-cz` to launch Commitizen that creates the format for you.  
+If you don't want to type this format manually, you can use `yarn c` or `git-cz` to launch Commitizen that creates the format for you.  
 
 When you make a commit, the pre-commit hook will lint your code, then run unit tests. Please make sure that you stash changes you haven't added to your commit, so that tests only run on code you're about to commit.  
