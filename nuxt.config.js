@@ -20,7 +20,9 @@ const postcss = [
   willChangeTransition(),
 ]
 
-const analyze = process.env.NODE_ENV !== 'production' && !process.env.CI
+const dev = process.env.NODE_ENV === 'development'
+const ci = process.env.CI
+const analyze = dev && !ci
 
 module.exports = {
   'srcDir': './app',
@@ -48,6 +50,52 @@ module.exports = {
     '~/plugins/extension-data',
   ],
   'modules': [
+    [
+      '@nuxtjs/pwa', {
+        'manifest': {
+          'name':             'OpenUserCSS',
+          'short_name':       'OpenUserCSS',
+          'description':      'Themes for your favourite websites',
+          'display':          'standalone',
+          'theme_color':      '#005FFF',
+          'background_color': '#3E28B0',
+          'start_url':        '/?utm_source=homescreen',
+          'lang':             'en',
+          'icons':            [
+            {
+              'src':   '/img/openusercss.icon-x16.png',
+              'sizes': '16x16',
+              'type':  'image/png',
+            },
+            {
+              'src':   '/img/openusercss.icon-x32.png',
+              'sizes': '32x32',
+              'type':  'image/png',
+            },
+            {
+              'src':   '/img/openusercss.icon-x64.png',
+              'sizes': '64x64',
+              'type':  'image/png',
+            },
+            {
+              'src':   '/img/openusercss.icon-x128.png',
+              'sizes': '128x128',
+              'type':  'image/png',
+            },
+            {
+              'src':   '/img/openusercss.icon-x360.png',
+              'sizes': '360x360',
+              'type':  'image/png',
+            },
+            {
+              'src':   '/img/openusercss.icon-x640.png',
+              'sizes': '640x640',
+              'type':  'image/png',
+            },
+          ],
+        },
+      },
+    ],
     [
       'nuxt-fontawesome', {
         'component': 'fa-icon',
