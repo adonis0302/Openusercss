@@ -28,7 +28,7 @@
   .notification.ouc-notification(:class="color")
     .tile.is-ancestor
       .tile.is-1.ouc-icon-wrapper
-        fa-icon(:name="icon")
+        fa-icon(:icon="icon")
       .tile
         slot(name="content")
 </template>

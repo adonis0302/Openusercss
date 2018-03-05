@@ -55,7 +55,7 @@
                   .tile.is-child
                     .field
                       .control.has-icons-left
-                        icon(icon="mail-ru")
+                        fa-icon.icon(icon="envelope")
                         b-input(
                           type="email",
                           name="email",
@@ -70,7 +70,7 @@
                   .tile.is-child
                     .field
                       .control.has-icons-left
-                        fa-icon(name="account")
+                        fa-icon.icon(icon="user")
                         b-input(
                           type="text",
                           name="displayname",
@@ -87,7 +87,7 @@
                       .column
                         .field
                           .control.has-icons-left
-                            fa-icon(name="lock")
+                            fa-icon.icon(icon="lock")
                             b-input(
                               type="password",
                               name="password",
@@ -101,8 +101,7 @@
                             )
                       .column
                         .field
-                          .control.has-icons-left
-                            fa-icon(name="lock-plus")
+                          .control
                             b-input(
                               type="password",
                               name="passwordVerify",
@@ -115,10 +114,10 @@
                               aria-label="registration passphrase, again"
                             )
                   .tile.is-parent.is-vertical.is-paddingless
-                    ouc-button(icon="account-plus").is-primary
+                    ouc-button(icon="user-plus").is-primary
                       p(slot="content") Register
                     hr(v-show="errors.any()")
-                    notification(v-show="errors.any()", icon="alert", color="is-danger").is-danger
+                    notification(v-show="errors.any()", icon="exclamation", color="is-danger").is-danger
                       div(slot="content")
                         ul
                           li(v-for="error in errors.all()") {{error}}

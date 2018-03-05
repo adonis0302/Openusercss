@@ -30,9 +30,9 @@
 
             br
             p If that's not enough, you can check these themes out ^.^
-            p Or if you're going back to the Internet, take these with you:
-              fa-icon(icon="shield-outline")
-              fa-icon(icon="sword")
+            p Or if you're going back to the Internet, take these with you:&nbsp;&nbsp;
+              fa-icon(icon="chess-pawn")
+              fa-icon(icon="quidditch")
 
             hr
             p

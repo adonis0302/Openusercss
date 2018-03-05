@@ -33,6 +33,11 @@
       color: nth($primary, 2);
     }
   }
+
+  .has-margin-horizontal {
+    margin-right: 1rem;
+    margin-left: .5rem;
+  }
 </style>
 
 <template lang="pug">
@@ -52,7 +57,7 @@
         hr
         .box.is-warning(v-if="!extension")
           p
-            fa-icon(name="alert")
+            fa-icon.has-margin-horizontal(icon="exclamation")
             a(href="https://add0n.com/stylus.html", target="_blank", rel="nofollow noopener")
               | You don't seem to have a compatible extension installed,
               | or an error occurred.

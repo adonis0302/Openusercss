@@ -80,7 +80,7 @@
                 @input="queryChange"
               )
             .column.is-1
-              button.button(type="submit", :class="['button', 'is-primary', 'is-pulled-right', {'is-loading': loading}]") Search
+              button.button(type="submit", :class="['button', 'is-primary', 'is-pulled-right']") Search
         div(v-if="results")
           .columns
             .column.is-4

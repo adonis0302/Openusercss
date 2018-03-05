@@ -9,6 +9,10 @@ star-rating {
   margin-right: .5rem;
 }
 
+.icon.svg-inline--fa {
+  padding: .66rem;
+}
+
 .vue-tooltip-theme {
   background-color: nth($secondary, 1);
   color: nth($secondary, 2);

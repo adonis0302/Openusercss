@@ -1,6 +1,10 @@
 <script>
   export default {
     'props': {
+      'loading': {
+        'type':    Boolean,
+        'default': false,
+      },
       'icon': {
         'type':    String,
         'default': 'chevron-up',
@@ -18,6 +22,6 @@
 
 <template lang="pug">
   button.button.ouc-button(:class="{'is-loading': loading}")
-    material(:name="icon")
+    fa-icon(:icon="icon")
     slot(name="content")
 </template>

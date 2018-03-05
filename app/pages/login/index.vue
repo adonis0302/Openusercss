@@ -53,7 +53,7 @@
                   .tile.is-child
                     .field
                       .control.has-icons-left
-                        fa-icon(name="mail-ru")
+                        fa-icon.icon(icon="envelope")
                         b-input(
                           type="email",
                           name="email",
@@ -70,7 +70,7 @@
                       .column
                         .field
                           .control.has-icons-left
-                            fa-icon(name="lock")
+                            fa-icon.icon(icon="lock")
                             b-input(
                               type="password",
                               name="password",
@@ -83,10 +83,10 @@
                               aria-label="login passphrase"
                             )
                   .tile.is-parent.is-vertical.is-paddingless
-                    ouc-button(icon="account-plus").is-primary
+                    ouc-button(icon="user-plus").is-primary
                       p(slot="content") Login
                     hr(v-show="errors.any()")
-                    notification(v-show="errors.any()", icon="alert", color="is-danger").is-danger
+                    notification(v-show="errors.any()", icon="exclamation", color="is-danger").is-danger
                       div(slot="content")
                         ul
                           li(v-for="error in errors.all()") {{error}}
