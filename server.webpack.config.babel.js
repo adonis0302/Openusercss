@@ -27,9 +27,7 @@ const options = {
   'mode':   'production',
   'target': 'node',
   'entry':  {
-    'api':       './src/api.js',
-    'webserver': './src/webserver.js',
-    'server':    './src/client/js/server.js',
+    'api': './src/api.js',
   },
   'output': {
     'path':     path.resolve('build/'),
