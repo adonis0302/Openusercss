@@ -1,19 +1,41 @@
-.ouc-route-root {
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+@media screen and (max-width: 479px) {
+  .ouc-route-root {
+    opacity: 1;
+  }
+
+  .page-enter-active,
+  .page-leave-active {
+    transition-property: opacity, transform, filter;
+    transition-duration: map-get($animations, 'shorttime');;
+    transition-timing-function: map-get($animations, 'animation-function');
+  }
+
+  .page-enter,
+  .page-leave-to {
+    opacity: 0;
+    transform: scale(0.975);
+    filter: grayscale(1);
+  }
 }
 
-.page-enter-active,
-.page-leave-active {
-  transition-property: clip-path, transform;
-  transition-duration: map-get($animations, 'shorttime');;
-  transition-timing-function: map-get($animations, 'animation-function');
-}
+@media screen and (min-width: 478px) {
+  .ouc-route-root {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+  }
 
-.page-enter {
-  clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
-  transform: translateX(-50px);
-}
-.page-leave-to {
-  clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
-  transform: translateX(50px);
+  .page-enter-active,
+  .page-leave-active {
+    transition-property: clip-path, transform;
+    transition-duration: map-get($animations, 'shorttime');;
+    transition-timing-function: map-get($animations, 'animation-function');
+  }
+
+  .page-enter {
+    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%);
+    transform: translateX(-50px);
+  }
+  .page-leave-to {
+    clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
+    transform: translateX(50px);
+  }
 }
