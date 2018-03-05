@@ -173,3 +173,7 @@ gulp.task('static:email', () => {
     gulp.dest(destination('css')),
   ])
 })
+
+gulp.task('static:watch', () => {
+  gulp.watch('src/client/img/**/*', gulp.series('static:fast'))
+})

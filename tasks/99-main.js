@@ -1,10 +1,6 @@
 import gulp from 'gulp'
 import server from 'gulp-develop-server'
 
-gulp.task('static:watch', () => {
-  gulp.watch('src/client/img/**/*', gulp.series('static:fast'))
-})
-
 gulp.task('api:run', () => {
   return server.listen({
     'path':       './build/api.bundle.min',
@@ -22,8 +18,9 @@ gulp.task('build', gulp.parallel(
 gulp.task('watch', gulp.series(
   'api:fast',
   gulp.parallel(
-    'static:email',
+    'static:fast',
     'static:watch',
+    'static:email',
     'api:watch',
     'api:run'
   )
