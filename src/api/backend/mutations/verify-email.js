@@ -1,4 +1,4 @@
-import staticConfig from '../../../shared/config'
+import staticConfig from '../../../../lib/config'
 import jwt from 'jsonwebtoken'
 import pify from 'pify'
 

@@ -1,6 +1,6 @@
 import {findIndex,} from 'lodash'
-import mustAuthenticate from '../../../shared/enforce-session'
-import parse from '../../../shared/usercss-parser'
+import mustAuthenticate from '../../../../lib/enforce-session'
+import parse from '../../../../lib/usercss-parser'
 
 export default async (root, {
   token,

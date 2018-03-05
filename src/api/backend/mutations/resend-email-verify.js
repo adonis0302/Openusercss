@@ -1,5 +1,5 @@
-import mustAuthenticate from '../../../shared/enforce-session'
-import staticConfig from '../../../shared/config'
+import mustAuthenticate from '../../../../lib/enforce-session'
+import staticConfig from '../../../../lib/config'
 import jwt from 'jsonwebtoken'
 import {
   sendEmail,

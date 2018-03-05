@@ -6,8 +6,8 @@ import moment from 'moment'
 import {
   sendEmail as transportEmail,
 } from '../../email/mailer'
-import mustAuthenticate from '../../../shared/enforce-session'
-import staticConfig from '../../../shared/config'
+import mustAuthenticate from '../../../../lib/enforce-session'
+import staticConfig from '../../../../lib/config'
 
 const sendEmail = async (locals, {template,}) => {
   if (!locals.email) {
