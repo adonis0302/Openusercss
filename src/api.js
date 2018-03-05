@@ -5,7 +5,7 @@ import log from 'chalk-console'
 import morgan from 'morgan'
 import corser from 'corser'
 
-import staticConfig from './shared/config'
+import staticConfig from '../lib/config'
 import setupRoutes from './api/routes'
 
 import http from 'http'
