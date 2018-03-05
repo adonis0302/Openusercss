@@ -1,24 +1,4 @@
-@media screen and (max-width: 479px) {
-  .ouc-route-root {
-    opacity: 1;
-  }
-
-  .page-enter-active,
-  .page-leave-active {
-    transition-property: opacity, transform, filter;
-    transition-duration: map-get($animations, 'shorttime');;
-    transition-timing-function: map-get($animations, 'animation-function');
-  }
-
-  .page-enter,
-  .page-leave-to {
-    opacity: 0;
-    transform: scale(0.975);
-    filter: grayscale(1);
-  }
-}
-
-@media screen and (min-width: 478px) {
+@mixin fancy {
   .ouc-route-root {
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   }
@@ -38,4 +18,41 @@
     clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%);
     transform: translateX(50px);
   }
+}
+
+@mixin simple {
+  .ouc-route-root {
+    opacity: 1;
+  }
+
+  .page-enter-active,
+  .page-leave-active {
+    transition-property: opacity, transform, filter;
+    transition-duration: map-get($animations, 'longtime');;
+    transition-timing-function: map-get($animations, 'animation-function');
+  }
+
+  .page-enter,
+  .page-leave-to {
+    opacity: 0;
+    transform: scale(0.975);
+    filter: grayscale(.75);
+  }
+}
+
+// If a device has a touchscreen or the screen is small,
+// we assume it's a low power one, so only a simple page transition plays
+@media (pointer: coarse), (max-width: 767px) {
+  @include simple;
+}
+
+// If we have a fine pointer (e.g. a mouse), and the screen is large
+// we assume we're on a higher powered device, so we play a fancier animation
+@media (pointer: fine) and (min-width: 767px) {
+  @include fancy;
+}
+
+// GET THE EYEBLEACH, FIREFOX DOESN'T SUPPORT THE POINTER QUERY
+@media all and (min--moz-device-pixel-ratio:0) and (min-resolution: 3e1dpcm) and (min-width: 767px) {
+  @include fancy;
 }
