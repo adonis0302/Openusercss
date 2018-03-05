@@ -217,7 +217,7 @@
               hr
               p Please type your theme's title here to confirm:
               .control.has-icons-left
-                fa-icon(name="delete")
+                fa-icon.icon(icon="trash-alt")
                 b-input(
                   name="confirmTitle",
                   v-model="confirmTitle",
@@ -298,12 +298,12 @@
                             .level-left
                               p Rate this theme:
                             .level-right
-                              star-rating(
+                              //- star-rating(
                                 :rating="averageRating(theme.ratings)",
                                 :item-size="25",
                                 :show-rating="false",
                                 @rating-selected="sendRating"
-                              )
+                                )
 
               .box
                 vue-markdown(
