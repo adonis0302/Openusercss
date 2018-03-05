@@ -2379,7 +2379,11 @@ caniuse-api@^2.0.0:
     lodash.memoize "^4.1.2"
     lodash.uniq "^4.5.0"
 
-caniuse-db@^1.0.30000525, caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639, caniuse-db@^1.0.30000783:
+caniuse-db@^1.0.30000525, caniuse-db@^1.0.30000783:
+  version "1.0.30000811"
+  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000811.tgz#19efb9238393d40078332c34485c818d641c4305"
+
+caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
   version "1.0.30000810"
   resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000810.tgz#bd25830c41efab64339a2e381f49677343c84509"
 
@@ -6151,12 +6155,11 @@ gulp-babel@^7:
     through2 "^2.0.0"
     vinyl-sourcemaps-apply "^0.2.0"
 
-gulp-base64-webfont-css@^0:
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/gulp-base64-webfont-css/-/gulp-base64-webfont-css-0.0.1.tgz#f190bde23d77a6a168a43a847d4d92c19cbaec63"
+gulp-buffer@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/gulp-buffer/-/gulp-buffer-0.0.2.tgz#af81b4346101736b49942ec6c9fa867ffe737036"
   dependencies:
-    gulp-util "^3.0.4"
-    through2 "^0.6.3"
+    through2 "~0.4.0"
 
 gulp-cached@^1:
   version "1.1.1"
@@ -6243,6 +6246,13 @@ gulp-filter@^5:
     plugin-error "^0.1.2"
     streamfilter "^1.0.5"
 
+gulp-flatten@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/gulp-flatten/-/gulp-flatten-0.4.0.tgz#d9ac819416c30fd5dfb3dea9da79c83a1bcd61d1"
+  dependencies:
+    plugin-error "^0.1.2"
+    through2 "^2.0.0"
+
 gulp-imagemin@^3:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/gulp-imagemin/-/gulp-imagemin-3.4.0.tgz#23a8d4c5133f50a2a708aca87ca4b2d6eb7c4403"
@@ -6276,15 +6286,6 @@ gulp-imagemin@^3:
     readable-stream "^2.0.4"
     through2 "^2.0.0"
 
-gulp-pleeease@^2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/gulp-pleeease/-/gulp-pleeease-2.0.2.tgz#f61b83f1426b41beb0a04e0785de868af2faa726"
-  dependencies:
-    gulp-util "^3.0.1"
-    pleeease "^4.0.1"
-    through2 "^2.0.0"
-    vinyl-sourcemaps-apply "^0.1.4"
-
 gulp-postcss@^7:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/gulp-postcss/-/gulp-postcss-7.0.1.tgz#3f1c36db1197140c399c252ddff339129638e395"
@@ -6314,15 +6315,6 @@ gulp-remember@^0:
 gulp-rename@^1, gulp-rename@^1.2.0:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/gulp-rename/-/gulp-rename-1.2.2.tgz#3ad4428763f05e2764dec1c67d868db275687817"
-
-gulp-sass-glob@^1:
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/gulp-sass-glob/-/gulp-sass-glob-1.0.8.tgz#3b737ecebc9e6c106b82574c6faa9314bd94aeaa"
-  dependencies:
-    glob "^7.1.1"
-    minimatch "^3.0.3"
-    slash "^1.0.0"
-    through2 "^2.0.3"
 
 gulp-sass-vars@^1:
   version "1.3.0"
@@ -6360,7 +6352,7 @@ gulp-sourcemaps@1.6.0:
     through2 "^2.0.0"
     vinyl "^1.0.0"
 
-gulp-util@^3.0, gulp-util@^3.0.0, gulp-util@^3.0.1, gulp-util@^3.0.2, gulp-util@^3.0.3, gulp-util@^3.0.4, gulp-util@^3.0.7, gulp-util@^3.0.8:
+gulp-util@^3.0, gulp-util@^3.0.0, gulp-util@^3.0.1, gulp-util@^3.0.2, gulp-util@^3.0.3, gulp-util@^3.0.7, gulp-util@^3.0.8:
   version "3.0.8"
   resolved "https://registry.yarnpkg.com/gulp-util/-/gulp-util-3.0.8.tgz#0054e1e744502e27c04c187c3ecc505dd54bbb4f"
   dependencies:
@@ -10522,7 +10514,7 @@ pleeease-filters@^4.0.0:
     onecolor "^3.0.4"
     postcss "^6.0.1"
 
-pleeease@^4.0.1:
+pleeease@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/pleeease/-/pleeease-4.3.0.tgz#4fdf87eeb0167e582d6723586af402559fd5d098"
   dependencies:
@@ -13184,7 +13176,7 @@ source-map-url@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/source-map-url/-/source-map-url-0.4.0.tgz#3e935d7ddd73631b97659956d55128e87b5084a3"
 
-source-map@0.1.x, source-map@^0.1.39:
+source-map@0.1.x:
   version "0.1.43"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.1.43.tgz#c24bc146ca517c1471f5dacbe2571b2b7f9e3346"
   dependencies:
@@ -13868,7 +13860,7 @@ through2@^0.5.0:
     readable-stream "~1.0.17"
     xtend "~3.0.0"
 
-through2@^0.6.0, through2@^0.6.1, through2@^0.6.3:
+through2@^0.6.0, through2@^0.6.1:
   version "0.6.5"
   resolved "https://registry.yarnpkg.com/through2/-/through2-0.6.5.tgz#41ab9c67b29d57209071410e1d7a7a968cd3ad48"
   dependencies:
@@ -13889,7 +13881,7 @@ through2@~0.2.3:
     readable-stream "~1.1.9"
     xtend "~2.1.1"
 
-through2@~0.4.1:
+through2@~0.4.0, through2@~0.4.1:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/through2/-/through2-0.4.2.tgz#dbf5866031151ec8352bb6c4db64a2292a840b9b"
   dependencies:
@@ -14631,12 +14623,6 @@ vinyl-sourcemap@^1.1.0:
     now-and-later "^2.0.0"
     remove-bom-buffer "^3.0.0"
     vinyl "^2.0.0"
-
-vinyl-sourcemaps-apply@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/vinyl-sourcemaps-apply/-/vinyl-sourcemaps-apply-0.1.4.tgz#c5fcbd43e2f238423c2dc98bddd6f79b72bc345b"
-  dependencies:
-    source-map "^0.1.39"
 
 vinyl-sourcemaps-apply@^0.2.0, vinyl-sourcemaps-apply@^0.2.1:
   version "0.2.1"
