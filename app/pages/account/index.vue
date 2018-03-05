@@ -1,14 +1,14 @@
 <script>
   import {forOwn,} from 'lodash'
 
-  import spinner from '../components/elements/spinner.vue'
-  import oucFooter from '../components/elements/ouc-footer.vue'
-  import notification from '../components/elements/notification.vue'
-  import oucButton from '../components/elements/ouc-button.vue'
+  import spinner from '~/components/elements/spinner.vue'
+  import oucFooter from '~/components/elements/ouc-footer.vue'
+  import notification from '~/components/elements/notification.vue'
+  import oucButton from '~/components/elements/ouc-button.vue'
 
-  import bInput from '../components/bits/b-input.vue'
-  import bTextarea from '../components/bits/b-textarea.vue'
-  import bSwitch from '../components/bits/b-switch.vue'
+  import bInput from '~/components/bits/b-input.vue'
+  import bTextarea from '~/components/bits/b-textarea.vue'
+  import bSwitch from '~/components/bits/b-switch.vue'
 
   export default {
     'components': {
@@ -96,8 +96,8 @@
 
 <style lang="scss" scoped>
   @import 'node_modules/bulma/sass/utilities/initial-variables';
-  @import '../scss/autocolor';
-  @import '../scss/variables';
+  @import '../../scss/autocolor';
+  @import '../../scss/variables';
 
   .mw500 {
     max-width: 500px;

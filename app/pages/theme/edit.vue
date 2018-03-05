@@ -3,18 +3,18 @@
   import semver from 'semver'
   import {cloneDeep, concat,} from 'lodash'
   import {Chrome as colorPicker,} from 'vue-color'
-  import parse from '../../lib/usercss-parser'
+  import parse from '~/../lib/usercss-parser'
   import raven from 'raven-js'
 
-  import oucFooter from '../components/elements/ouc-footer.vue'
-  import navbar from '../components/elements/navbar.vue'
-  import notification from '../components/elements/notification.vue'
-  import editor from '../components/elements/editor.vue'
-  import listCreator from '../components/elements/list-creator.vue'
+  import oucFooter from '~/components/elements/ouc-footer.vue'
+  import navbar from '~/components/elements/navbar.vue'
+  import notification from '~/components/elements/notification.vue'
+  import editor from '~/components/elements/editor.vue'
+  import listCreator from '~/components/elements/list-creator.vue'
 
-  import bInput from '../components/bits/b-input.vue'
-  import bTextarea from '../components/bits/b-textarea.vue'
-  import bSwitch from '../components/bits/b-switch.vue'
+  import bInput from '~/components/bits/b-input.vue'
+  import bTextarea from '~/components/bits/b-textarea.vue'
+  import bSwitch from '~/components/bits/b-switch.vue'
 
   const customDictionary = {
     'en': {
@@ -175,8 +175,8 @@
 
 <style lang="scss" scoped>
   @import 'node_modules/bulma/sass/utilities/initial-variables';
-  @import '../scss/autocolor';
-  @import '../scss/variables';
+  @import '../../scss/autocolor';
+  @import '../../scss/variables';
 
   textarea[name="description"] {
     resize: vertical;

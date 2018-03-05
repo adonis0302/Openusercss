@@ -1,6 +1,6 @@
 <script>
-  import oucFooter from '../components/elements/ouc-footer.vue'
-  import spinner from '../components/elements/spinner.vue'
+  import oucFooter from '~/components/elements/ouc-footer.vue'
+  import spinner from '~/components/elements/spinner.vue'
 
   export default {
     'components': {

@@ -1,10 +1,10 @@
 <script>
-  import notification from '../components/elements/notification.vue'
-  import oucButton from '../components/elements/ouc-button.vue'
-  import bInput from '../components/bits/b-input.vue'
+  import notification from '~/components/elements/notification.vue'
+  import oucButton from '~/components/elements/ouc-button.vue'
+  import bInput from '~/components/bits/b-input.vue'
 
-  import oucFooter from '../components/elements/ouc-footer.vue'
-  import navbar from '../components/elements/navbar.vue'
+  import oucFooter from '~/components/elements/ouc-footer.vue'
+  import navbar from '~/components/elements/navbar.vue'
 
   export default {
     'components': {

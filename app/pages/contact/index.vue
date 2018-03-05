@@ -1,8 +1,8 @@
 <script>
   import {decode,} from 'he'
 
-  import oucFooter from '../components/elements/ouc-footer.vue'
-  import navbar from '../components/elements/navbar.vue'
+  import oucFooter from '~/components/elements/ouc-footer.vue'
+  import navbar from '~/components/elements/navbar.vue'
 
   export default {
     'components': {

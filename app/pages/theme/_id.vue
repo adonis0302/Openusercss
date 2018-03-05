@@ -1,11 +1,11 @@
 <script>
-  import {formatMoment,} from '../../lib/time'
-  import {buildTheme,} from '../../lib/usercss-builder'
+  import {formatMoment,} from '~/../lib/time'
+  import {buildTheme,} from '~/../lib/usercss-builder'
 
-  import oucFooter from '../components/elements/ouc-footer.vue'
-  import navbar from '../components/elements/navbar.vue'
-  import notification from '../components/elements/notification.vue'
-  import bInput from '../components/bits/b-input.vue'
+  import oucFooter from '~/components/elements/ouc-footer.vue'
+  import navbar from '~/components/elements/navbar.vue'
+  import notification from '~/components/elements/notification.vue'
+  import bInput from '~/components/bits/b-input.vue'
   import raven from 'raven-js'
   import hat from 'hat'
 
@@ -170,8 +170,8 @@
 
 <style lang="scss" scoped>
   @import 'node_modules/bulma/sass/utilities/initial-variables';
-  @import '../scss/autocolor';
-  @import '../scss/variables';
+  @import '../../scss/autocolor';
+  @import '../../scss/variables';
 
   code {
     display: block;
@@ -194,7 +194,7 @@
 </style>
 
 <template lang="pug">
-  include ../components/static/microdata/theme.pug
+  include ../../components/static/microdata/theme.pug
 
   div.ouc-route-root
     +theme-microdata

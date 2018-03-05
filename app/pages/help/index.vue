@@ -1,7 +1,7 @@
 <script>
-  import oucFooter from '../components/elements/ouc-footer.vue'
-  import navbar from '../components/elements/navbar.vue'
-  import notification from '../components/elements/notification.vue'
+  import oucFooter from '~/components/elements/ouc-footer.vue'
+  import navbar from '~/components/elements/navbar.vue'
+  import notification from '~/components/elements/notification.vue'
 
   export default {
     'components': {
@@ -19,8 +19,8 @@
 
 <style lang="scss" scoped>
   @import 'node_modules/bulma/sass/utilities/initial-variables';
-  @import '../scss/autocolor';
-  @import '../scss/variables';
+  @import '../../scss/autocolor';
+  @import '../../scss/variables';
 
   .box {
     &.is-warning {

@@ -1,9 +1,9 @@
 <script>
-  import oucFooter from '../components/elements/ouc-footer.vue'
-  import navbar from '../components/elements/navbar.vue'
-  import searchField from '../components/elements/search-field.vue'
-  import notification from '../components/elements/notification.vue'
-  import themeCard from '../components/elements/theme-card.vue'
+  import oucFooter from '~/components/elements/ouc-footer.vue'
+  import navbar from '~/components/elements/navbar.vue'
+  import searchField from '~/components/elements/search-field.vue'
+  import notification from '~/components/elements/notification.vue'
+  import themeCard from '~/components/elements/theme-card.vue'
 
   export default {
     'components': {
@@ -65,8 +65,8 @@
 </script>
 
 <template lang="pug">
-  include ../components/static/microdata/theme.pug
-  include ../components/static/microdata/user.pug
+  include ../../components/static/microdata/theme.pug
+  include ../../components/static/microdata/user.pug
 
   div.ouc-route-root
     .container
