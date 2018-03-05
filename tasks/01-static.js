@@ -4,10 +4,8 @@ import merge from 'merge-stream'
 import buffer from 'gulp-buffer'
 import filter from 'gulp-filter'
 import path from 'path'
-import {
-  remember,
-  cached,
-} from './shared/cache'
+import remember from 'gulp-remember'
+import cached from 'gulp-cached'
 
 // IMAGES
 import imagemin from 'gulp-imagemin'
