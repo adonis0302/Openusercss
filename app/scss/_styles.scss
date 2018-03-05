@@ -35,6 +35,7 @@ star-rating {
 .ouc-route-root {
   display: flex;
   flex-direction: column;
+  min-height: calc(100vh - #{map-get($kerning, 'navbar-height')});
 
   > *:not(:last-child) {
     flex: 1
