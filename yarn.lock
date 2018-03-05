@@ -9564,6 +9564,10 @@ nuxt-fontawesome@^0.1.3:
     "@fortawesome/fontawesome" "^1.1.3"
     "@fortawesome/vue-fontawesome" "^0.0.22"
 
+"nuxt-matomo@https://github.com/DecentM/nuxt-matomo":
+  version "0.4.0"
+  resolved "https://github.com/DecentM/nuxt-matomo#cbb1238e59d8fe8171c4dd100fd4efd3fb284dde"
+
 nuxt@^1.4.0:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/nuxt/-/nuxt-1.4.0.tgz#66df9ede68daf2ef4cfbcc329da7dda0003e0420"

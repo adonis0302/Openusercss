@@ -51,6 +51,13 @@ module.exports = {
   ],
   'modules': [
     [
+      'nuxt-matomo', {
+        'matomoUrl': '//pwk.decentm.com/',
+        'siteId':    10,
+        'cookies':   false,
+      },
+    ],
+    [
       '@nuxtjs/sitemap', {
         'exclude': [
           '/theme/*/edit',
