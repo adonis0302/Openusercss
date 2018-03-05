@@ -1,6 +1,6 @@
 <script>
-  import {formatMoment,} from '../shared/time'
-  import {buildTheme,} from '../shared/usercss-builder'
+  import {formatMoment,} from '../../lib/time'
+  import {buildTheme,} from '../../lib/usercss-builder'
 
   import oucFooter from '../components/elements/ouc-footer.vue'
   import navbar from '../components/elements/navbar.vue'

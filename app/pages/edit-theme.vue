@@ -3,7 +3,7 @@
   import semver from 'semver'
   import {cloneDeep, concat,} from 'lodash'
   import {Chrome as colorPicker,} from 'vue-color'
-  import parse from '../shared/usercss-parser'
+  import parse from '../../lib/usercss-parser'
   import raven from 'raven-js'
 
   import oucFooter from '../components/elements/ouc-footer.vue'
