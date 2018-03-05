@@ -20,6 +20,8 @@ const postcss = [
   willChangeTransition(),
 ]
 
+const analyze = process.env.NODE_ENV !== 'production' && !process.env.CI
+
 module.exports = {
   'srcDir': './app',
   'head':   {
@@ -47,6 +49,7 @@ module.exports = {
     '~/plugins/material-icons',
   ],
   'build': {
+    analyze,
     postcss,
   },
 }
