@@ -46,7 +46,18 @@ module.exports = {
     '~/plugins/vue-modal',
     '~/plugins/vee-validate',
     '~/plugins/extension-data',
-    '~/plugins/material-icons',
+  ],
+  'modules': [
+    [
+      'nuxt-fontawesome', {
+        'component': 'fa-icon',
+        'imports':   [
+          {
+            'set': '@fortawesome/fontawesome-free-solid',
+          },
+        ],
+      },
+    ],
   ],
   'build': {
     analyze,

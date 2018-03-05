@@ -8,13 +8,11 @@
     "vue",
     "security",
     "async",
-    "flowtype",
     "ava"
   ],
   "extends": [
     "standard",
     "nodesecurity",
-    "plugin:flowtype/recommended",
     "plugin:vue/base"
   ],
   "rules": {
