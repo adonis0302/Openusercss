@@ -6170,13 +6170,6 @@ gulp-decompress@^1.2.0:
     gulp-util "^3.0.1"
     readable-stream "^2.0.2"
 
-gulp-develop-server@^0:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/gulp-develop-server/-/gulp-develop-server-0.5.2.tgz#20d1c9039e93f6a7c3c3cc84d557a9052c230cf4"
-  dependencies:
-    gulp-util "^3.0.3"
-    lodash "^4.13.1"
-
 gulp-filter@^5:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/gulp-filter/-/gulp-filter-5.1.0.tgz#a05e11affb07cf7dcf41a7de1cb7b63ac3783e73"
@@ -6275,7 +6268,7 @@ gulp-sourcemaps@1.6.0:
     through2 "^2.0.0"
     vinyl "^1.0.0"
 
-gulp-util@^3.0, gulp-util@^3.0.1, gulp-util@^3.0.3, gulp-util@^3.0.7, gulp-util@^3.0.8:
+gulp-util@^3.0, gulp-util@^3.0.1, gulp-util@^3.0.7, gulp-util@^3.0.8:
   version "3.0.8"
   resolved "https://registry.yarnpkg.com/gulp-util/-/gulp-util-3.0.8.tgz#0054e1e744502e27c04c187c3ecc505dd54bbb4f"
   dependencies:
@@ -13141,6 +13134,10 @@ standard-version@^4:
     fs-access "^1.0.0"
     semver "^5.1.0"
     yargs "^8.0.1"
+
+start-server-webpack-plugin@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/start-server-webpack-plugin/-/start-server-webpack-plugin-2.2.3.tgz#acc6947b919ca4226f48c67a6802b397e6df00f4"
 
 stat-mode@^0.2.0:
   version "0.2.2"

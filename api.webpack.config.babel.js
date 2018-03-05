@@ -7,6 +7,7 @@ import fs from 'fs'
 
 // Plugins
 import UglifyJSPlugin from 'uglifyjs-webpack-plugin'
+import StartServerPlugin from 'start-server-webpack-plugin'
 
 const log = (prefix, ...contents) => {
   /* eslint-disable-next-line no-console */
@@ -58,6 +59,13 @@ export default ({watch, env,}) => {
   if (env && env === 'development') {
     options.mode = env
     options.watch = watch
+
+    if (watch) {
+      options.plugins.push(new StartServerPlugin({
+        'name':   'api.bundle.min.js',
+        'signal': 'SIGTERM',
+      }))
+    }
   } else {
     options.plugins.push(new UglifyJSPlugin())
   }

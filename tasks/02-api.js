@@ -3,7 +3,7 @@ import pump from 'pump'
 
 import webpack from 'webpack'
 import webpackStream from 'webpack-stream'
-import webpackConfig from '../server.webpack.config.babel'
+import webpackConfig from '../api.webpack.config.babel'
 
 gulp.task('api:prod', () => {
   return pump([
