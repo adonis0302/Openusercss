@@ -1,7 +1,11 @@
 <script>
   import {mapGetters,} from 'vuex'
+  import progressiveImage from '../bits/progressive-image.vue'
 
   export default {
+    'components': {
+      progressiveImage,
+    },
     'methods': {
       toggleOpen () {
         this.open = !this.open
@@ -48,8 +52,8 @@
 
   .navbar-brand {
     img {
-      max-height: map-get($kerning, 'navbar-height');
-      min-height: map-get($kerning, 'navbar-height');
+      max-height: calc(#{map-get($kerning, 'navbar-height')} - 1.5rem);
+      min-height: calc(#{map-get($kerning, 'navbar-height')} - 1.5rem);
     }
   }
 
@@ -60,7 +64,7 @@
   }
 
   .spacer {
-    width: 1rem;
+    width: .75rem;
   }
 
   .navbar-item:not(.no-active) {
@@ -82,6 +86,12 @@
       .container
         .navbar-brand.ouc-navbar-brand
           nuxt-link(to="/").navbar-item.no-active
+            progressive-image(
+              src="/img/openusercss.icon.svg",
+              placeholder="/img/openusercss.icon-x16.png",
+              height="2.5",
+              width="2.5"
+            )
             .spacer
             span OpenUserCSS
             .spacer
