@@ -5,7 +5,7 @@ import webpack from 'webpack'
 import webpackStream from 'webpack-stream'
 import webpackConfig from '../server.webpack.config.babel'
 
-gulp.task('server:prod', () => {
+gulp.task('api:prod', () => {
   return pump([
     gulp.src('./src/*.js'),
     webpackStream(webpackConfig({
@@ -16,7 +16,7 @@ gulp.task('server:prod', () => {
   ])
 })
 
-gulp.task('server:fast', () => {
+gulp.task('api:fast', () => {
   return pump([
     gulp.src('./src/*.js'),
     webpackStream(webpackConfig({
@@ -27,7 +27,7 @@ gulp.task('server:fast', () => {
   ])
 })
 
-gulp.task('server:watch', () => {
+gulp.task('api:watch', (done) => {
   return pump([
     gulp.src('./src/*.js'),
     webpackStream(webpackConfig({
