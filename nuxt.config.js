@@ -51,6 +51,13 @@ module.exports = {
   ],
   'modules': [
     [
+      '@nuxtjs/sitemap', {
+        'exclude': [
+          '/theme/*/edit',
+        ],
+      },
+    ],
+    [
       '@nuxtjs/pwa', {
         'manifest': {
           'name':             'OpenUserCSS',

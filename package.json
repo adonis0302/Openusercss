@@ -59,6 +59,7 @@
     "@fortawesome/fontawesome-free-solid": "^5.0.8",
     "@fortawesome/vue-fontawesome": "^0.0.22",
     "@nuxtjs/pwa": "^2.0.5",
+    "@nuxtjs/sitemap": "^0.0.3",
     "all-contributors-cli": "^4",
     "ava": "^0",
     "babel-cli": "^6",
