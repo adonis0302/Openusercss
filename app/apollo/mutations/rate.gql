@@ -1,0 +1,39 @@
+mutation(
+  $id:    ID!
+  $token: String!
+  $value: Int!
+) {
+  rate(
+    id:    $id
+    token: $token
+    value: $value
+  ) {
+    _id
+    user {
+      _id
+      username
+      displayname
+      avatarUrl
+      smallAvatarUrl
+      lastSeen
+      lastSeenReason
+      createdAt
+      lastUpdate
+      bio
+      donationUrl
+    }
+    title
+    description
+    content
+    createdAt
+    lastUpdate
+    version
+    screenshots
+    options {
+      type
+      label
+      name
+      value
+    }
+  }
+}

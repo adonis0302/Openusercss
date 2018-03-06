@@ -46,10 +46,12 @@ module.exports = {
     '~/plugins/vue-markdown',
     '~/plugins/vue-filters',
     '~/plugins/vue-modal',
+    '~/plugins/vue-apollo',
     '~/plugins/vee-validate',
     '~/plugins/extension-data',
   ],
   'modules': [
+    '~/modules/vue-apollo',
     [
       'nuxt-matomo', {
         'matomoUrl': '//pwk.decentm.com/',

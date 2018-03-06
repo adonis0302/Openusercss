@@ -1,0 +1,49 @@
+mutation(
+  $token:       String!
+  $id:          ID!
+  $title:       String!
+  $description: String!
+  $content:     String!
+  $version:     String!
+  $screenshots: [String]!
+  $options:     String!
+) {
+  theme(
+    token:       $token
+    id:          $id
+    title:       $title
+    description: $description
+    content:     $content
+    version:     $version
+    screenshots: $screenshots
+    options:     $options
+  ) {
+    _id
+    user {
+      _id
+      username
+      displayname
+      avatarUrl
+      smallAvatarUrl
+      lastSeen
+      lastSeenReason
+      createdAt
+      lastUpdate
+      bio
+      donationUrl
+    }
+    title
+    description
+    content
+    createdAt
+    lastUpdate
+    version
+    screenshots
+    options {
+      type
+      label
+      name
+      value
+    }
+  }
+}

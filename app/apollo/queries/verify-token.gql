@@ -1,0 +1,23 @@
+query($token: String!) {
+  verifyToken(token: $token) {
+    _id
+    user {
+      _id
+      username
+      displayname
+      avatarUrl
+      smallAvatarUrl
+      lastSeen
+      lastSeenReason
+      createdAt
+      lastUpdate
+      bio
+      donationUrl
+    }
+    token
+    expiresAt
+    createdAt
+    ip
+    ua
+  }
+}

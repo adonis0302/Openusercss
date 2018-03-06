@@ -1,0 +1,29 @@
+mutation(
+  $token:       String!
+  $password:    String
+  $displayname: String
+  $email:       String
+  $bio:         String
+  $donationUrl: String
+) {
+  account(
+    token:       $token
+    password:    $password
+    displayname: $displayname
+    email:       $email
+    bio:         $bio
+    donationUrl: $donationUrl
+  ) {
+    _id
+    username
+    displayname
+    avatarUrl
+    smallAvatarUrl
+    lastSeen
+    lastSeenReason
+    createdAt
+    lastUpdate
+    bio
+    donationUrl
+  }
+}

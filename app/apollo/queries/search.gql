@@ -1,0 +1,47 @@
+query($terms: String!, $limit: Int, $skip: Int) {
+  search(terms: $terms, limit: $limit, skip: $skip) {
+    users {
+      _id
+      username
+      displayname
+      avatarUrl
+      smallAvatarUrl
+      lastSeen
+      lastSeenReason
+      createdAt
+      lastUpdate
+      bio
+      donationUrl
+    }
+
+    themes {
+      _id
+      user {
+        _id
+        username
+        displayname
+        avatarUrl
+        smallAvatarUrl
+        lastSeen
+        lastSeenReason
+        createdAt
+        lastUpdate
+        bio
+        donationUrl
+      }
+      title
+      description
+      content
+      createdAt
+      lastUpdate
+      version
+      screenshots
+      options {
+        type
+        label
+        name
+        value
+      }
+    }
+  }
+}

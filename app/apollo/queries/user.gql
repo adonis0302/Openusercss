@@ -1,0 +1,15 @@
+query($id: ID!) {
+  user(id: $id) {
+    _id
+    username
+    displayname
+    avatarUrl
+    smallAvatarUrl
+    lastSeen
+    lastSeenReason
+    createdAt
+    lastUpdate
+    bio
+    donationUrl
+  }
+}

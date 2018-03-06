@@ -1,0 +1,23 @@
+mutation(
+  $displayname: String!
+  $email:       String!
+  $password:    String!
+) {
+  register(
+    displayname: $displayname
+    email:       $email
+    password:    $password
+  ) {
+    _id
+    username
+    displayname
+    avatarUrl
+    smallAvatarUrl
+    lastSeen
+    lastSeenReason
+    createdAt
+    lastUpdate
+    bio
+    donationUrl
+  }
+}
