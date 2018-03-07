@@ -58,7 +58,11 @@
         this.results = searchResults
       },
       queryChange (value) {
-        this.$router.replace(`/search/${value}`)
+        this.$router.replace({
+          'query': {
+            'terms': value,
+          },
+        })
       },
     },
   }
