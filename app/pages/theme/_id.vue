@@ -99,14 +99,18 @@
       },
       viewSource () {
         this.$modal.show('source-viewer')
-        this.$router.replace(`/theme/${this.$route.params.id}/${encodeURIComponent(JSON.stringify({
-          'viewingSource': true,
-        }))}`)
+        this.$router.replace({
+          'query': {
+            'viewingSource': true,
+          },
+        })
       },
       closeSource () {
-        this.$router.replace(`/theme/${this.$route.params.id}/${encodeURIComponent(JSON.stringify({
-          'viewingSource': false,
-        }))}`)
+        this.$router.replace({
+          'query': {
+            'viewingSource': false,
+          },
+        })
       },
       installTheme () {
         if (process.env.NODE_ENV === 'development') {
