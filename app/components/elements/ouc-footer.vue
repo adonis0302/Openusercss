@@ -1,18 +1,28 @@
 <script>
   import progressiveImage from '../bits/progressive-image.vue'
+  import gql from 'graphql-tag'
 
   export default {
+    'apollo': {
+      'version': gql`{
+        version {
+          revisionTag
+        }
+      }`,
+    },
     'components': {
       progressiveImage,
     },
+    data () {
+      return {
+        'version': {
+          'revisionTag':   'loading...',
+          'latestThemes':  [],
+          'popularThemes': [],
+        },
+      }
+    },
     'computed': {
-      revision () {
-        if (typeof window === 'undefined') {
-          return {}
-        }
-
-        return window.revision
-      },
       changelog () {
         if (typeof window === 'undefined') {
           return ''
@@ -115,6 +125,7 @@
               router-link(to="/contact")
                 fa-icon(icon="envelope")
                 | Contact the administrator
-              //- p Client version: {{revision.revisionTag}}&nbsp;
+              p API version: {{version.revisionTag}}
+              p Client version: {{$pkg.version}}&nbsp;
                 a(@click.prevent="$modal.show('changelog-viewer')") (changelog)
 </template>
