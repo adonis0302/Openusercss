@@ -53,6 +53,23 @@ module.exports = {
   ],
   'modules': [
     [
+      '@nuxtjs/markdownit', {
+        'preset':  'default',
+        'breaks':  true,
+        'linkify': true,
+        'use':     [
+          [
+            'markdown-it-link-attributes', {
+              'attrs': {
+                'target': '_blank',
+                'rel':    'noopener nofollow',
+              },
+            },
+          ],
+        ],
+      },
+    ],
+    [
       'nuxt-matomo', {
         'matomoUrl': '//pwk.decentm.com/',
         'siteId':    10,
