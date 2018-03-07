@@ -1,6 +1,8 @@
 <script>
-  import progressiveImage from '../bits/progressive-image.vue'
   import gql from 'graphql-tag'
+
+  import progressiveImage from '../bits/progressive-image.vue'
+  import changelog from '~/../CHANGELOG.md'
 
   export default {
     'apollo': {
@@ -13,6 +15,11 @@
     'components': {
       progressiveImage,
     },
+    'computed': {
+      changelog () {
+        return changelog
+      },
+    },
     data () {
       return {
         'version': {
@@ -21,15 +28,6 @@
           'popularThemes': [],
         },
       }
-    },
-    'computed': {
-      changelog () {
-        if (typeof window === 'undefined') {
-          return ''
-        }
-
-        return window.changelog
-      },
     },
   }
 </script>
@@ -65,6 +63,10 @@
   .has-padding {
     padding: .25rem
   }
+
+  .v--modal .box {
+    margin-top: 4rem;
+  }
 </style>
 
 <template lang="pug">
@@ -75,11 +77,7 @@
       :scrollable="true"
     )
       .box
-        vue-markdown.content(
-          :source="changelog",
-          :html="true",
-          :anchor-attributes="$anchorAttributes"
-        )
+        div(v-html="changelog")
 
     .is-vertical.ouc-im-broke-wrapper
       .is-primary-bg
