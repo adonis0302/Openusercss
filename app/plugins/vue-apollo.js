@@ -39,6 +39,7 @@ export default async (context, inject) => {
   if (process.client) {
     persistor = new CachePersistor({
       'storage': localforage,
+      'maxSize': 2096128,
       cache,
     })
 
