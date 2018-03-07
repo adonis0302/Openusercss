@@ -3,6 +3,7 @@ import nodeFetch from 'node-fetch'
 import Vue from 'vue'
 import VueApollo from 'vue-apollo'
 import localforage from 'localforage'
+import log from 'chalk-console'
 
 import pkg from '~/../package.json'
 
@@ -43,18 +44,15 @@ export default async (context, inject) => {
       cache,
     })
 
-    const cacheVersion = localforage.getItem('ouc-cache-version')
+    const cacheVersion = await localforage.getItem('ouc-cache-version')
 
     if (pkg.version === cacheVersion) {
       await persistor.restore()
     } else {
-<<<<<<< Updated upstream
-=======
       console.warn([
         `Client (${pkg.version}) - cache (${cacheVersion}) version mismatch.`,
         'Emptying...',
       ].join(' '))
->>>>>>> Stashed changes
       await persistor.purge()
       await localforage.setItem('ouc-cache-version', pkg.version)
     }
