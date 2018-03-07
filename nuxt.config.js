@@ -49,9 +49,9 @@ module.exports = {
     '~/plugins/vue-apollo',
     '~/plugins/vee-validate',
     '~/plugins/extension-data',
+    '~/plugins/static-data',
   ],
   'modules': [
-    '~/modules/vue-apollo',
     [
       'nuxt-matomo', {
         'matomoUrl': '//pwk.decentm.com/',
