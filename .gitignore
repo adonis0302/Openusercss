@@ -15,7 +15,7 @@ bkup.*
 /fly
 /screenshots
 
-/app/static
+/app/static/
 
 # Created by https://www.gitignore.io/api/node,linux
 
