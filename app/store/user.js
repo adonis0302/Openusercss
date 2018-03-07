@@ -1,3 +1,5 @@
+import createPersistedState from 'vuex-persistedstate'
+import localforage from 'localforage'
 import {struct,} from 'superstruct'
 
 const validators = {}
@@ -18,6 +20,14 @@ validators.session = struct({
   'ua':    'string',
   'user':  validators.reference('User'),
 })
+
+export const plugins = []
+
+if (process.client) {
+  plugins.push(createPersistedState({
+    'storage': localforage,
+  }))
+}
 
 export const state = () => ({
   'session': false,

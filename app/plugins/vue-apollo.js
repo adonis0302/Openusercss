@@ -1,3 +1,4 @@
+/* eslint no-console:0 */
 import nodeFetch from 'node-fetch'
 import Vue from 'vue'
 import VueApollo from 'vue-apollo'
@@ -48,9 +49,9 @@ export default async (context, inject) => {
     if (pkg.version === cacheVersion) {
       await persistor.restore()
     } else {
-      log.info([
-        `Cache version (${cacheVersion}) and client version (${pkg.version})`,
-        'don\'t match. Emptying cache...',
+      console.warn([
+        `Client (${pkg.version}) - cache (${cacheVersion}) version mismatch.`,
+        'Emptying...',
       ].join(' '))
       await persistor.purge()
       await localforage.setItem('ouc-cache-version', pkg.version)
