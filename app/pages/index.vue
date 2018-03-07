@@ -1,4 +1,6 @@
 <script>
+  import gql from 'graphql-tag'
+
   import oucFooter from '~/components/elements/ouc-footer.vue'
   import navbar from '~/components/elements/navbar.vue'
   import searchField from '~/components/elements/search-field.vue'
@@ -7,6 +9,54 @@
   import notification from '~/components/elements/notification.vue'
 
   export default {
+    'apollo': {
+      'latestThemes': {
+        'query': gql`query($limit: Int!) {
+          latestThemes(limit: $limit) {
+            _id
+            user {
+              _id
+              username
+              displayname
+              avatarUrl
+              smallAvatarUrl
+            }
+            title
+            description
+            createdAt
+            lastUpdate
+          }
+        }`,
+        variables () {
+          return {
+            'limit': 6,
+          }
+        },
+      },
+      'popularThemes': {
+        'query': gql`query($limit: Int!) {
+          popularThemes(limit: $limit) {
+            _id
+            user {
+              _id
+              username
+              displayname
+              avatarUrl
+              smallAvatarUrl
+            }
+            title
+            description
+            createdAt
+            lastUpdate
+          }
+        }`,
+        variables () {
+          return {
+            'limit': 6,
+          }
+        },
+      },
+    },
     data () {
       return {
         'latestThemes':  [],
