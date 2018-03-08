@@ -6,6 +6,8 @@
   import oucFooter from '~/components/elements/ouc-footer.vue'
   import navbar from '~/components/elements/navbar.vue'
 
+  import gql from 'graphql-tag'
+
   export default {
     'components': {
       oucButton,
@@ -29,7 +31,24 @@
         const validated = await this.$validator.validateAll()
 
         if (validated) {
-          this.$store.dispatch('register', this.registerData)
+          await this.$apollo.mutate({
+            'mutation': gql`
+              mutation(
+                $displayname: String!
+                $email:       String!
+                $password:    String!
+              ) {
+                register(
+                  displayname: $displayname
+                  email:       $email
+                  password:    $password
+                ) {
+                  _id
+                }
+              }
+            `,
+            'variables': this.registerData,
+          })
         }
       },
     },

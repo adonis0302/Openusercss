@@ -6,6 +6,8 @@
   import oucButton from '~/components/elements/ouc-button.vue'
   import bInput from '~/components/bits/b-input.vue'
 
+  import gql from 'graphql-tag'
+
   export default {
     'components': {
       oucButton,
@@ -27,7 +29,22 @@
         const validated = await this.$validator.validateAll()
 
         if (validated) {
-          await this.$store.dispatch('login', this.loginData)
+          await this.$apollo.mutate({
+            'mutation': gql`
+              mutation(
+                $email:    String!
+                $password: String!
+              ) {
+                login(
+                  email:    $email
+                  password: $password
+                ) {
+                  token
+                }
+              }
+            `,
+            'variables': this.loginData,
+          })
         }
       },
     },
