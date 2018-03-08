@@ -1,4 +1,4 @@
-import staticConfig from '../../../../lib/config'
+import staticConfig from '../../../lib/config'
 import jwt from 'jsonwebtoken'
 import pify from 'pify'
 
@@ -10,11 +10,11 @@ export default async (root, {token,}, {User,}) => {
   if (decoded.email) {
     let user = null
 
-    const existingEmailUser = await getUser({
+    const existingEmailUser = await User.findOne({
       'email': decoded.email,
     })
 
-    user = existingEmailUser || await getUser({
+    user = existingEmailUser || await User.findOne({
       'pendingEmail': decoded.email,
     })
 

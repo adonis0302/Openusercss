@@ -33,16 +33,16 @@ const sources = {
     'app/scss/email.scss',
   ],
   'icons': [
-    'src/client/img/*.icon.*',
+    'src/img/*.icon.*',
   ],
   'elements': [
-    'src/client/img/**/*',
+    'src/img/**/*',
   ],
   'backgrounds': [
-    'src/client/img/**/*.bg.*',
+    'src/img/**/*.bg.*',
   ],
   'vectors': [
-    'src/client/img/**/*.svg',
+    'src/img/**/*.svg',
   ],
 }
 

@@ -28,7 +28,7 @@ const options = {
   'mode':   'production',
   'target': 'node',
   'entry':  {
-    'api': './src/api.js',
+    'api': './api/index.js',
   },
   'output': {
     'path':     path.resolve('build/'),

@@ -1,6 +1,6 @@
 import {findIndex,} from 'lodash'
-import mustAuthenticate from '../../../../lib/enforce-session'
-import parse from '../../../../lib/usercss-parser'
+import mustAuthenticate from '../../../lib/enforce-session'
+import parse from '../../../lib/usercss-parser'
 
 export default async (root, {
   token,
@@ -11,9 +11,9 @@ export default async (root, {
   id,
   screenshots,
   options,
-}, {Session, Theme, User, Option,}) => {
+}, {Session, Theme, User, Rating, Option,}) => {
   const session = await mustAuthenticate(token, Session)
-  const user = await getUser({
+  const user = await User.findOne({
     '_id': session.user._id,
   })
   let newTheme = null
@@ -29,7 +29,7 @@ export default async (root, {
   const parsedOptions = JSON.parse(decodeURIComponent(options))
 
   if (id) {
-    newTheme = await getTheme({
+    newTheme = await Theme.findOne({
       '_id': id,
     })
     const userOwnsTheme = session.user._id.equals(newTheme.user._id)
@@ -65,7 +65,7 @@ export default async (root, {
   const savedTheme = await newTheme.save()
 
   await user.save()
-  savedTheme.ratings = await getRatings({
+  savedTheme.ratings = await Rating.find({
     'theme': savedTheme._id,
   })
 

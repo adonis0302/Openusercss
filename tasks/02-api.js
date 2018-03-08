@@ -5,9 +5,15 @@ import webpack from 'webpack'
 import webpackStream from 'webpack-stream'
 import webpackConfig from '../api.webpack.config.babel'
 
+const sources = {
+  'api': [
+    'api/index.js',
+  ],
+}
+
 gulp.task('api:prod', () => {
   return pump([
-    gulp.src('./src/*.js'),
+    gulp.src(sources.api),
     webpackStream(webpackConfig({
       'env':   'production',
       'watch': false,
@@ -18,7 +24,7 @@ gulp.task('api:prod', () => {
 
 gulp.task('api:fast', () => {
   return pump([
-    gulp.src('./src/*.js'),
+    gulp.src(sources.api),
     webpackStream(webpackConfig({
       'env':   'development',
       'watch': false,
@@ -29,7 +35,7 @@ gulp.task('api:fast', () => {
 
 gulp.task('api:watch', (done) => {
   return pump([
-    gulp.src('./src/*.js'),
+    gulp.src(sources.api),
     webpackStream(webpackConfig({
       'env':   'development',
       'watch': true,

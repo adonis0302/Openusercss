@@ -1,12 +1,12 @@
 import {ObjectID,} from 'mongodb'
-import mustAuthenticate from '../../../../lib/enforce-session'
+import mustAuthenticate from '../../../lib/enforce-session'
 
 export default async (root, {token, id, value,}, {Session, Theme, Rating, User,}) => {
   const session = await mustAuthenticate(token, Session)
-  const user = await getUser({
+  const user = await User.findOne({
     '_id': session.user._id,
   })
-  const theme = await getTheme({
+  const theme = await Theme.findOne({
     '_id': id,
   })
 
@@ -22,7 +22,7 @@ export default async (root, {token, id, value,}, {Session, Theme, Rating, User,}
   })
 
   // Load the existing rating object
-  let existing = await getRating({
+  let existing = await Rating.findOne({
     'theme': new ObjectID(id),
     'user':  user._id,
   })
@@ -41,7 +41,7 @@ export default async (root, {token, id, value,}, {Session, Theme, Rating, User,}
   }
 
   await existing.save()
-  const finalTheme = await getTheme({
+  const finalTheme = await Theme.findOne({
     '_id': id,
   })
 

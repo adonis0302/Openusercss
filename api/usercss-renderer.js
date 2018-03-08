@@ -1,5 +1,5 @@
 import Theme from './connector/schema/theme'
-import {buildTheme,} from '../../lib/usercss-builder'
+import {buildTheme,} from '../lib/usercss-builder'
 
 export default async (req, res, next) => {
   const foundTheme = await Theme.findOne({
