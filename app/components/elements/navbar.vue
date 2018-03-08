@@ -2,6 +2,8 @@
   import {mapGetters,} from 'vuex'
   import progressiveImage from '../bits/progressive-image.vue'
 
+  import pkg from '~/../package.json'
+
   export default {
     'components': {
       progressiveImage,
@@ -14,9 +16,14 @@
         this.open = false
       },
     },
-    'computed': mapGetters({
-      'session': 'user/session',
-    }),
+    'computed': {
+      ...mapGetters({
+        'session': 'user/session',
+      }),
+      'release': () => pkg.release.replace(/\w\S*/g, (text) => {
+        return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase()
+      }),
+    },
     data () {
       return {
         'open': false,
@@ -96,7 +103,7 @@
             span OpenUserCSS
             .spacer
             .tag.is-secondary
-              | Alpha!
+              | {{release}}!
           .navbar-burger(@click="toggleOpen")
             span
             span
