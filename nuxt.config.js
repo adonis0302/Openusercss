@@ -47,6 +47,7 @@ module.exports = {
     '~/plugins/vue-filters',
     '~/plugins/vue-modal',
     '~/plugins/vue-apollo',
+    '~/plugins/vue-noscript',
     '~/plugins/vee-validate',
     '~/plugins/extension-data',
     '~/plugins/static-data',
