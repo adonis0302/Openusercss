@@ -48,12 +48,8 @@ module.exports = {
       {'rel': 'me', 'href': '//decentm.com',},
     ],
   },
-  'loading': {
-    'color':       '#FFB450',
-    'failedColor': '#D80B00',
-    'height':      '3px',
-  },
-  'css': [
+  'loading': '~/components/elements/loading.vue',
+  'css':     [
     '~/scss/main.scss',
   ],
   'plugins': [
