@@ -8,8 +8,6 @@ import ellipsis from 'postcss-ellipsis'
 
 import cssnano from 'cssnano'
 import advancedPreset from 'cssnano-preset-advanced'
-import {appConfig,} from './config'
-import processObject from '../../lib/process-object'
 
 const customPreset = advancedPreset({
   'discardComments':     false,
@@ -48,29 +46,6 @@ export const postCssPluginsProd = [
     'preset': 'advanced',
   }),
 ]
-
-export const ourSassConfig = processObject(appConfig.get(), (index, value) => {
-  if (value[0] === '#') {
-    return value
-  } else if (
-    value.includes
-    && (value.includes('rem')
-      || value.includes('em')
-      || value.includes('px')
-      || value.includes('%')
-      || value.includes('vh')
-      || value.includes('vw')
-    )
-  ) {
-    return value
-  }
-
-  if (value === 0) {
-    return value
-  }
-
-  return `"${value}"`
-})
 
 export const iconSizesPx = [
   16,
