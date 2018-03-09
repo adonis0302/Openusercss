@@ -98,6 +98,13 @@ star-rating {
   width: 100%;
 }
 
+.is-full-centered {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .has-bottom-margin:not(:last-child) {
   margin-bottom: 1.5rem;
 }

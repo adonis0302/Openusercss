@@ -30,7 +30,22 @@ module.exports = {
     'titleTemplate': '%s - OpenUserCSS',
     'meta':          [
       {'charset': 'utf-8',},
-      {'name': 'viewport', 'content': 'width=device-width, initial-scale=1',},
+      {'http-equiv': 'x-ua-compatible', 'content': 'ie=edge',},
+      {'name': 'skype_toolbar', 'content': 'skype_toolbar_parser_compatible',},
+      {'name': 'msapplication-tap-highlight', 'content': 'no',},
+      {'name': 'renderer', 'content': 'webkit|ie-comp|ie-stand',},
+      {'name': 'x5-page-mode', 'content': 'app',},
+      {'name': 'browsermode', 'content': 'application',},
+      {'name': 'wap-font-scale', 'content': 'no',},
+      {'name': 'viewport', 'content': 'width=device-width, initial-scale=1, shrink-to-fit=no',},
+      {'name': 'application-name', 'content': 'OpenUserCSS',},
+      {'name': 'robots', 'content': 'index,follow',},
+      {'name': 'format-detection', 'content': 'telephone=no',},
+      {'name': 'mobile-web-capable', 'content': 'yes',},
+    ],
+    'link': [
+      {'rel': 'license', 'href': '//github.com/OpenUserCSS/openusercss.org/LICENSE',},
+      {'rel': 'me', 'href': '//decentm.com',},
     ],
   },
   'loading': {
@@ -47,6 +62,7 @@ module.exports = {
     '~/plugins/vue-filters',
     '~/plugins/vue-modal',
     '~/plugins/vue-apollo',
+    '~/plugins/vue-noscript',
     '~/plugins/vee-validate',
     '~/plugins/extension-data',
     '~/plugins/static-data',
@@ -85,6 +101,9 @@ module.exports = {
     ],
     [
       '@nuxtjs/pwa', {
+        'icon': {
+          'iconSrc': 'app/static/img/openusercss.icon-x128.png',
+        },
         'manifest': {
           'name':             'OpenUserCSS',
           'short_name':       'OpenUserCSS',
