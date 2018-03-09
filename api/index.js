@@ -11,6 +11,7 @@ import raven from 'raven'
 
 import secure from './modules/secure'
 import routes from './modules/routes'
+import signals from './modules/signal-handler'
 
 let server = null
 const init = async () => {
@@ -55,24 +56,10 @@ const init = async () => {
   }
 })()
 
-process.on('unhandledRejection', (error) => {
-  log.error(`Unhandled promise rejection in API: ${error.message}`)
-  log.error(error.stack)
-  process.exit(1)
-})
-
-process.on('SIGTERM', () => {
-  log.info('API received SIGTERM')
-  server.close()
-  process.exit(15)
-})
-
-process.on('SIGINT', () => {
-  log.info('API received SIGINT')
-  server.close()
-  process.exit(2)
-})
-
-process.on('exit', () => {
-  log.info('API process exiting immediately')
+signals({
+  'name':   'API',
+  'thread': process,
+  cleanup () {
+    return server.close()
+  },
 })
