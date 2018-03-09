@@ -1,7 +1,7 @@
 import express from 'express'
 import {graphqlExpress, graphiqlExpress,} from 'apollo-server-express'
 import bodyParser from 'body-parser'
-import staticConfig from '../../lib/config'
+import staticConfig from '../lib/config'
 
 import usercsssRenderer from './usercss-renderer'
 import schema from './backend'

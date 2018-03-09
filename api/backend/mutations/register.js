@@ -6,7 +6,7 @@ import {
   sendEmail,
 } from '../../email/mailer'
 
-import staticConfig from '../../../../lib/config'
+import staticConfig from '../../../lib/config'
 
 const createSendEmail = async ({email, displayname,}) => {
   const config = await staticConfig()

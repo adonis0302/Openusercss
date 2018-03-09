@@ -1,7 +1,7 @@
 import log from 'chalk-console'
 import camo, {connect,} from 'camo'
 import {forOwn,} from 'lodash'
-import staticConfig from '../../../lib/config'
+import staticConfig from '../../lib/config'
 
 import Theme, {Option,} from './schema/theme'
 import User from './schema/user'

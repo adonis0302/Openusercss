@@ -6,7 +6,7 @@ import morgan from 'morgan'
 import corser from 'corser'
 
 import staticConfig from '../lib/config'
-import setupRoutes from './api/routes'
+import setupRoutes from './routes'
 
 import http from 'http'
 import https from 'https'

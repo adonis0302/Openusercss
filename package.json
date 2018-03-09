@@ -16,7 +16,7 @@
     "client:start:dev": "env-cmd ./.dev.env nuxt",
     "client:build:prod": "env-cmd ./.prod.env nuxt build",
     "client:build:dev": "env-cmd ./.dev.env nuxt build",
-    "api:start:dev": "env-cmd ./.dev.env node build/api",
+    "api:start:dev": "env-cmd ./.dev.env gulp api:watch",
     "api:start:prod": "env-cmd ./.prod.env node build/api",
     "api:build:fast": "env-cmd ./.dev.env gulp server:email-templates shared:fast server:fast",
     "lint:dry": "eslint --ext .js,.vue --ignore-path .gitignore src tasks test",

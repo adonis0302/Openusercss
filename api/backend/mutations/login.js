@@ -1,5 +1,5 @@
-import staticConfig from '../../../../lib/config'
-import {expected,} from '../../../../lib/custom-errors'
+import staticConfig from '../../../lib/config'
+import {expected,} from '../../../lib/custom-errors'
 import jwt from 'jsonwebtoken'
 import moment from 'moment'
 import bcrypt from 'bcryptjs'
@@ -9,7 +9,7 @@ const invalidCreds = 'Invalid credentials'
 
 export default async (root, {email, password,}, {User, Session, Theme, headers, connection,}) => {
   const config = await staticConfig()
-  const requestedUser = await getUser({
+  const requestedUser = await User.findOne({
     email,
   })
 

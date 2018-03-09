@@ -2,7 +2,7 @@ import Email from 'email-templates'
 import nodemailer from 'nodemailer'
 import pify from 'pify'
 import path from 'path'
-import staticConfig from '../../../lib/config'
+import staticConfig from '../../lib/config'
 
 export const createTestAccount = async () => {
   const testAccount = await pify(nodemailer.createTestAccount)
