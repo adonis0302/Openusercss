@@ -72,6 +72,8 @@ const inputTypeDefs = `
 
 const rootTypeDefs = `
   type Query {
+    viewer: User
+
     verifyToken(
       token: String!
     ): Session!
@@ -106,6 +108,8 @@ const rootTypeDefs = `
   }
 
   type Mutation {
+    viewer: User
+
     verifyEmail(
       token: String!
     ): Boolean!
