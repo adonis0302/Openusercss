@@ -11,7 +11,8 @@
   export default {
     'apollo': {
       'latestThemes': {
-        'query': gql`query($limit: Int!) {
+        'prefetch': true,
+        'query':    gql`query($limit: Int!) {
           latestThemes(limit: $limit) {
             _id
             user {
@@ -34,7 +35,8 @@
         },
       },
       'popularThemes': {
-        'query': gql`query($limit: Int!) {
+        'prefetch': true,
+        'query':    gql`query($limit: Int!) {
           popularThemes(limit: $limit) {
             _id
             user {
