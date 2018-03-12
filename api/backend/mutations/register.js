@@ -36,23 +36,22 @@ const createSendEmail = async ({email, displayname,}) => {
   return result
 }
 
-export default async (root, {displayname, email, password,}, {User,}) => {
+export default async (root, {displayname, email, password,}, {User, token,}) => {
   const config = await staticConfig()
   const salt = await bcrypt.genSalt(parseInt(config.get('saltrounds'), 10))
   const hash = await bcrypt.hash(password, salt)
-  const newUser = User.create({
+  const newUser = await User.create({
     'password': hash,
     'username': displayname.toLowerCase(),
     displayname,
     email,
   })
-  const savedUser = await newUser.save()
 
-  createSendEmail(savedUser)
+  createSendEmail(newUser)
   .catch((error) => {
     log.error(error.stack)
     raven.captureException(error)
   })
 
-  return savedUser
+  return newUser
 }

@@ -73,10 +73,8 @@ const inputTypeDefs = `
 const rootTypeDefs = `
   type Query {
     viewer: User
-
-    verifyToken(
-      token: String!
-    ): Session!
+    verifyToken: Session!
+    version: Version!
 
     theme(
       id: ID!
@@ -100,8 +98,6 @@ const rootTypeDefs = `
       limit: Int
     ): [Theme]!
 
-    version: Version!
-
     popularThemes(
       limit: Int
     ): [Theme]!
@@ -109,6 +105,8 @@ const rootTypeDefs = `
 
   type Mutation {
     viewer: User
+    logout: Boolean!
+    resendVerification: Boolean!
 
     verifyEmail(
       token: String!
@@ -125,21 +123,11 @@ const rootTypeDefs = `
       password: String!
     ): Session!
 
-    logout(
-      token: String!
-    ): Boolean!
-
     deleteTheme(
-      token: String!
       id: ID!
     ): Boolean!
 
-    resendVerification(
-      token: String!
-    ): Boolean!
-
     theme(
-      token:       String!
       id:          ID
       title:       String!
       description: String!
@@ -150,7 +138,6 @@ const rootTypeDefs = `
     ): Theme!
 
     account(
-      token:       String!
       password:    String
       displayname: String
       email:       String
@@ -160,7 +147,6 @@ const rootTypeDefs = `
 
     rate(
       id:    String!
-      token: String!
       value: Int!
     ): Theme!
   }
