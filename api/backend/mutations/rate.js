@@ -1,7 +1,7 @@
 import {ObjectID,} from 'mongodb'
 import mustAuthenticate from '../../../lib/enforce-session'
 
-export default async (root, {token, id, value,}, {Session, Theme, Rating, User,}) => {
+export default async (root, {id, value,}, {Session, Theme, Rating, User, token,}) => {
   const session = await mustAuthenticate(token, Session)
   const user = await User.findOne({
     '_id': session.user._id,

@@ -33,9 +33,18 @@ const createSendEmail = async ({email, displayname,}) => {
   return result
 }
 
-export default async (root, {token,}, {Session,}) => {
+export default async (root, options, {Session, token,}) => {
   const session = await mustAuthenticate(token, Session)
+
+  if (session.user.emailVerified) {
+    throw new Error('Your e-mail address is already verified')
+  }
+
   const result = await createSendEmail(session.user)
+
+  if (!result.accepted) {
+    return false
+  }
 
   return result.accepted[0] === session.user.email
 }

@@ -1,3 +1,5 @@
+import viewer from './viewer'
+
 import verifyTokenQuery from './queries/verify-token'
 import searchQuery from './queries/search'
 import themeQuery from './queries/theme'
@@ -19,6 +21,7 @@ import rateMutation from './mutations/rate'
 
 export default {
   'Query': {
+    viewer,
     'verifyToken':   verifyTokenQuery,
     'search':        searchQuery,
     'theme':         themeQuery,
@@ -29,6 +32,7 @@ export default {
     'popularThemes': popularThemesQuery,
   },
   'Mutation': {
+    viewer,
     'register':           registerMutation,
     'login':              loginMutation,
     'logout':             logoutMutation,

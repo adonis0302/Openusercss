@@ -46,6 +46,7 @@ export default async (root, {displayname, email, password,}, {User, token,}) => 
     displayname,
     email,
   })
+  const savedUser = newUser.save()
 
   createSendEmail(newUser)
   .catch((error) => {
@@ -53,5 +54,5 @@ export default async (root, {displayname, email, password,}, {User, token,}) => 
     raven.captureException(error)
   })
 
-  return newUser
+  return savedUser
 }

@@ -2,7 +2,7 @@ import staticConfig from '../../../lib/config'
 import jwt from 'jsonwebtoken'
 import pify from 'pify'
 
-export default async (root, {token,}, {User,}) => {
+export default async (root, options, {User, token,}) => {
   const config = await staticConfig()
   const decoded = await pify(jwt.verify)(token, config.get('keypair.clientprivate'))
   let result = false

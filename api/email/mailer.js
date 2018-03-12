@@ -67,7 +67,7 @@ export const sendEmail = async ({to, template, locals,}) => {
     transport = await createTransport(transportOptions)
   }
 
-  const resourcePath = path.resolve('./static')
+  const resourcePath = path.resolve('./app/static')
   const email = new Email({
     'juice':          true,
     'juiceResources': {

@@ -44,7 +44,7 @@ const sendEmail = async (locals, {template,}) => {
   return result
 }
 
-export default async (root, {token, email, password, displayname, bio, donationUrl,}, {User, Session,}) => {
+export default async (root, {email, password, displayname, bio, donationUrl,}, {User, Session, token,}) => {
   const session = await mustAuthenticate(token, Session)
   const config = await staticConfig()
   const saltRounds = parseInt(config.get('saltrounds'), 10)

@@ -3,7 +3,6 @@ import mustAuthenticate from '../../../lib/enforce-session'
 import parse from '../../../lib/usercss-parser'
 
 export default async (root, {
-  token,
   title,
   description,
   content,
@@ -11,7 +10,7 @@ export default async (root, {
   id,
   screenshots,
   options,
-}, {Session, Theme, User, Rating, Option,}) => {
+}, {Session, Theme, User, Rating, Option, token,}) => {
   const session = await mustAuthenticate(token, Session)
   const user = await User.findOne({
     '_id': session.user._id,
@@ -26,6 +25,7 @@ export default async (root, {
   if (!parsed.code) {
     throw new Error('Parse result is empty. Is your CSS valid?')
   }
+
   const parsedOptions = JSON.parse(decodeURIComponent(options))
 
   if (id) {
