@@ -32,6 +32,9 @@ const sources = {
   'email': [
     'app/scss/email.scss',
   ],
+  'emailTemplates': [
+    'src/emails/**/*.pug',
+  ],
   'icons': [
     'src/img/*.icon.*',
   ],
@@ -171,6 +174,13 @@ gulp.task('static:email', () => {
     postcss(postCssPluginsProd),
     flatten(),
     gulp.dest(destination('css')),
+  ])
+})
+
+gulp.task('static:email-templates', () => {
+  return pump([
+    gulp.src(sources.emailTemplates),
+    gulp.dest(path.resolve('./build/emails')),
   ])
 })
 
