@@ -2,15 +2,11 @@
 import nodeFetch from 'node-fetch'
 import Vue from 'vue'
 import VueApollo from 'vue-apollo'
-import localforage from 'localforage'
-
-import pkg from '~/../package.json'
 
 import {ApolloClient,} from 'apollo-client'
 import {HttpLink,} from 'apollo-link-http'
 import {onError,} from 'apollo-link-error'
 import {InMemoryCache,} from 'apollo-cache-inmemory'
-import {CachePersistor,} from 'apollo-cache-persist'
 import {from,} from 'apollo-link'
 
 export default async (context, inject) => {
@@ -29,7 +25,6 @@ export default async (context, inject) => {
     httpLinkOptions.fetch = nodeFetch
   }
 
-  let persistor = null
   const httpLink = new HttpLink(httpLinkOptions)
   const errorLink = onError(({graphQLErrors, networkError, response,}) => {
     response.errors = []
@@ -95,27 +90,6 @@ export default async (context, inject) => {
     cache,
   }
 
-  if (process.client) {
-    persistor = new CachePersistor({
-      'storage': localforage,
-      'maxSize': 2096128,
-      cache,
-    })
-
-    const cacheVersion = await localforage.getItem('ouc-cache-version')
-
-    if (pkg.version === cacheVersion) {
-      await persistor.restore()
-    } else {
-      console.warn([
-        `Client (${pkg.version}) - cache (${cacheVersion}) version mismatch.`,
-        'Emptying...',
-      ].join(' '))
-      await persistor.purge()
-      await localforage.setItem('ouc-cache-version', pkg.version)
-    }
-  }
-
   const apolloClient = new ApolloClient(clientOptions)
 
   // Provider building and main
@@ -134,6 +108,7 @@ export default async (context, inject) => {
           Reflect.deleteProperty(Component.options.apollo, '$init')
         }
       })
+
       await apolloProvider.prefetchAll(context, Components)
       nuxtState.apollo = apolloProvider.getStates()
     })
