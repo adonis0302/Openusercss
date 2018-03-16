@@ -66,6 +66,16 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "extremelypenguin",
+      "name": "Marcus Chong",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/30125762?v=4",
+      "profile": "http://extremelypenguin.github.io",
+      "contributions": [
+        "doc"
+      ]
     }
-  ]
+  ],
+  "repoType": "github"
 }
