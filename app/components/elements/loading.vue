@@ -1,45 +1,66 @@
 <template lang="pug">
-  .ouc-loading-root(:class="{'show': loading && slow}")
-    .ouc-loading-cover
-    .ouc-loading-cover
-    .ouc-loading-message-wrapper
-      .ouc-loading-icon
-      .ouc-progress-wrapper
-        .ouc-progress-indicator(v-if="progress !== 0", :style="{width: progress + '%'}")
-      .ouc-loading-message(v-if="progress !== 0")
-        h1 {{progress}}%
-        h5 Looks like the network is slow. Please wait...
-      .ouc-loading-message(v-if="progress === 0")
-        h3 Looks like the network is slow. Please wait...
+  div
+    .ouc-quick-loading(:class="{'show': !slow && loading}")
+    .ouc-loading-root(:class="{'show': slow && loading}")
+      .ouc-loading-cover
+      .ouc-loading-cover
+      .ouc-loading-message-wrapper
+        .ouc-loading-icon
+        .ouc-progress-wrapper
+          .ouc-progress-indicator(v-if="percent !== 0", :style="{width: percent + '%'}")
+        .ouc-loading-message(v-if="percent <= 100")
+          h1 {{percent}}%
+          h5 Looks like the network is slow. Please wait...
+        .ouc-loading-message(v-if="percent > 100")
+          h1 {{percent}}%
+          h5
+            | I'm sorry, I don't actually know the progress. Let's see how high
+            | we can count!
+            br
+            | I'll let you know when it's complete, or if I run
+            | into an error.
 </template>
 
 <script>
   export default {
-    'data': () => ({
-      'slow':     false,
-      'loading':  false,
-      'failed':   false,
-      'progress': 0,
-    }),
+    'name': 'nuxt-loading',
+    data () {
+      return {
+        'slow':    false,
+        'loading': false,
+        'failed':  false,
+        'percent': 0,
+        'timer':   null,
+      }
+    },
     'methods': {
       reset () {
+        if (this.timer) {
+          clearInterval(this.timer)
+        }
+
         this.slow = false
         this.loading = false
         this.failed = false
-        this.progress = 0
-      },
-      increase (num) {
-        this.progress = num
+        this.percent = 0
       },
       start () {
         this.reset()
         this.loading = true
 
+        this.timer = setInterval(() => {
+          setTimeout(() => {
+            if (this.loading) {
+              this.increase(Math.floor(Math.random() * 5))
+            }
+          }, Math.random() * 400)
+        }, 400)
+
         setTimeout(() => {
           if (this.loading) {
             this.slow = true
           }
-        }, 1000)
+        }, 2000)
       },
       finish () {
         this.reset()
@@ -47,6 +68,10 @@
       fail () {
         this.reset()
         this.failed = true
+      },
+      increase (num) {
+        this.percent = this.percent + Math.floor(num)
+        return this
       },
     },
   }
@@ -56,6 +81,45 @@
   @import 'node_modules/bulma/sass/utilities/initial-variables';
   @import '../../scss/autocolor';
   @import '../../scss/variables';
+
+  @keyframes Gradient {
+  	0% {
+  		background-position: 100% 50%
+  	}
+  	100% {
+  		background-position: 0 50%
+  	}
+  }
+
+  .ouc-quick-loading {
+    background: repeating-linear-gradient(
+      45deg,
+      nth(map-get($colors, 'secondary'), 1),
+      nth(map-get($colors, 'secondary'), 1) 10px,
+      darken(nth(map-get($colors, 'secondary'), 1), 10) 10px,
+      darken(nth(map-get($colors, 'secondary'), 1), 10) 20px
+    );
+    background-size: 400%;
+    animation-name: Gradient;
+    animation-duration: 45s;
+    animation-timing-function: linear;
+    animation-play-state: running;
+    animation-iteration-count: infinite;
+    position: fixed;
+    width: 100%;
+    transition-property: height;
+    transition-timing-function: map-get($animations, 'animation-function');
+    transition-duration: map-get($animations, 'shorttime');
+    top: map-get($kerning, 'navbar-height');
+    height: 0;
+    display: flex;
+    z-index: 101;
+    pointer-events: none;
+
+    &.show {
+      height: 7.5px;
+    }
+  }
 
   .ouc-loading-root {
     position: fixed;
