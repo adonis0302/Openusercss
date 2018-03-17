@@ -7,6 +7,7 @@
   "imageSize": 100,
   "commit": true,
   "badgeTemplate": "[![All Contributors](https://img.shields.io/badge/all_contributors-<%= contributors.length %>-orange.svg?style=for-the-badge&maxAge=3600&label=Contributors&colorA=005fff&colorB=ffb450)](#contributing)",
+  "contributorsPerLine": 6,
   "contributors": [
     {
       "login": "RaitaroH",
