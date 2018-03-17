@@ -34,7 +34,7 @@
   [![up-for-grabs issues](https://img.shields.io/github/issues/OpenUserCSS/openusercss.org/pull%20request%20welcome.svg?style=for-the-badge&maxAge=3600&label=Issues%20you%20can%20solve&colorA=005fff&colorB=ffb450)](https://github.com/OpenUserCSS/openusercss.org/issues?q=is%3Aissue+is%3Aopen+label%3A%22pull+request+welcome%22)  
 
   [![Latest version](https://img.shields.io/github/tag/OpenUserCSS/openusercss.org.svg?style=for-the-badge&maxAge=3600&label=Version&colorA=005fff&colorB=ffb450)](https://openusercss.org)
-  [![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=for-the-badge&maxAge=3600&label=Contributors&colorA=005fff&colorB=ffb450)](#contributing)
+  [![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=for-the-badge&maxAge=3600&label=Contributors&colorA=005fff&colorB=ffb450)](#contributing)
   [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge&maxAge=3600&label=Pull%20requests&colorA=005fff&colorB=ffb450)](http://makeapullrequest.com)
   [![license](https://img.shields.io/github/license/OpenUserCSS/openusercss.org.svg?style=for-the-badge&maxAge=3600&colorA=005fff&colorB=ffb450)](https://github.com/OpenUserCSS/openusercss.org/blob/master/LICENSE)
 
