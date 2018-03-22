@@ -8096,7 +8096,7 @@ lodash.memoize@^4.1.2:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/lodash.memoize/-/lodash.memoize-4.1.2.tgz#bcc6c49a42a2840ed997f323eada5ecd182e0bfe"
 
-lodash.merge@4.6.1, lodash.merge@^4.4.0, lodash.merge@^4.6.0, lodash.merge@^4.6.1:
+lodash.merge@4.6.1, lodash.merge@^4.4.0, lodash.merge@^4.6.0:
   version "4.6.1"
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.1.tgz#adc25d9cb99b9391c59624f379fbba60d7111d54"
 
@@ -14313,15 +14313,9 @@ vue@^2, vue@^2.5.13:
   version "2.5.16"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.5.16.tgz#07edb75e8412aaeed871ebafa99f4672584a0085"
 
-vuex-persist@^1:
-  version "1.1.4"
-  resolved "https://registry.yarnpkg.com/vuex-persist/-/vuex-persist-1.1.4.tgz#eaec0645a7dda073aeeee5b6be63ca6b5d7b38c6"
-  dependencies:
-    lodash.merge "^4.6.1"
-
-vuex-persistedstate@^2.4.2:
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/vuex-persistedstate/-/vuex-persistedstate-2.5.0.tgz#81a6871fe39223573ec69d3e4825c6e25cd6998a"
+vuex-persistedstate@^2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/vuex-persistedstate/-/vuex-persistedstate-2.5.1.tgz#129274514e2e46b49e8ca8066cf85b345c7b4ce2"
   dependencies:
     deepmerge "^2.1.0"
     shvl "^1.2.0"
