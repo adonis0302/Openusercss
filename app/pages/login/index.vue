@@ -25,11 +25,15 @@
       }
     },
     'methods': {
-      login () {
-        this.$store.dispatch('session/login', this.loginData)
-        .then(this.$router.push({
-          'path': '/',
-        }))
+      async login () {
+        const valid = await this.$validator.validateAll()
+
+        if (valid) {
+          this.$store.dispatch('session/login', this.loginData)
+          .then(this.$router.push({
+            'path': '/',
+          }))
+        }
       },
     },
     mounted () {
