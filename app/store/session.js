@@ -29,9 +29,13 @@ validators.session = struct({
 export const state = () => ({
   'session': null,
   'viewer':  null,
+  'loading': false,
 })
 
 export const getters = {
+  loading (state) {
+    return state.loading
+  },
   token (state) {
     if (!state.session) {
       return null
@@ -48,6 +52,9 @@ export const getters = {
 }
 
 export const mutations = {
+  loading (state, isLoading) {
+    state.loading = isLoading
+  },
   login (state, session) {
     const fullSession = validators.session(session)
 
@@ -57,16 +64,37 @@ export const mutations = {
   },
   logout (state) {
     state.session = null
+    state.viewer = null
   },
 }
 
 export const actions = {
-  async verifyToken ({commit, getters,}) {
+  async verify ({commit, getters,}) {
+    commit('loading', true)
 
+    try {
+      await client.query({
+        'query': gql`
+          query {
+            verifyToken {
+              _id
+            }
+          }
+        `,
+      })
+    } catch (error) {
+      commit('logout')
+      throw error
+    }
+
+    commit('loading', false)
   },
   async login ({commit,}, loginData) {
-    const {data,} = await client.mutate({
-      'mutation': gql`
+    commit('loading', true)
+
+    try {
+      const {data,} = await client.mutate({
+        'mutation': gql`
         mutation(
           $password: String!
           $email:    String!
@@ -87,21 +115,37 @@ export const actions = {
             ua
           }
         }
-      `,
-      'variables': loginData,
-    })
+        `,
+        'variables': loginData,
+      })
 
-    commit('login', data.login)
+      commit('users/upsert', data.login.user, {
+        'root': true,
+      })
+      commit('login', data.login)
+      commit('loading', false)
+    } catch (error) {
+      commit('loading', false)
+      throw error
+    }
   },
   async logout ({commit,}) {
-    const {data,} = await client.mutate({
-      'mutation': gql`
+    commit('loading', true)
+
+    try {
+      await client.mutate({
+        'mutation': gql`
         mutation {
           logout
         }
-      `,
-    })
+        `,
+      })
 
-    console.log(data)
+      commit('logout')
+      commit('loading', false)
+    } catch (error) {
+      commit('loading', false)
+      throw error
+    }
   },
 }
