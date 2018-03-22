@@ -92,8 +92,8 @@
                 progressive-image(
                   src="/img/patreon.icon-x64.png",
                   placeholder="/img/patreon.icon-x16.png",
-                  height="2",
-                  width="2"
+                  height="2rem",
+                  width="2rem"
                 )
               a.button.is-paypal.is-pulled-right.is-fullheight(href="//www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NQE35LHY6NKS6", target="_blank")
                 | Support by PayPal!

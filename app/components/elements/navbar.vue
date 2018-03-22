@@ -107,8 +107,8 @@
             progressive-image(
               src="/img/openusercss.icon.svg",
               placeholder="/img/openusercss.icon-x16.png",
-              height="2.5",
-              width="2.5"
+              height="2.5rem",
+              width="2.5rem"
             )
             .spacer
             span OpenUserCSS
