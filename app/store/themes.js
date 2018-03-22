@@ -1,5 +1,6 @@
 import {cloneDeep,} from 'lodash'
 import gql from 'graphql-tag'
+import moment from 'moment'
 
 import client from '~/../lib/apollo-client'
 
@@ -8,18 +9,32 @@ export const state = () => ({
 })
 
 export const mutations = {
-  insert (state, theme,) {
-    state.themes.push(theme)
+  upsert (state, newTheme,) {
+    const existingIndex = state.themes.findIndex((theme) => newTheme._id === theme._id)
+
+    if (existingIndex !== -1) {
+      state.themes[existingIndex] = newTheme
+    } else {
+      state.themes.push(newTheme)
+    }
   },
 }
 
 export const getters = {
-  latestThemes (state,) {
+  latest (state,) {
     const copy = cloneDeep(state.themes)
 
     copy.sort((a, b) => {
-      // TODO: This following line isn't final, use momentjs to compare
-      return a.createdAt - b.createdAt
+      return !moment(a.createdAt).isAfter(b.createdAt)
+    })
+
+    return copy
+  },
+  popular (state,) {
+    const copy = cloneDeep(state.themes)
+
+    copy.sort((a, b) => {
+      return true
     })
 
     return copy
@@ -27,12 +42,23 @@ export const getters = {
 }
 
 export const actions = {
-  async latestThemes ({commit, state,}) {
+  async latest ({commit, state,}) {
     const {data,} = await client.query({
       'query': gql`
         query($limit: Int!) {
           latestThemes(limit: $limit) {
             _id
+            user {
+              _id
+              username
+              displayname
+              avatarUrl
+              smallAvatarUrl
+            }
+            title
+            description
+            createdAt
+            lastUpdate
           }
         }
       `,
@@ -42,15 +68,26 @@ export const actions = {
     })
 
     data.latestThemes.forEach((theme) => {
-      commit('insert', theme)
+      commit('upsert', theme)
     })
   },
-  async popularThemes ({commit, state,}) {
+  async popular ({commit, state,}) {
     const {data,} = await client.query({
       'query': gql`
         query($limit: Int!) {
           popularThemes(limit: $limit) {
             _id
+            user {
+              _id
+              username
+              displayname
+              avatarUrl
+              smallAvatarUrl
+            }
+            title
+            description
+            createdAt
+            lastUpdate
           }
         }
       `,
@@ -59,8 +96,8 @@ export const actions = {
       },
     })
 
-    data.latestThemes.forEach((theme) => {
-      commit('insert', theme)
+    data.popularThemes.forEach((theme) => {
+      commit('upsert', theme)
     })
   },
 }

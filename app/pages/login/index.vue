@@ -6,7 +6,7 @@
   import oucButton from '~/components/elements/ouc-button.vue'
   import bInput from '~/components/bits/b-input.vue'
 
-  import gql from 'graphql-tag'
+  import {mapActions,} from 'vuex'
 
   export default {
     'components': {
@@ -24,30 +24,9 @@
         },
       }
     },
-    'methods': {
-      async submitLogin () {
-        const validated = await this.$validator.validateAll()
-
-        if (validated) {
-          await this.$apollo.mutate({
-            'mutation': gql`
-              mutation(
-                $email:    String!
-                $password: String!
-              ) {
-                login(
-                  email:    $email
-                  password: $password
-                ) {
-                  token
-                }
-              }
-            `,
-            'variables': this.loginData,
-          })
-        }
-      },
-    },
+    'methods': mapActions({
+      'login': 'session/login',
+    }),
   }
 </script>
 
@@ -62,7 +41,7 @@
     .section(slot="form").ouc-form-section
         .container(style="max-width: 500px;").ouc-centered
           .box.ouc-form-box
-            form(@submit.prevent="submitLogin").ouc-login-form
+            form(@submit.prevent="login(loginData)").ouc-login-form
               h3 Log in to OpenUserCSS
               hr
               .tile.is-ancestor
@@ -71,13 +50,13 @@
                     .field
                       .control.has-icons-left
                         fa-icon.icon(icon="envelope")
-                        b-input(
+                        input.input(
                           type="email",
                           name="email",
                           autocomplete="email",
                           placeholder="E-mail",
                           v-validate.disable="'required|email'",
-                          v-model.lazy="loginData.email",
+                          v-model="loginData.email",
                           :class="{'input': true, 'is-danger': errors.has('email') }",
                           data-vv-as="e-mail",
                           aria-label="login e-mail"
@@ -88,13 +67,13 @@
                         .field
                           .control.has-icons-left
                             fa-icon.icon(icon="lock")
-                            b-input(
+                            input.input(
                               type="password",
                               name="password",
                               autocomplete="current-password",
                               placeholder="Passphrase",
                               v-validate.disable="'required'",
-                              v-model.lazy="loginData.password"
+                              v-model="loginData.password"
                               :class="{'input': true, 'is-danger': errors.has('password') }",
                               data-vv-as="passphrase",
                               aria-label="login passphrase"

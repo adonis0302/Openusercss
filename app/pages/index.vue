@@ -1,6 +1,4 @@
 <script>
-  import gql from 'graphql-tag'
-
   import oucFooter from '~/components/elements/ouc-footer.vue'
   import navbar from '~/components/elements/navbar.vue'
   import searchField from '~/components/elements/search-field.vue'
@@ -8,62 +6,14 @@
   import themeCard from '~/components/elements/theme-card.vue'
   import notification from '~/components/elements/notification.vue'
 
+  import {mapGetters,} from 'vuex'
+
   export default {
-    'apollo': {
-      'latestThemes': {
-        'prefetch': true,
-        'query':    gql`query($limit: Int!) {
-          latestThemes(limit: $limit) {
-            _id
-            user {
-              _id
-              username
-              displayname
-              avatarUrl
-              smallAvatarUrl
-            }
-            title
-            description
-            createdAt
-            lastUpdate
-          }
-        }`,
-        variables () {
-          return {
-            'limit': 6,
-          }
-        },
-      },
-      'popularThemes': {
-        'prefetch': true,
-        'query':    gql`query($limit: Int!) {
-          popularThemes(limit: $limit) {
-            _id
-            user {
-              _id
-              username
-              displayname
-              avatarUrl
-              smallAvatarUrl
-            }
-            title
-            description
-            createdAt
-            lastUpdate
-          }
-        }`,
-        variables () {
-          return {
-            'limit': 6,
-          }
-        },
-      },
-    },
-    data () {
-      return {
-        'latestThemes':  [],
-        'popularThemes': [],
-      }
+    fetch ({store,}) {
+      return Promise.all([
+        store.dispatch('themes/latest'),
+        store.dispatch('themes/popular'),
+      ])
     },
     'components': {
       searchField,
@@ -73,6 +23,10 @@
       chip,
       notification,
     },
+    'computed': mapGetters({
+      'latestThemes':  'themes/latest',
+      'popularThemes': 'themes/popular',
+    }),
     'methods': {
       averageRating (array) {
         let sum = 0
