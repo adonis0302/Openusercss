@@ -165,6 +165,7 @@
     "camo": "^0",
     "chalk-console": "^1",
     "conf": "^1",
+    "cors": "^2.8.4",
     "corser": "^2.0.1",
     "cross-env": "^5.1.0",
     "delay": "^2",

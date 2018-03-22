@@ -1,5 +1,4 @@
 import helmet from 'helmet'
-import corser from 'corser'
 
 export default async ({app, config,}) => {
   const cspOptions = {
@@ -12,17 +11,6 @@ export default async ({app, config,}) => {
 
   if (config.get('env') === 'development') {
     cspOptions.directives.defaultSrc.push('localhost')
-    cspOptions.directives.scriptSrc = [
-      ...cspOptions.directives.defaultSrc,
-      "'unsafe-inline'",
-      'unpkg.com',
-      'cdn.jsdelivr.net',
-    ]
-    cspOptions.directives.styleSrc = [
-      ...cspOptions.directives.defaultSrc,
-      "'unsafe-inline'",
-      'unpkg.com',
-    ]
   }
 
   app.use(helmet({
@@ -40,6 +28,4 @@ export default async ({app, config,}) => {
       'policy': 'no-referrer',
     },
   }))
-
-  app.use(corser.create())
 }

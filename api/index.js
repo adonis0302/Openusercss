@@ -12,6 +12,7 @@ import raven from 'raven'
 import secure from './modules/secure'
 import routes from './modules/routes'
 import signals from './modules/signal-handler'
+import cors from './modules/cors'
 
 let server = null
 const init = async () => {
@@ -28,6 +29,7 @@ const init = async () => {
   app.set('env', config.get('env'))
 
   await secure({app, config,})
+  await cors({app, config,})
   await routes({app, config,})
 
   server = http.createServer(app)

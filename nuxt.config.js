@@ -63,6 +63,9 @@ module.exports = {
     '~/plugins/extension-data',
     '~/plugins/static-data',
   ],
+  'serverMiddleware': [
+    '~/server-middleware/helmet.js',
+  ],
   'modules': [
     [
       '@nuxtjs/markdownit', {
