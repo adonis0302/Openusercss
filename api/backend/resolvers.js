@@ -3,11 +3,11 @@ import viewer from './viewer'
 import verifyTokenQuery from './queries/verify-token'
 import searchQuery from './queries/search'
 import themeQuery from './queries/theme'
-import themesQuery from './queries/themes'
 import userQuery from './queries/user'
 import latestThemesQuery from './queries/latest-themes'
 import versionQuery from './queries/version'
 import popularThemesQuery from './queries/popular-themes'
+import userThemesQuery from './queries/user-themes'
 
 import registerMutation from './mutations/register'
 import loginMutation from './mutations/login'
@@ -25,11 +25,11 @@ export default {
     'verifyToken':   verifyTokenQuery,
     'search':        searchQuery,
     'theme':         themeQuery,
-    'themes':        themesQuery,
     'user':          userQuery,
     'latestThemes':  latestThemesQuery,
     'version':       versionQuery,
     'popularThemes': popularThemesQuery,
+    'userThemes':    userThemesQuery,
   },
   'Mutation': {
     viewer,

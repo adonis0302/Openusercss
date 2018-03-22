@@ -70,7 +70,7 @@ const inputTypeDefs = `
   }
 `
 
-const rootTypeDefs = `
+const queries = `
   type Query {
     viewer: User
     verifyToken: Session!
@@ -80,13 +80,13 @@ const rootTypeDefs = `
       id: ID!
     ): Theme!
 
-    themes(
-      query: ThemeQuery!
-    ): [Theme]!
-
     user(
       id: ID!
     ): User!
+
+    userThemes(
+      id: ID!
+    ): [Theme]!
 
     search(
       terms: String!
@@ -102,7 +102,9 @@ const rootTypeDefs = `
       limit: Int
     ): [Theme]!
   }
+`
 
+const mutations = `
   type Mutation {
     viewer: User
     logout: Boolean!
@@ -152,8 +154,9 @@ const rootTypeDefs = `
   }
 `
 
-export default `
-  ${outputTypeDefs}
-  ${inputTypeDefs}
-  ${rootTypeDefs}
-`
+export default [
+  outputTypeDefs,
+  inputTypeDefs,
+  queries,
+  mutations,
+].join('\n')

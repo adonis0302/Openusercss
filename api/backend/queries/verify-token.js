@@ -1,5 +1,5 @@
 import mustAuthenticate from '../../../lib/enforce-session'
 
-export default async (root, {token,}, {Session, headers,}) => {
+export default async (root, options, {Session, headers, token,}) => {
   return mustAuthenticate(token, Session)
 }
