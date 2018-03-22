@@ -29,10 +29,10 @@
         const valid = await this.$validator.validateAll()
 
         if (valid) {
-          this.$store.dispatch('session/login', this.loginData)
-          .then(this.$router.push({
+          await this.$store.dispatch('session/login', this.loginData)
+          this.$router.push({
             'path': '/',
-          }))
+          })
         }
       },
     },
