@@ -5,13 +5,20 @@
   import oucFooter from '~/components/elements/ouc-footer.vue'
   import navbar from '~/components/elements/navbar.vue'
   import notification from '~/components/elements/notification.vue'
+  import progressiveImage from '~/components/bits/progressive-image.vue'
+
+  import {mapGetters,} from 'vuex'
 
   export default {
+    fetch ({store, route,}) {
+      return store.dispatch('users/single', route.params.id)
+    },
     'components': {
       oucFooter,
       navbar,
       themeCard,
       notification,
+      progressiveImage,
     },
     beforeMount () {
       this.timeInterval = setInterval(() => {
@@ -54,15 +61,14 @@
       }
     },
     'computed': {
-      'user': {
-        'cache': false,
-        get () {
-          const user = this.$db.getCollection('users').findOne({
-            '_id': this.$route.params.id,
-          })
-
-          return user || {}
-        },
+      ...mapGetters({
+        'viewer': 'session/viewer',
+      }),
+      user () {
+        return this.$store.getters['users/all'].find((user) => user._id === this.$route.params.id)
+      },
+      themes () {
+        return this.$store.getters['themes/all'].filter((theme) => theme.user._id === this.$route.params.id)
       },
       lastOnlineDisplay () {
         const user = this.user
@@ -85,12 +91,12 @@
           .level
             .level-left
               h1 Profile
-            .level-right.ouc-profile-action-buttons(v-if="currentUser && currentUser._id === user._id")
+            .level-right.ouc-profile-action-buttons(v-show="viewer && viewer._id === user._id")
               .tile.is-parent.is-paddingless
                 .tile.ouc-new-theme-button-wrapper.is-child
-                  router-link.button.is-primary.ouc-new-theme-button(to="/theme/edit") Upload new theme
+                  nuxt-link.button.is-primary.ouc-new-theme-button(to="/theme/edit") Upload new theme
                 .tile.ouc-account-button-wrapper.is-child
-                  router-link.button.is-primary.ouc-account-button(to="/account") Account
+                  nuxt-link.button.is-primary.ouc-account-button(to="/account") Account
           .columns
             .column.is-6
               div
@@ -99,6 +105,12 @@
                     .tile.is-parent.is-paddingless
                       .tile.is-4
                         .tile.is-child.ouc-user-avatar
+                          progressive-image(
+                            :src="user.avatarUrl",
+                            :placeholder="user.smallAvatarUrl",
+                            height="10rem",
+                            width="10rem"
+                          )
                       .tile.is-8
                         .tile.is-parent.ouc-user-details
                           .tile.is-parent
@@ -110,7 +122,7 @@
                 .box
                   .level.is-mobile
                     .level-left.ouc-last-seen-wrapper
-                      fa-icon(v-if="isOnline(user.lastSeen)", name="circle", color="#06BC5A")
+                      fa-icon(v-if="isOnline(user.lastSeen)", icon="circle", color="#06BC5A")
                       p.ouc-last-seen {{lastOnlineDisplay}}
 
               hr
