@@ -62,6 +62,10 @@ module.exports = {
     '~/plugins/vee-validate',
     '~/plugins/extension-data',
     '~/plugins/static-data',
+    {
+      'src': '~/plugins/vuex-persist',
+      'ssr': false,
+    },
   ],
   'serverMiddleware': [
     '~/server-middleware/helmet.js',
