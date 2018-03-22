@@ -66,6 +66,10 @@ module.exports = {
       'src': '~/plugins/vuex-persist',
       'ssr': false,
     },
+    {
+      'src': '~/plugins/vue-flickity',
+      'ssr': false,
+    },
   ],
   'serverMiddleware': [
     '~/server-middleware/helmet.js',
