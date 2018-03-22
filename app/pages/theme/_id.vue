@@ -66,9 +66,11 @@
       }
       const self = this
 
-      this.$nextTick(() => {
-        self.$refs.flickity.rerender()
-      })
+      if (this.theme.screenshots.length) {
+        this.$nextTick(() => {
+          self.$refs.flickity.rerender()
+        })
+      }
     },
     beforeDestroy () {
       this.$modal.hide('delete-theme')
