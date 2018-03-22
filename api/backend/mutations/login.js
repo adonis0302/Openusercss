@@ -5,7 +5,7 @@ import moment from 'moment'
 import bcrypt from 'bcryptjs'
 
 const {AuthenticationError,} = expected
-const invalidCreds = 'Invalid credentials'
+const invalidCreds = 'credentials-invalid'
 
 export default async (root, {email, password,}, {User, Session, Theme, headers, connection,}) => {
   const config = await staticConfig()

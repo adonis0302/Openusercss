@@ -19,7 +19,7 @@ export default async (root, {limit,}, {User, Theme, Rating,}) => {
   }
 
   if (!result) {
-    throw new Error('No latest themes found')
+    throw new Error('no-such-theme')
   }
 
   return result

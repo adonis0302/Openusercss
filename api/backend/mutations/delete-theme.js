@@ -12,7 +12,7 @@ export default async (root, {id,}, {Session, Theme, token,}) => {
   }
 
   if (!theme || !userOwnsTheme) {
-    throw new Error('No theme found')
+    throw new Error('no-such-theme')
   }
 
   const result = await theme.delete()

@@ -4,7 +4,7 @@ export default async (root, {query,}, {User, Theme,}) => {
   })
 
   if (!result) {
-    throw new Error('No themes found')
+    throw new Error('no-such-theme')
   }
 
   return result

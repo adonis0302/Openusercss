@@ -22,7 +22,7 @@ export default async (root, options, {User, token,}) => {
       // Just in case we made an error by sending a verification link
       // to an address that we weren't meant to send one to.
       // This should never happen
-      throw new Error('\nThis address does not exist.\nTo fix it, you must persist')
+      throw new Error('verification-link-target-mismatch')
     }
 
     if (user.pendingEmail && user.pendingEmail !== '') {

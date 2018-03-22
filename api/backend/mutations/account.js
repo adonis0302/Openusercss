@@ -11,10 +11,10 @@ import staticConfig from '../../../lib/config'
 
 const sendEmail = async (locals, {template,}) => {
   if (!locals.email) {
-    throw new Error('No email address defined in locals')
+    throw new Error('locals-no-email')
   }
   if (!locals.user || !locals.oldUser) {
-    throw new Error('Locals must include an oldUser and a user object')
+    throw new Error('locals-no-oldUser-object')
   }
 
   const config = await staticConfig()
@@ -69,7 +69,7 @@ export default async (root, {email, password, displayname, bio, donationUrl,}, {
       'message': 'Changing displayname',
     })
     if (user.displayname === displayname) {
-      throw new Error('This username is already the one you\'re currently using.')
+      throw new Error('cannot-change-to-same-displayname')
     }
 
     user.displayname = displayname
@@ -82,7 +82,7 @@ export default async (root, {email, password, displayname, bio, donationUrl,}, {
       'message': 'Changing email',
     })
     if (user.email === email) {
-      throw new Error('This e-mail address is already the one you\'re currently using')
+      throw new Error('cannot-change-to-same-email')
     }
 
     user.pendingEmail = email

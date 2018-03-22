@@ -12,12 +12,12 @@ export default async (root, {id, value,}, {Session, Theme, Rating, User, token,}
 
   // Sanity checks
   if (!theme) {
-    throw new Error('No theme found')
+    throw new Error('no-such-theme')
   }
 
   user.themes.forEach((userTheme) => {
     if (userTheme._id.equals(id)) {
-      throw new Error('You can\'t rate your own themes')
+      throw new Error('cannot-rate-own-theme')
     }
   })
 

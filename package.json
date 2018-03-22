@@ -168,6 +168,7 @@
     "cors": "^2.8.4",
     "corser": "^2.0.1",
     "cross-env": "^5.1.0",
+    "dashify": "^1.0.0",
     "delay": "^2",
     "email-templates": "^3",
     "express": "^4",

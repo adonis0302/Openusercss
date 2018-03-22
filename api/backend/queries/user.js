@@ -6,7 +6,7 @@ export default async (root, {id,}, {Session, Theme, User, Rating,}) => {
   })
 
   if (!foundUser) {
-    throw new Error(`No user found by ID ${id}`)
+    throw new Error('no-such-user')
   }
 
   return foundUser

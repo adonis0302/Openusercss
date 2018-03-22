@@ -37,7 +37,7 @@ export default async (root, options, {Session, token,}) => {
   const session = await mustAuthenticate(token, Session)
 
   if (session.user.emailVerified) {
-    throw new Error('Your e-mail address is already verified')
+    throw new Error('email-already-verified')
   }
 
   const result = await createSendEmail(session.user)

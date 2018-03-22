@@ -18,12 +18,12 @@ export default async (root, {
   let newTheme = null
 
   if (!user.emailVerified) {
-    throw new Error('You must verify your e-mail address before uploading themes.')
+    throw new Error('email-not-verified')
   }
   const parsed = await parse(decodeURIComponent(content))
 
   if (!parsed.code) {
-    throw new Error('Parse result is empty. Is your CSS valid?')
+    throw new Error('empty-parse-result')
   }
 
   const parsedOptions = JSON.parse(decodeURIComponent(options))
@@ -35,7 +35,7 @@ export default async (root, {
     const userOwnsTheme = session.user._id.equals(newTheme.user._id)
 
     if (!newTheme || !userOwnsTheme) {
-      throw new Error('No theme found')
+      throw new Error('no-such-theme')
     }
 
     newTheme.title = decodeURIComponent(title)
