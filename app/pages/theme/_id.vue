@@ -6,15 +6,24 @@
   import navbar from '~/components/elements/navbar.vue'
   import notification from '~/components/elements/notification.vue'
   import bInput from '~/components/bits/b-input.vue'
+  import progressiveImage from '~/components/bits/progressive-image.vue'
+
+  import starRating from 'vue-star-rating'
   import raven from 'raven-js'
   import hat from 'hat'
+  import {mapGetters,} from 'vuex'
 
   export default {
+    fetch ({store, route,}) {
+      return store.dispatch('themes/single', route.params.id)
+    },
     'components': {
       oucFooter,
       navbar,
       notification,
       bInput,
+      starRating,
+      progressiveImage,
     },
     data () {
       return {
@@ -31,6 +40,21 @@
         },
       }
     },
+    'computed': {
+      ...mapGetters({
+        'viewer': 'session/viewer',
+      }),
+      theme () {
+        return this.$store.getters['themes/all'].find((theme) => theme._id === this.$route.params.id)
+      },
+      user () {
+        if (!this.theme) {
+          return {}
+        }
+
+        return this.$store.getters['users/all'].find((user) => user._id === this.theme.user._id)
+      },
+    },
     created () {
       if (this.$route.params.options) {
         this.options = JSON.parse(decodeURIComponent(this.$route.params.options))
@@ -40,6 +64,11 @@
       if (this.options.viewingSource) {
         this.viewSource()
       }
+      const self = this
+
+      this.$nextTick(() => {
+        self.$refs.flickity.rerender()
+      })
     },
     beforeDestroy () {
       this.$modal.hide('delete-theme')
@@ -123,7 +152,7 @@
         try {
           const self = this
 
-          const built = await buildTheme(this.theme, this.user)
+          const built = await buildTheme(this.theme, this.theme.user)
           const key = hat()
 
           const callbackHandler = (event) => {
@@ -252,12 +281,12 @@
               h1 {{theme.title}}
             .level-right
               .tile.is-parent.is-paddingless
-                .tile.is-child(v-if="user._id === currentUser._id")
+                .tile.is-child(v-show="viewer && user._id === viewer._id")
                   .content.is-marginless.is-pulled-right
                     button.button.is-danger(@click="confirmDeleteTheme") Delete theme
-                .tile.is-child(v-if="user._id === currentUser._id")
+                .tile.is-child(v-show="viewer && user._id === viewer._id")
                   .is-marginless.is-pulled-right
-                    router-link.button.is-primary(:to="'/theme/edit/' + theme._id") Edit theme
+                    nuxt-link.button.is-primary(:to="'/theme/edit/' + theme._id") Edit theme
                 .tile
                   .tile.is-child
                     .content.is-marginless.is-pulled-right
@@ -278,35 +307,53 @@
             .column.is-6
               div
                 .box.is-paddingless.is-marginless.ouc-theme-card
-                  //- flickity.carousel(ref="flickity", :options="flickityOptions")
+                  no-ssr(v-if="theme.screenshots.length")
+                    flickity.carousel(ref="flickity", :options="flickityOptions")
+                      progressive-image.carousel-cell(
+                        v-for="screenshot in theme.screenshots",
+                        :key="screenshot",
+                        :src="proxyImage(screenshot).large",
+                        :placeholder="proxyImage(screenshot).small",
+                        width="100%",
+                        height="15rem",
+                        size="cover"
+                      )
+                    progressive-image.carousel-cell(
+                      slot="placeholder",
+                      :placeholder="proxyImage(theme.screenshots[0]).small",
+                      width="100%",
+                      height="15rem",
+                      size="cover"
+                    )
                   .column
                     .tile.is-parent.is-paddingless
                       .tile.is-child.is-parent.is-vertical
                         .level.is-marginless
                           .level-left
-                            router-link(:to="'/profile/' + user._id")
+                            nuxt-link(:to="'/profile/' + user._id")
                               button.button.is-primary
-                                p Visit {{user.displayname}}'s profile
+                                p Visit {{theme.user.displayname}}'s profile
                             button.button.is-primary(
                               @click="viewSource"
                             ) View source
                         br
-                        p(v-if="averageRating(theme.ratings) !== 0") Average rating: {{averageRating(theme.ratings)}}
-                        p(v-if="averageRating(theme.ratings) === 0") Not rated yet
+                        p(v-show="averageRating(theme.ratings) !== 0") Average rating: {{averageRating(theme.ratings)}}
+                        p(v-show="averageRating(theme.ratings) === 0") Not rated yet
                         p Created: {{formatMoment(theme.createdAt)}}
                         p Last updated: {{formatMoment(theme.lastUpdate)}}
                         p Version: {{theme.version}}
-                        div(v-if="currentUser._id")
+                        div(v-show="viewer")
                           br
                           .level
                             .level-left
                               p Rate this theme:
                             .level-right
-                              //- star-rating(
-                                :rating="averageRating(theme.ratings)",
-                                :item-size="25",
-                                :show-rating="false",
-                                @rating-selected="sendRating"
+                              no-ssr
+                                star-rating(
+                                  :rating="averageRating(theme.ratings)",
+                                  :star-size="25",
+                                  :show-rating="false",
+                                  @rating-selected="sendRating"
                                 )
 
               .box
