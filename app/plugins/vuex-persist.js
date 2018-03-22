@@ -6,5 +6,9 @@ export default ({store,}) => {
     'storage': window.localStorage,
   })
 
+  if (store.getters['session/token']) {
+    store.dispatch('session/verify')
+  }
+
   return persistState(store)
 }
