@@ -1,8 +1,9 @@
 import createPersistedState from 'vuex-persistedstate'
+import pkg from '~/../package.json'
 
 export default ({store,}) => {
   const persistState = createPersistedState({
-    'key':     'ouc-state',
+    'key':     `ouc-state-${pkg.version}`,
     'storage': window.localStorage,
   })
 
