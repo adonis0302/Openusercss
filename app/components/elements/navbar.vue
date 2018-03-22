@@ -1,5 +1,5 @@
 <script>
-  import {mapGetters,} from 'vuex'
+  import {mapGetters, mapActions,} from 'vuex'
   import progressiveImage from '../bits/progressive-image.vue'
 
   import pkg from '~/../package.json'
@@ -9,6 +9,9 @@
       progressiveImage,
     },
     'methods': {
+      ...mapActions({
+        'logout': 'session/logout',
+      }),
       toggleOpen () {
         this.open = !this.open
       },
@@ -18,11 +21,19 @@
     },
     'computed': {
       ...mapGetters({
-        'session': 'user/session',
+        'session': 'session/data',
+        'viewer':  'session/viewer',
       }),
       'release': () => pkg.release.replace(/\w\S*/g, (text) => {
         return text.charAt(0).toUpperCase() + text.substr(1).toLowerCase()
       }),
+      profileUrl () {
+        if (!this.viewer) {
+          return '/login'
+        }
+
+        return `/profile/${this.viewer._id}`
+      },
     },
     data () {
       return {
@@ -111,19 +122,19 @@
         .navbar-menu.is-primary.ouc-navbar-menu(:class="{'is-active': open}")
           .navbar-start
           .navbar-end(@click="close")
-            nuxt-link(v-if="session", :to="'/profile/' + currentUser._id").navbar-item
-              fa-icon(icon="account")
-              | Welcome, {{currentUser.displayname}}
-            a(v-if="session", @click.prevent="logout").navbar-item
-              fa-icon(icon="sign-out")
+            nuxt-link(v-show="session", :to="profileUrl").navbar-item
+              fa-icon(icon="user")
+              | Welcome, {{viewer ? viewer.displayname : 'Guest'}}
+            a(v-show="session", @click.prevent="logout").navbar-item
+              fa-icon(icon="sign-out-alt")
               | Log out
             nuxt-link(to="/").navbar-item
               fa-icon(icon="home")
               | Home
-            nuxt-link(v-if="!session", to="/login").navbar-item
+            nuxt-link(v-show="!session", to="/login").navbar-item
               fa-icon(icon="sign-in-alt")
               | Log in
-            nuxt-link(v-if="!session", to="/register").navbar-item
+            nuxt-link(v-show="!session", to="/register").navbar-item
               fa-icon(icon="user-plus")
               | Register
             nuxt-link(to="/search").navbar-item
