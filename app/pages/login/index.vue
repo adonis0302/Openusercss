@@ -6,7 +6,7 @@
   import oucButton from '~/components/elements/ouc-button.vue'
   import bInput from '~/components/bits/b-input.vue'
 
-  import {mapActions,} from 'vuex'
+  import {mapGetters,} from 'vuex'
 
   export default {
     'components': {
@@ -24,8 +24,23 @@
         },
       }
     },
-    'methods': mapActions({
-      'login': 'session/login',
+    'methods': {
+      login () {
+        this.$store.dispatch('session/login', this.loginData)
+        .then(this.$router.push({
+          'path': '/',
+        }))
+      },
+    },
+    mounted () {
+      if (this.viewer) {
+        this.$router.push({
+          'path': '/',
+        })
+      }
+    },
+    'computed': mapGetters({
+      'viewer': 'session/viewer',
     }),
   }
 </script>
@@ -41,7 +56,7 @@
     .section(slot="form").ouc-form-section
         .container(style="max-width: 500px;").ouc-centered
           .box.ouc-form-box
-            form(@submit.prevent="login(loginData)").ouc-login-form
+            form(@submit.prevent="login").ouc-login-form
               h3 Log in to OpenUserCSS
               hr
               .tile.is-ancestor
