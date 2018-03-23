@@ -1,10 +1,10 @@
 <script>
-  import noSSR from 'vue-no-ssr'
   import semver from 'semver'
   import {cloneDeep, concat,} from 'lodash'
   import {Chrome as colorPicker,} from 'vue-color'
   import parse from '~/../lib/usercss-parser'
   import raven from 'raven-js'
+  import {mapGetters,} from 'vuex'
 
   import oucFooter from '~/components/elements/ouc-footer.vue'
   import navbar from '~/components/elements/navbar.vue'
@@ -31,7 +31,6 @@
 
   export default {
     'components': {
-      noSSR,
       oucFooter,
       navbar,
       notification,
@@ -44,7 +43,7 @@
     },
     'data': () => {
       return {
-        'editedTheme': {
+        'editingTheme': {
           'title':       '',
           'description': '',
           'version':     '',
@@ -58,30 +57,23 @@
         },
       }
     },
-    beforeMount () {
-      const self = this
-
-      if (this.$route.params.id) {
-        if (this.editedTheme && !this.editedTheme._id) {
-          this.$store.dispatch('getFullTheme', this.$route.params.id)
-          .then((theme) => {
-            theme.user = {
-              '_id': theme.user._id,
-            }
-            self.editedTheme = theme
-          })
-        } else {
-          self.editedTheme = this.$db.getCollection('themes').findOne({
-            '_id': this.$route.params.id,
-          })
-        }
+    created () {
+      if (this.$route.params.id && !this.theme) {
+        this.$store.commit('themes/editTemp', {
+          'id':    this.$route.params.id,
+          'theme': cloneDeep(this.editingTheme),
+        })
       }
+    },
+    mounted () {
+      this.editingTheme = cloneDeep(this.$store.getters['themes/editCache'][this.$route.params.id])
+        || this.editingTheme
 
-      this.editedTheme.options.forEach((option, index) => {
+      this.editingTheme.options.forEach((option, index) => {
         const cleanOption = cloneDeep(option)
 
         Reflect.deleteProperty(cleanOption, '__typename')
-        this.editedTheme.options[index] = cleanOption
+        this.editingTheme.options[index] = cleanOption
       })
 
       this.$validator.extend('semver', (value) => !!semver.valid(value))
@@ -89,36 +81,39 @@
     },
     'methods': {
       concat,
+      saveTemp () {
+        this.$store.commit('themes/editTemp', {
+          'id':    this.$route.params.id,
+          'theme': cloneDeep(this.editingTheme),
+        })
+      },
       async submit () {
         const validated = await this.$validator.validateAll()
 
         if (validated) {
           const readyTheme = cloneDeep(this.editedTheme)
 
-          this.$store.dispatch('saveTheme', {
-            'redirect': `/profile/${this.currentUser._id}`,
-            readyTheme,
-          })
+          this.$store.dispatch('themes/submit', readyTheme)
         }
       },
-      createColorsObject (hex) {
+      /* createColorsObject (hex) {
         return {
           hex,
         }
       },
       addOption (type) {
-        this.editedTheme.options.push({
+        this.editingTheme.options.push({
           type,
         })
       },
       removeOption (index) {
-        this.editedTheme.options.splice(index, 1)
+        this.editingTheme.options.splice(index, 1)
       },
       properCase (string) {
         return string.charAt(0).toUpperCase() + string.slice(1)
       },
       updateColor (colorObj, index) {
-        this.editedTheme.options[index].value = colorObj.hex
+        this.editingTheme.options[index].value = colorObj.hex
       },
       renderObjectOption (obj) {
         if (typeof obj === 'string') {
@@ -126,7 +121,7 @@
         }
 
         return `${obj.label} - ${obj.value}`
-      },
+      }, */
       async parseUserCSS (input) {
         if (input.toLowerCase().includes('==userstyle==')) {
           let parseResult = null
@@ -150,24 +145,21 @@
 
           const {props, code,} = parseResult
 
-          this.editedTheme.content = code
-          this.editedTheme.version = props.version
-          this.editedTheme.description = props.description
-          this.editedTheme.license = props.license
-          this.editedTheme.title = props.title
-          this.editedTheme.options = props.vars
+          this.editingTheme.content = code
+          this.editingTheme.version = props.version
+          this.editingTheme.description = props.description
+          this.editingTheme.license = props.license
+          this.editingTheme.title = props.title
+          this.editingTheme.options = props.vars
         }
       },
     },
     'computed': {
+      ...mapGetters({
+        'loading': 'themes/loading',
+      }),
       theme () {
-        if (!this.$route.params.id) {
-          return {}
-        }
-
-        return this.$db.getCollection('themes').findOne({
-          '_id': this.$route.params.id,
-        })
+        return this.$store.getters['themes/editCache'][this.$route.params.id] || this.editingTheme
       },
     },
   }
@@ -223,11 +215,11 @@
   div.ouc-route-root
     .container
       .section
-        notification(v-if="errors.all().length > 0", icon="alert", color="is-danger").is-danger
+        notification(v-if="errors.all().length > 0", icon="exclamation", color="is-danger").is-danger
           div(slot="content")
             p(v-for="error in errors.all()") {{error}}
 
-        form(slot="form", @submit.prevent="submit").ouc-new-theme-form
+        form(slot="form", @submit.prevent="submit", @change="saveTemp").ouc-new-theme-form
           .tile.ouc-new-theme-header.is-parent.is-paddingless
             .tile.is-6.is-child
               h1.is-inline(v-if="$route.params.id") Editing:&nbsp;
@@ -237,7 +229,7 @@
                 name="title",
                 placeholder="Theme title",
                 v-validate.disable="'required'",
-                v-model="editedTheme.title",
+                v-model="editingTheme.title",
                 :class="['input', {'is-danger': errors.has('title')}]"
               )
 
@@ -260,16 +252,16 @@
                         name="description",
                         placeholder="Theme description",
                         v-validate.disable="'required'",
-                        v-model="editedTheme.description",
+                        v-model="editingTheme.description",
                         :class="['input', {'is-danger': errors.has('description')}]"
                       )
                 .column.is-6
                   .box.is-fullheight
                     .content
                       vue-markdown(
-                        :source="editedTheme.description",
+                        :source="editingTheme.description",
                         :html="false",
-                        :anchor-attributes="anchorAttributes"
+                        :anchor-attributes="$anchorAttributes"
                       )
 
             .column.is-7
@@ -277,22 +269,22 @@
                 .tile.is-child
                   .field
                     .control.has-icons-left
-                      fa-icon(name="update")
+                      fa-icon.icon(icon="code-branch")
                       b-input(
                         type="text",
                         name="version",
                         placeholder="Version",
                         v-validate.disable="'required|semver'",
-                        v-model="editedTheme.version",
+                        v-model="editingTheme.version",
                         :class="['input', {'is-danger': errors.has('version')}]"
                       )
 
                 .tile.is-child
                   list-creator(
-                    icon="earth",
+                    icon="globe",
                     :max-items="10",
                     item-name="screenshot",
-                    v-model="editedTheme.screenshots",
+                    v-model="editingTheme.screenshots",
                     placeholder="Paste a URL to your image here"
                   ).has-bottom-margin
 
@@ -301,7 +293,8 @@
                     no-ssr
                       editor(
                         @input="parseUserCSS",
-                        v-model="editedTheme.content",
+                        @change="saveTemp",
+                        v-model="editingTheme.content",
                         name="content",
                         v-validate.disable="'required'",
                         :class="{'is-danger': errors.has('content')}"
@@ -315,18 +308,18 @@
                       type="button",
                       @click="addOption('text')"
                     ) Add text option
-                  .tileis-child.is-6
+                  .tile.is-child.is-6
                     button.button.is-primary.is-fullwidth(
                       type="button",
                       @click="addOption('color')"
                     ) Add color option
                 .tile
-                  .tileis-child.is-6
+                  .tile.is-child.is-6
                     button.button.is-primary.is-fullwidth(
                       type="button",
                       @click="addOption('checkbox')"
                     ) Add checkbox option
-                  .tileis-child.is-6
+                  .tile.is-child.is-6
                     button.button.is-primary.is-fullwidth(
                       type="button",
                       @click="addOption('select')"
@@ -334,7 +327,7 @@
 
                 br
                 .tile.is-parent.is-paddingless.is-vertical
-                  .tile.is-child(v-for="(option, index) in editedTheme.options")
+                  .tile.is-child(v-for="(option, index) in editingTheme.options")
                     .box.is-fullwidth
                       .level.is-marginless
                         .level-left
@@ -352,25 +345,25 @@
                             type="text",
                             :name="option.type + '-' + index + '-' + 'label'",
                             placeholder="Option label",
-                            v-model="editedTheme.options[index].label"
+                            v-model="editingTheme.options[index].label"
                           )
                         .tile.is-child
                           b-input(
                             type="text",
                             :name="option.type + '-' + index + '-' + 'name'",
                             placeholder="Variable name",
-                            v-model="editedTheme.options[index].name"
+                            v-model="editingTheme.options[index].name"
                           )
                         .tile.is-child(v-if="option.type === 'text'")
                           b-input(
                             type="text",
                             :name="option.type + '-' + index + '-' + 'value'",
                             placeholder="Default value",
-                            v-model="editedTheme.options[index].value"
+                            v-model="editingTheme.options[index].value"
                           )
                         .tile.has-text-centered.is-child(v-if="option.type === 'checkbox'")
                           .select.is-fullwidth
-                            select(v-model="editedTheme.options[index].value")
+                            select(v-model="editingTheme.options[index].value")
                               option(value="checked") Checked
                               option(value="unchecked") Unchecked
 
@@ -387,7 +380,7 @@
                       .tile.is-parent.is-paddingless.is-vertical(v-if="option.type === 'select'")
                         hr
                         list-creator(
-                          v-model="editedTheme.options[index].value",
+                          v-model="editingTheme.options[index].value",
                           item-name="value option",
                           max-items=64,
                           placeholder="Value",

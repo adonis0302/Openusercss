@@ -7,11 +7,15 @@ import client from '~/../lib/apollo-client'
 export const state = () => ({
   'loading': false,
   'themes':  [],
+  'editing': {},
 })
 
 export const mutations = {
   loading (state, isLoading,) {
     state.loading = isLoading
+  },
+  editTemp (state, {theme, id,}) {
+    state.editing[id] = theme
   },
   upsert (state, newTheme,) {
     const existingIndex = state.themes.findIndex((theme) => newTheme._id === theme._id)
@@ -30,6 +34,9 @@ export const getters = {
   },
   all (state,) {
     return state.themes
+  },
+  editCache (state,) {
+    return state.editing
   },
   latest (state,) {
     const copy = cloneDeep(state.themes)
@@ -52,6 +59,37 @@ export const getters = {
 }
 
 export const actions = {
+  async submit ({commit, state,}, theme) {
+    const {data,} = await client.mutate({
+      'mutation': gql`
+        mutation(
+          $id: ID
+          $title: String!
+          $description: String!
+          $content: String!
+          $version: String!
+          $screenshots: [String]
+          $options: String!
+        ) {
+          theme(
+            id: $id
+            title: $title
+            description: $description
+            content: $content
+            version: $version
+            screenshots: $screenshots
+            options: $options
+          ) {
+            _id
+          }
+        }
+      `,
+      'variables': theme,
+    })
+
+    commit('upsert', data.theme)
+  },
+
   async latest ({commit, state,}) {
     const {data,} = await client.query({
       'query': gql`
