@@ -15,6 +15,9 @@
     "nodesecurity",
     "plugin:vue/base"
   ],
+  "globals": {
+    "OUC": true,
+  },
   "rules": {
     "flowtype/no-types-missing-file-annotation": 0,
     "async/missing-await-in-async-fn": 0,
