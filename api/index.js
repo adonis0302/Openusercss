@@ -28,6 +28,8 @@ const init = async () => {
   app.set('trust proxy', true)
   app.set('env', config.get('env'))
 
+  app.use(morgan('combined'))
+
   await secure({app, config,})
   await cors({app, config,})
   await routes({app, config,})
@@ -39,7 +41,6 @@ const init = async () => {
   log.info(`API environment: ${app.get('env')}`)
 
   if (config.get('env') !== 'development') {
-    app.use(morgan('combined'))
     app.use(raven.errorHandler())
   }
 
