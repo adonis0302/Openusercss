@@ -14,6 +14,7 @@ secrets.json
 bkup.*
 /fly
 /screenshots
+/licenses.json
 
 /app/static/
 

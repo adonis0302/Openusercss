@@ -16,7 +16,7 @@
     "plugin:vue/base"
   ],
   "globals": {
-    "OUC": true,
+    "OUC": true
   },
   "rules": {
     "flowtype/no-types-missing-file-annotation": 0,

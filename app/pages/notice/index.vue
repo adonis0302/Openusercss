@@ -43,14 +43,8 @@
             | &gt;
 
           hr
-          p
-            | You can see the full text of the license here:&nbsp;
-            a(
-              href="https://github.com/OpenUserCSS/openusercss.org/blob/master/LICENSE",
-              target="_blank",
-              rel="nofollow noopener"
-            )
-              | https://github.com/OpenUserCSS/openusercss.org/blob/master/LICENSE
+          nuxt-link(to="/notice/licenses")
+            .button.is-primary View Open Source licenses
 
     ouc-footer
 </template>

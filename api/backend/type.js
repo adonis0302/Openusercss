@@ -61,6 +61,14 @@ const outputTypeDefs = `
     revisionTag:    String!
     revisionBranch: String!
   }
+
+  type License {
+    package:    String
+    repository: String
+    license:    String
+    source:     String
+    sourceText: String
+  }
 `
 
 const inputTypeDefs = `
@@ -75,6 +83,7 @@ const queries = `
     viewer: User
     verifyToken: Session!
     version: Version!
+    licenses: [License]!
 
     theme(
       id: ID!

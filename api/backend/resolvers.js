@@ -8,6 +8,7 @@ import latestThemesQuery from './queries/latest-themes'
 import versionQuery from './queries/version'
 import popularThemesQuery from './queries/popular-themes'
 import userThemesQuery from './queries/user-themes'
+import licensesQuery from './queries/licenses'
 
 import registerMutation from './mutations/register'
 import loginMutation from './mutations/login'
@@ -30,6 +31,7 @@ export default {
     'version':       versionQuery,
     'popularThemes': popularThemesQuery,
     'userThemes':    userThemesQuery,
+    'licenses':      licensesQuery,
   },
   'Mutation': {
     viewer,

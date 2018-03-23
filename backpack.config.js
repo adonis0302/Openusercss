@@ -1,5 +1,9 @@
 const {DefinePlugin,} = require('webpack')
 const git = require('git-revision')
+const fs = require('fs')
+
+// eslint-disable-next-line no-sync
+const licenses = fs.readFileSync('./licenses.json')
 
 module.exports = {
   webpack (config, options, webpack,) {
@@ -9,11 +13,12 @@ module.exports = {
 
     config.plugins.push(new DefinePlugin({
       'OUC.version': {
+        'revisionTag':    JSON.stringify(git('tag')),
         'revisionLong':   JSON.stringify(git('long')),
         'revisionShort':  JSON.stringify(git('short')),
-        'revisionTag':    JSON.stringify(git('tag')),
         'revisionBranch': JSON.stringify(git('branch')),
       },
+      'OUC.licenses': licenses.toString(),
     }))
 
     return config
