@@ -35,6 +35,9 @@ export const getters = {
   all (state,) {
     return state.themes
   },
+  single (state) {
+    return (id) => state.themes.find((theme) => theme._id === id)
+  },
   editCache (state,) {
     return state.editing
   },

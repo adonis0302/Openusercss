@@ -28,6 +28,9 @@ export const getters = {
   all (state) {
     return state.users
   },
+  single (state) {
+    return (id) => state.users.find((user) => user._id === id)
+  },
 }
 
 export const actions = {
