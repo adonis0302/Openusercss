@@ -5,10 +5,19 @@ import client from '~/../lib/apollo-client'
 
 const validators = {}
 
-validators.sessionUser = struct({
-  '_id':         'string',
-  'displayname': 'string',
-  '__typename':  'string?',
+validators.user = struct({
+  '_id':            'string',
+  'displayname':    'string',
+  'username':       'string',
+  'avatarUrl':      'string',
+  'smallAvatarUrl': 'string',
+  'lastSeen':       'string',
+  'lastSeenReason': 'string',
+  'createdAt':      'string',
+  'lastUpdate':     'string',
+  'bio':            'string',
+  'donationUrl':    'string',
+  '__typename':     'string?',
 }, {
   '__typename': 'User',
 })
@@ -21,7 +30,7 @@ validators.session = struct({
   'ua':         'string',
   'expiresAt':  'string',
   'createdAt':  'string',
-  'user':       validators.sessionUser,
+  'user':       validators.user,
 }, {
   '__typename': 'Session',
 })
@@ -106,7 +115,16 @@ export const actions = {
             _id
             user {
               _id
+              username
               displayname
+              avatarUrl
+              smallAvatarUrl
+              lastSeen
+              lastSeenReason
+              createdAt
+              lastUpdate
+              bio
+              donationUrl
             }
             token
             expiresAt
@@ -140,12 +158,12 @@ export const actions = {
         }
         `,
       })
-
-      commit('logout')
-      commit('loading', false)
     } catch (error) {
-      commit('loading', false)
-      throw error
+      // eslint-disable-next-line no-console
+      console.error(error)
     }
+
+    commit('loading', false)
+    commit('logout')
   },
 }
