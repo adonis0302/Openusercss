@@ -42,9 +42,15 @@ export default async (root, options, {Session, token,}) => {
 
   const result = await createSendEmail(session.user)
 
-  if (!result.accepted) {
-    return false
+  if (process.env.NODE_ENV === 'production') {
+    if (!result.accepted) {
+      throw new Error('email-not-accepted')
+    }
+
+    if (result.accepted[0] !== session.user.email) {
+      throw new Error(result.accepted)
+    }
   }
 
-  return result.accepted[0] === session.user.email
+  return true
 }

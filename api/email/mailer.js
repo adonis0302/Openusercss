@@ -68,7 +68,11 @@ export const sendEmail = async ({to, template, locals,}) => {
   }
 
   const resourcePath = path.resolve('./app/static')
+
   const email = new Email({
+    'views': {
+      'root': path.resolve('./build/emails'),
+    },
     'juice':          true,
     'juiceResources': {
       'preserveImportant': true,
