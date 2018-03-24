@@ -34,6 +34,7 @@ const sources = {
   ],
   'emailTemplates': [
     'src/emails/**/*.pug',
+    'src/email-views/**/*.pug',
   ],
   'icons': [
     'src/img/*.icon.*',

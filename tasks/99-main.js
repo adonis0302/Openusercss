@@ -7,14 +7,13 @@ gulp.task('build', gulp.parallel(
   'static:email-templates',
 ))
 
-gulp.task('watch', gulp.series(
-  gulp.parallel(
-    'licenses',
-    'static:email',
-    'static:email-templates',
-  ),
-  gulp.parallel(
-    'static:fast',
-    'static:watch',
-  )
+gulp.task('api:watch', gulp.parallel(
+  'licenses',
+  'static:email',
+  'static:email-templates',
+))
+
+gulp.task('client:watch', gulp.parallel(
+  'static:fast',
+  'static:watch',
 ))
