@@ -14,8 +14,11 @@
   import {mapGetters,} from 'vuex'
 
   export default {
-    fetch ({store, route,}) {
+    fetch ({store, app, route,}) {
       return store.dispatch('themes/single', route.params.id)
+      .catch(() => {
+        store.commit('themes/delete', route.params.id)
+      })
     },
     'components': {
       oucFooter,
@@ -45,14 +48,15 @@
         'viewer': 'session/viewer',
       }),
       theme () {
-        return this.$store.getters['themes/all'].find((theme) => theme._id === this.$route.params.id)
+        return this.$store.getters['themes/single'](this.$route.params.id)
+          || {}
       },
       user () {
         if (!this.theme) {
           return {}
         }
 
-        return this.$store.getters['users/all'].find((user) => user._id === this.theme.user._id)
+        return this.$store.getters['users/single'](this.theme.user._id)
       },
     },
     created () {

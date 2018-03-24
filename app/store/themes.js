@@ -17,6 +17,11 @@ export const mutations = {
   editTemp (state, {theme, id,}) {
     state.editing[id] = theme
   },
+  delete (state, id,) {
+    const index = state.themes.find((theme) => theme._id === id)
+
+    state.themes.splice(index, 1)
+  },
   upsert (state, newTheme,) {
     const existingIndex = state.themes.findIndex((theme) => newTheme._id === theme._id)
 
