@@ -63,6 +63,10 @@ module.exports = {
     '~/plugins/extension-data',
     '~/plugins/static-data',
     {
+      'src': '~/plugins/izitoast',
+      'ssr': false,
+    },
+    {
       'src': '~/plugins/vuex-persist',
       'ssr': false,
     },
