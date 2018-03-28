@@ -43,6 +43,30 @@ export const actions = {
       throw error
     }
   },
+  async verifyEmail ({commit,}, token) {
+    commit('loading', true)
+
+    try {
+      const {data,} = await client.mutate({
+        'mutation': gql`
+          mutation($token: String!) {
+            verifyEmail(token: $token)
+          }
+        `,
+        'variables': {
+          token,
+        },
+      })
+
+      if (!data.verifyEmail) {
+        throw new Error('Your e-mail address couldn\'t be verified. Please try again!')
+      }
+      commit('loading', false)
+    } catch (error) {
+      commit('loading', false)
+      throw error
+    }
+  },
   async submit ({commit,}, accountData) {
     commit('loading', true)
 
