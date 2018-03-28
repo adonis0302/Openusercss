@@ -14,39 +14,23 @@
     },
     'methods': {
       showInfo () {
-        this.$toast.info({
-          'title':   'Info',
-          'message': 'This is an info message',
-          'timeout': false,
-          'theme':   'ouc',
-          'layout':  2,
-        })
+        this.$toast.info('This is an info message', 'Info')
       },
       showSuccess () {
-        this.$toast.success({
-          'title':   'Success',
-          'message': 'This is a success message',
-          'timeout': false,
-          'theme':   'ouc',
-          'layout':  2,
-        })
+        this.$toast.success('This is a success message', 'Success')
       },
       showWarning () {
-        this.$toast.warning({
-          'title':   'Warning',
-          'message': 'This is a warning message',
-          'timeout': false,
-          'theme':   'ouc',
-          'layout':  2,
-        })
+        this.$toast.warning('This is a warning message', 'Warning')
       },
       showError () {
-        this.$toast.error({
-          'title':   'Error',
-          'message': 'This is an error message',
-          'timeout': false,
-          'theme':   'ouc',
-          'layout':  2,
+        this.$toast.error('This is an error message', 'Error', {
+          'buttons': [
+            [
+              '<button class="button has-text-white">Toggle spinning</button>', () => {
+                this.spinning = !this.spinning
+              },
+            ],
+          ],
         })
       },
     },

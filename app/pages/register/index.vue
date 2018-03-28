@@ -31,8 +31,9 @@
         const validated = await this.$validator.validateAll()
 
         if (validated) {
-          await this.$apollo.mutate({
-            'mutation': gql`
+          try {
+            await this.$apollo.mutate({
+              'mutation': gql`
               mutation(
                 $displayname: String!
                 $email:       String!
@@ -46,9 +47,15 @@
                   _id
                 }
               }
-            `,
-            'variables': this.registerData,
-          })
+              `,
+              'variables': this.registerData,
+            })
+            this.$router.push({
+              'path': '/',
+            })
+          } catch (error) {
+            this.$toast.error(error.message, 'Error')
+          }
         }
       },
     },

@@ -29,10 +29,14 @@
         const valid = await this.$validator.validateAll()
 
         if (valid) {
-          await this.$store.dispatch('session/login', this.loginData)
-          this.$router.push({
-            'path': '/',
-          })
+          try {
+            await this.$store.dispatch('session/login', this.loginData)
+            this.$router.push({
+              'path': '/',
+            })
+          } catch (error) {
+            this.$toast.error(error.message, 'Error')
+          }
         }
       },
     },

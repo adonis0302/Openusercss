@@ -45,14 +45,12 @@
     },
     'methods': {
       async resendVerification () {
-        await this.$store.dispatch('account/resendVerify')
-
-        this.$toast.success({
-          'title':   'Sent',
-          'message': 'Check your inbox!',
-          'theme':   'ouc',
-          'layout':  2,
-        })
+        try {
+          await this.$store.dispatch('account/resendVerify')
+          this.$toast.success('Check your inbox!', 'Sent')
+        } catch (error) {
+          this.$toast.error(error.message, 'Error')
+        }
       },
       async submitAccount () {
         const validated = await this.$validator.validateAll()
