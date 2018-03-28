@@ -47,7 +47,10 @@
           p
             | This page in under construction. What's here already works, but more
             | content is needed to cover topics. If you want to write some,&nbsp;
-            a(href="https://github.com/OpenUserCSS/openusercss.org/issues/new", target="_blank")
+            a.has-text-primary(
+              href="https://github.com/OpenUserCSS/openusercss.org/issues/new"
+              target="_blank"
+            )
               | open a new issue!
 
         .content
@@ -119,9 +122,9 @@
         .content
           p
             | For further help, please drop us a line&nbsp;
-            a(href="//forums.openusercss.org", target="_blank") on our community forums
+            a.has-text-primary(href="//forums.openusercss.org", target="_blank") on our community forums
             | , or visit&nbsp;
-            nuxt-link(to="/contact") the contact page
+            nuxt-link.has-text-primary(to="/contact") the contact page
 
 
     ouc-footer

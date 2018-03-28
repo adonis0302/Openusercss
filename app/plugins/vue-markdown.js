@@ -5,6 +5,7 @@ Vue.component('vue-markdown', VueMarkdown)
 Vue.mixin({
   'computed': {
     '$anchorAttributes': () => ({
+      'class':  'has-text-primary',
       'target': '_blank',
       'rel':    'nofollow noopener',
     }),

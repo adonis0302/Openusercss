@@ -42,17 +42,17 @@
             b of this website.&nbsp;
             | If you want to contact the creator of a theme,
             | you can do so&nbsp;
-            a(href="//forums.openusercss.org/", target="_blank") on the forums.
+            a.has-text-primary(href="//forums.openusercss.org/", target="_blank") on the forums.
           ul
             li
               p
                 | About CSS development, please post here:&nbsp;
-                a(href="//forums.openusercss.org/category/5/theme-development", target="_blank")
+                a.has-text-primary(href="//forums.openusercss.org/category/5/theme-development", target="_blank")
                   | https://forums.openusercss.org/category/5/theme-development
             li
               p
                 | About this site itself, or if you want to report themes, please post here:&nbsp;
-                a(href="//forums.openusercss.org/category/6/openusercss-org", target="_blank")
+                a.has-text-primary(href="//forums.openusercss.org/category/6/openusercss-org", target="_blank")
                   | https://forums.openusercss.org/category/6/openusercss-org
             li
               p.is-inline

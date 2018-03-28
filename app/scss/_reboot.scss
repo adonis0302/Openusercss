@@ -43,16 +43,6 @@ div[itemtype] {
     list-style: decimal;
     padding-left: 35px;
   }
-
-  &:not(.is-warning) a {
-    background-color: nth($primary, 2);
-    color: nth($primary, 1);
-  }
-
-  &.is-warning a {
-    background-color: nth($warning, 2);
-    color: nth($warning, 1);
-  }
 }
 
 .container {

@@ -34,7 +34,7 @@
           p
             | You should have received a copy of the GNU General Public License
             | along with this program.  If not, see&nbsp;&lt;
-            a(
+            a.has-text-primary(
               href="https://www.gnu.org/licenses/",
               target="_blank",
               rel="nofollow noopener"
