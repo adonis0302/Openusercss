@@ -77,7 +77,7 @@ export const actions = {
           $content: String!
           $version: String!
           $screenshots: [String]
-          $options: String!
+          $options: [OptionInput]!
         ) {
           theme(
             id: $id
@@ -89,12 +89,42 @@ export const actions = {
             options: $options
           ) {
             _id
+            user {
+              _id
+              username
+              displayname
+              avatarUrl
+              smallAvatarUrl
+              lastSeen
+              lastSeenReason
+              createdAt
+              lastUpdate
+              bio
+              donationUrl
+            }
+            title
+            description
+            content
+            createdAt
+            lastUpdate
+            version
+            screenshots
+            options {
+              type
+              label
+              name
+              value
+            }
           }
         }
       `,
       'variables': theme,
     })
 
+    commit('users/upsert', data.theme.user, {
+      'root': true,
+    })
+    Reflect.deleteProperty(data.theme, 'user')
     commit('upsert', data.theme)
   },
 
@@ -110,11 +140,26 @@ export const actions = {
               displayname
               avatarUrl
               smallAvatarUrl
+              lastSeen
+              lastSeenReason
+              createdAt
+              lastUpdate
+              bio
+              donationUrl
             }
             title
             description
+            content
             createdAt
             lastUpdate
+            version
+            screenshots
+            options {
+              type
+              label
+              name
+              value
+            }
           }
         }
       `,
@@ -124,6 +169,10 @@ export const actions = {
     })
 
     data.latestThemes.forEach((theme) => {
+      commit('users/upsert', theme.user, {
+        'root': true,
+      })
+      Reflect.deleteProperty(theme, 'user')
       commit('upsert', theme)
     })
   },
@@ -139,11 +188,26 @@ export const actions = {
               displayname
               avatarUrl
               smallAvatarUrl
+              lastSeen
+              lastSeenReason
+              createdAt
+              lastUpdate
+              bio
+              donationUrl
             }
             title
             description
+            content
             createdAt
             lastUpdate
+            version
+            screenshots
+            options {
+              type
+              label
+              name
+              value
+            }
           }
         }
       `,
@@ -153,6 +217,10 @@ export const actions = {
     })
 
     data.popularThemes.forEach((theme) => {
+      commit('users/upsert', theme.user, {
+        'root': true,
+      })
+      Reflect.deleteProperty(theme, 'user')
       commit('upsert', theme)
     })
   },
