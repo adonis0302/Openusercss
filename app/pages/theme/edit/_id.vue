@@ -23,7 +23,7 @@
           'required': 'Theme code must not be empty',
         },
         'version': {
-          'semver': 'Theme versioning must be semantic',
+          'semver': 'Theme versioning must be semantic (e.g.: 1.0.0)',
         },
       },
     },
@@ -57,6 +57,9 @@
         },
       }
     },
+    fetch ({route, store,}) {
+      return store.dispatch('themes/single', route.params.id)
+    },
     created () {
       if (this.$route.params.id && !this.theme) {
         this.$store.commit('themes/editTemp', {
@@ -64,20 +67,15 @@
           'theme': cloneDeep(this.editingTheme),
         })
       }
+
+      this.$validator.extend('semver', (value) => !!semver.valid(value))
+      this.$validator.localize(customDictionary)
+
+      this.editingTheme = cloneDeep(this.$store.getters['themes/single'](this.$route.params.id))
     },
     mounted () {
       this.editingTheme = cloneDeep(this.$store.getters['themes/editCache'][this.$route.params.id])
         || this.editingTheme
-
-      this.editingTheme.options.forEach((option, index) => {
-        const cleanOption = cloneDeep(option)
-
-        Reflect.deleteProperty(cleanOption, '__typename')
-        this.editingTheme.options[index] = cleanOption
-      })
-
-      this.$validator.extend('semver', (value) => !!semver.valid(value))
-      this.$validator.localize(customDictionary)
     },
     'methods': {
       concat,
@@ -91,9 +89,10 @@
         const validated = await this.$validator.validateAll()
 
         if (validated) {
-          const readyTheme = cloneDeep(this.editedTheme)
+          const readyTheme = cloneDeep(this.editingTheme)
 
-          this.$store.dispatch('themes/submit', readyTheme)
+          await this.$store.dispatch('themes/submit', readyTheme)
+          this.$router.push('/')
         }
       },
       /* createColorsObject (hex) {
