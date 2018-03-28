@@ -15,10 +15,10 @@ const createSendEmail = async ({email, displayname,}) => {
     'algorithm': 'HS256',
   })
 
-  let link = `https://openusercss.org/verify-email/${token}`
+  let link = `https://openusercss.org/account/verify-email/${token}`
 
   if (process.env.NODE_ENV === 'development') {
-    link = `http://localhost:5010/verify-email/${token}`
+    link = `http://localhost:5010/account/verify-email/${token}`
   }
 
   const result = await sendEmail({
