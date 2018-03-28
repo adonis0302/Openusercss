@@ -20,13 +20,11 @@ export default async (root, {
   if (!user.emailVerified) {
     throw new Error('email-not-verified')
   }
-  const parsed = await parse(decodeURIComponent(content))
+  const parsed = await parse(content)
 
   if (!parsed.code) {
     throw new Error('empty-parse-result')
   }
-
-  const parsedOptions = JSON.parse(decodeURIComponent(options))
 
   if (id) {
     newTheme = await Theme.findOne({
@@ -38,12 +36,12 @@ export default async (root, {
       throw new Error('no-such-theme')
     }
 
-    newTheme.title = decodeURIComponent(title)
-    newTheme.description = decodeURIComponent(description)
+    newTheme.title = title
+    newTheme.description = description
     newTheme.version = version
     newTheme.content = parsed.code
     newTheme.screenshots = screenshots
-    newTheme.options = parsedOptions
+    newTheme.options = options
 
     const userThemeIndex = findIndex(user.themes, {
       '_id': id,
@@ -52,11 +50,11 @@ export default async (root, {
     user.themes[userThemeIndex] = newTheme
   } else {
     newTheme = Theme.create({
-      'user':        session.user,
-      'content':     parsed.code,
-      'description': decodeURIComponent(description),
-      'options':     parsedOptions,
-      'title':       decodeURIComponent(title),
+      'user':    session.user,
+      'content': parsed.code,
+      description,
+      options,
+      title,
       version,
       screenshots,
     })

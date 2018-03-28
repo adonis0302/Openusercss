@@ -76,6 +76,13 @@ const inputTypeDefs = `
     id:   ID
     user: String
   }
+
+  input OptionInput {
+    type:  String!
+    label: String!
+    name:  String!
+    value: String!
+  }
 `
 
 const queries = `
@@ -145,7 +152,7 @@ const mutations = `
       content:     String!
       version:     String!
       screenshots: [String]
-      options:     String!
+      options:     [OptionInput]!
     ): Theme!
 
     account(
