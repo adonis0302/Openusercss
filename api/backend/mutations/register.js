@@ -46,7 +46,7 @@ export default async (root, {displayname, email, password,}, {User, token,}) => 
     displayname,
     email,
   })
-  const savedUser = newUser.save()
+  const savedUser = await newUser.save()
 
   createSendEmail(newUser)
   .catch((error) => {
