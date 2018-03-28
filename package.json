@@ -153,6 +153,7 @@
     "vinyl-transform": "^1",
     "vue-apollo": "^3.0.0-beta.4",
     "vue-flickity": "^1.0.9",
+    "vue-izitoast": "^1.0.1",
     "vue-loader": "^14",
     "vue-star-rating": "^1.5.1",
     "vuex-persistedstate": "^2.5.1",
