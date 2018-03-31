@@ -17,7 +17,11 @@
       },
       'src':         String,
       'placeholder': String,
-      'size':        {
+      'position':    {
+        'type':    String,
+        'default': 'top left',
+      },
+      'size': {
         'type':    String,
         'default': 'contain',
       },
@@ -37,13 +41,14 @@
     data () {
       return {
         'style': {
-          'height':            '100%',
-          'width':             '100%',
-          'background-image':  `url("${this.placeholder}")`,
-          'background-repeat': 'no-repeat',
-          'background-size':   this.size,
-          'transition':        'filter .3s ease-in-out',
-          'filter':            'blur(4px)',
+          'height':              '100%',
+          'width':               '100%',
+          'background-image':    `url("${this.placeholder}")`,
+          'background-repeat':   'no-repeat',
+          'background-size':     this.size,
+          'background-position': this.position,
+          'transition':          'filter .3s ease-in-out',
+          'filter':              'blur(4px)',
         },
         'rawStyle': {
           'height':     '100%',
@@ -83,5 +88,6 @@
 <template lang="pug">
   .ouc-responsive-image-wrapper(v-if="!raw", :style="commonStyle")
     .ouc-responsive-image(:style="style", ref="main")
+      slot(name="overlay")
   img.ouc-responsive-image-raw(v-else, ref="raw", :style="rawStyle", :src="placeholder")
 </template>
