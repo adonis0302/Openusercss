@@ -59,7 +59,7 @@ export const getters = {
     const copy = cloneDeep(state.themes)
 
     copy.sort((a, b) => {
-      return true
+      return false
     })
 
     return copy
@@ -67,7 +67,15 @@ export const getters = {
 }
 
 export const actions = {
-  async submit ({commit, state,}, theme) {
+  async submit ({commit, state,}, {
+    id,
+    title,
+    description,
+    content,
+    version,
+    screenshots,
+    options,
+  }) {
     const {data,} = await client.mutate({
       'mutation': gql`
         mutation(
@@ -118,13 +126,20 @@ export const actions = {
           }
         }
       `,
-      'variables': theme,
+      'variables': {
+        id,
+        title,
+        description,
+        content,
+        version,
+        screenshots,
+        options,
+      },
     })
 
     commit('users/upsert', data.theme.user, {
       'root': true,
     })
-    Reflect.deleteProperty(data.theme, 'user')
     commit('upsert', data.theme)
   },
 
