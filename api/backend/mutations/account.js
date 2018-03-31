@@ -26,10 +26,10 @@ const sendEmail = async (locals, {template,}) => {
     'algorithm': 'HS256',
   })
 
-  let link = `https://openusercss.org/verify-email/${token}`
+  let link = `https://openusercss.org/account/verify-email/${token}`
 
   if (process.env.NODE_ENV === 'development') {
-    link = `http://localhost:5010/verify-email/${token}`
+    link = `http://localhost:5010/account/verify-email/${token}`
   }
 
   const result = await transportEmail({
@@ -96,9 +96,9 @@ export default async (root, {email, password, displayname, bio, donationUrl,}, {
       'algorithm': 'HS256',
     })
 
-    link = `https://openusercss.org/verify-email/${verificationToken}`
+    link = `https://openusercss.org/account/verify-email/${verificationToken}`
     if (process.env.NODE_ENV === 'development') {
-      link = `http://localhost:5010/verify-email/${verificationToken}`
+      link = `http://localhost:5010/account/verify-email/${verificationToken}`
     }
   }
 
