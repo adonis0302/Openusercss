@@ -48,7 +48,8 @@
       }
     },
     'computed': mapGetters({
-      'viewer': 'session/viewer',
+      'viewer':  'session/viewer',
+      'loading': 'session/loading',
     }),
   }
 </script>
@@ -102,7 +103,7 @@
                               aria-label="login passphrase"
                             )
                   .tile.is-parent.is-vertical.is-paddingless
-                    ouc-button(icon="user-plus").is-primary
+                    ouc-button(icon="user-plus", :loading="loading").is-primary
                       p(slot="content") Login
                     hr(v-show="errors.any()")
                     notification(v-show="errors.any()", icon="exclamation", color="is-danger").is-danger

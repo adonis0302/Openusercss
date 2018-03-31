@@ -7,6 +7,7 @@
   import navbar from '~/components/elements/navbar.vue'
 
   import gql from 'graphql-tag'
+  import {mapGetters,} from 'vuex'
 
   export default {
     'components': {
@@ -59,6 +60,9 @@
         }
       },
     },
+    'computed': mapGetters({
+      'loading': 'session/loading',
+    }),
   }
 </script>
 
