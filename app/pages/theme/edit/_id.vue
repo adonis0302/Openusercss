@@ -2,7 +2,7 @@
   import semver from 'semver'
   import {cloneDeep, concat,} from 'lodash'
   import {Chrome as colorPicker,} from 'vue-color'
-  import parse from '~/../lib/usercss-parser'
+  import {parse,} from 'parse-usercss'
   import raven from 'raven-js'
   import {mapGetters,} from 'vuex'
 
@@ -43,7 +43,12 @@
     },
     'data': () => {
       return {
-        'editingTheme': {
+        'error':         null,
+        'editorWarning': null,
+        'fancyEditor':   'on',
+        'notFound':      false,
+        'editingTheme':  {
+          'id':          '',
           'title':       '',
           'description': '',
           'version':     '',
@@ -57,8 +62,18 @@
         },
       }
     },
-    fetch ({route, store,}) {
-      return store.dispatch('themes/single', route.params.id)
+    async asyncData ({route, store,}) {
+      if (!route.params.id) {
+        return null
+      }
+
+      try {
+        await store.dispatch('themes/single', route.params.id)
+      } catch (error) {
+        return {
+          'notFound': error.message,
+        }
+      }
     },
     created () {
       if (this.$route.params.id && !this.theme) {
@@ -72,6 +87,7 @@
       this.$validator.localize(customDictionary)
 
       this.editingTheme = cloneDeep(this.$store.getters['themes/single'](this.$route.params.id))
+        || this.editingTheme
     },
     mounted () {
       this.editingTheme = cloneDeep(this.$store.getters['themes/editCache'][this.$route.params.id])
@@ -91,11 +107,15 @@
         if (validated) {
           const readyTheme = cloneDeep(this.editingTheme)
 
-          await this.$store.dispatch('themes/submit', readyTheme)
-          this.$router.push('/')
+          try {
+            await this.$store.dispatch('themes/submit', readyTheme)
+            this.$router.push('/')
+          } catch (error) {
+            this.$toast.error(error.message)
+          }
         }
       },
-      /* createColorsObject (hex) {
+      createColorsObject (hex) {
         return {
           hex,
         }
@@ -120,37 +140,60 @@
         }
 
         return `${obj.label} - ${obj.value}`
-      }, */
-      async parseUserCSS (input) {
-        if (input.toLowerCase().includes('==userstyle==')) {
-          let parseResult = null
+      },
+      parseUserCSS (input) {
+        this.$nextTick(() => {
+          if (input.toLowerCase().includes('==userstyle==')) {
+            let parseResult = null
 
-          raven.captureBreadcrumb({
-            'event': {
-              'name': 'parsing-usercss',
-            },
-            'contents': {
-              'source': input,
-            },
-          })
+            raven.captureBreadcrumb({
+              'event': {
+                'name': 'parsing-usercss',
+              },
+              'contents': {
+                'source': input,
+              },
+            })
 
-          try {
-            parseResult = await parse(input)
-          } catch (error) {
-            // eslint-disable-next-line no-console
-            console.error(error)
-            raven.captureException(error)
+            try {
+              parseResult = parse(input)
+              this.error = null
+            } catch (error) {
+              this.error = error
+              raven.captureException(error)
+            }
+
+            if (!parseResult) {
+              return null
+            }
+
+            const {
+              description,
+              name,
+              vars,
+              version,
+            } = parseResult
+
+            this.editingTheme.version = version
+            this.editingTheme.description = description
+            this.editingTheme.title = name
+
+            this.editingTheme.options = []
+
+            Object.keys(vars).forEach((key) => {
+              const item = cloneDeep(vars[key])
+
+              this.editingTheme.options.push(item)
+            })
+
+            this.editorWarning = [
+              'Don\'t forget to remove the usercss definition',
+              'from the theme before saving',
+            ].join(' ')
+          } else {
+            this.editorWarning = null
           }
-
-          const {props, code,} = parseResult
-
-          this.editingTheme.content = code
-          this.editingTheme.version = props.version
-          this.editingTheme.description = props.description
-          this.editingTheme.license = props.license
-          this.editingTheme.title = props.title
-          this.editingTheme.options = props.vars
-        }
+        })
       },
     },
     'computed': {
@@ -214,11 +257,15 @@
   div.ouc-route-root
     .container
       .section
-        notification(v-if="errors.all().length > 0", icon="exclamation", color="is-danger").is-danger
+        .notification(v-if="errors.all().length > 0", icon="exclamation", color="is-danger").is-danger
           div(slot="content")
             p(v-for="error in errors.all()") {{error}}
+        .notification.is-danger(v-if="error")
+          p An error occurred in the editor: {{error.message}}
+        .notification.is-danger(v-if="notFound")
+          p An error occurred while loading the editor: {{notFound}}
 
-        form(slot="form", @submit.prevent="submit", @change="saveTemp").ouc-new-theme-form
+        form(v-else, slot="form", @submit.prevent="submit", @input="saveTemp").ouc-new-theme-form
           .tile.ouc-new-theme-header.is-parent.is-paddingless
             .tile.is-6.is-child
               h1.is-inline(v-if="$route.params.id") Editing:&nbsp;
@@ -269,7 +316,7 @@
                   .field
                     .control.has-icons-left
                       fa-icon.icon(icon="code-branch")
-                      b-input(
+                      input.input(
                         type="text",
                         name="version",
                         placeholder="Version",
@@ -285,11 +332,20 @@
                     item-name="screenshot",
                     v-model="editingTheme.screenshots",
                     placeholder="Paste a URL to your image here"
-                  ).has-bottom-margin
+                    ).has-bottom-margin
+
+                .notification.is-warning(v-if="editorWarning")
+                  fa-icon(icon="exclamation")
+                  | {{editorWarning}}
+
+                .tile.is-child
+                  label
+                    | Use fancy code editor
+                    b-switch.is-pulled-right(v-model="fancyEditor")
 
                 .tile.ouc-new-theme-editor.is-child
-                  .box.is-paddingless
-                    no-ssr
+                  no-ssr
+                    .box.is-paddingless(v-if="fancyEditor")
                       editor(
                         @input="parseUserCSS",
                         @change="saveTemp",
@@ -298,6 +354,17 @@
                         v-validate.disable="'required'",
                         :class="{'is-danger': errors.has('content')}"
                       )
+                    b-textarea(
+                      v-else,
+                      type="text",
+                      name="content",
+                      placeholder="Theme source code",
+                      @input="parseUserCSS",
+                      @change="saveTemp",
+                      v-model="editingTheme.content",
+                      v-validate.disable="'required'",
+                      :class="{'is-danger': errors.has('content')}"
+                    )
 
             .column.is-5
               .tile.is-parent.is-vertical
@@ -336,29 +403,29 @@
                             type="button",
                             @click="removeOption(index)"
                           )
-                            icon(icon="close")
+                            fa-icon(icon="times")
                       br
                       .tile.is-parent.is-paddingless
                         .tile.is-child
-                          b-input(
+                          input.input(
                             type="text",
                             :name="option.type + '-' + index + '-' + 'label'",
                             placeholder="Option label",
                             v-model="editingTheme.options[index].label"
                           )
                         .tile.is-child
-                          b-input(
+                          input.input(
                             type="text",
                             :name="option.type + '-' + index + '-' + 'name'",
                             placeholder="Variable name",
                             v-model="editingTheme.options[index].name"
                           )
                         .tile.is-child(v-if="option.type === 'text'")
-                          b-input(
+                          input.input(
                             type="text",
                             :name="option.type + '-' + index + '-' + 'value'",
                             placeholder="Default value",
-                            v-model="editingTheme.options[index].value"
+                            v-model="editingTheme.options[index].default"
                           )
                         .tile.has-text-centered.is-child(v-if="option.type === 'checkbox'")
                           .select.is-fullwidth
@@ -379,11 +446,11 @@
                       .tile.is-parent.is-paddingless.is-vertical(v-if="option.type === 'select'")
                         hr
                         list-creator(
-                          v-model="editingTheme.options[index].value",
+                          v-model="editingTheme.options[index].options",
                           item-name="value option",
                           max-items=64,
                           placeholder="Value",
-                          icon="view-list",
+                          icon="bars",
                           :support-objects="true"
                         )
 

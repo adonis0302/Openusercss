@@ -44,6 +44,7 @@
       addObject () {
         if (this.list.length < this.maxItems) {
           this.list.push({
+            'name':  '',
             'label': '',
             'value': '',
           })

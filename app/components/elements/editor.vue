@@ -53,7 +53,7 @@
       this.$emit('init', this.editor)
       this.editor.$blockScrolling = Infinity
 
-      this.editor.on('change', () => {
+      this.editor.on('input', () => {
         self.$emit('change', self.editor.getValue())
         self.$emit('input', self.editor.getValue())
       })
