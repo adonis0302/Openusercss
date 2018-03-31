@@ -49,7 +49,6 @@
       }),
       theme () {
         return this.$store.getters['themes/single'](this.$route.params.id)
-          || {}
       },
       user () {
         if (!this.theme) {
@@ -58,21 +57,29 @@
 
         return this.$store.getters['users/single'](this.theme.user._id)
       },
-    },
-    created () {
-      if (this.$route.params.options) {
-        this.options = JSON.parse(decodeURIComponent(this.$route.params.options))
-      }
+      canDoEventInstall () {
+        if (!this.extension || process.server) {
+          return false
+        }
+
+        return this.extension.capabilities.includes('event:install-usercss')
+      },
+      installLink () {
+        if (process.env.NODE_ENV === 'development') {
+          return `http://localhost:5000/theme/${this.theme._id}.user.css`
+        }
+
+        return `https://api.openusercss.org/theme/${this.theme._id}.user.css`
+      },
     },
     mounted () {
-      if (this.options.viewingSource) {
+      if (this.$route.query.viewingSource === 'true') {
         this.viewSource()
       }
-      const self = this
 
-      if (this.theme.screenshots.length) {
+      if (this.theme && this.theme.screenshots.length) {
         this.$nextTick(() => {
-          self.$refs.flickity.rerender()
+          this.$refs.flickity.rerender()
         })
       }
     },
@@ -147,13 +154,6 @@
           },
         })
       },
-      installTheme () {
-        if (process.env.NODE_ENV === 'development') {
-          window.open(`http://localhost:5000/theme/${this.theme._id}.user.css`)
-        } else {
-          window.open(`https://api.openusercss.org/theme/${this.theme._id}.user.css`)
-        }
-      },
       async installThemeEvent () {
         try {
           const self = this
@@ -166,7 +166,7 @@
               window.removeEventListener('message', callbackHandler)
 
               if (event.data.key !== key) {
-                const error = new Error(`${process.extension.name} didn't pass the key back correctly`)
+                const error = new Error(`${this.extension.name} didn't pass the key back correctly`)
 
                 raven.captureException(error)
                 self.$toast.error({
@@ -182,7 +182,7 @@
 
               self.$toast.success({
                 'title':   'Theme installed',
-                'message': `${this.theme.title} was installed by ${process.extension.name} successfully`,
+                'message': `${this.theme.title} was installed by ${this.extension.name} successfully`,
                 'timeout': 10000,
                 'theme':   'ouc',
                 'layout':  2,
@@ -209,8 +209,8 @@
 
 <style lang="scss" scoped>
   @import 'node_modules/bulma/sass/utilities/initial-variables';
-  @import '../../scss/autocolor';
-  @import '../../scss/variables';
+  @import '../../../scss/autocolor';
+  @import '../../../scss/variables';
 
   code {
     display: block;
@@ -233,12 +233,18 @@
 </style>
 
 <template lang="pug">
-  include ../../components/static/microdata/theme.pug
+  include ../../../components/static/microdata/theme.pug
 
   div.ouc-route-root
-    +theme-microdata
+    div(v-if="theme")
+      +theme-microdata
 
-    modal(name="delete-theme", :draggable="true", height="auto")
+    modal(
+      v-if="theme"
+      name="delete-theme"
+      :draggable="true"
+      height="auto"
+    )
       form(@submit.prevent="deleteTheme")
         .card.is-unselectable
           .card-header
@@ -270,6 +276,7 @@
               button.button.is-fullbleed.is-borderless(type="reset", @click="cancelDelete") Cancel
 
     modal(
+      v-if="theme",
       name="source-viewer",
       height="auto",
       :scrollable="true",
@@ -281,7 +288,16 @@
 
     .container(:inert="showingModal")
       div
-        .section
+        .section(v-if="!theme")
+          .notification.is-danger
+            .level
+              .level-left
+                fa-icon(icon="times")
+                p
+                  | No themes were found that match your query.
+                  | You either clicked on a broken link, or mistyped the URL.
+
+        .section(v-else)
           .level
             .level-left.is-marginless
               h1 {{theme.title}}
@@ -296,18 +312,18 @@
                 .tile
                   .tile.is-child
                     .content.is-marginless.is-pulled-right
-                      div(v-if="extension")
-                        button.button.is-primary(
-                          @click="installTheme",
-                          v-if="!extension.capabilities.includes('event:install-usercss')"
-                        ) Install with {{extension.name}}
+                      div(v-if="canDoEventInstall && extension")
                         button.button.is-primary(
                           @click="installThemeEvent",
                           v-if="extension.capabilities.includes('event:install-usercss')"
                         )
                           div(v-if="!extensionData.installed") Install with {{extension.name}}
                           div(v-if="extensionData.installed") Reinstall with {{extension.name}}
-                      button.button.is-primary(v-if="!extension", @click="installTheme") Install theme as usercss
+                      a.button.is-primary(
+                        :href="installLink",
+                        target="_blank",
+                        v-if="!canDoEventInstall"
+                      ) Install as usercss
 
           .columns
             .column.is-6
