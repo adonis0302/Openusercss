@@ -8,6 +8,7 @@
   import progressiveImage from '~/components/bits/progressive-image.vue'
 
   import {mapGetters,} from 'vuex'
+  import starRating from 'vue-star-rating'
 
   export default {
     fetch ({store, route,}) {
@@ -19,6 +20,7 @@
       themeCard,
       notification,
       progressiveImage,
+      starRating,
     },
     beforeMount () {
       this.timeInterval = setInterval(() => {
@@ -81,6 +83,8 @@
 
 <template lang="pug">
   include ../../components/static/microdata/user.pug
+  include ../../components/static/microdata/theme.pug
+  include ../../components/static/theme-card.pug
 
   div.ouc-route-root
     +user-microdata
@@ -112,7 +116,7 @@
                             width="10rem"
                           )
                       .tile.is-8
-                        .tile.is-parent.ouc-user-details
+                        .tile.is-parent.is-paddingless.ouc-user-details
                           .tile.is-parent
                             .tile.is-child.is-parent.is-vertical.is-paddingless
                               h2 {{user.displayname}}
@@ -140,22 +144,15 @@
                 hr
 
               .columns.is-multiline
-                .column.is-6(v-for="(theme, index) in themes")
-                  theme-card(:data-index="index", :small="true", direction="horizontal", card-class="is-primary", :theme-id="theme._id").has-bottom-margin
-                    .tile.is-parent(slot="content")
-                      .columns
-                        .column
-                          h4 {{theme.title}}
-                          br
-                          p(v-if="averageRating(theme.ratings) === 0") Not rated yet
-                          p(v-if="averageRating(theme.ratings) !== 0")
-                            star-rating(
-                              :rating="averageRating(theme.ratings)",
-                              :item-size="10",
-                              :show-rating="false",
-                              :read-only="true"
-                            )
-                          h6(v-if="theme.createdAt !== theme.lastUpdate") Last updated {{theme.lastUpdate | moment('from', 'now')}}
+                nuxt-link.column.is-6(
+                  v-for="(theme, index) in themes",
+                  :key="theme._id",
+                  :to="'/theme/' + theme._id"
+                )
+                  +theme-microdata
+                  +theme-card
+                    //- TODO: Get install count!
+                    p.subtitle Installs: {{parseInt(Math.random() * 100, 10)}}
 
     ouc-footer
 </template>

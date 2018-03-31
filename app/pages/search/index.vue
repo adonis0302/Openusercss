@@ -7,6 +7,7 @@
 
   import {mapGetters,} from 'vuex'
   import moment from 'moment'
+  import starRating from 'vue-star-rating'
 
   export default {
     'components': {
@@ -15,6 +16,7 @@
       notification,
       themeCard,
       progressiveImage,
+      starRating,
     },
     data () {
       return {
@@ -60,8 +62,6 @@
             'skip':  0,
           })
         } catch (error) {
-          /* eslint-disable-next-line no-console */
-          console.error(error)
           this.$toast.error(error.message, 'Error')
         }
       },
@@ -82,18 +82,11 @@
       ...mapGetters({
         'loading': 'search/loading',
       }),
-      results () {
-        const noResults = {
-          'users':  [],
-          'themes': [],
-        }
-
-        if (!this.$store) {
-          return noResults
-        }
-
-        return this.$store.getters['search/single'](this.$route.query.terms)
-          || noResults
+      'results': {
+        'cache': false,
+        get () {
+          return this.$store.getters['search/single'](this.$route.query.terms)
+        },
       },
     },
   }
@@ -110,6 +103,7 @@
 <template lang="pug">
   include ../../components/static/microdata/theme.pug
   include ../../components/static/microdata/user.pug
+  include ../../components/static/theme-card.pug
 
   div.ouc-route-root
     .container
@@ -134,9 +128,9 @@
 
         .columns
           .column.is-4
-            div(v-if="!results.users.length")
+            div(v-if="!results || !results.users || !results.users.length")
               p No users found
-            .columns.is-multiline
+            .columns.is-multiline(v-else)
               .column.is-6(v-for="user in results.users")
                 +user-microdata
 
@@ -159,26 +153,17 @@
                         )
 
           .column.is-8
-            div(v-if="!results.themes.length")
+            div(v-if="!results || !results.themes || !results.themes.length")
               p No themes found
-            .columns.is-multiline
-              .column.is-4(v-for="(theme, index) in results.themes")
+            .columns.is-multiline(v-else)
+              nuxt-link.column.is-4(
+                v-for="(theme, index) in results.themes",
+                :key="theme._id",
+                :to="'/theme/' + theme._id"
+              )
                 +theme-microdata
+                +theme-card
+                  span
 
-                theme-card(:data-index="index", :small="true", direction="horizontal", card-class="is-primary", :theme-id="theme._id")
-                  .tile.is-parent(slot="content")
-                    .columns
-                      .column
-                        h4 {{theme.title}}
-                        br
-                        p(v-if="averageRating(theme.ratings) !== 0")
-                          star-rating(
-                            :rating="averageRating(theme.ratings)",
-                            :item-size="10",
-                            :show-rating="false",
-                            :read-only="true"
-                          )
-                        h6(v-if="theme.createdAt === theme.lastUpdate") Created {{theme.createdAt | moment('from', 'now')}}
-                        h6(v-else) Last updated {{theme.lastUpdate | moment('from', 'now')}}
     ouc-footer
 </template>

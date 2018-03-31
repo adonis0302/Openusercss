@@ -62,6 +62,7 @@ module.exports = {
     '~/plugins/vee-validate',
     '~/plugins/extension-data',
     '~/plugins/static-data',
+    '~/plugins/proxy-image',
     {
       'src': '~/plugins/izitoast',
       'ssr': false,
@@ -106,7 +107,8 @@ module.exports = {
     [
       '@nuxtjs/sitemap', {
         'exclude': [
-          '/theme/*/edit',
+          '/theme/edit',
+          '/theme/edit/*',
         ],
       },
     ],

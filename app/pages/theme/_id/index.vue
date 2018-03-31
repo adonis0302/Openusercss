@@ -117,12 +117,6 @@
           value,
         })
       },
-      proxyImage (original) {
-        return {
-          'large': `https://imageproxy.openusercss.org/${original}`,
-          'small': `https://imageproxy.openusercss.org/50x/${original}`,
-        }
-      },
       hasScreenshots (theme) {
         return !!theme.screenshots && !!theme.screenshots.length && theme.screenshots[0] !== ''
       },

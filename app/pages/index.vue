@@ -4,8 +4,10 @@
   import chip from '~/components/elements/chip.vue'
   import themeCard from '~/components/elements/theme-card.vue'
   import notification from '~/components/elements/notification.vue'
+  import progressiveImage from '~/components/bits/progressive-image.vue'
 
   import {mapGetters,} from 'vuex'
+  import starRating from 'vue-star-rating'
 
   export default {
     fetch ({store,}) {
@@ -20,6 +22,8 @@
       navbar,
       chip,
       notification,
+      progressiveImage,
+      starRating,
     },
     'computed': mapGetters({
       'latestThemes':  'themes/latest',
@@ -52,55 +56,66 @@
   }
 </script>
 
+<style lang="scss" scoped>
+  .media-content {
+    overflow: hidden;
+  }
+</style>
+
 <template lang="pug">
+  include ../components/static/theme-card.pug
+
   div.ouc-route-root
     .container
       div
         .section
-          .columns
-            .column
+          .columns.is-multiline
+            .column.is-6
               h2.has-bottom-margin Newest themes
               .columns.is-multiline
-                .column.is-6(v-for="(theme, index) in limitBy(latestThemes, 6)")
-                    theme-card(
-                      :small="true",
-                      :theme-id="theme._id",
-                      :data-index="index",
-                      direction="horizontal",
-                      card-class="is-primary",
-                      itemtype="SoftwareApplication"
-                    ).has-bottom-margin
-                      .tile.is-parent(slot="content")
-                        .columns
-                          .column
-                            h4(itemprop="name") {{theme.title}}
-                            h6(itemprop="author", itemtype="Person") by {{theme.user.displayname}}
-                              meta(itemprop="name", :value="theme.user.displayname")
-                              meta(itemprop="url", :value="'/profile/' + theme.user._id")
-                            h6 {{theme.createdAt | moment('from', 'now')}}
-                            meta(itemprop="dateCreated", :value="theme.createdAt")
-                            meta(itemprop="dateModified", :value="theme.lastUpdate")
-                            meta(itemprop="url", :value="'/theme/' + theme._id")
+                nuxt-link.column.is-6(
+                  v-for="(theme, index) in limitBy(latestThemes, 6)",
+                  :key="theme._id",
+                  :to="'/theme/' + theme._id"
+                )
+                  +theme-card
+                    .media
+                      .media-left
+                        figure.image.is-48x48
+                          progressive-image(
+                            :src="theme.user.avatarUrl",
+                            :placeholder="theme.user.smallAvatarUrl",
+                            width="100%",
+                            height="4rem",
+                            size="contain"
+                          )
+                      .media-content
+                        p.title.is-7 {{theme.user.displayname}}
+                        p.subtitle {{theme.createdAt | moment('from', 'now')}}
 
             .column
               h2.has-bottom-margin Popular themes
               .columns.is-multiline
-                .column.is-6(v-for="(theme, index) in limitBy(popularThemes, 6)")
-                  theme-card(:small="true", :theme-id="theme._id", :data-index="index", direction="horizontal", card-class="is-primary").has-bottom-margin
-                    .tile.is-parent(slot="content")
-                      .tile.is-child
-                        h4 {{theme.title}}
-                        div(v-if="averageRating(theme.ratings) !== 0")
-                          br
-                          star-rating(
-                            :rating="averageRating(theme.ratings)",
-                            :item-size="10",
-                            :show-rating="false",
-                            :read-only="true"
+                nuxt-link.column.is-6(
+                  v-for="(theme, index) in limitBy(popularThemes, 6)",
+                  :key="theme._id",
+                  :to="'/theme/' + theme._id"
+                )
+                  +theme-card
+                    .media
+                      .media-left
+                        figure.image.is-48x48
+                          progressive-image(
+                            :src="theme.user.avatarUrl",
+                            :placeholder="theme.user.smallAvatarUrl",
+                            width="100%",
+                            height="4rem",
+                            size="contain"
                           )
-                        h6 by {{theme.user.displayname}}
-                        p(v-if="theme.ratings && theme.ratings.length === 0") Not rated yet
-                        p(v-if="theme.ratings && theme.ratings.length !== 0") Has {{theme.ratings.length}} ratings
+                      .media-content
+                        p.title.is-7 {{theme.user.displayname}}
+                        //- TODO: Get install count!
+                        p.subtitle {{parseInt(Math.random() * 100, 10)}} installs
 
     ouc-footer
 </template>
