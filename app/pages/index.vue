@@ -1,7 +1,6 @@
 <script>
   import oucFooter from '~/components/elements/ouc-footer.vue'
   import navbar from '~/components/elements/navbar.vue'
-  import searchField from '~/components/elements/search-field.vue'
   import chip from '~/components/elements/chip.vue'
   import themeCard from '~/components/elements/theme-card.vue'
   import notification from '~/components/elements/notification.vue'
@@ -16,7 +15,6 @@
       ])
     },
     'components': {
-      searchField,
       oucFooter,
       themeCard,
       navbar,
