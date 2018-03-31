@@ -5,8 +5,10 @@ star-rating {
   display: none;
 }
 
-.svg-inline--fa {
-  margin-right: .5rem;
+*:not(.button) {
+  > .svg-inline--fa {
+    margin-right: .5rem;
+  }
 }
 
 .icon.svg-inline--fa {
