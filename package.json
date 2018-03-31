@@ -192,6 +192,7 @@
     "node-fetch": "^2.1.1",
     "nodemailer": "^4",
     "nuxt": "^1.4.0",
+    "parse-usercss": "https://github.com/StylishThemes/parse-usercss",
     "passport": "^0",
     "passport-http": "^0",
     "passport-local": "^1",
