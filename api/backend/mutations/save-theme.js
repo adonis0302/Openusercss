@@ -1,6 +1,7 @@
-import {findIndex,} from 'lodash'
 import mustAuthenticate from '../../../lib/enforce-session'
 import parse from '../../../lib/usercss-parser'
+
+import moment from 'moment'
 
 export default async (root, {
   title,
@@ -43,11 +44,7 @@ export default async (root, {
     newTheme.screenshots = screenshots
     newTheme.options = options
 
-    const userThemeIndex = findIndex(user.themes, {
-      '_id': id,
-    })
-
-    user.themes[userThemeIndex] = newTheme
+    user.lastSeenReason = 'updating a theme'
   } else {
     newTheme = Theme.create({
       'user':    session.user,
@@ -58,9 +55,13 @@ export default async (root, {
       version,
       screenshots,
     })
+
+    user.lastSeenReason = 'uploading a new theme'
   }
 
   const savedTheme = await newTheme.save()
+
+  user.lastSeen = moment().toJSON()
 
   await user.save()
   savedTheme.ratings = await Rating.find({
