@@ -57,12 +57,18 @@
         const self = this
 
         if (validated) {
-          forOwn(this.editing, (value, key) => {
-            if (value) {
-              this.$store.dispatch('account/submit', {
+          const gets = []
+
+          Object.keys(this.editing).forEach((key) => {
+            if (this.editing[key] === 'on') {
+              gets.push(this.$store.dispatch('account/submit', {
                 [key]: self.account[key] || '',
-              })
+              }))
             }
+          })
+
+          return Promise.all(gets).catch((error) => {
+            this.$toast.error(error.message, 'Error')
           })
         }
       },
