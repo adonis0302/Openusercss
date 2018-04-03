@@ -1,5 +1,6 @@
 $tones: (
   "brand-primary":    #005FFF,
+  "brand-dark":       #000FE5,
   "brand-secondary":  #FFB450,
   "brand-background": #3E28B0,
   "brand-highlight":  #024991,
@@ -42,6 +43,7 @@ $animations: (
 $colors: (
   'body':         (map-get($tones, 'white'),            text-for-bg(map-get($tones, 'white'))),
   'primary':      (map-get($tones, 'brand-primary'),    text-for-bg(map-get($tones, 'brand-primary'))),
+  'primary-dark': (map-get($tones, 'brand-dark'),       text-for-bg(map-get($tones, 'brand-dark'))),
   'secondary':    (map-get($tones, 'brand-secondary'),  text-for-bg(map-get($tones, 'brand-secondary'))),
   'background':   (map-get($tones, 'brand-background'), text-for-bg(map-get($tones, 'brand-background'))),
   'highlight':    (map-get($tones, 'brand-highlight'),  text-for-bg(map-get($tones, 'brand-highlight'))),
@@ -62,6 +64,8 @@ $colors: (
   'paypal':       (map-get($tones, 'paypal'),           text-for-bg(map-get($tones, 'paypal'))),
   'patreon':      (map-get($tones, 'patreon'),          text-for-bg(map-get($tones, 'patreon')))
 );
+
+$brand-background: linear-gradient(130deg, map-get($tones, 'brand-dark'), map-get($tones, 'brand-primary'));
 
 $kerning: (
   'size-1':        map-get($layout, 'base-size'),

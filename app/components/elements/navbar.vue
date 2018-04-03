@@ -49,6 +49,7 @@
   @import '../../scss/variables';
 
   $primary: map-get($colors, 'primary');
+  $dark: map-get($colors, 'primary-dark');
   $background: map-get($colors, 'background');
 
   .navbar {
@@ -75,9 +76,13 @@
     }
   }
 
-  .navbar-menu {
+  .ouc-navbar {
     &.is-primary {
-      background-color: map-get($tones, 'brand-primary');
+      background: $brand-background;
+    }
+
+    * {
+      background: transparent;
     }
   }
 
@@ -89,11 +94,6 @@
     &.nuxt-link-exact-active {
       background-color: nth($background, 1);
       color: nth($background, 2);
-    }
-
-    &:not(.nuxt-link-exact-active):not(:hover) {
-      background-color: nth($primary, 1);
-      color: nth($primary, 2);
     }
   }
 </style>

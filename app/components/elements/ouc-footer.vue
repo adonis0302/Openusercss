@@ -46,9 +46,12 @@
     flex-direction: column;
   }
 
-  .is-primary-bg {
-    background-color: nth($primary, 1);
-    color: nth($primary, 2);
+  .bg-brand {
+    background: $brand-background;
+  }
+
+  .bg-transparent {
+    background: transparent;
   }
 
   .is-fullheight {
@@ -79,24 +82,24 @@
       .box
         div(v-html="changelog")
 
-    .is-vertical.ouc-im-broke-wrapper
-      .is-primary-bg
-        .container.ouc-im-broke
-          .tile.is-parent.is-paddingless
-            .tile.is-child.is-pulled-left
-              .box.is-primary-bg.ouc-im-broke-begging.is-borderless.is-shadowless OpenUserCSS needs your support!
-            .tile.is-child
-              a.button.is-patreon.is-pulled-right.is-fullheight(href="//patreon.com/DecentM", target="_blank")
-                | Become a patron on
-                .has-padding
-                progressive-image(
-                  src="/img/patreon.icon-x64.png",
-                  placeholder="/img/patreon.icon-x16.png",
-                  height="2rem",
-                  width="2rem"
-                )
-              a.button.is-paypal.is-pulled-right.is-fullheight(href="//www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NQE35LHY6NKS6", target="_blank")
-                | Support by PayPal!
+    .is-vertical.ouc-im-broke-wrapper.bg-brand
+      .container.ouc-im-broke
+        .tile.is-parent.is-paddingless
+          .tile.is-child.is-pulled-left
+            .box.ouc-im-broke-begging.is-borderless.is-shadowless.bg-transparent.has-text-white
+              | OpenUserCSS needs your support!
+          .tile.is-child
+            a.button.is-patreon.is-pulled-right.is-fullheight(href="//patreon.com/DecentM", target="_blank")
+              | Become a patron on
+              .has-padding
+              progressive-image(
+                src="/img/patreon.icon-x64.png",
+                placeholder="/img/patreon.icon-x16.png",
+                height="2rem",
+                width="2rem"
+              )
+            a.button.is-paypal.is-pulled-right.is-fullheight(href="//www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NQE35LHY6NKS6", target="_blank")
+              | Support by PayPal!
 
       .footer.is-vertical.ouc-footer-content
         .container
