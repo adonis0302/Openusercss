@@ -85,6 +85,8 @@
 
 <style lang="scss" scoped>
   .carousel {
+    transform: translateZ(0);
+
     &:not(.flickity-enabled) {
       height: 15rem;
       clip-path: polygon(0 0, 100% 0, 100% 15rem, 0 15rem);
