@@ -11,6 +11,8 @@
   import notification from '~/components/elements/notification.vue'
   import editor from '~/components/elements/editor.vue'
   import listCreator from '~/components/elements/list-creator.vue'
+  import imageCarousel from '~/components/elements/image-carousel.vue'
+  import progressiveImage from '~/components/bits/progressive-image.vue'
 
   import bInput from '~/components/bits/b-input.vue'
   import bTextarea from '~/components/bits/b-textarea.vue'
@@ -40,6 +42,8 @@
       listCreator,
       colorPicker,
       bSwitch,
+      progressiveImage,
+      imageCarousel,
     },
     'data': () => {
       return {
@@ -208,32 +212,6 @@
 </script>
 
 <style lang="scss" scoped>
-  @import 'node_modules/bulma/sass/utilities/initial-variables';
-  @import '../../../scss/autocolor';
-  @import '../../../scss/variables';
-
-  textarea[name="description"] {
-    resize: vertical;
-    height: 200px;
-    max-height: 400px;
-    min-height: 50px;
-  }
-
-  .is-primary {
-    background-color: map-get($tones, 'brand-primary');
-
-    a,
-    p {
-      color: white
-    }
-  }
-
-  .ouc-icon-wrapper {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
   .is-half-width {
     width: 50%
   }
@@ -251,6 +229,14 @@
     padding-left: .25rem;
     padding-right: .25rem;
   }
+
+  .is-minheight-description {
+    min-height: 10rem;
+  }
+
+  .has-brand-line-left {
+    border-left: 5px #0005FF solid;
+  }
 </style>
 
 <template lang="pug">
@@ -265,96 +251,99 @@
         .notification.is-danger(v-if="notFound")
           p An error occurred while loading the editor: {{notFound}}
 
-        form(v-else, slot="form", @submit.prevent="submit", @input="saveTemp").ouc-new-theme-form
-          .tile.ouc-new-theme-header.is-parent.is-paddingless
-            .tile.is-6.is-child
-              h1.is-inline(v-if="$route.params.id") Editing:&nbsp;
-              h1.is-inline(v-else="$route.params.id") Creating:&nbsp;
-              b-input.is-inline.is-size-7(
-                type="text",
-                name="title",
-                placeholder="Theme title",
-                v-validate.disable="'required'",
-                v-model="editingTheme.title",
-                :class="['input', {'is-danger': errors.has('title')}]"
-              )
+        form.ouc-new-theme-form(v-else, @submit.prevent="submit", @input="saveTemp")
+          .card
+            .card-header
+              .level.is-fullwidth.box.is-shadowless
+                .level-left
+                  h5.card-header-title(v-if="$route.params.id") Editing {{theme.title}}
+                  h5.card-header-title(v-else) Creating {{theme.title | placeholder('a new theme')}}
+                .level-right
+                  button.button.is-primary(
+                    type="submit",
+                    :class="{'is-loading': loading}"
+                  ) Save theme
 
-            .tile.is-6.is-child
-              button.button.is-pulled-right(
-                type="submit",
-                is-primary,
-                :class="['button', 'is-primary', {'is-loading': loading}]"
-              ) Save theme
+            .card-content
+              .field
+                label.label(for="theme-title-input") Theme title
+                .control.has-icons-left
+                  fa-icon.icon(icon="font")
+                  input.input#theme-title-input(
+                    type="text",
+                    name="title",
+                    v-validate.disable="'required'",
+                    v-model="editingTheme.title",
+                    :class="{'is-danger': errors.has('title')}"
+                  )
 
-          br
-          .columns.is-multiline
-            .column.is-12
-              .columns
-                .column.is-6
-                  .field
+              .field
+                label.label(for="theme-description-input") Theme description
+                .columns
+                  .column.is-6
                     .control
-                      b-textarea(
+                      textarea.textarea.input.is-minheight-description#theme-description-input(
                         type="text",
                         name="description",
-                        placeholder="Theme description",
                         v-validate.disable="'required'",
                         v-model="editingTheme.description",
-                        :class="['input', {'is-danger': errors.has('description')}]"
+                        :class="{'is-danger': errors.has('description')}"
                       )
-                .column.is-6
-                  .box.is-fullheight
-                    .content
-                      vue-markdown(
-                        :source="editingTheme.description",
-                        :html="false",
-                        :anchor-attributes="$anchorAttributes"
+                  .column.is-6
+                    vue-markdown.box.is-minheight-description(
+                      :source="editingTheme.description",
+                      :html="false",
+                      :anchor-attributes="$anchorAttributes"
+                    )
+
+              .field
+                label.label(for="theme-version-input") Semantic theme version
+                .control.has-icons-left
+                  fa-icon.icon(icon="code-branch")
+                  input.input#theme-version-input(
+                    type="text",
+                    name="version",
+                    v-validate.disable="'required|semver'",
+                    v-model="editingTheme.version",
+                    :class="{'is-danger': errors.has('version')}"
+                  )
+
+              .field
+                label.label(for="theme-screenshots-input") Screenshots
+                .columns
+                  .column.is-6
+                    .control
+                      list-creator.has-bottom-margin#theme-screenshots-input(
+                        @input="saveTemp",
+                        icon="globe",
+                        :max-items="10",
+                        item-name="screenshot",
+                        v-model="editingTheme.screenshots",
+                        placeholder="Paste a URL to your image here"
                       )
+                  .column.is-6
+                    image-carousel(
+                      v-model="theme.screenshots"
+                    )
 
-            .column.is-7
-              .tile.is-parent.is-paddingless.is-vertical
-                .tile.is-child
-                  .field
-                    .control.has-icons-left
-                      fa-icon.icon(icon="code-branch")
-                      input.input(
-                        type="text",
-                        name="version",
-                        placeholder="Version",
-                        v-validate.disable="'required|semver'",
-                        v-model="editingTheme.version",
-                        :class="['input', {'is-danger': errors.has('version')}]"
-                      )
+              .notification.is-warning(v-if="editorWarning")
+                fa-icon(icon="exclamation")
+                | {{editorWarning}}
 
-                .tile.is-child
-                  list-creator(
-                    icon="globe",
-                    :max-items="10",
-                    item-name="screenshot",
-                    v-model="editingTheme.screenshots",
-                    placeholder="Paste a URL to your image here"
-                    ).has-bottom-margin
-
-                .notification.is-warning(v-if="editorWarning")
-                  fa-icon(icon="exclamation")
-                  | {{editorWarning}}
-
-                .tile.is-child
-                  label
-                    | Use fancy code editor
-                    b-switch.is-pulled-right(v-model="fancyEditor")
-
-                .tile.ouc-new-theme-editor.is-child
+              .field
+                label.label(for="theme-source-input") Source code
+                .control
                   no-ssr
-                    .box.is-paddingless(v-if="fancyEditor")
-                      editor(
-                        @input="parseUserCSS",
-                        @change="saveTemp",
-                        v-model="editingTheme.content",
-                        name="content",
-                        v-validate.disable="'required'",
-                        :class="{'is-danger': errors.has('content')}"
-                      )
-                    b-textarea(
+                    editor#theme-source-input(
+                      v-if="fancyEditor",
+                      @input="parseUserCSS",
+                      @change="saveTemp",
+                      v-model="editingTheme.content",
+                      name="content",
+                      v-validate.disable="'required'",
+                      :class="{'is-danger': errors.has('content')}"
+                    )
+                    textarea.textarea.input#theme-source-input(
                       v-else,
                       type="text",
                       name="content",
@@ -366,93 +355,61 @@
                       :class="{'is-danger': errors.has('content')}"
                     )
 
-            .column.is-5
-              .tile.is-parent.is-vertical
-                .tile
-                  .tile.is-child.is-6
-                    button.button.is-primary.is-fullwidth(
-                      type="button",
-                      @click="addOption('text')"
-                    ) Add text option
-                  .tile.is-child.is-6
-                    button.button.is-primary.is-fullwidth(
-                      type="button",
-                      @click="addOption('color')"
-                    ) Add color option
-                .tile
-                  .tile.is-child.is-6
-                    button.button.is-primary.is-fullwidth(
-                      type="button",
-                      @click="addOption('checkbox')"
-                    ) Add checkbox option
-                  .tile.is-child.is-6
-                    button.button.is-primary.is-fullwidth(
-                      type="button",
-                      @click="addOption('select')"
-                    ) Add dropdown option
+          br
+          .card
+            .card-header
+              p.card-header-title
+                | Variables
+            .card-content
+              .field.box.has-brand-line-left(v-for="option in editingTheme.options")
+                .columns.is-multiline
+                  .column.is-2
+                    .control
+                      label.label(:for="'option-control-type-' + option.name")
+                        | Type
+                      .select.is-fullwidth
+                        select.is-fullwidth(:id="'option-control-type-' + option.name", v-model="option.type")
+                          option color
+                          option select
+                          option checkbox
+                          option text
 
-                br
-                .tile.is-parent.is-paddingless.is-vertical
-                  .tile.is-child(v-for="(option, index) in editingTheme.options")
-                    .box.is-fullwidth
-                      .level.is-marginless
-                        .level-left
-                          p {{properCase(option.type)}} option
-                        .level-right
-                          button.button.is-danger(
-                            type="button",
-                            @click="removeOption(index)"
-                          )
-                            fa-icon(icon="times")
-                      br
-                      .tile.is-parent.is-paddingless
-                        .tile.is-child
-                          input.input(
-                            type="text",
-                            :name="option.type + '-' + index + '-' + 'label'",
-                            placeholder="Option label",
-                            v-model="editingTheme.options[index].label"
-                          )
-                        .tile.is-child
-                          input.input(
-                            type="text",
-                            :name="option.type + '-' + index + '-' + 'name'",
-                            placeholder="Variable name",
-                            v-model="editingTheme.options[index].name"
-                          )
-                        .tile.is-child(v-if="option.type === 'text'")
-                          input.input(
-                            type="text",
-                            :name="option.type + '-' + index + '-' + 'value'",
-                            placeholder="Default value",
-                            v-model="editingTheme.options[index].default"
-                          )
-                        .tile.has-text-centered.is-child(v-if="option.type === 'checkbox'")
-                          .select.is-fullwidth
-                            select(v-model="editingTheme.options[index].value")
-                              option(value="checked") Checked
-                              option(value="unchecked") Unchecked
+                  .column.is-5
+                    .control
+                      label.label(:for="'option-control-label-' + option.name")
+                        | Label
+                      input.input(:id="'option-control-label-' + option.name", v-model="option.label")
 
-                      .tile.is-parent.is-paddingless.is-vertical(v-if="option.type === 'color'")
-                        hr
-                        .tile.is-child
-                          p Default:
-                        .tile.is-child
-                          color-picker.is-fullwidth(
-                            :value="createColorsObject(option.value)",
-                            @input="(event) => updateColor(event, index)"
-                          )
+                  .column.is-5
+                    .control
+                      label.label(:for="'option-control-name-' + option.name")
+                        | Name
+                      input.input(:id="'option-control-name-' + option.name", v-model="option.name")
 
-                      .tile.is-parent.is-paddingless.is-vertical(v-if="option.type === 'select'")
-                        hr
-                        list-creator(
-                          v-model="editingTheme.options[index].options",
-                          item-name="value option",
-                          max-items=64,
-                          placeholder="Value",
-                          icon="bars",
-                          :support-objects="true"
-                        )
+                  .column.is-6
+                    .control
+                      label.label(:for="'option-control-value-' + option.name")
+                        | Value
+                      input.input(:id="'option-control-value-' + option.name", v-model="option.value")
+
+                  .column.is-6
+                    .control
+                      label.label(:for="'option-control-default-' + option.name")
+                        | Default
+                      input.input(:id="'option-control-default-' + option.name", v-model="option.default")
+
+                  .column.is-12
+                    .control
+                      label.label(:for="'option-control-options-' + option.name")
+                        | Options
+                      list-creator(
+                        v-model="option.options",
+                        icon="clipboard-list",
+                        :max-items="20",
+                        item-name="option",
+                        placeholder="Write your option here",
+                        :support-objects="true"
+                      )
 
     ouc-footer
 </template>

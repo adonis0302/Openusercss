@@ -5263,16 +5263,16 @@ flatten@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/flatten/-/flatten-1.0.2.tgz#dae46a9d78fbe25292258cc1e780a41d95c03782"
 
-flickity@^2.0.5:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/flickity/-/flickity-2.1.0.tgz#92da939bafcadeb8688885ce82b0613f55921239"
+flickity@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/flickity/-/flickity-2.1.1.tgz#1c35ef78bfa4d06a033759743f12d614181ad29a"
   dependencies:
     desandro-matches-selector "^2.0.0"
     ev-emitter "^1.0.2"
     fizzy-ui-utils "^2.0.0"
     get-size "^2.0.0"
     tap-listener "^2.0.0"
-    unidragger "^2.2.3"
+    unidragger "^2.3.0"
 
 flush-write-stream@^1.0.0, flush-write-stream@^1.0.2:
   version "1.0.3"
@@ -13840,11 +13840,11 @@ undertaker@^1.0.0:
     object.reduce "^1.0.0"
     undertaker-registry "^1.0.0"
 
-unidragger@^2.2.3:
-  version "2.2.3"
-  resolved "https://registry.yarnpkg.com/unidragger/-/unidragger-2.2.3.tgz#a618801b9b629e1045e3d3793713e7add0a1e16b"
+unidragger@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/unidragger/-/unidragger-2.3.0.tgz#ab9d9fd62106f3252d88fae5f3a99575e6d31d02"
   dependencies:
-    unipointer "^2.2.0"
+    unipointer "^2.3.0"
 
 union-value@^1.0.0:
   version "1.0.0"
@@ -13855,9 +13855,15 @@ union-value@^1.0.0:
     is-extendable "^0.1.1"
     set-value "^0.4.3"
 
-unipointer@^2.1.0, unipointer@^2.2.0:
+unipointer@^2.1.0:
   version "2.2.1"
   resolved "https://registry.yarnpkg.com/unipointer/-/unipointer-2.2.1.tgz#05f9adaac92c0e6e6ed41ce85adab26166b03ee6"
+  dependencies:
+    ev-emitter "^1.0.1"
+
+unipointer@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/unipointer/-/unipointer-2.3.0.tgz#ba0dc462ce31c2a88e80810e19c3bae0ce47ed9f"
   dependencies:
     ev-emitter "^1.0.1"
 
@@ -14269,12 +14275,6 @@ vue-eslint-parser@^2.0.3:
     espree "^3.5.2"
     esquery "^1.0.0"
     lodash "^4.17.4"
-
-vue-flickity@^1.0.9:
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/vue-flickity/-/vue-flickity-1.0.9.tgz#b344e9ec66a1db08c3c9aac64170fa412793e623"
-  dependencies:
-    flickity "^2.0.5"
 
 vue-hot-reload-api@^2.2.0:
   version "2.3.0"
