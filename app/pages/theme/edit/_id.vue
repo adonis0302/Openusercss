@@ -47,11 +47,12 @@
     },
     'data': () => {
       return {
-        'error':         null,
-        'editorWarning': null,
-        'fancyEditor':   'on',
-        'notFound':      false,
-        'editingTheme':  {
+        'error':          null,
+        'editorWarning':  null,
+        'fancyEditor':    'on',
+        'fancyVariables': 'on',
+        'notFound':       false,
+        'editingTheme':   {
           'id':          '',
           'title':       '',
           'description': '',
@@ -358,10 +359,21 @@
           br
           .card
             .card-header
-              p.card-header-title
-                | Variables
+              .card-header-title
+                .level.is-fullwidth
+                  .level-left
+                    p Variables
+                  .level-right
+                    label
+                      | Edit as JSON&nbsp;
+                      b-switch(v-model="fancyVariables")
+
             .card-content
-              .field.box.has-brand-line-left(v-for="option in editingTheme.options")
+              editor#theme-options-input(
+                v-if="!fancyVariables",
+                :value="JSON.stringify(editingTheme.options, null, 4)"
+              )
+              .field.box.has-brand-line-left(v-else, v-for="option in editingTheme.options")
                 .columns.is-multiline
                   .column.is-2
                     .control
