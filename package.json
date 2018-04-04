@@ -167,6 +167,7 @@
     "brace": "^0",
     "camo": "^0",
     "chalk-console": "^1",
+    "circular-json": "^0.5.1",
     "conf": "^1",
     "cors": "^2.8.4",
     "corser": "^2.0.1",

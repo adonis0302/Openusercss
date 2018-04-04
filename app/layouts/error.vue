@@ -1,5 +1,8 @@
 <script>
   import oucFooter from '../components/elements/ouc-footer.vue'
+  import pkg from '~/../package.json'
+
+  import CircularJSON from 'circular-json'
 
   export default {
     'components': {
@@ -8,9 +11,42 @@
     'props': [
       'error',
     ],
+    data () {
+      return {
+        'userMessage':    '',
+        'showCommentBox': null,
+      }
+    },
+    'computed': {
+      commentPlaceholder () {
+        return [
+          'Type additional info or your comments here\n',
+          'They will be inserted into the information below',
+        ].join('')
+      },
+      extendedError () {
+        if (process.server) {
+          return this.error
+        }
+
+        const ourClientInfo = {}
+
+        /* eslint-disable-next-line guard-for-in */
+        for (const i in navigator) {
+          ourClientInfo[i] = clientInformation[i]
+        }
+
+        return Object.assign(this.error, {
+          'version':           pkg.version,
+          'clientInformation': ourClientInfo,
+          'route':             this.$route,
+          'userMessage':       this.userMessage,
+        }, {})
+      },
+    },
     'methods': {
-      encode (string) {
-        return Buffer.from(JSON.stringify(string)).toString('base64')
+      encode (value) {
+        return Buffer.from(CircularJSON.stringify(value)).toString('base64')
       },
       select (event) {
         if (process.client) {
@@ -29,6 +65,7 @@
   pre {
     word-wrap: break-word;
     white-space: pre-line;
+    max-height: 20rem;
   }
 </style>
 
@@ -49,13 +86,13 @@
                 p Either you clicked on a mistyped link or this page has been moved.
 
               .ouc-error-description(v-if="error.statusCode !== 404")
-                p An unknown error occurred while rendering "{{error.path}}".
+                p An unknown error occurred while rendering "{{error.path || $route.fullPath}}".
 
             br
-            nuxt-link(to="/")
+            nuxt-link.has-text-primary(to="/")
               | If that's not enough, click here to return to the home page ^.^
             p Or if you're going back to the Internet, take these with you:&nbsp;&nbsp;
-              fa-icon(icon="chess-pawn")
+              fa-icon(icon="shield-alt")
               fa-icon(icon="quidditch")
 
             div(v-if="error.statusCode !== 404")
@@ -65,8 +102,26 @@
             br
           .column.is-6
             h4 Debugging information
+            br
+            button.button.is-primary(v-if="!showCommentBox", @click="showCommentBox = true")
+              | Leave a comment
+            div(v-if="showCommentBox")
+              textarea.textarea.input(
+                type="text",
+                v-model="userMessage",
+                :placeholder="commentPlaceholder"
+              )
+              p
+                br
+                | When you're done typing, please copy this wall of text
+                | below and&nbsp;
+                a.has-text-primary(
+                  href="//github.com/OpenUserCSS/openusercss.org/issues",
+                  target="_blank",
+                  rel="noopener"
+                ) submit an issue on GitHub!
             hr
-            pre(@click="select") {{encode(error)}}
+            pre(@click="select") {{encode(extendedError)}}
 
     ouc-footer
 </template>
