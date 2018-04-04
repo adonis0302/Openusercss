@@ -1,4 +1,6 @@
 <script>
+  import hat from 'hat'
+
   export default {
     'props': {
       'mode': {
@@ -29,6 +31,7 @@
     data () {
       return {
         'editor': null,
+        'id':     `ouc-editor-${hat()}`,
       }
     },
     'methods': {
@@ -47,7 +50,7 @@
       require('brace/ext/modelist')
       require('brace/ext/themelist')
       require('brace/mode/css')
-      this.editor = brace.edit('editor')
+      this.editor = brace.edit(this.id)
 
       this.setMode(this.editor)
       this.$emit('init', this.editor)
@@ -86,7 +89,7 @@
   $highlight: nth(map-get($colors, 'highlight'), 1);
   $danger: nth(map-get($colors, 'danger'), 1);
 
-  #editor {
+  .ouc-editor {
     // Editor environment
 
     background-color: $white;
@@ -188,5 +191,5 @@
 
 <template lang="pug">
   div.ouc-editor-wrapper
-    #editor.ouc-editor
+    .ouc-editor(:id="id")
 </template>
