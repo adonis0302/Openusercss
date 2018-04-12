@@ -13,19 +13,18 @@
     data () {
       return {
         'flickity': null,
+        'items':    this.value.map((item) => this.proxyImage(item)),
       }
     },
 
     'watch': {
-      items () {
+      value () {
+        this.items = this.value.map((item) => this.proxyImage(item))
         this.$nextTick(this.rerender)
       },
     },
 
     'computed': {
-      items () {
-        return this.value.map((item) => this.proxyImage(item))
-      },
       options () {
         return {
           'wrapAround':      true,
