@@ -23,11 +23,19 @@ const outputTypeDefs = `
     ua:        String!
   }
 
-  type Option {
-    type:  String!
-    label: String!
+  type ThemeVairableOption {
     name:  String!
+    label: String!
     value: String!
+  }
+
+  type ThemeVariable {
+    type:    String!
+    label:   String!
+    name:    String!
+    value:   String
+    default: String!
+    options: [ThemeVairableOption!]
   }
 
   type Rating {
@@ -47,7 +55,8 @@ const outputTypeDefs = `
     lastUpdate:  String!
     version:     String!
     screenshots: [String]
-    options:     [Option]
+    license:     String!
+    variables:   [ThemeVariable]
   }
 
   type SearchResults {
@@ -77,11 +86,19 @@ const inputTypeDefs = `
     user: String
   }
 
-  input OptionInput {
-    type:  String!
-    label: String!
+  input ThemeVariableOptionInput {
     name:  String!
+    label: String!
     value: String!
+  }
+
+  input ThemeVariableInput {
+    type:    String!
+    label:   String!
+    name:    String!
+    value:   String
+    default: String!
+    options: [ThemeVariableOptionInput!]
   }
 `
 
@@ -152,7 +169,8 @@ const mutations = `
       content:     String!
       version:     String!
       screenshots: [String]
-      options:     [OptionInput]!
+      variables:   [ThemeVariableInput]!
+      license:     String!
     ): Theme!
 
     account(
