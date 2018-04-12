@@ -2,12 +2,23 @@
   import notification from '~/components/elements/notification.vue'
   import oucButton from '~/components/elements/ouc-button.vue'
   import bInput from '~/components/bits/b-input.vue'
+  import bSwitch from '~/components/bits/b-switch.vue'
 
   import oucFooter from '~/components/elements/ouc-footer.vue'
   import navbar from '~/components/elements/navbar.vue'
 
-  import gql from 'graphql-tag'
   import {mapGetters,} from 'vuex'
+  import registerMutation from '~/apollo/mutations/register.gql'
+
+  const customDictionary = {
+    'en': {
+      'custom': {
+        'terms': {
+          'required': 'Please accept the terms of service before continuing',
+        },
+      },
+    },
+  }
 
   export default {
     'components': {
@@ -16,9 +27,11 @@
       notification,
       oucFooter,
       navbar,
+      bSwitch,
     },
     data () {
       return {
+        'acceptTerms':  null,
         'registerData': {
           'displayname':    '',
           'password':       '',
@@ -27,6 +40,9 @@
         },
       }
     },
+    created () {
+      this.$validator.localize(customDictionary)
+    },
     'methods': {
       async submitRegistration () {
         const validated = await this.$validator.validateAll()
@@ -34,21 +50,7 @@
         if (validated) {
           try {
             await this.$apollo.mutate({
-              'mutation': gql`
-              mutation(
-                $displayname: String!
-                $email:       String!
-                $password:    String!
-              ) {
-                register(
-                  displayname: $displayname
-                  email:       $email
-                  password:    $password
-                ) {
-                  _id
-                }
-              }
-              `,
+              'mutation':  registerMutation,
               'variables': this.registerData,
             })
             this.$router.push({
@@ -143,6 +145,21 @@
                               data-vv-as="passphrase verification",
                               aria-label="registration passphrase, again"
                             )
+                  .field
+                    .control
+                      label.checkbox
+                        b-switch(
+                          v-model="acceptTerms",
+                          v-validate.disable="'required'",
+                          name="terms"
+                        )
+                        | &nbsp;I accept the&nbsp;
+                        a.has-text-primary(
+                          href="https://forums.openusercss.org/topic/6/terms-of-service",
+                          rel="noopener",
+                          target="_blank",
+                        ) terms of service (click here to view)
+
                   .tile.is-parent.is-vertical.is-paddingless
                     ouc-button(icon="user-plus").is-primary
                       p(slot="content") Register
