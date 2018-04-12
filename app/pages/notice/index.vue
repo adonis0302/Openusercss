@@ -45,6 +45,8 @@
           hr
           nuxt-link(to="/notice/licenses")
             .button.is-primary View Open Source licenses
+          nuxt-link(to="/notice/applied-licenses")
+            .button.is-primary About theme licenses
 
     ouc-footer
 </template>
