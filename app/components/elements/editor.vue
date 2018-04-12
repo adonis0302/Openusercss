@@ -50,9 +50,10 @@
       require('brace/ext/modelist')
       require('brace/ext/themelist')
       require('brace/mode/css')
+      require('brace/mode/json')
       this.editor = brace.edit(this.id)
 
-      this.setMode(this.editor)
+      this.editor.getSession().setMode(`ace/mode/${this.mode}`)
       this.$emit('init', this.editor)
       this.editor.$blockScrolling = Infinity
 
@@ -65,9 +66,6 @@
       this.editor.clearSelection()
     },
     'watch': {
-      theme () {
-        this.setTheme()
-      },
       value (data) {
         if (this.editor.getValue() !== data) {
           this.editor.setValue(data, 0)
@@ -118,12 +116,12 @@
     }
 
     .ace_warning {
-      background-image: url('/img/warning.icon-x32.png');
+      background-image: url('/img/warning.icon-x32.png') !important;
       background-size: contain;
     }
 
     .ace_error {
-      background-image: url('/img/error.icon-x32.png');
+      background-image: url('/img/error.icon-x32.png') !important;
       background-size: contain;
     }
 
