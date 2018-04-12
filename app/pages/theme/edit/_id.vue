@@ -5,6 +5,8 @@
   import {parse,} from 'parse-usercss'
   import raven from 'raven-js'
   import {mapGetters,} from 'vuex'
+  import treeSelect from '@riophae/vue-treeselect'
+  import licenseList from '~/../lib/spdx-license-list'
 
   import oucFooter from '~/components/elements/ouc-footer.vue'
   import navbar from '~/components/elements/navbar.vue'
@@ -44,23 +46,25 @@
       bSwitch,
       progressiveImage,
       imageCarousel,
+      treeSelect,
     },
     'data': () => {
       return {
         'error':          null,
         'editorWarning':  null,
+        'optionsWarning': null,
         'fancyEditor':    'on',
         'fancyVariables': 'on',
         'notFound':       false,
         'editingTheme':   {
-          'id':          '',
+          '_id':         '',
           'title':       '',
           'description': '',
           'version':     '',
           'screenshots': [],
           'content':     '',
-          'options':     [],
-          'license':     'string',
+          'variables':   [],
+          'license':     '',
         },
         'colors': {
           'hex': '#ffffff',
@@ -112,6 +116,10 @@
         if (validated) {
           const readyTheme = cloneDeep(this.editingTheme)
 
+          readyTheme.id = readyTheme._id
+
+          Reflect.deleteProperty(readyTheme, 'user')
+
           try {
             await this.$store.dispatch('themes/submit', readyTheme)
             this.$router.push('/')
@@ -125,19 +133,30 @@
           hex,
         }
       },
-      addOption (type) {
-        this.editingTheme.options.push({
-          type,
+      addVariable () {
+        this.editingTheme.variables.push({
+          'type':    'text',
+          'label':   '',
+          'name':    '',
+          'value':   null,
+          'default': '',
+          'options': null,
         })
+
+        this.saveTemp()
+      },
+      removeVariable (index) {
+        this.editingTheme.variables.splice(index, 1)
+        this.saveTemp()
       },
       removeOption (index) {
-        this.editingTheme.options.splice(index, 1)
+        this.editingTheme.variables.splice(index, 1)
       },
       properCase (string) {
         return string.charAt(0).toUpperCase() + string.slice(1)
       },
       updateColor (colorObj, index) {
-        this.editingTheme.options[index].value = colorObj.hex
+        this.editingTheme.variables[index].value = colorObj.hex
       },
       renderObjectOption (obj) {
         if (typeof obj === 'string') {
@@ -183,22 +202,32 @@
             this.editingTheme.description = description
             this.editingTheme.title = name
 
-            this.editingTheme.options = []
+            this.editingTheme.variables = []
 
             Object.keys(vars).forEach((key) => {
               const item = cloneDeep(vars[key])
 
-              this.editingTheme.options.push(item)
+              this.editingTheme.variables.push(item)
             })
 
             this.editorWarning = [
-              'Don\'t forget to remove the usercss definition',
-              'from the theme before saving',
+              'Your UserCSS definition will be removed after submission.',
+              'Make sure all your data is shown in the UI before saving!',
             ].join(' ')
           } else {
             this.editorWarning = null
           }
+
+          this.saveTemp()
         })
+      },
+      optionsChanged (input) {
+        try {
+          this.editingTheme.variables = JSON.parse(input)
+          this.optionsWarning = null
+        } catch (error) {
+          this.optionsWarning = error.message
+        }
       },
     },
     'computed': {
@@ -207,6 +236,29 @@
       }),
       theme () {
         return this.$store.getters['themes/editCache'][this.$route.params.id] || this.editingTheme
+      },
+      spdxList () {
+        return licenseList
+      },
+      licenses () {
+        const final = []
+
+        Object.keys(licenseList).forEach((key) => {
+          final.push({
+            'id':    key,
+            'label': licenseList[key].name,
+          })
+        })
+
+        final.push({
+          'id':    'Other',
+          'label': 'Other',
+        })
+
+        return final
+      },
+      selectedLicense () {
+        return this.spdxList[this.editingTheme.license] || {}
       },
     },
   }
@@ -238,10 +290,24 @@
   .has-brand-line-left {
     border-left: 5px #0005FF solid;
   }
+
+  .has-margin-top {
+    margin-top: 1rem;
+  }
 </style>
 
 <template lang="pug">
   div.ouc-route-root
+    modal(
+      name="raw-viewer",
+      height="auto",
+      :scrollable="true"
+    )
+      .tile.is-parent.is-paddingless
+        .tile.is-child
+          pre
+            code {{editingTheme}}
+
     .container
       .section
         .notification(v-if="errors.all().length > 0", icon="exclamation", color="is-danger").is-danger
@@ -257,9 +323,15 @@
             .card-header
               .level.is-fullwidth.box.is-shadowless
                 .level-left
-                  h5.card-header-title(v-if="$route.params.id") Editing {{theme.title}}
-                  h5.card-header-title(v-else) Creating {{theme.title | placeholder('a new theme')}}
+                  div
+                    h5.card-header-title(v-if="$route.params.id") Editing {{theme.title}}
+                    h5.card-header-title(v-else) Creating {{theme.title | placeholder('a new theme')}}
                 .level-right
+                  button.button.is-grey-lighter(
+                    type="button",
+                    @click="$modal.show('raw-viewer')"
+                  ) View parsed format
+
                   button.button.is-primary(
                     type="submit",
                     :class="{'is-loading': loading}"
@@ -298,16 +370,46 @@
                     )
 
               .field
-                label.label(for="theme-version-input") Semantic theme version
-                .control.has-icons-left
-                  fa-icon.icon(icon="code-branch")
-                  input.input#theme-version-input(
-                    type="text",
-                    name="version",
-                    v-validate.disable="'required|semver'",
-                    v-model="editingTheme.version",
-                    :class="{'is-danger': errors.has('version')}"
-                  )
+                .columns
+                  .column.is-6
+                    label.label(for="theme-version-input") Semantic theme version
+                    .control.has-icons-left
+                      fa-icon.icon(icon="code-branch")
+                      input.input#theme-version-input(
+                        type="text",
+                        name="version",
+                        v-validate.disable="'required|semver'",
+                        v-model="editingTheme.version",
+                        :class="{'is-danger': errors.has('version')}"
+                      )
+
+                  .column.is-6
+                    label.label(for="theme-license-input")
+                      | License: {{editingTheme.license}}
+                      a.has-text-primary(
+                        v-if="selectedLicense.url",
+                        :href="selectedLicense.url",
+                        target="_blank",
+                        rel="noopener nofollow"
+                      ) &nbsp;(click to view)
+                      | &nbsp;
+                      nuxt-link.has-text-warning(
+                        to="/notice/applied-licenses"
+                      ) (notice)
+
+                    .control
+                      no-ssr
+                        tree-select.input#theme-license-input(
+                          v-model="editingTheme.license",
+                          :multiple="false",
+                          :options="licenses",
+                          :clearable="false"
+                        )
+                      div(v-if="editingTheme.license === 'Other' && !editingTheme.description.toLowerCase().includes('license')")
+                        br
+                        .notification.is-warning
+                          fa-icon(icon="exclamation")
+                          | Remember to specify your license in the theme description!
 
               .field
                 label.label(for="theme-screenshots-input") Screenshots
@@ -338,7 +440,6 @@
                     editor#theme-source-input(
                       v-if="fancyEditor",
                       @input="parseUserCSS",
-                      @change="saveTemp",
                       v-model="editingTheme.content",
                       name="content",
                       v-validate.disable="'required'",
@@ -350,7 +451,6 @@
                       name="content",
                       placeholder="Theme source code",
                       @input="parseUserCSS",
-                      @change="saveTemp",
                       v-model="editingTheme.content",
                       v-validate.disable="'required'",
                       :class="{'is-danger': errors.has('content')}"
@@ -365,16 +465,29 @@
                     p Variables
                   .level-right
                     label
-                      | Edit as JSON&nbsp;
+                      | Use friendly editor&nbsp;
                       b-switch(v-model="fancyVariables")
 
             .card-content
-              editor#theme-options-input(
+              .notification.is-warning(v-if="optionsWarning")
+                fa-icon(icon="exclamation")
+                | {{optionsWarning}}
+
+              button.button.is-primary(type="button", @click="addVariable")
+                | Add variable
+
+              editor.has-margin-top#theme-options-input(
                 v-if="!fancyVariables",
-                :value="JSON.stringify(editingTheme.options, null, 4)"
+                :value="JSON.stringify(editingTheme.variables, null, 4)",
+                @input="optionsChanged",
+                mode="json"
               )
-              .field.box.has-brand-line-left(v-else, v-for="option in editingTheme.options")
+              .field.box.has-brand-line-left.has-margin-top(v-else, v-for="(option, index) in editingTheme.variables")
                 .columns.is-multiline
+                  .column.is-1
+                    button.button.is-danger(type="button", @click="removeVariable(index)")
+                      fa-icon(icon="times")
+
                   .column.is-2
                     .control
                       label.label(:for="'option-control-type-' + option.name")
@@ -392,7 +505,7 @@
                         | Label
                       input.input(:id="'option-control-label-' + option.name", v-model="option.label")
 
-                  .column.is-5
+                  .column.is-4
                     .control
                       label.label(:for="'option-control-name-' + option.name")
                         | Name
