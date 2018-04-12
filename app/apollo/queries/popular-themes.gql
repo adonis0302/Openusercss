@@ -21,7 +21,8 @@ query($limit: Int) {
     lastUpdate
     version
     screenshots
-    options {
+    license
+    variables {
       type
       label
       name

@@ -1,22 +1,22 @@
 mutation(
-  $token:       String!
   $id:          ID!
   $title:       String!
   $description: String!
   $content:     String!
   $version:     String!
   $screenshots: [String]!
-  $options:     String!
+  $variables:   [ThemeVariableInput]!
+  $license:     String!
 ) {
   theme(
-    token:       $token
     id:          $id
     title:       $title
     description: $description
     content:     $content
     version:     $version
     screenshots: $screenshots
-    options:     $options
+    variables:   $variables
+    license:     $license
   ) {
     _id
     user {
@@ -39,7 +39,8 @@ mutation(
     lastUpdate
     version
     screenshots
-    options {
+    license
+    variables {
       type
       label
       name

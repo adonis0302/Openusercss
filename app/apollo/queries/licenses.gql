@@ -1,0 +1,9 @@
+query {
+  licenses {
+    package
+    repository
+    license
+    source
+    sourceText
+  }
+}

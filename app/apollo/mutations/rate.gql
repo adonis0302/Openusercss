@@ -1,11 +1,9 @@
 mutation(
   $id:    ID!
-  $token: String!
   $value: Int!
 ) {
   rate(
     id:    $id
-    token: $token
     value: $value
   ) {
     _id
@@ -29,7 +27,8 @@ mutation(
     lastUpdate
     version
     screenshots
-    options {
+    license
+    variables {
       type
       label
       name

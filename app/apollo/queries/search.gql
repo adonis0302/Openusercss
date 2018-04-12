@@ -36,7 +36,8 @@ query($terms: String!, $limit: Int, $skip: Int) {
       lastUpdate
       version
       screenshots
-      options {
+      license
+      variables {
         type
         label
         name

@@ -1,6 +1,5 @@
 mutation(
-  $token: String!
   $id:     ID!
 ) {
-  deleteTheme(token: $token, id: $id)
+  deleteTheme(id: $id)
 }

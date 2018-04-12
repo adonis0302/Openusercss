@@ -1,5 +1,4 @@
 mutation(
-  $token:       String!
   $password:    String
   $displayname: String
   $email:       String
@@ -7,7 +6,6 @@ mutation(
   $donationUrl: String
 ) {
   account(
-    token:       $token
     password:    $password
     displayname: $displayname
     email:       $email
