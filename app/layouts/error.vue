@@ -1,8 +1,7 @@
 <script>
   import oucFooter from '../components/elements/ouc-footer.vue'
   import pkg from '~/../package.json'
-
-  import CircularJSON from 'circular-json'
+  import assert from 'assert'
 
   export default {
     'components': {
@@ -26,27 +25,155 @@
       },
       extendedError () {
         if (process.server) {
-          return this.error
+          return Object.assign(this.error, {
+            'location': 'ssr',
+            'version':  pkg.version,
+            'time':     new Date(),
+          }, {})
         }
 
-        const ourClientInfo = {}
+        const {
+          productSub,
+          vendor,
+          hardwareConcurrency,
+          appCodeName,
+          appName,
+          platform,
+          product,
+          userAgent,
+          language,
+          languages,
+          onLine,
+          doNotTrack,
+          deviceMemory,
+        } = window.clientInformation
 
-        /* eslint-disable-next-line guard-for-in */
-        for (const i in navigator) {
-          ourClientInfo[i] = clientInformation[i]
+        const collects = [
+          'script',
+          'link',
+          'style',
+        ]
+        const $items = []
+        const items = []
+
+        collects.forEach((collect) => {
+          document.querySelectorAll(collect).forEach((element) => {
+            $items.push(element)
+          })
+        })
+
+        const firstPartyClues = [
+          'window.__NUXT__={',
+          'http://github.com/OpenUserCSS/',
+          'http://decentm.com',
+          'https://decentm.com',
+          'https://fontawesome.com',
+          'sourceMappingURL',
+          window.origin,
+        ]
+
+        const assetFirstParty = (asset) => {
+          assert(
+            asset instanceof HTMLElement,
+            'Asset validator must be passed an instance of HTMLElement'
+          )
+
+          let result = false
+          let data = null
+          const backoff = asset.innerHTML.length > 50000
+
+          switch (asset.nodeName) {
+          case 'SCRIPT':
+            if (backoff) {
+              data = asset.src
+            } else if (!data) {
+              data = asset.innerHTML
+            }
+            break
+          case 'LINK':
+            data = asset.href
+            break
+          case 'STYLE':
+            if (asset.parentElement.tagName === 'HEAD') {
+              return {
+                'result': true,
+                'data':   '',
+              }
+            }
+
+            if (backoff) {
+              data = asset.src
+            } else if (!data) {
+              data = asset.innerHTML
+            }
+            break
+          default:
+            data = asset.innerHTML
+            break
+          }
+
+          firstPartyClues.forEach((clue) => {
+            if (!data) {
+              result = true
+              return
+            }
+
+            if (data.includes(clue)) {
+              result = true
+            }
+          })
+
+          return {
+            result,
+            data,
+          }
         }
+
+        $items.forEach((element) => {
+          const {result, data,} = assetFirstParty(element)
+
+          if (!result) {
+            items.push(data)
+          }
+        })
 
         return Object.assign(this.error, {
-          'version':           pkg.version,
-          'clientInformation': ourClientInfo,
-          'route':             this.$route,
-          'userMessage':       this.userMessage,
+          'location':             'hydrated',
+          'userMessage':          this.userMessage,
+          'version':              pkg.version,
+          'localStorageBytes':    window.localStorage.getItem(`ouc-state-${pkg.version}`).length,
+          'timezoneOffset':       new Date().getTimezoneOffset(),
+          'time':                 new Date(),
+          'workerRegistered':     Boolean(navigator.serviceWorker.controller),
+          /* eslint-disable-next-line no-underscore-dangle */
+          'vueDevtoolsInstalled': Boolean(window.__VUE_DEVTOOLS_GLOBAL_HOOK__),
+          'extension':            this.extension,
+          items,
+          'viewport':             {
+            'width':  window.innerWidth,
+            'height': window.innerHeight,
+          },
+          'clientInformation': {
+            userAgent,
+            productSub,
+            vendor,
+            hardwareConcurrency,
+            appCodeName,
+            appName,
+            platform,
+            product,
+            onLine,
+            doNotTrack,
+            deviceMemory,
+            language,
+            languages,
+          },
         }, {})
       },
     },
     'methods': {
       encode (value) {
-        return Buffer.from(CircularJSON.stringify(value)).toString('base64')
+        return Buffer.from(JSON.stringify(value, null, 4)).toString('base64')
       },
       select (event) {
         if (process.client) {
