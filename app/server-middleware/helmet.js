@@ -11,6 +11,7 @@ const cspOptions = {
       "'self'",
       'openusercss.org',
       'openusercss.com',
+      'pwk.decentm.com',
       'sentry.io',
     ],
     'styleSrc': [
@@ -33,12 +34,17 @@ const cspOptions = {
       'api.openusercss.com',
       'imageproxy.openusercss.org',
       'imageproxy.openusercss.com',
+      'pwk.decentm.com',
       'gravatar.com',
       'sentry.io',
     ],
     'fontSrc': [
       'data:',
       "'self'",
+    ],
+    'workerSrc': [
+      "'self'",
+      'blob:',
     ],
   },
 }
