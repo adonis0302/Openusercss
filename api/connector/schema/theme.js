@@ -4,7 +4,31 @@ import moment from 'moment'
 import validators from './validators'
 import User from './user'
 
-export class Option extends EmbeddedDocument {
+export class VariableOption extends EmbeddedDocument {
+  constructor () {
+    super()
+
+    this.schema({
+      'name': {
+        'type':     String,
+        'required': false,
+        'validate': validators.length(64),
+      },
+      'label': {
+        'type':     String,
+        'required': false,
+        'validate': validators.length(64),
+      },
+      'value': {
+        'type':     String,
+        'required': false,
+        'validate': validators.length(64),
+      },
+    })
+  }
+}
+
+export class Variable extends EmbeddedDocument {
   constructor () {
     super()
 
@@ -15,7 +39,7 @@ export class Option extends EmbeddedDocument {
         'validate': validators.isOneOf([
           'text',
           'color',
-          'dropdown',
+          'select',
           'checkbox',
         ]),
       },
@@ -33,6 +57,15 @@ export class Option extends EmbeddedDocument {
         'type':     String,
         'required': false,
         'validate': validators.length(64),
+      },
+      'default': {
+        'type':     String,
+        'required': false,
+        'validate': validators.length(64),
+      },
+      'options': {
+        'type':     [ VariableOption, ],
+        'required': false,
       },
     })
   }
@@ -84,6 +117,11 @@ export default class Theme extends Document {
         'required': true,
         'validate': validators.isSemver,
       },
+      'license': {
+        'type':     String,
+        'required': true,
+        'validate': validators.spdxLicense,
+      },
       'screenshots': {
         'type': [
           String,
@@ -91,11 +129,10 @@ export default class Theme extends Document {
         'required': false,
         'validate': validators.length(10),
       },
-      'options': {
-        'type':     Array,
+      'variables': {
+        'type':     [ Variable, ],
         'required': false,
         'default':  [],
-        'validate': validators.length(64),
       },
       'user': User,
     })

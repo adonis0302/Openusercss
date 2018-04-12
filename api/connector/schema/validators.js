@@ -1,8 +1,17 @@
 import moment from 'moment'
 import semver from 'semver'
 import urlRegex from './url-regex'
+import spdxList from '../../../lib/spdx-license-list'
 
 export default {
+  'spdxLicense': (value) => {
+    if (value.toLowerCase() === 'other') {
+      return true
+    }
+
+    return Boolean(spdxList[value])
+  },
+
   'isOneOf': (array) => {
     return (data) => array.indexOf(data) !== -1
   },

@@ -1,6 +1,4 @@
 import mustAuthenticate from '../../../lib/enforce-session'
-import parse from '../../../lib/usercss-parser'
-
 import moment from 'moment'
 
 export default async (root, {
@@ -10,7 +8,8 @@ export default async (root, {
   version,
   id,
   screenshots,
-  options,
+  variables,
+  license,
 }, {Session, Theme, User, Rating, Option, token,}) => {
   const session = await mustAuthenticate(token, Session)
   const user = await User.findOne({
@@ -20,11 +19,6 @@ export default async (root, {
 
   if (!user.emailVerified) {
     throw new Error('email-not-verified')
-  }
-  const parsed = await parse(content)
-
-  if (!parsed.code) {
-    throw new Error('empty-parse-result')
   }
 
   if (id) {
@@ -40,20 +34,22 @@ export default async (root, {
     newTheme.title = title
     newTheme.description = description
     newTheme.version = version
-    newTheme.content = parsed.code
+    newTheme.content = content
     newTheme.screenshots = screenshots
-    newTheme.options = options
+    newTheme.variables = variables
+    newTheme.license = license
 
     user.lastSeenReason = 'updating a theme'
   } else {
     newTheme = Theme.create({
-      'user':    session.user,
-      'content': parsed.code,
+      user,
+      content,
       description,
-      options,
+      variables,
       title,
       version,
       screenshots,
+      license,
     })
 
     user.lastSeenReason = 'uploading a new theme'
@@ -62,11 +58,7 @@ export default async (root, {
   const savedTheme = await newTheme.save()
 
   user.lastSeen = moment().toJSON()
-
   await user.save()
-  savedTheme.ratings = await Rating.find({
-    'theme': savedTheme._id,
-  })
 
   return savedTheme
 }
