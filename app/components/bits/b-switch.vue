@@ -130,7 +130,6 @@
     appearance: none;
     position: relative;
     outline: 0;
-    border-radius: calc(0.8 * var(--height));
     width: calc(1.625 * var(--height));
     height: var(--height);
     background-color: $border;
@@ -150,7 +149,6 @@
       top: 0;
       left: 0;
       height: calc(var(--height) - 2px);
-      border-radius: calc((var(--height) - 2px) / 2);
       transition: 0.233s;
     }
     &:before {
@@ -160,7 +158,6 @@
     &:after {
       width: calc(var(--height) - 2px);
       background-color: #fff;
-      box-shadow: 0 2px 3px rgba(17, 17, 17, 0.1);
     }
     &.checked {
       border-color: nth($primary, 1);
