@@ -383,6 +383,12 @@
     mustache "^2.3.0"
     stack-trace "0.0.10"
 
+"@riophae/vue-treeselect@^0.0.15":
+  version "0.0.15"
+  resolved "https://registry.yarnpkg.com/@riophae/vue-treeselect/-/vue-treeselect-0.0.15.tgz#d68a5a23fd057973a9d23376fafcb475e7d78110"
+  dependencies:
+    fuzzysearch "^1.0.3"
+
 "@types/async@2.0.47":
   version "2.0.47"
   resolved "https://registry.yarnpkg.com/@types/async/-/async-2.0.47.tgz#f49ba1dd1f189486beb6e1d070a850f6ab4bd521"
@@ -2592,10 +2598,6 @@ cipher-base@^1.0.0, cipher-base@^1.0.1, cipher-base@^1.0.3:
 circular-json@^0.3.1:
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/circular-json/-/circular-json-0.3.3.tgz#815c99ea84f6809529d2f45791bdf82711352d66"
-
-circular-json@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/circular-json/-/circular-json-0.5.1.tgz#b8942a09e535863dc21b04417a91971e1d9cd91f"
 
 clap@^1.0.9:
   version "1.2.3"
@@ -5512,6 +5514,10 @@ function-source@^0.1.0:
 functional-red-black-tree@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/functional-red-black-tree/-/functional-red-black-tree-1.0.1.tgz#1b0ab3bd553b2a0d6399d29c0e3ea0b252078327"
+
+fuzzysearch@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/fuzzysearch/-/fuzzysearch-1.0.3.tgz#dffc80f6d6b04223f2226aa79dd194231096d008"
 
 gather-stream@^1.0.0:
   version "1.0.0"

@@ -160,6 +160,7 @@
     "yarn": "^1"
   },
   "dependencies": {
+    "@riophae/vue-treeselect": "^0.0.15",
     "apollo-client": "^2",
     "apollo-server-express": "^1",
     "babel-polyfill": "^6",
@@ -167,7 +168,6 @@
     "brace": "^0",
     "camo": "^0",
     "chalk-console": "^1",
-    "circular-json": "^0.5.1",
     "conf": "^1",
     "cors": "^2.8.4",
     "corser": "^2.0.1",
