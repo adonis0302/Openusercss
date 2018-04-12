@@ -8,7 +8,7 @@ gulp.task('licenses', (done) => {
     'omitPermissive': true,
     'overrides':      {
       // I have a Flickity "Commercial Developer" license
-      'flickity@2.1.0': {
+      'flickity@2.1.1': {
         'license':    'MIT',
         'source':     '',
         'sourceText': '',
