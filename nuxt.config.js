@@ -76,6 +76,7 @@ module.exports = {
     '~/server-middleware/helmet.js',
   ],
   'modules': [
+    '~/modules/apollo',
     [
       '@nuxtjs/markdownit', {
         'preset':  'default',
