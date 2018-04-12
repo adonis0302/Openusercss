@@ -96,6 +96,15 @@
       color: nth($background, 2);
     }
   }
+
+  .navbar-item {
+    &:hover {
+      @supports (backdrop-filter: brightness(80%)) {
+        background: transparent !important;
+        backdrop-filter: brightness(80%);
+      }
+    }
+  }
 </style>
 
 <template lang="pug">
