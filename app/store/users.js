@@ -1,5 +1,5 @@
-import gql from 'graphql-tag'
 import client from '~/../lib/apollo-client'
+import userQuery from '~/apollo/queries/user.gql'
 
 export const state = () => ({
   'loading': false,
@@ -44,63 +44,12 @@ export const actions = {
 
     try {
       const {data,} = await client.query({
-        'query': gql`
-          query($id: ID!) {
-            user(id: $id) {
-              _id
-              username
-              displayname
-              avatarUrl
-              smallAvatarUrl
-              lastSeen
-              lastSeenReason
-              createdAt
-              lastUpdate
-              bio
-              donationUrl
-            }
-
-            userThemes(id: $id) {
-              _id
-              user {
-                _id
-                username
-                displayname
-                avatarUrl
-                smallAvatarUrl
-                lastSeen
-                lastSeenReason
-                createdAt
-                lastUpdate
-                bio
-                donationUrl
-              }
-              title
-              description
-              content
-              createdAt
-              lastUpdate
-              version
-              screenshots
-              options {
-                type
-                label
-                name
-                value
-              }
-            }
-          }
-        `,
+        'query':     userQuery,
         'variables': {
           id,
         },
       })
 
-      data.userThemes.forEach((theme) => {
-        commit('themes/upsert', theme, {
-          'root': true,
-        })
-      })
       commit('upsert', data.user)
       commit('loading', false)
     } catch (error) {

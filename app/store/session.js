@@ -1,7 +1,9 @@
 import {struct,} from 'superstruct'
-import gql from 'graphql-tag'
-
 import client from '~/../lib/apollo-client'
+
+import loginMutation from '~/apollo/mutations/login.gql'
+import logoutMutation from '~/apollo/mutations/logout.gql'
+import verifyTokenQuery from '~/apollo/queries/verify-token.gql'
 
 const validators = {}
 
@@ -83,13 +85,7 @@ export const actions = {
 
     try {
       await client.query({
-        'query': gql`
-          query {
-            verifyToken {
-              _id
-            }
-          }
-        `,
+        'query': verifyTokenQuery,
       })
     } catch (error) {
       commit('logout')
@@ -103,37 +99,7 @@ export const actions = {
 
     try {
       const {data,} = await client.mutate({
-        'mutation': gql`
-        mutation(
-          $password: String!
-          $email:    String!
-        ) {
-          login(
-            password: $password
-            email:    $email
-          ) {
-            _id
-            user {
-              _id
-              username
-              displayname
-              avatarUrl
-              smallAvatarUrl
-              lastSeen
-              lastSeenReason
-              createdAt
-              lastUpdate
-              bio
-              donationUrl
-            }
-            token
-            expiresAt
-            createdAt
-            ip
-            ua
-          }
-        }
-        `,
+        'mutation':  loginMutation,
         'variables': loginData,
       })
 
@@ -152,11 +118,7 @@ export const actions = {
 
     try {
       await client.mutate({
-        'mutation': gql`
-        mutation {
-          logout
-        }
-        `,
+        'mutation': logoutMutation,
       })
     } catch (error) {
       // eslint-disable-next-line no-console

@@ -1,5 +1,7 @@
-import gql from 'graphql-tag'
 import client from '~/../lib/apollo-client'
+import verifyEmailMutation from '~/apollo/mutations/verify-email.gql'
+import resendVerificationMutation from '~/apollo/mutations/resend-verification.gql'
+import accountMutation from '~/apollo/mutations/account.gql'
 
 export const state = () => ({
   'loading': false,
@@ -30,11 +32,7 @@ export const actions = {
 
     try {
       await client.mutate({
-        'mutation': gql`
-          mutation {
-            resendVerification
-          }
-        `,
+        'mutation': resendVerificationMutation,
       })
 
       commit('loading', false)
@@ -48,11 +46,7 @@ export const actions = {
 
     try {
       const {data,} = await client.mutate({
-        'mutation': gql`
-          mutation($token: String!) {
-            verifyEmail(token: $token)
-          }
-        `,
+        'mutation':  verifyEmailMutation,
         'variables': {
           token,
         },
@@ -72,35 +66,7 @@ export const actions = {
 
     try {
       const {data,} = await client.mutate({
-        'mutation': gql`
-          mutation(
-            $password: String
-            $displayname: String
-            $email: String
-            $bio: String
-            $donationUrl: String
-          ) {
-            account(
-              password: $password
-              displayname: $displayname
-              email: $email
-              bio: $bio
-              donationUrl: $donationUrl
-            ) {
-              _id
-              username
-              displayname
-              avatarUrl
-              smallAvatarUrl
-              lastSeen
-              lastSeenReason
-              createdAt
-              lastUpdate
-              bio
-              donationUrl
-            }
-          }
-        `,
+        'mutation':  accountMutation,
         'variables': accountData,
       })
 

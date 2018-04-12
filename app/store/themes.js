@@ -1,8 +1,11 @@
 import {cloneDeep,} from 'lodash'
-import gql from 'graphql-tag'
 import moment from 'moment'
 
 import client from '~/../lib/apollo-client'
+import themeMutation from '~/apollo/mutations/theme.gql'
+import latestThemesQuery from '~/apollo/queries/latest-themes.gql'
+import popularThemesQuery from '~/apollo/queries/popular-themes.gql'
+import themeQuery from '~/apollo/queries/theme.gql'
 
 export const state = () => ({
   'loading': false,
@@ -74,58 +77,11 @@ export const actions = {
     content,
     version,
     screenshots,
-    options,
+    variables,
+    license,
   }) {
     const {data,} = await client.mutate({
-      'mutation': gql`
-        mutation(
-          $id: ID
-          $title: String!
-          $description: String!
-          $content: String!
-          $version: String!
-          $screenshots: [String]
-          $options: [OptionInput]!
-        ) {
-          theme(
-            id: $id
-            title: $title
-            description: $description
-            content: $content
-            version: $version
-            screenshots: $screenshots
-            options: $options
-          ) {
-            _id
-            user {
-              _id
-              username
-              displayname
-              avatarUrl
-              smallAvatarUrl
-              lastSeen
-              lastSeenReason
-              createdAt
-              lastUpdate
-              bio
-              donationUrl
-            }
-            title
-            description
-            content
-            createdAt
-            lastUpdate
-            version
-            screenshots
-            options {
-              type
-              label
-              name
-              value
-            }
-          }
-        }
-      `,
+      'mutation':  themeMutation,
       'variables': {
         id,
         title,
@@ -133,51 +89,17 @@ export const actions = {
         content,
         version,
         screenshots,
-        options,
+        variables,
+        license,
       },
     })
 
-    commit('users/upsert', data.theme.user, {
-      'root': true,
-    })
     commit('upsert', data.theme)
   },
 
   async latest ({commit, state,}) {
     const {data,} = await client.query({
-      'query': gql`
-        query($limit: Int!) {
-          latestThemes(limit: $limit) {
-            _id
-            user {
-              _id
-              username
-              displayname
-              avatarUrl
-              smallAvatarUrl
-              lastSeen
-              lastSeenReason
-              createdAt
-              lastUpdate
-              bio
-              donationUrl
-            }
-            title
-            description
-            content
-            createdAt
-            lastUpdate
-            version
-            screenshots
-            options {
-              type
-              label
-              name
-              value
-            }
-          }
-        }
-      `,
+      'query':     latestThemesQuery,
       'variables': {
         'limit': 6,
       },
@@ -191,41 +113,10 @@ export const actions = {
       commit('upsert', theme)
     })
   },
+
   async popular ({commit, state,}) {
     const {data,} = await client.query({
-      'query': gql`
-        query($limit: Int!) {
-          popularThemes(limit: $limit) {
-            _id
-            user {
-              _id
-              username
-              displayname
-              avatarUrl
-              smallAvatarUrl
-              lastSeen
-              lastSeenReason
-              createdAt
-              lastUpdate
-              bio
-              donationUrl
-            }
-            title
-            description
-            content
-            createdAt
-            lastUpdate
-            version
-            screenshots
-            options {
-              type
-              label
-              name
-              value
-            }
-          }
-        }
-      `,
+      'query':     popularThemesQuery,
       'variables': {
         'limit': 6,
       },
@@ -239,44 +130,13 @@ export const actions = {
       commit('upsert', theme)
     })
   },
+
   async single ({commit, state,}, id) {
     commit('loading', true)
 
     try {
       const {data,} = await client.query({
-        'query': gql`
-          query($id: ID!) {
-            theme(id: $id) {
-              _id
-              user {
-                _id
-                username
-                displayname
-                avatarUrl
-                smallAvatarUrl
-                lastSeen
-                lastSeenReason
-                createdAt
-                lastUpdate
-                bio
-                donationUrl
-              }
-              title
-              description
-              content
-              createdAt
-              lastUpdate
-              version
-              screenshots
-              options {
-                type
-                label
-                name
-                value
-              }
-            }
-          }
-        `,
+        'query':     themeQuery,
         'variables': {
           id,
         },

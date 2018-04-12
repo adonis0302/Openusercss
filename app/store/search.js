@@ -1,5 +1,5 @@
-import gql from 'graphql-tag'
 import client from '~/../lib/apollo-client'
+import searchQuery from '~/apollo/queries/search.gql'
 
 export const state = () => ({
   'loading': false,
@@ -30,63 +30,7 @@ export const actions = {
 
     try {
       const {data,} = await client.query({
-        'query': gql`
-          query(
-            $terms: String!
-            $limit: Int
-            $skip:  Int
-          ) {
-            search(
-              terms: $terms
-              limit: $limit
-              skip:  $skip
-            ) {
-              users {
-                _id
-                username
-                displayname
-                avatarUrl
-                smallAvatarUrl
-                lastSeen
-                lastSeenReason
-                createdAt
-                lastUpdate
-                bio
-                donationUrl
-              }
-
-              themes {
-                _id
-                user {
-                  _id
-                  username
-                  displayname
-                  avatarUrl
-                  smallAvatarUrl
-                  lastSeen
-                  lastSeenReason
-                  createdAt
-                  lastUpdate
-                  bio
-                  donationUrl
-                }
-                title
-                description
-                content
-                createdAt
-                lastUpdate
-                version
-                screenshots
-                options {
-                  type
-                  label
-                  name
-                  value
-                }
-              }
-            }
-          }
-        `,
+        'query':     searchQuery,
         'variables': {
           terms,
           limit,

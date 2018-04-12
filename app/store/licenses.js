@@ -1,5 +1,5 @@
-import gql from 'graphql-tag'
 import client from '~/../lib/apollo-client'
+import licensesQuery from '~/apollo/queries/licenses.gql'
 
 export const state = () => ({
   'loading': false,
@@ -30,17 +30,7 @@ export const actions = {
 
     try {
       const {data,} = await client.query({
-        'query': gql`
-          query {
-            licenses {
-              package
-              repository
-              license
-              source
-              sourceText
-            }
-          }
-        `,
+        'query': licensesQuery,
       })
 
       commit('all', data.licenses)
