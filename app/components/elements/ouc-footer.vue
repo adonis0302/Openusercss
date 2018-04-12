@@ -1,16 +1,12 @@
 <script>
-  import gql from 'graphql-tag'
+  import versionQuery from '~/apollo/queries/version.gql'
 
   import progressiveImage from '../bits/progressive-image.vue'
   import changelog from '~/../CHANGELOG.md'
 
   export default {
     'apollo': {
-      'version': gql`{
-        version {
-          revisionTag
-        }
-      }`,
+      'version': versionQuery,
     },
     'components': {
       progressiveImage,
