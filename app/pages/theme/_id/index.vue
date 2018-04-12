@@ -7,7 +7,9 @@
   import notification from '~/components/elements/notification.vue'
   import bInput from '~/components/bits/b-input.vue'
   import progressiveImage from '~/components/bits/progressive-image.vue'
+  import imageCarousel from '~/components/elements/image-carousel.vue'
 
+  import spdxList from '~/../lib/spdx-license-list'
   import starRating from 'vue-star-rating'
   import raven from 'raven-js'
   import hat from 'hat'
@@ -27,20 +29,15 @@
       bInput,
       starRating,
       progressiveImage,
+      imageCarousel,
     },
     data () {
       return {
         'options': {
           'viewingSource': false,
         },
-        'confirmTitle':    '',
-        'showingModal':    false,
-        'flickityOptions': {
-          'wrapAround':      true,
-          'prevNextButtons': false,
-          'pageDots':        false,
-          'cellAlign':       'left',
-        },
+        'confirmTitle': '',
+        'showingModal': false,
       }
     },
     'computed': {
@@ -71,16 +68,20 @@
 
         return `https://api.openusercss.org/theme/${this.theme._id}.user.css`
       },
+      license () {
+        if (this.theme.license.toLowerCase() === 'other') {
+          return {
+            'name': 'Other',
+            'url':  '/notice/applied-licenses',
+          }
+        }
+
+        return spdxList[this.theme.license]
+      },
     },
     mounted () {
       if (this.$route.query.viewingSource === 'true') {
         this.viewSource()
-      }
-
-      if (this.theme && this.theme.screenshots.length) {
-        this.$nextTick(() => {
-          this.$refs.flickity.rerender()
-        })
       }
     },
     beforeDestroy () {
@@ -224,6 +225,11 @@
     padding-right: .6rem;
     white-space: nowrap;
   }
+
+  .is-vcentered {
+    display: flex;
+    align-items: center;
+  }
 </style>
 
 <template lang="pug">
@@ -323,24 +329,9 @@
             .column.is-6
               div
                 .box.is-paddingless.is-marginless.ouc-theme-card
-                  no-ssr(v-if="theme.screenshots.length")
-                    flickity.carousel(ref="flickity", :options="flickityOptions")
-                      progressive-image.carousel-cell(
-                        v-for="screenshot in theme.screenshots",
-                        :key="screenshot",
-                        :src="proxyImage(screenshot).large",
-                        :placeholder="proxyImage(screenshot).small",
-                        width="100%",
-                        height="15rem",
-                        size="cover"
-                      )
-                    progressive-image.carousel-cell(
-                      slot="placeholder",
-                      :placeholder="proxyImage(theme.screenshots[0]).small",
-                      width="100%",
-                      height="15rem",
-                      size="cover"
-                    )
+                  image-carousel(
+                    v-model="theme.screenshots"
+                  )
                   .column
                     .tile.is-parent.is-paddingless
                       .tile.is-child.is-parent.is-vertical
@@ -353,6 +344,23 @@
                               @click="viewSource"
                             ) View source
                         br
+                        .box
+                          div(v-if="theme.license === 'Other'")
+                            p
+                              | {{theme.user.displayname}} has applied their
+                              | own license to this theme.
+                              br
+                              | Please see the description below for details.
+                          .columns(v-else)
+                            .column.is-9.is-vcentered
+                              p License: {{license.name}}
+                            .column.is-3.is-full-centered
+                              a.button.is-primary(
+                                :href="license.url",
+                                target="_blank",
+                                ref="noopener nofollow"
+                              ) Click to read
+
                         p(v-show="averageRating(theme.ratings) !== 0") Average rating: {{averageRating(theme.ratings)}}
                         p(v-show="averageRating(theme.ratings) === 0") Not rated yet
                         p Created: {{formatMoment(theme.createdAt)}}
