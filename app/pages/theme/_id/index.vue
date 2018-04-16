@@ -1,9 +1,6 @@
 <script>
   import {formatMoment,} from '~/../lib/time'
-  import {buildTheme,} from '~/../lib/usercss-builder'
 
-  import oucFooter from '~/components/elements/ouc-footer.vue'
-  import navbar from '~/components/elements/navbar.vue'
   import notification from '~/components/elements/notification.vue'
   import bInput from '~/components/bits/b-input.vue'
   import progressiveImage from '~/components/bits/progressive-image.vue'
@@ -14,6 +11,7 @@
   import raven from 'raven-js'
   import hat from 'hat'
   import {mapGetters,} from 'vuex'
+  import {stringify,} from 'parse-usercss'
 
   export default {
     fetch ({store, app, route,}) {
@@ -23,8 +21,6 @@
       })
     },
     'components': {
-      oucFooter,
-      navbar,
       notification,
       bInput,
       starRating,
@@ -149,11 +145,9 @@
           },
         })
       },
-      async installThemeEvent () {
+      installThemeEvent () {
         try {
           const self = this
-
-          const built = await buildTheme(this.theme, this.theme.user)
           const key = hat()
 
           const callbackHandler = (event) => {
@@ -164,32 +158,40 @@
                 const error = new Error(`${this.extension.name} didn't pass the key back correctly`)
 
                 raven.captureException(error)
-                self.$toast.error({
-                  'title':   'Theme installation failed',
-                  'message': error.message,
-                  'timeout': 10000,
-                  'theme':   'ouc',
-                  'layout':  2,
-                })
+                self.$toast.error(error.message, 'Theme installation failed')
 
                 throw error
               }
 
-              self.$toast.success({
-                'title':   'Theme installed',
-                'message': `${this.theme.title} was installed by ${this.extension.name} successfully`,
-                'timeout': 10000,
-                'theme':   'ouc',
-                'layout':  2,
-              })
+              self.$toast.success(
+                `${this.theme.title} was installed by ${this.extension.name} successfully`,
+                'Theme installed',
+              )
             }
           }
+
+          console.log(JSON.stringify(this.theme.variables, null, 4))
+
+          /* eslint-disable-next-line prefer-template */
+          const rendered = stringify({
+            'name':         this.theme.title,
+            'namespace':    `https://openusercss.org/theme/${this.theme._id}`,
+            'homepageURL':  `https://openusercss.org/theme/${this.theme._id}`,
+            'version':      this.theme.version,
+            'license':      this.theme.license,
+            'description':  this.theme.description,
+            'vars':         this.theme.variables,
+            'author':       `${this.theme.user.displayname} (https://openusercss.org/profile/${this.theme.user._id})`,
+            'preprocessor': 'uso',
+          }, {
+            'alignKeys': true,
+          }) + `\n\n${this.theme.content}\n`
 
           window.addEventListener('message', callbackHandler)
           window.postMessage({
             'type':  'ouc-install-usercss',
             'title': this.theme.title,
-            'code':  built,
+            'code':  rendered,
             key,
           }, '*')
         } catch (error) {
@@ -203,9 +205,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import 'node_modules/bulma/sass/utilities/initial-variables';
-  @import '../../../scss/autocolor';
-  @import '../../../scss/variables';
+  @import '../../../scss/component';
 
   code {
     display: block;
@@ -317,8 +317,7 @@
                           @click="installThemeEvent",
                           v-if="extension.capabilities.includes('event:install-usercss')"
                         )
-                          div(v-if="!extensionData.installed") Install with {{extension.name}}
-                          div(v-if="extensionData.installed") Reinstall with {{extension.name}}
+                          div Install with {{extension.name}}
                       a.button.is-primary(
                         :href="installLink",
                         target="_blank",
@@ -344,28 +343,32 @@
                               @click="viewSource"
                             ) View source
                         br
-                        .box
-                          div(v-if="theme.license === 'Other'")
-                            p
-                              | {{theme.user.displayname}} has applied their
-                              | own license to this theme.
-                              br
-                              | Please see the description below for details.
-                          .columns(v-else)
-                            .column.is-9.is-vcentered
-                              p License: {{license.name}}
-                            .column.is-3.is-full-centered
-                              a.button.is-primary(
-                                :href="license.url",
-                                target="_blank",
-                                ref="noopener nofollow"
-                              ) Click to read
 
                         p(v-show="averageRating(theme.ratings) !== 0") Average rating: {{averageRating(theme.ratings)}}
                         p(v-show="averageRating(theme.ratings) === 0") Not rated yet
                         p Created: {{formatMoment(theme.createdAt)}}
                         p Last updated: {{formatMoment(theme.lastUpdate)}}
                         p Version: {{theme.version}}
+                        div(v-if="theme.license === 'Other'")
+                          br
+                          .notification.is-primary.is-marginless
+                            fa-icon(icon="info")
+                            | {{theme.user.displayname}} has applied their
+                            | own license to this theme.
+                            br
+                            | Please see the description below for details.
+
+                        div(v-else)
+                          | License:&nbsp;
+                          a.has-text-primary(
+                            :href="license.url",
+                            target="_blank",
+                            ref="noopener nofollow"
+                          ) {{license.name}}
+                          | &nbsp;
+                          nuxt-link.has-text-secondary(to="/notice/applied-licenses")
+                            | (notice)
+
                         div(v-show="viewer")
                           br
                           .level
@@ -387,15 +390,17 @@
                   :anchor-attributes="$anchorAttributes"
                 )
             .column.is-6
-              h3 Theme options
+              h3 Theme variables
               p A preview of options you can set in your extension
               hr
               .columns.is-multiline
-                .column.is-6(v-for="option in theme.options")
-                  .box
-                    b {{option.label}}
-                    p Type: {{option.type}}
-                    p(v-if="option.possibleValues && option.possibleValues.length") {{option.possibleValues}}
-
-    ouc-footer
+                .column.is-6(v-for="variable in theme.variables")
+                  .card
+                    .card-header
+                      p.card-header-title
+                        | {{variable.label}}
+                    .card-content
+                      p Type: {{variable.type}}
+                      p Name: {{variable.name}}
+                      p Default: {{variable.value || variable.default}}
 </template>
