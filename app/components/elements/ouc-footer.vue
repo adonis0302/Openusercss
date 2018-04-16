@@ -29,9 +29,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import 'node_modules/bulma/sass/utilities/initial-variables';
-  @import '../../scss/autocolor';
-  @import '../../scss/variables';
+  @import '../../scss/component';
 
   .footer {
     padding-bottom: 48px;
@@ -42,8 +40,8 @@
     flex-direction: column;
   }
 
-  .bg-brand {
-    background: $brand-background;
+  .ouc-im-broke-wrapper {
+    @include brand-gradient(map-get($tones, 'brand-dark'), map-get($tones, 'patreon'), 40%, 42.5%);
   }
 
   .bg-transparent {
@@ -63,6 +61,10 @@
     padding: .25rem
   }
 
+  .has-padding-1 {
+    padding: 1rem
+  }
+
   .v--modal .box {
     margin-top: 4rem;
   }
@@ -78,24 +80,31 @@
       .box
         div(v-html="changelog")
 
-    .is-vertical.ouc-im-broke-wrapper.bg-brand
+    .is-vertical.ouc-im-broke-wrapper
       .container.ouc-im-broke
         .tile.is-parent.is-paddingless
           .tile.is-child.is-pulled-left
             .box.ouc-im-broke-begging.is-borderless.is-shadowless.bg-transparent.has-text-white
               | OpenUserCSS needs your support!
           .tile.is-child
-            a.button.is-patreon.is-pulled-right.is-fullheight(href="//patreon.com/DecentM", target="_blank")
-              | Become a patron on
+            a.button.is-patreon.is-pulled-right.is-fullheight.is-hidden-touch(href="//patreon.com/DecentM", target="_blank")
+              b Become a patron on
               .has-padding
               progressive-image(
                 src="/img/patreon.icon-x64.png",
                 placeholder="/img/patreon.icon-x16.png",
-                height="2rem",
-                width="2rem"
+                height="1.75rem",
+                width="1.75rem"
               )
-            a.button.is-paypal.is-pulled-right.is-fullheight(href="//www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NQE35LHY6NKS6", target="_blank")
-              | Support by PayPal!
+            a.button.is-patreon.is-pulled-right.is-fullheight.is-fullwidth.is-hidden-desktop.has-padding-1(href="//patreon.com/DecentM", target="_blank")
+              b Become a patron on
+              .has-padding
+              progressive-image(
+                src="/img/patreon.icon-x64.png",
+                placeholder="/img/patreon.icon-x16.png",
+                height="1.5rem",
+                width="1.5rem"
+              )
 
       .footer.is-vertical.ouc-footer-content
         .container
