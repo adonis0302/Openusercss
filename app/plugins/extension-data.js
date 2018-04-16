@@ -121,7 +121,14 @@ if (process.client) {
 }
 
 Vue.mixin({
-  'computed': {
-    'extension': () => extension,
+  data () {
+    return {
+      extension,
+    }
+  },
+  mounted () {
+    setTimeout(() => {
+      this.extension = extension
+    })
   },
 })
