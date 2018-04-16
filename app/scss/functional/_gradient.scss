@@ -5,4 +5,5 @@
   $center: 50%
 ) {
   background: linear-gradient(130deg, $from $center - $brush / 2, $to $center + $brush / 2);
+  color: text-for-bg(mix($from, $to));
 }
