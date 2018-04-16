@@ -1,5 +1,5 @@
 mutation(
-  $id:          ID!
+  $id:          ID
   $title:       String!
   $description: String!
   $content:     String!
