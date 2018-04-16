@@ -1,14 +1,7 @@
 <script>
-  import oucFooter from '~/components/elements/ouc-footer.vue'
-  import navbar from '~/components/elements/navbar.vue'
-
   import {mapGetters,} from 'vuex'
 
   export default {
-    'components': {
-      oucFooter,
-      navbar,
-    },
     fetch ({store, route,}) {
       return store.dispatch('licenses/all')
     },
@@ -41,9 +34,7 @@
 </script>
 
 <style lang="scss">
-  @import 'node_modules/bulma/sass/utilities/initial-variables';
-  @import '../../scss/autocolor';
-  @import '../../scss/variables';
+  @import '../../scss/component';
 
   .bg-primary {
     background-color: nth($primary, 1) !important;
@@ -114,6 +105,4 @@
                       | View full license text
                   .level-right(v-if="!license.sourceText && license.source")
                     p Source: {{license.source}}
-
-    ouc-footer
 </template>

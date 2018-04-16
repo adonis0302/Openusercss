@@ -1,6 +1,4 @@
 <script>
-  import oucFooter from '~/components/elements/ouc-footer.vue'
-  import navbar from '~/components/elements/navbar.vue'
   import notification from '~/components/elements/notification.vue'
   import themeCard from '~/components/elements/theme-card.vue'
   import progressiveImage from '~/components/bits/progressive-image.vue'
@@ -11,8 +9,6 @@
 
   export default {
     'components': {
-      oucFooter,
-      navbar,
       notification,
       themeCard,
       progressiveImage,
@@ -164,6 +160,4 @@
                 +theme-microdata
                 +theme-card
                   span
-
-    ouc-footer
 </template>

@@ -77,9 +77,7 @@
 </script>
 
 <style lang="scss">
-  @import 'node_modules/bulma/sass/utilities/initial-variables';
-  @import '../../scss/autocolor';
-  @import '../../scss/variables';
+  @import '../../scss/component';
 
   $primary: nth(map-get($colors, 'primary'), 1);
   $secondary: nth(map-get($colors, 'secondary'), 1);

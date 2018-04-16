@@ -1,6 +1,4 @@
 <script>
-  import oucFooter from '~/components/elements/ouc-footer.vue'
-  import navbar from '~/components/elements/navbar.vue'
   import chip from '~/components/elements/chip.vue'
   import themeCard from '~/components/elements/theme-card.vue'
   import notification from '~/components/elements/notification.vue'
@@ -17,9 +15,7 @@
       ])
     },
     'components': {
-      oucFooter,
       themeCard,
-      navbar,
       chip,
       notification,
       progressiveImage,
@@ -116,6 +112,4 @@
                         p.title.is-7 {{theme.user.displayname}}
                         //- TODO: Get install count!
                         p.subtitle {{parseInt(Math.random() * 100, 10)}} installs
-
-    ouc-footer
 </template>

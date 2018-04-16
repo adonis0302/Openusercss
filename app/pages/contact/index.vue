@@ -1,14 +1,7 @@
 <script>
   import {decode,} from 'he'
 
-  import oucFooter from '~/components/elements/ouc-footer.vue'
-  import navbar from '~/components/elements/navbar.vue'
-
   export default {
-    'components': {
-      oucFooter,
-      navbar,
-    },
     mounted () {
       setTimeout(() => {
         this.showing = true
@@ -58,6 +51,4 @@
               p.is-inline
                 | If you need to message me privately for other reasons, my email is&nbsp;
                 p.is-inline.is-unselectable(:class="[{'has-text-reversed': showing}]") {{email}}
-
-    ouc-footer
 </template>

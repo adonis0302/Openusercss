@@ -1,7 +1,4 @@
 <script>
-  import oucFooter from '~/components/elements/ouc-footer.vue'
-  import navbar from '~/components/elements/navbar.vue'
-
   import notification from '~/components/elements/notification.vue'
   import oucButton from '~/components/elements/ouc-button.vue'
   import bInput from '~/components/bits/b-input.vue'
@@ -12,8 +9,6 @@
     'components': {
       oucButton,
       notification,
-      oucFooter,
-      navbar,
       bInput,
     },
     'data': () => {
@@ -110,6 +105,4 @@
                       div(slot="content")
                         ul
                           li(v-for="error in errors.all()") {{error}}
-
-    ouc-footer
 </template>

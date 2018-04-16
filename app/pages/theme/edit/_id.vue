@@ -8,8 +8,6 @@
   import treeSelect from '@riophae/vue-treeselect'
   import licenseList from '~/../lib/spdx-license-list'
 
-  import oucFooter from '~/components/elements/ouc-footer.vue'
-  import navbar from '~/components/elements/navbar.vue'
   import notification from '~/components/elements/notification.vue'
   import editor from '~/components/elements/editor.vue'
   import listCreator from '~/components/elements/list-creator.vue'
@@ -35,8 +33,6 @@
 
   export default {
     'components': {
-      oucFooter,
-      navbar,
       notification,
       editor,
       bInput,
@@ -535,6 +531,4 @@
                         placeholder="Write your option here",
                         :support-objects="true"
                       )
-
-    ouc-footer
 </template>

@@ -1,15 +1,3 @@
-<script>
-  import oucFooter from '~/components/elements/ouc-footer.vue'
-  import navbar from '~/components/elements/navbar.vue'
-
-  export default {
-    'components': {
-      oucFooter,
-      navbar,
-    },
-  }
-</script>
-
 <template lang="pug">
   div.ouc-route-root
     .container
@@ -47,6 +35,4 @@
             .button.is-primary View Open Source licenses
           nuxt-link(to="/notice/applied-licenses")
             .button.is-primary About theme licenses
-
-    ouc-footer
 </template>

@@ -44,9 +44,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import 'node_modules/bulma/sass/utilities/initial-variables';
-  @import '../../scss/autocolor';
-  @import '../../scss/variables';
+  @import '../../scss/component';
 
   $primary: map-get($colors, 'primary');
   $dark: map-get($colors, 'primary-dark');
@@ -69,16 +67,9 @@
     height: map-get($kerning, 'navbar-height');
   }
 
-  .navbar-brand {
-    img {
-      max-height: calc(#{map-get($kerning, 'navbar-height')} - 1.5rem);
-      min-height: calc(#{map-get($kerning, 'navbar-height')} - 1.5rem);
-    }
-  }
-
   .ouc-navbar {
     &.is-primary {
-      background: $brand-background;
+      @include brand-gradient;
     }
 
     * {
@@ -97,9 +88,9 @@
     }
   }
 
-  .navbar-item {
-    &:hover {
-      @supports (backdrop-filter: brightness(80%)) {
+  @supports (backdrop-filter: brightness(80%)) {
+    .navbar-item {
+      &:hover {
         background: transparent !important;
         backdrop-filter: brightness(80%);
       }
@@ -116,8 +107,8 @@
             progressive-image(
               src="/img/openusercss.icon.svg",
               placeholder="/img/openusercss.icon-x16.png",
-              height="2.5rem",
-              width="2.5rem"
+              height="2.25rem",
+              width="2.25rem"
             )
             .spacer
             span OpenUserCSS

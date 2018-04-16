@@ -4,9 +4,6 @@
   import bInput from '~/components/bits/b-input.vue'
   import bSwitch from '~/components/bits/b-switch.vue'
 
-  import oucFooter from '~/components/elements/ouc-footer.vue'
-  import navbar from '~/components/elements/navbar.vue'
-
   import {mapGetters,} from 'vuex'
   import registerMutation from '~/apollo/mutations/register.gql'
 
@@ -25,8 +22,6 @@
       oucButton,
       bInput,
       notification,
-      oucFooter,
-      navbar,
       bSwitch,
     },
     data () {
@@ -168,6 +163,4 @@
                       div(slot="content")
                         ul
                           li(v-for="error in errors.all()") {{error}}
-
-    ouc-footer
 </template>

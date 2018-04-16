@@ -1,10 +1,8 @@
 <script>
-  import oucFooter from '~/components/elements/ouc-footer.vue'
   import spinner from '~/components/elements/spinner.vue'
 
   export default {
     'components': {
-      oucFooter,
       spinner,
     },
     data () {
@@ -55,6 +53,4 @@
             button.button(@click="showSuccess") Success
             button.button(@click="showWarning") Warning
             button.button(@click="showError") Error
-
-    ouc-footer
 </template>

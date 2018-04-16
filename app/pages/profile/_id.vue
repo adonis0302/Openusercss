@@ -2,8 +2,6 @@
   import moment from 'moment'
 
   import themeCard from '~/components/elements/theme-card.vue'
-  import oucFooter from '~/components/elements/ouc-footer.vue'
-  import navbar from '~/components/elements/navbar.vue'
   import notification from '~/components/elements/notification.vue'
   import progressiveImage from '~/components/bits/progressive-image.vue'
 
@@ -15,8 +13,6 @@
       return store.dispatch('users/single', route.params.id)
     },
     'components': {
-      oucFooter,
-      navbar,
       themeCard,
       notification,
       progressiveImage,
@@ -153,6 +149,4 @@
                   +theme-card
                     //- TODO: Get install count!
                     p.subtitle Installs: {{parseInt(Math.random() * 100, 10)}}
-
-    ouc-footer
 </template>

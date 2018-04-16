@@ -1,15 +1,3 @@
-<script>
-  import oucFooter from '~/components/elements/ouc-footer.vue'
-  import navbar from '~/components/elements/navbar.vue'
-
-  export default {
-    'components': {
-      oucFooter,
-      navbar,
-    },
-  }
-</script>
-
 <template lang="pug">
   div.ouc-route-root
     .container
@@ -47,6 +35,4 @@
             | I'm not a lawyer, nor does OpenUserCSS provide legal advice to anyone.
             | If you're concerned about copyright, please consult with your/an
             | attorney.
-
-    ouc-footer
 </template>

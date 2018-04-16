@@ -3,7 +3,6 @@
   import {mapGetters,} from 'vuex'
 
   import spinner from '~/components/elements/spinner.vue'
-  import oucFooter from '~/components/elements/ouc-footer.vue'
   import notification from '~/components/elements/notification.vue'
   import oucButton from '~/components/elements/ouc-button.vue'
 
@@ -13,7 +12,6 @@
 
   export default {
     'components': {
-      oucFooter,
       spinner,
       notification,
       bInput,
@@ -108,9 +106,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import 'node_modules/bulma/sass/utilities/initial-variables';
-  @import '../../scss/autocolor';
-  @import '../../scss/variables';
+  @import '../../scss/component';
 
   .mw500 {
     max-width: 500px;
@@ -304,6 +300,4 @@
                         :html="false",
                         :anchor-attributes="$anchorAttributes"
                       )
-
-    ouc-footer
 </template>
