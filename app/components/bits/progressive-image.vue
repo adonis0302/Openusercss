@@ -29,6 +29,10 @@
         'type':    Boolean,
         'default': false,
       },
+      'circular': {
+        'type':    Boolean,
+        'default': false,
+      },
     },
     'computed': {
       commonStyle () {
@@ -87,7 +91,7 @@
 
 <template lang="pug">
   .ouc-responsive-image-wrapper(v-if="!raw", :style="commonStyle")
-    .ouc-responsive-image(:style="style", ref="main")
+    .ouc-responsive-image(:style="style", ref="main", :class="{'is-circular': circular}")
       slot(name="overlay")
   img.ouc-responsive-image-raw(v-else, ref="raw", :style="rawStyle", :src="placeholder")
 </template>
