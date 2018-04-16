@@ -90,49 +90,48 @@
         .section
           .level
             .level-left
-              h1 Profile
+              h1 {{user.displayname | placeholder('Profile')}}
             .level-right.ouc-profile-action-buttons(v-show="viewer && viewer._id === user._id")
-              .tile.is-parent.is-paddingless
+              .tile.is-parent.is-paddingless.is-brand-primary
                 .tile.ouc-new-theme-button-wrapper.is-child
-                  nuxt-link.button.is-primary.ouc-new-theme-button(to="/theme/edit") Upload new theme
+                  nuxt-link.button.is-backgroundless.is-borderless.has-text-white.ouc-new-theme-button(to="/theme/edit")
+                    | Upload new theme
                 .tile.ouc-account-button-wrapper.is-child
-                  nuxt-link.button.is-primary.ouc-account-button(to="/account") Account
+                  nuxt-link.button.is-backgroundless.is-borderless.has-text-white.ouc-account-button(to="/account")
+                    | Account
           .columns
             .column.is-6
-              div
-                .box.is-paddingless.is-marginless.ouc-user-card
-                  .column.is-paddingless
-                    .tile.is-parent.is-paddingless
-                      .tile.is-4
-                        .tile.is-child.ouc-user-avatar
-                          progressive-image(
-                            :src="user.avatarUrl",
-                            :placeholder="user.smallAvatarUrl",
-                            height="10rem",
-                            width="10rem"
-                          )
-                      .tile.is-8
-                        .tile.is-parent.is-paddingless.ouc-user-details
-                          .tile.is-parent
-                            .tile.is-child.is-parent.is-vertical.is-paddingless
-                              h2 {{user.displayname}}
-                              br
-                              p Themes: {{themes ? themes.length : 0}}
-
-                .box
-                  .level.is-mobile
-                    .level-left.ouc-last-seen-wrapper
-                      fa-icon(v-if="isOnline(user.lastSeen)", icon="circle", color="#06BC5A")
+              .card
+                .card-content.is-brand-primary
+                  .columns
+                    .column.is-4.is-hcentered
+                      figure.image.has-indicator
+                        fa-icon(v-if="isOnline(user.lastSeen)", icon="circle", color="#06BC5A")
+                        progressive-image(
+                          :src="user.avatarUrl",
+                          :placeholder="user.smallAvatarUrl",
+                          height="7.5rem",
+                          width="7.5rem",
+                          size="cover",
+                          position="center center",
+                          :circular="true"
+                        )
+                    .column.is-8
+                      p @{{user.username}}
+                      hr
                       p.ouc-last-seen {{lastOnlineDisplay}}
 
-              hr
-              .box
-                .content.ouc-user-bio-wrapper
-                  vue-markdown.ouc-user-bio(
-                    :source="user.bio",
-                    :html="false",
-                    :anchor-attributes="$anchorAttributes"
-                  )
+                .card-content
+                  .content.ouc-user-bio-wrapper
+                    vue-markdown.ouc-user-bio(
+                      v-if="user.bio",
+                      :source="user.bio",
+                      :html="false",
+                      :anchor-attributes="$anchorAttributes"
+                    )
+                    p(v-else)
+                      | {{user.displayname}} has not written a bio yet.
+
             .column.is-6
               div.ouc-user-donation-wrapper(v-if="user.donationUrl && user.donationUrl !== ''", is-paddingless)
                 a.button.is-primary(:href="user.donationUrl", target="_blank", rel="nofollow noopener")
