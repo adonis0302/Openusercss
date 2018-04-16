@@ -33,6 +33,7 @@
 
   .footer {
     padding-bottom: 48px;
+    color: #111;
   }
 
   .is-vertical {
