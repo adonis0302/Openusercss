@@ -1,9 +1,11 @@
 <script>
   import navbar from '../components/elements/navbar.vue'
+  import oucFooter from '../components/elements/ouc-footer.vue'
 
   export default {
     'components': {
       navbar,
+      oucFooter,
     },
     beforeMount () {
       this.process = process
@@ -35,8 +37,8 @@
 
 <template lang="pug">
   div
+    navbar
     div.ouc-app-root
-      navbar
       nuxt
     ouc-noscript
       noscript
@@ -46,4 +48,6 @@
             | You're browsing without scripts. Most features will not work, but
             | you should still be able to install themes if your extension
             | supports this.
+
+    ouc-footer
 </template>
