@@ -1,21 +1,5 @@
-<script>
-  import oucFooter from '~/components/elements/ouc-footer.vue'
-  import navbar from '~/components/elements/navbar.vue'
-  import notification from '~/components/elements/notification.vue'
-
-  export default {
-    'components': {
-      oucFooter,
-      navbar,
-      notification,
-    },
-  }
-</script>
-
 <style lang="scss" scoped>
-  @import 'node_modules/bulma/sass/utilities/initial-variables';
-  @import '../../scss/autocolor';
-  @import '../../scss/variables';
+  @import '../../scss/component';
 
   .box {
     &.is-warning {
@@ -58,74 +42,72 @@
 
         hr
         no-ssr
-          div(v-if="extension")
-            .box.is-primary
-              fa-icon.is-inline(icon="puzzle-piece")
-              p.is-inline(v-if="extension.version")
-                | Detected extension: {{extension.name}}, version {{extension.version}}. You're good to go!
-              p.is-inline(v-if="!extension.version")
-                | Detected extension: {{extension.name}}. You're good to go!
+          div
+            div(v-if="extension")
+              .box.is-primary
+                fa-icon.is-inline(icon="puzzle-piece")
+                p.is-inline(v-if="extension.version")
+                  | Detected extension: {{extension.name}}, version {{extension.version}}. You're good to go!
+                p.is-inline(v-if="!extension.version")
+                  | Detected extension: {{extension.name}}. You're good to go!
 
-            p Here's some info about what you can do with {{extension.name}}:
-            .content
-              ul
-                li(v-if="extension.capabilities.includes('install-usercss')")
-                  | Since this extension can handle the usercss format, you can
-                  | click "Install with {{extension.name}}" on a theme page to
-                  | install it.
-                li(v-if="extension.capabilities.includes('configure-after-install')")
-                  | Once a theme is installed, you'll be able to configure it in your extension.
-                li(v-if="extension.capabilities.includes('configure-before-install')")
-                  | You'll be able to configure themes before installing them.
-                li(v-if="extension.capabilities.includes('create-usercss') && extension.capabilities.includes('builtin-editor')")
-                  | You can create usercss compliant themes easily with this extension using its builtin code editor.
-                li(v-if="extension.capabilities.includes('edit-usercss') && extension.capabilities.includes('builtin-editor')")
-                  | You can edit already installed themes with this extension using its builtin code editor.
-                li(v-if="extension.capabilities.includes('import-moz-export')")
-                  | You can import themes that user the @moz- export format.
-                li(v-if="extension.capabilities.includes('export-moz-export')")
-                  | You can export themes into the @moz- format.
-                li(v-if="extension.capabilities.includes('update-manual')")
-                  | {{extension.name}} includes an update checker button that lets
-                  | you update installed themes easily.
-                li(v-if="extension.capabilities.includes('update-auto')")
-                  | {{extension.name}} will check for updates for your themes
-                  | and apply them automatically when available.
-                li(v-if="extension.capabilities.includes('export-json-backups')")
-                  | You can export your installed themes into a JSON formatted file
-                  | for safety.
-                li(v-if="extension.capabilities.includes('import-json-backups')")
-                  | You can import your JSON backups into the extension to restore
-                  | what you backed up.
-                li(v-if="extension.capabilities.includes('manage-local')")
-                  | You can view a list of installed themes in the extension and
-                  | disable, enable, edit or uninstall them.
-                li(v-if="extension.capabilities.includes('search-remote')")
-                  | You can search for themes on websites without having to leave
-                  | the extension.
-                li(v-if="extension.capabilities.includes('query-api')")
-                  | You can see a list of your installed themes straight
-                  | from OpenUserCSS without having to open the extension.
-                li(v-if="extension.capabilities.includes('mutate-api')")
-                  | You can disable, enable or uninstall themes straight
-                  | from OpenUserCSS without having to open the extension.
+              p Here's some info about what you can do with {{extension.name}}:
+              .content
+                ul
+                  li(v-if="extension.capabilities.includes('install-usercss')")
+                    | Since this extension can handle the usercss format, you can
+                    | click "Install with {{extension.name}}" on a theme page to
+                    | install it.
+                  li(v-if="extension.capabilities.includes('configure-after-install')")
+                    | Once a theme is installed, you'll be able to configure it in your extension.
+                  li(v-if="extension.capabilities.includes('configure-before-install')")
+                    | You'll be able to configure themes before installing them.
+                  li(v-if="extension.capabilities.includes('create-usercss') && extension.capabilities.includes('builtin-editor')")
+                    | You can create usercss compliant themes easily with this extension using its builtin code editor.
+                  li(v-if="extension.capabilities.includes('edit-usercss') && extension.capabilities.includes('builtin-editor')")
+                    | You can edit already installed themes with this extension using its builtin code editor.
+                  li(v-if="extension.capabilities.includes('import-moz-export')")
+                    | You can import themes that user the @moz- export format.
+                  li(v-if="extension.capabilities.includes('export-moz-export')")
+                    | You can export themes into the @moz- format.
+                  li(v-if="extension.capabilities.includes('update-manual')")
+                    | {{extension.name}} includes an update checker button that lets
+                    | you update installed themes easily.
+                  li(v-if="extension.capabilities.includes('update-auto')")
+                    | {{extension.name}} will check for updates for your themes
+                    | and apply them automatically when available.
+                  li(v-if="extension.capabilities.includes('export-json-backups')")
+                    | You can export your installed themes into a JSON formatted file
+                    | for safety.
+                  li(v-if="extension.capabilities.includes('import-json-backups')")
+                    | You can import your JSON backups into the extension to restore
+                    | what you backed up.
+                  li(v-if="extension.capabilities.includes('manage-local')")
+                    | You can view a list of installed themes in the extension and
+                    | disable, enable, edit or uninstall them.
+                  li(v-if="extension.capabilities.includes('search-remote')")
+                    | You can search for themes on websites without having to leave
+                    | the extension.
+                  li(v-if="extension.capabilities.includes('query-api')")
+                    | You can see a list of your installed themes straight
+                    | from OpenUserCSS without having to open the extension.
+                  li(v-if="extension.capabilities.includes('mutate-api')")
+                    | You can disable, enable or uninstall themes straight
+                    | from OpenUserCSS without having to open the extension.
 
-        .box.is-warning(v-show="!extension")
-          fa-icon.is-inline.has-margin-horizontal(icon="exclamation")
-          div.is-inline
-            a(href="https://add0n.com/stylus.html", target="_blank", rel="nofollow noopener")
-             | You don't seem to have a compatible extension installed,
-             | or an error occurred.
-             | Click here to install Stylus to be able to use themes!
+            .box.is-warning(v-else)
+              fa-icon.is-inline.has-margin-horizontal(icon="exclamation")
+              div.is-inline
+                a(href="https://add0n.com/stylus.html", target="_blank", rel="nofollow noopener")
+                  | You don't seem to have a compatible extension installed,
+                  | or an error occurred.
+                  | Click here to install Stylus to be able to use themes!
 
-        hr
+            hr
         .content
           p
             | For further help, please drop us a line&nbsp;
             a.has-text-primary(href="//forums.openusercss.org", target="_blank") on our community forums
             | , or visit&nbsp;
             nuxt-link.has-text-primary(to="/contact") the contact page
-
-
-    ouc-footer
 </template>
