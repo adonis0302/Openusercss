@@ -6,6 +6,10 @@
   height: 100% !important;
 }
 
+.is-backgroundless {
+  background: transparent !important;
+}
+
 .is-thin {
   font-weight: 300 !important;
 }
@@ -32,8 +36,28 @@
   text-overflow: ellipsis;
 }
 
+.is-circular {
+  border-radius: 50%;
+}
+
 .is-unselectable {
   user-select: none;
+}
+
+.is-vcentered {
+  display: flex;
+  align-items: center;
+}
+
+.is-hcentered {
+  display: flex;
+  justify-content: center;
+}
+
+.has-indicator {
+  > :nth-child(2) {
+    margin-top: -1rem;
+  }
 }
 
 .is-fullbleed {
