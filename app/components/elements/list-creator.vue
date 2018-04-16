@@ -98,9 +98,9 @@
 
     br
     .ouc-list-creator-object-item(v-if="supportObjects")
-      button.button.is-primary(v-if="!listFull", @click="addObject", type="button") Add object {{itemName}}
+      button.button.is-brand-primary(v-if="!listFull", @click="addObject", type="button") Add object {{itemName}}
 
     .tile.ouc-list-creator-array-item.is-parent.is-paddingless(v-else)
       .tile.is-child
-        button.button.is-primary(v-if="!listFull", @click="addItem", type="button") Add {{itemName}}
+        button.button.is-brand-primary(v-if="!listFull", @click="addItem", type="button") Add {{itemName}}
 </template>
