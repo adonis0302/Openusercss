@@ -51,10 +51,10 @@
         this.timer = setInterval(() => {
           setTimeout(() => {
             if (this.loading) {
-              this.increase(Math.floor(Math.random() * 5))
+              this.increase(Math.floor(Math.random() * 6))
             }
-          }, Math.random() * 400)
-        }, 400)
+          }, Math.random() * 600)
+        }, 600)
 
         setTimeout(() => {
           if (this.loading) {
@@ -78,9 +78,7 @@
 </script>
 
 <style lang="scss" scoped>
-  @import 'node_modules/bulma/sass/utilities/initial-variables';
-  @import '../../scss/autocolor';
-  @import '../../scss/variables';
+  @import '../../scss/component';
 
   @keyframes Gradient {
   	0% {
