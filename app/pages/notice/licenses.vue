@@ -101,7 +101,7 @@
                       br
                       | {{license.license}}
                   .level-right(v-if="license.sourceText")
-                    button.button.is-secondary(@click.prevent="open(index)")
+                    button.button.is-brand-secondary.is-borderless(@click.prevent="open(index)")
                       | View full license text
                   .level-right(v-if="!license.sourceText && license.source")
                     p Source: {{license.source}}

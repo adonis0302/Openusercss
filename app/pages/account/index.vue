@@ -156,13 +156,13 @@
             | but you're not logged in.
           br
           p
-            nuxt-link.button.is-primary(to="/login") Click here to do so
+            nuxt-link.button.is-brand-primary(to="/login") Click here to do so
 
         no-ssr
           form.ouc-logged-in(v-if="viewer", @submit.prevent="submitAccount")
             .tile.is-parent.is-paddingless
               .tile.is-child
-                button.button.is-primary.is-pulled-right(
+                button.button.is-brand-primary.is-pulled-right(
                   type="submit",
                   :disabled="!this.editingCount",
                   :class="{'is-loading': loading}"
@@ -194,7 +194,7 @@
                     br
                     .tile
                       .tile.is-child
-                        button.button.is-primary(
+                        button.button.is-brand-primary(
                           type="button",
                           :class="{'is-loading': loading}",
                           @click="resendVerification",

@@ -3,7 +3,6 @@
 
   import notification from '~/components/elements/notification.vue'
   import bInput from '~/components/bits/b-input.vue'
-  import progressiveImage from '~/components/bits/progressive-image.vue'
   import imageCarousel from '~/components/elements/image-carousel.vue'
 
   import spdxList from '~/../lib/spdx-license-list'
@@ -24,7 +23,6 @@
       notification,
       bInput,
       starRating,
-      progressiveImage,
       imageCarousel,
     },
     data () {
@@ -224,11 +222,6 @@
     padding-left: .6rem;
     padding-right: .6rem;
     white-space: nowrap;
-  }
-
-  .is-vcentered {
-    display: flex;
-    align-items: center;
   }
 </style>
 

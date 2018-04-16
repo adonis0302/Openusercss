@@ -328,7 +328,7 @@
                     @click="$modal.show('raw-viewer')"
                   ) View parsed format
 
-                  button.button.is-primary(
+                  button.button.is-brand-primary(
                     type="submit",
                     :class="{'is-loading': loading}"
                   ) Save theme
@@ -469,7 +469,7 @@
                 fa-icon(icon="exclamation")
                 | {{optionsWarning}}
 
-              button.button.is-primary(type="button", @click="addVariable")
+              button.button.is-brand-primary(type="button", @click="addVariable")
                 | Add variable
 
               editor.has-margin-top#theme-options-input(

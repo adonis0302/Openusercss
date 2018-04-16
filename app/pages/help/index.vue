@@ -44,7 +44,7 @@
         no-ssr
           div
             div(v-if="extension")
-              .box.is-primary
+              .box.is-brand-primary
                 fa-icon.is-inline(icon="puzzle-piece")
                 p.is-inline(v-if="extension.version")
                   | Detected extension: {{extension.name}}, version {{extension.version}}. You're good to go!
