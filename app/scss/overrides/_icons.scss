@@ -1,0 +1,9 @@
+*:not(.button) {
+  > .svg-inline--fa {
+    margin-right: .5rem;
+  }
+}
+
+.icon.svg-inline--fa {
+  padding: .66rem;
+}

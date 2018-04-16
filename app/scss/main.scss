@@ -6,8 +6,7 @@
 @import 'node_modules/izitoast/dist/css/iziToast';
 @import 'node_modules/@riophae/vue-treeselect/dist/vue-treeselect.min';
 
-@import './autocolor';
-@import './variables';
+@import './component';
 
 @import 'node_modules/bulma/sass/utilities/all';
 @import 'node_modules/bulma/sass/base/all';
@@ -16,10 +15,5 @@
 @import 'node_modules/bulma/sass/elements/all';
 @import 'node_modules/bulma/sass/components/all';
 
-@import './compat';
-@import './fonts';
-@import './styles';
-@import './page-transitions';
-@import './toast';
-@import './reboot';
-@import './export';
+@import './overrides/all';
+@import './components/all';

@@ -1,0 +1,32 @@
+@for $i from 1 through 6 {
+  h#{$i} {
+    font-family: 'Nunito';
+    font-size: responsive;
+    max-font-size: ((10px - $i * 4) + 30px);
+    min-font-size: ((11px - $i * 4) + 25px);
+  }
+}
+
+p,
+a,
+li,
+ul {
+  font-family: 'Nunito';
+  font-size: responsive;
+  line-height: 22px;
+  max-font-size: 16.5px;
+  min-font-size: 15px;
+  text-decoration: none;
+}
+
+@font-face {
+    font-family: 'Nunito';
+    font-weight: 400;
+    src: url('../fonts/Nunito.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Nunito';
+    font-weight: 700;
+    src: url('../fonts/Nunito-Bold.woff') format('woff');
+}

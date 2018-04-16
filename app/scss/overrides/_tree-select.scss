@@ -1,0 +1,13 @@
+.vue-treeselect {
+  z-index: 100;
+}
+
+.vue-treeselect__control {
+  border-radius: 0;
+  border: none;
+  height: 33px;
+}
+
+.vue-treeselect__menu {
+  border-radius: 0 !important;
+}

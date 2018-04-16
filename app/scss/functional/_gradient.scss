@@ -1,0 +1,8 @@
+@mixin brand-gradient(
+  $from: map-get($tones, 'brand-dark'),
+  $to: map-get($tones, 'brand-primary'),
+  $brush: 100%,
+  $center: 50%
+) {
+  background: linear-gradient(130deg, $from $center - $brush / 2, $to $center + $brush / 2);
+}

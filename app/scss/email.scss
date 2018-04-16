@@ -1,13 +1,11 @@
 @charset 'UTF-8';
 
-@import './autocolor';
-@import './variables';
 @import 'node_modules/css-reset-and-normalize-sass/scss/flavored-reset-and-normalize';
 @import 'node_modules/md-shadows/md-shadows';
 
-@import './compat';
-@import './styles';
-@import './reboot';
+@import './component';
+@import './overrides/all';
+@import './components/all';
 
 $background: map-get($colors, 'background');
 

@@ -1,0 +1,9 @@
+#__layout > div {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  > *:not(:last-child):not(:first-child) {
+    flex: 1
+  }
+}

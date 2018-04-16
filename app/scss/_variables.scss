@@ -27,7 +27,7 @@ $tones: (
 );
 
 $layout: (
-  "base-size":    6rem,
+  "base-size":    5.5rem,
   "radius-small": 0,
   "radius":       0,
   "radius-large": 0,
@@ -64,8 +64,6 @@ $colors: (
   'paypal':       (map-get($tones, 'paypal'),           text-for-bg(map-get($tones, 'paypal'))),
   'patreon':      (map-get($tones, 'patreon'),          text-for-bg(map-get($tones, 'patreon')))
 );
-
-$brand-background: linear-gradient(130deg, map-get($tones, 'brand-dark'), map-get($tones, 'brand-primary'));
 
 $kerning: (
   'size-1':        map-get($layout, 'base-size'),

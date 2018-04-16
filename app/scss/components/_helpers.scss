@@ -1,0 +1,63 @@
+.is-borderless {
+  border: 0 !important;
+}
+
+.fullheight {
+  height: 100% !important;
+}
+
+.is-thin {
+  font-weight: 300 !important;
+}
+
+.is-normal {
+  font-weight: 400 !important;
+}
+
+.is-bold {
+  font-weight: 600 !important;
+}
+
+.is-extra-bold {
+  font-weight: 700 !important;
+}
+
+.is-borderless {
+  border: 0 !important;
+}
+
+.is-ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.is-unselectable {
+  user-select: none;
+}
+
+.is-fullbleed {
+  height: 100%;
+  margin: 0;
+  width: 100%;
+}
+
+.is-full-centered {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.has-bottom-margin:not(:last-child) {
+  margin-bottom: 1.5rem;
+}
+
+.has-text-reversed {
+  unicode-bidi: bidi-override;
+  direction: rtl;
+}
+
+.is-flex {
+  display: flex
+}
