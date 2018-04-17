@@ -62,6 +62,17 @@
       ...mapGetters({
         'viewer': 'session/viewer',
       }),
+      viewingOwn () {
+        if (!this.viewer) {
+          return false
+        }
+
+        if (this.viewer._id === this.$route.params.id) {
+          return true
+        }
+
+        return false
+      },
       user () {
         return this.$store.getters['users/all'].find((user) => user._id === this.$route.params.id)
       },
@@ -138,7 +149,19 @@
                   | Support {{user.displayname}}'s themes by donating
                 hr
 
-              .columns.is-multiline
+              .columns.is-multiline(v-if="viewingOwn")
+                nuxt-link.column.is-12(
+                  v-for="(theme, index) in themes",
+                  :key="theme._id",
+                  :to="'/theme/' + theme._id"
+                )
+                  +theme-microdata
+                  .box
+                    .level
+                      b {{theme.title}}
+                      p Created {{theme.createdAt | moment('Do MMMM YYYY')}}
+
+              .columns.is-multiline(v-else)
                 nuxt-link.column.is-6(
                   v-for="(theme, index) in themes",
                   :key="theme._id",
