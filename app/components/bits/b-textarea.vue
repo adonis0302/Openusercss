@@ -6,13 +6,13 @@
     ],
     mounted () {
       if (this.lazy) {
-        this.$el.onchange = () => {
+        this.$el.addEventListener('change', () => {
           this.$emit('input', this.$el.value)
-        }
+        })
       } else {
-        this.$el.oninput = () => {
+        this.$el.addEventListener('input', () => {
           this.$emit('input', this.$el.value)
-        }
+        })
       }
     },
   }

@@ -68,7 +68,7 @@
       $image.src = this.src
       $image.classList.add('is-invisible')
 
-      $image.onload = () => {
+      $image.addEventListener('load', () => {
         if (this.raw) {
           this.$refs.raw.src = this.src
           this.rawStyle.filter = ''
@@ -78,7 +78,7 @@
         }
 
         $image.remove()
-      }
+      })
 
       if (this.raw) {
         this.$refs.raw.append($image)

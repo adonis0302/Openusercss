@@ -90,7 +90,7 @@ const attachHandshakeListeners = () => {
           }
         })
 
-        if (missingFeatures.length) {
+        if (missingFeatures.length > 0) {
           throw new Error([
             `${response.extension.name} ${response.extension.version} is not capable of the following features:`,
             `${missingFeatures.join('\n')}`,
