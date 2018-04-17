@@ -223,6 +223,15 @@
     padding-right: .6rem;
     white-space: nowrap;
   }
+
+  .extension-icon {
+    height: 1rem;
+    width: 1rem;
+    background-size: contain;
+    background-position: center center;
+    background-repeat: no-repeat;
+    margin-right: .25rem;
+  }
 </style>
 
 <template lang="pug">
@@ -295,27 +304,31 @@
             .level-left.is-marginless
               h1 {{theme.title}}
             .level-right
-              .tile.is-parent.is-paddingless
+              .tile.is-parent.is-paddingless.is-brand-primary
                 .tile.is-child(v-show="viewer && user._id === viewer._id")
                   .content.is-marginless.is-pulled-right
                     button.button.is-danger(@click="confirmDeleteTheme") Delete theme
                 .tile.is-child(v-show="viewer && user._id === viewer._id")
                   .is-marginless.is-pulled-right
-                    nuxt-link.button.is-primary(:to="'/theme/edit/' + theme._id") Edit theme
+                    nuxt-link.button.is-primary.is-backgroundless(:to="'/theme/edit/' + theme._id") Edit theme
                 .tile
                   .tile.is-child
                     .content.is-marginless.is-pulled-right
-                      div(v-if="canDoEventInstall && extension")
-                        button.button.is-primary(
-                          @click="installThemeEvent",
-                          v-if="extension.capabilities.includes('event:install-usercss')"
-                        )
-                          div Install with {{extension.name}}
-                      a.button.is-primary(
+                      a.button.is-primary.is-backgroundless(
                         :href="installLink",
                         target="_blank",
-                        v-if="!canDoEventInstall"
                       ) Install as usercss
+
+              | &nbsp;
+              .tile.is-parent.is-paddingless(v-if="canDoEventInstall && extension")
+                .tile
+                  .tile.is-child
+                    button.button.is-brand-primary(
+                      @click="installThemeEvent",
+                      v-if="extension.capabilities.includes('event:install-usercss')"
+                    )
+                      .extension-icon(:style="{'background-image': 'url(' + extension.icon + ')'}")
+                      | Install with {{extension.name}}
 
           .columns
             .column.is-6
@@ -330,9 +343,10 @@
                         .level.is-marginless
                           .level-left
                             nuxt-link(:to="'/profile/' + user._id")
-                              button.button.is-primary
+                              button.button.is-brand-primary
                                 p Visit {{theme.user.displayname}}'s profile
-                            button.button.is-primary(
+                            | &nbsp;
+                            button.button.is-grey-light(
                               @click="viewSource"
                             ) View source
                         br
