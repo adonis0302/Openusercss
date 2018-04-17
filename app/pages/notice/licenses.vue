@@ -71,29 +71,31 @@
       .section
         .content
           h1 Open Source licenses
-          h5
+          p.is-marginless
             | OpenUserCSS uses open source packages provided by the awesome
             | developer community.
-            br
-            | This page lists non-permissively licensed packages.&nbsp;
-            a(
-              href="//github.com/OpenUserCSS/openusercss.org",
-              target="_blank"
-            ) Check out all packages on our GitHub page here.
+          a(
+            href="//github.com/OpenUserCSS/openusercss.org",
+            rel="noopener",
+            target="_blank"
+          )
+            p.has-text-primary
+              | This page lists non-permissively licensed packages.&nbsp;
+              | Check out all packages on our GitHub page here.
 
           hr
 
           .columns.is-multiline
             .column.is-4(v-for="(license, index) in licenses")
-              .box.bg-primary
-                p(v-if="!license.repository") {{license.package}}
-                a.bg-primary(
-                  v-if="license.repository",
-                  :href="license.repository",
-                  rel="noopener nofollow",
-                  target="_blank"
-                ) {{license.package}}
-                hr
+              .box.is-brand-primary
+                p(v-if="license.repository")
+                  a.has-text-white(
+                    :href="license.repository",
+                    rel="noopener nofollow",
+                    target="_blank"
+                  ) {{license.package}}
+                p(v-else) {{license.package}}
+
                 .level
                   .level-left
                     p

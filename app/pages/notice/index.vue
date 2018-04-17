@@ -31,8 +31,10 @@
             | &gt;
 
           hr
-          nuxt-link(to="/notice/licenses")
-            .button.is-primary View Open Source licenses
-          nuxt-link(to="/notice/applied-licenses")
-            .button.is-primary About theme licenses
+          .level
+            .is-brand-primary
+              nuxt-link(to="/notice/licenses")
+                .button.is-primary.is-backgroundless View Open Source licenses
+              nuxt-link(to="/notice/applied-licenses")
+                .button.is-primary.is-backgroundless About theme licenses
 </template>
