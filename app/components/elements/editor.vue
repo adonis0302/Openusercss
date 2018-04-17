@@ -92,7 +92,9 @@
     color: $black;
     height: 400px;
 
-    span {
+    * {
+      font-family: monospace !important;
+      line-height: 12px;
       font-size: 12px !important;
     }
 
