@@ -185,6 +185,7 @@
                         .control
                           b-input(
                             name="email",
+                            autocomplete="email",
                             v-model="account.email",
                             :disabled="!editing.email",
                             placeholder="E-mail address"
@@ -212,6 +213,7 @@
                         b-input(
                           name="password",
                           type="password",
+                          autocomplete="new-password",
                           v-model="account.password",
                           :disabled="!editing.password",
                           placeholder="Passphrase",
@@ -225,6 +227,7 @@
                         b-input(
                           name="passwordVerify",
                           type="password",
+                          autocomplete="new-password",
                           v-model="account.passwordVerify",
                           :disabled="!editing.password",
                           placeholder="Passphrase verification",
