@@ -6,6 +6,7 @@
   "plugins": [
     "html",
     "vue",
+    "unicorn",
     "security",
     "async",
     "ava"
@@ -13,6 +14,7 @@
   "extends": [
     "standard",
     "nodesecurity",
+    "plugin:unicorn/recommended",
     "plugin:vue/base"
   ],
   "globals": {
