@@ -168,7 +168,7 @@
                   :to="'/theme/' + theme._id"
                 )
                   +theme-microdata
-                  +theme-card
+                  +theme-card(true)
                     //- TODO: Get install count!
                     p.subtitle Installs: {{parseInt(Math.random() * 100, 10)}}
 </template>

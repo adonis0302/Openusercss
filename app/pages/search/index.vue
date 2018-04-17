@@ -158,6 +158,6 @@
                 :to="'/theme/' + theme._id"
               )
                 +theme-microdata
-                +theme-card
+                +theme-card(true)
                   span
 </template>

@@ -74,7 +74,7 @@
                   :key="theme._id",
                   :to="'/theme/' + theme._id"
                 )
-                  +theme-card
+                  +theme-card(true)
                     .media
                       .media-left
                         figure.image.is-48x48
@@ -97,7 +97,7 @@
                   :key="theme._id",
                   :to="'/theme/' + theme._id"
                 )
-                  +theme-card
+                  +theme-card(true)
                     .media
                       .media-left
                         figure.image.is-48x48

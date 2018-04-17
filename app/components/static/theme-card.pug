@@ -1,31 +1,32 @@
-mixin theme-card
+mixin theme-card(hasImage)
   .card
     .card-header
       p.card-header-title
         | {{theme.title}}
-    .card-image
-      figure.image
-        progressive-image(
-          :src="proxyImage(theme.screenshots[0]).large",
-          :placeholder="proxyImage(theme.screenshots[0]).small",
-          width="100%",
-          height="8rem",
-          size="cover"
-        )
-          .ouc-screenshot-overlay(slot="overlay")
-            .tile.is-parent
-              .tile.is-child
-                no-ssr
-                  star-rating.is-pulled-right(
-                    :rating="averageRating(theme.ratings)",
-                    :star-size="15",
-                    :show-rating="false",
-                    :read-only="true",
-                    active-color="#FFB450",
-                    inactive-color="#FFFFFF",
-                    border-color="#FFFFFF",
-                    :border-width="2"
-                  )
+    if hasImage
+      .card-image
+        figure.image
+          progressive-image(
+            :src="proxyImage(theme.screenshots[0]).large",
+            :placeholder="proxyImage(theme.screenshots[0]).small",
+            width="100%",
+            height="8rem",
+            size="cover"
+          )
+            .ouc-screenshot-overlay(slot="overlay")
+              .tile.is-parent
+                .tile.is-child
+                  no-ssr
+                    star-rating.is-pulled-right(
+                      :rating="averageRating(theme.ratings)",
+                      :star-size="15",
+                      :show-rating="false",
+                      :read-only="true",
+                      active-color="#FFB450",
+                      inactive-color="#FFFFFF",
+                      border-color="#FFFFFF",
+                      :border-width="2"
+                    )
 
     if block
       .card-content
