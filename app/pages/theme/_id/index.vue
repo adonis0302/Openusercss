@@ -11,6 +11,41 @@
   import hat from 'hat'
   import {mapGetters,} from 'vuex'
   import {stringify,} from 'parse-usercss'
+  import assert from 'assert'
+  import delay from 'delay'
+
+  const msgExtension = ({method, responseMethod, payload, hasKey,}) => new Promise((resolve, reject) => {
+    assert(typeof method === 'string', 'Argument "method" must be a string')
+    assert(typeof responseMethod === 'string', 'Argument "responseMethod" must be a string')
+    assert(typeof payload === 'object', 'Argument "payload" must be a string')
+
+    const key = hat()
+    const callbackHandler = (event) => {
+      if (event.data && event.data.type === responseMethod) {
+        window.removeEventListener('message', callbackHandler)
+
+        if (event.data.key !== key && hasKey) {
+          const error = new Error([
+            'Extension didn\'t pass the key back correctly',
+            'Event data:',
+            JSON.stringify(event.data, null, 4),
+          ].join('\n'))
+
+          raven.captureException(error)
+          throw error
+        }
+
+        resolve(event.data)
+      }
+    }
+
+    window.addEventListener('message', callbackHandler)
+    window.postMessage({
+      ...payload,
+      'type': method,
+      key,
+    }, '*')
+  })
 
   export default {
     fetch ({store, app, route,}) {
@@ -143,33 +178,8 @@
           },
         })
       },
-      installThemeEvent () {
+      async installThemeEvent () {
         try {
-          const self = this
-          const key = hat()
-
-          const callbackHandler = (event) => {
-            if (event.data && event.data.type === 'ouc-install-callback') {
-              window.removeEventListener('message', callbackHandler)
-
-              if (event.data.key !== key) {
-                const error = new Error(`${this.extension.name} didn't pass the key back correctly`)
-
-                raven.captureException(error)
-                self.$toast.error(error.message, 'Theme installation failed')
-
-                throw error
-              }
-
-              self.$toast.success(
-                `${this.theme.title} was installed by ${this.extension.name} successfully`,
-                'Theme installed',
-              )
-            }
-          }
-
-          console.log(JSON.stringify(this.theme.variables, null, 4))
-
           /* eslint-disable-next-line prefer-template */
           const rendered = stringify({
             'name':         this.theme.title,
@@ -185,14 +195,52 @@
             'alignKeys': true,
           }) + `\n\n${this.theme.content}\n`
 
-          window.addEventListener('message', callbackHandler)
-          window.postMessage({
-            'type':  'ouc-install-usercss',
-            'title': this.theme.title,
-            'code':  rendered,
-            key,
-          }, '*')
+          const sent = await msgExtension({
+            'hasKey':         true,
+            'method':         'ouc-install-usercss',
+            'responseMethod': 'ouc-install-callback',
+            'payload':        {
+              'title': this.theme.title,
+              'code':  rendered,
+            },
+          })
+
+          const checkp = msgExtension({
+            'hasKey':         false,
+            'method':         'ouc-is-installed',
+            'responseMethod': 'ouc-is-installed-response',
+            'payload':        {
+              'name':      this.theme.title,
+              'namespace': `https://openusercss.org/theme/${this.theme._id}`,
+            },
+          })
+          const waitp = delay(200)
+          const result = await Promise.race([
+            checkp,
+            waitp,
+          ])
+
+          assert(
+            typeof result === 'object',
+            `${this.extension.name} returned non-object value or has failed to respond in 200ms`
+          )
+          assert(
+            result.style.enabled === true,
+            `${this.extension.name} was unable to install ${this.theme.title}`
+          )
+
+          this.$toast.success(
+            `${this.theme.title} was installed by ${this.extension.name} successfully`,
+            'Theme installed',
+          )
+
+          return {
+            ...sent,
+            ...result,
+          }
         } catch (error) {
+          this.$toast.error(error.message, 'Theme installation failed')
+
           // eslint-disable-next-line no-console
           console.error(error)
           raven.captureException(error)
