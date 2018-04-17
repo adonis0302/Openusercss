@@ -121,6 +121,9 @@ $warning:   map-get($colors, 'warning');
 $text: nth(map-get($colors, 'body'), 2);
 $link: nth(map-get($colors, 'body'), 2);
 
+$body-line-height: map-get($layout, 'base-size') / 3;
+$content-heading-line-height: map-get($layout, 'base-size') / 3;
+
 $family-primary: 'Nunito';
 $family-code: $family-primary;
 
