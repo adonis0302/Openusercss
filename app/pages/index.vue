@@ -111,5 +111,5 @@
                       .media-content
                         p.title.is-7 {{theme.user.displayname}}
                         //- TODO: Get install count!
-                        p.subtitle {{parseInt(Math.random() * 100, 10)}} installs
+                        //- p.subtitle {{parseInt(Math.random() * 100, 10)}} installs
 </template>
