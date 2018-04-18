@@ -1,4 +1,3 @@
-import devtools from 'postcss-devtools'
 import rucksack from 'rucksack-css'
 import flexibility from 'postcss-flexibility'
 import fixes from 'postcss-fixes'
@@ -15,7 +14,6 @@ const customPreset = advancedPreset({
 })
 
 export const postCssPluginsFunctional = [
-  devtools(),
   // Syntax extending plugins
   rucksack({
     'autoprefixer':      false,

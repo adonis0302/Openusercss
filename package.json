@@ -136,7 +136,6 @@
     "nuxt-matomo": "^0.5.0",
     "nyc": "^11.4.1",
     "pleeease": "^4.3.0",
-    "postcss-devtools": "^1",
     "postcss-ellipsis": "^1",
     "postcss-fixes": "^2",
     "postcss-flexibility": "^2",
