@@ -2,6 +2,7 @@ import bcrypt from 'bcryptjs'
 import log from 'chalk-console'
 import raven from 'raven'
 import jwt from 'jsonwebtoken'
+import moment from 'moment'
 import {
   sendEmail,
 } from '../../email/mailer'
@@ -24,12 +25,15 @@ const createSendEmail = async ({email, displayname,}) => {
     link = `http://localhost:5010/account/verify-email/${token}`
   }
 
+  const expires = moment().add(1, 'days').format('MMMM Do, HH:mm ZZ')
+
   const result = await sendEmail({
     'to':       email,
     'template': 'email-verification-initial',
     'locals':   {
       displayname,
       link,
+      expires,
     },
   })
 

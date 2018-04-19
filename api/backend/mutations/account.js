@@ -124,18 +124,17 @@ export default async (root, {email, password, displayname, bio, donationUrl,}, {
 
   // Only send notification emails if saving was successful
   if (password) {
-    sendEmail({
+    await sendEmail({
       user,
       oldUser,
       'email': user.email,
     }, {
       'template': 'password-changed',
     })
-    .catch(raven.captureException)
   }
 
   if (displayname) {
-    sendEmail({
+    await sendEmail({
       user,
       oldUser,
       'newDisplayname': displayname,
@@ -143,20 +142,18 @@ export default async (root, {email, password, displayname, bio, donationUrl,}, {
     }, {
       'template': 'username-changed',
     })
-    .catch(raven.captureException)
   }
 
   if (email) {
-    sendEmail({
+    await sendEmail({
       'email': user.email,
       user,
       oldUser,
     }, {
       'template': 'email-reverification-previous',
     })
-    .catch(raven.captureException)
 
-    sendEmail({
+    await sendEmail({
       user,
       oldUser,
       email,
@@ -164,18 +161,16 @@ export default async (root, {email, password, displayname, bio, donationUrl,}, {
     }, {
       'template': 'email-reverification-next',
     })
-    .catch(raven.captureException)
   }
 
-  if (donationUrl && user.donationUrl !== oldUser.donationUrl) {
-    sendEmail({
+  if (donationUrl) {
+    await sendEmail({
       'email': user.email,
       user,
       oldUser,
     }, {
       'template': 'donation-link-changed',
     })
-    .catch(raven.captureException)
   }
 
   return savedUser

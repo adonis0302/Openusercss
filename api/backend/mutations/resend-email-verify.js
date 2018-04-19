@@ -1,6 +1,7 @@
 import mustAuthenticate from '../../../lib/enforce-session'
 import staticConfig from '../../../lib/config'
 import jwt from 'jsonwebtoken'
+import moment from 'moment'
 import {
   sendEmail,
 } from '../../email/mailer'
@@ -21,12 +22,15 @@ const createSendEmail = async ({email, displayname,}) => {
     link = `http://localhost:5010/account/verify-email/${token}`
   }
 
+  const expires = moment().add(1, 'days').format('MMMM Do, HH:mm ZZ')
+
   const result = await sendEmail({
     'to':       email,
     'template': 'email-verification-request',
     'locals':   {
       displayname,
       link,
+      expires,
     },
   })
 
@@ -42,14 +46,12 @@ export default async (root, options, {Session, token,}) => {
 
   const result = await createSendEmail(session.user)
 
-  if (process.env.NODE_ENV === 'production') {
-    if (!result.accepted) {
-      throw new Error('email-not-accepted')
-    }
+  if (!result.accepted) {
+    throw new Error('email-not-accepted')
+  }
 
-    if (result.accepted[0] !== session.user.email) {
-      throw new Error(result.accepted)
-    }
+  if (result.accepted[0] !== session.user.email) {
+    throw new Error(result.accepted)
   }
 
   return true
