@@ -1,0 +1,17 @@
+extends ../textonly
+
+block title
+  | Changed account details
+
+block content
+  | Your username has been changed from #{oldUser.displayname} to #{user.displayname}.
+  |
+  | There is no need for verification, but if you didn't do this,
+  | your account was logged into by someone you shouldn't trust.
+  |
+  | To reset your passphrase, please go to https://openusercss.org/account
+  |
+  | Your new alias shall rise!
+
+block reason
+  | someone (hopefully you) changed your username

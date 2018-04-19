@@ -1,0 +1,25 @@
+extends ../textonly
+
+block title
+  | Welcome to OpenUserCSS!
+
+block content
+  | Your account has been created, but you must confirm
+  | this e-mail before being able to upload themes.
+  |
+  | This URL is valid for one day (until #{expires}).
+  |
+  | If it expires, please log in and request a new verification e-mail from
+  | your account page!
+  |
+  | Open this URL in your browser to verify your address: #{link}
+  |
+  | To get started, you can visit these pages:
+  | - Browse themes: https://openusercss.org
+  | - Search themes: https://openusercss.org/search
+  | - Talk or ask questions: https://forums.openusercss.org
+  |
+  | #{signoff}
+
+block reason
+  | someone (hopefully you) registered an account with your e-mail address

@@ -1,56 +1,35 @@
 extends ../main
 
-block page
-  .container
-    .section
-      .logo
-        img(src="https://openusercss.org/img/openusercss.icon-x64.png")
-    .section
-      .has-text-centered
-        p
-          span.size-h2 Your e-mail address has been changed
-    .section
-      .has-text-left
-        p
-          | The e-mail address associated with your OpenUserCSS account has
-          | been changed to this one, but you must confirm
-          | this e-mail before being able to upload themes.
-    .section
-      .has-text-left
-        p
-          | If you did this by mistake or changed your mind, you need to change
-          | your address back and request a verification e-mail.
-    .section
-      .has-text-left
-        p
-          | If you didn't make this change, someone has gotten into your
-          | OpenUserCSS account. In this case, you should change your password
-          | immediately.
+block title
+  | Account details changed - E-mail address
 
-    .section
-      a.button.has-bottom-margin(href=link)
-        .card.has-text-centered.md-shadow--3.is-primary
-          p.size-h2 Verify
+block content
+  +row
+    p.
+      The e-mail address associated with your OpenUserCSS account has
+      been changed to this one, but you must confirm
+      this e-mail before being able to upload themes.
 
-    .section
-      .has-text-right
-        p May the byte of bytes lead your way!
+  +row
+    p.
+      If you did this by mistake or changed your mind, you need to change
+      your address back and request a verification e-mail.
 
-    hr
-    .section
-      .has-text-left.has-text-small
-        p
-          | In case you can't see the link to click on, copy and paste
-          | this into your browser's URL bar: #{link}
-    .section
-      .has-text-left.has-text-small
-        p
-          | You've received this e-mail because someone changed
-          | your e-mail address on&nbsp;
-          a(href="https://openusercss.org") OpenUserCSS
-          | .
-        br
-        p
-          | To write a message, visit&nbsp;
-          a(href="https://openusercss.org/contact") the contact page
-          | !
+  +row
+    p.
+      If you didn't make this change, someone has gotten into your
+      OpenUserCSS account. In this case, you should change your password
+      immediately.
+
+  +row.has-padding-vertical-2(align="center")
+    a.button.is-brand-primary.has-padding-1.has-text-white(href=link)
+      | Verify
+
+  +row(align="right")
+    | #{signoff}
+
+block footer
+  +link-fallback(link)
+
+block reason
+  | someone (hopefully you) changed your e-mail address

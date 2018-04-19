@@ -1,0 +1,20 @@
+extends ../textonly
+
+block title
+  | Account verification
+
+block content
+  | You've requested that we resend this verification e-mail, so here it is.
+  |
+  | If you didn't request your address to be verified, someone has accessed your
+  | account without your permission. In this case, you should reset your password
+  | immediately.
+  |
+  | This URL is valid for one day (until #{expires}).
+  |
+  | Open this URL in your browser to verify your address: #{link}
+  |
+  | #{signoff}
+
+block reason
+  | someone requested an e-mail verification for your account

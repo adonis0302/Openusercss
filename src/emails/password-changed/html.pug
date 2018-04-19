@@ -1,43 +1,25 @@
 extends ../main
 
-block page
-  .container
-    .section
-      .logo
-        img(src="https://openusercss.org/img/openusercss.icon-x64.png")
-    .section
-      .has-text-centered
-        p
-          span.size-h2 Your passphrase was changed
-    .section
-      .has-text-left
-        p
-          | This is just a notification, that your passphrase on OpenUserCSS
-          | has been changed.
-    .section
-      .has-text-left
-        p
-          | There is no need for verification, but if you didn't do this,
-          | your account was logged into by someone you shouldn't trust.
-    .section
-      .has-text-left
-        p
-          a(href="https://openusercss.org/reset-passphrase")
-            | Click here if you want to reset your passphrase.
-    .section
-      .has-text-right
-        p Stay safe!
+block title
+  | Account details changed - Passphrase
 
-    hr
-    .section
-      .has-text-left.has-text-small
-        p
-          | You've received this e-mail because someone changed
-          | your passphrase on&nbsp;
-          a(href="https://openusercss.org") OpenUserCSS
-          | .
-        br
-        p
-          | To write a message, visit&nbsp;
-          a(href="https://openusercss.org/contact") the contact page
-          | !
+block content
+  +row
+    p.
+      Your passphrase has been changed.
+  
+  +row
+    p.
+      There is no need for verification, but if you didn't do this,
+      your account was logged into by someone you shouldn't trust.
+
+  +row
+    p
+      a(href="https://openusercss.org/account")
+        | Click here if you want to reset your passphrase.
+  
+  +row(align="right")
+    p Stay safe!
+
+block reason
+  | someone (hopefully you) changed your passphrase

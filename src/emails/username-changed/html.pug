@@ -1,43 +1,25 @@
 extends ../main
 
-block page
-  .container
-    .section
-      .logo
-        img(src="https://openusercss.org/img/openusercss.icon-x64.png")
-    .section
-      .has-text-centered
-        p
-          span.size-h2 Your username was changed
-    .section
-      .has-text-left
-        p
-          | This is just a notification, that your username on OpenUserCSS
-          | has been changed from #{oldUser.displayname} to #{user.displayname}.
-    .section
-      .has-text-left
-        p
-          | There is no need for verification, but if you didn't do this,
-          | your account was logged into by someone you shouldn't trust.
-    .section
-      .has-text-left
-        p
-          a(href="https://openusercss.org/reset-password")
-            | Click here if you want to reset your passphrase.
-    .section
-      .has-text-right
-        p Your new alias shall rise!
+block title
+  | Account details changed - Username
 
-    hr
-    .section
-      .has-text-left.has-text-small
-        p
-          | You've received this e-mail because someone changed
-          | your username on&nbsp;
-          a(href="https://openusercss.org") OpenUserCSS
-          | .
-        br
-        p
-          | To write a message, visit&nbsp;
-          a(href="https://openusercss.org/contact") the contact page
-          | !
+block content
+  +row
+    p.
+      Your username has been changed from #{oldUser.displayname} to #{user.displayname}.
+  
+  +row
+    p.
+      There is no need for verification, but if you didn't do this,
+      your account was logged into by someone you shouldn't trust.
+    
+  +row
+    p
+      a(href="https://openusercss.org/account")
+        | Click here if you want to reset your passphrase.
+  
+  +row(align="right")
+    p Your new alias shall rise!
+
+block reason
+  | someone (hopefully you) changed your username

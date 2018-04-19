@@ -1,50 +1,32 @@
 extends ../main
 
-block page
-  .container
-    .section
-      .logo
-        img(src="https://openusercss.org/img/openusercss.icon-x64.png")
-    .section
-      .has-text-centered
-        p
-          span.size-h2 Your e-mail address has been changed
-    .section
-      .has-text-left
-        p
-          | The e-mail address associated with your OpenUserCSS account has
-          | been changed to a different one.
-    .section
-      .has-text-left
-        p
-          | Please log into your new e-mail account and find the verification
-          | message you should just have gotten and click the link inside.
-    .section
-      .has-text-left
-        p
-          | If you did this by mistake or changed your mind, you need to change
-          | your address back and request a verification e-mail afterwards.
-    .section
-      .has-text-left
-        p
-          | If you didn't make this change, someone has gotten into your
-          | OpenUserCSS account. In this case, you should change your password
-          | immediately.
+block title
+  | Account details changed - E-mail address
 
-    .section
-      .has-text-right
-        p Tonight's sky is going to be crimson red!
+block content
+  +row
+    p.
+      The e-mail address associated with your OpenUserCSS account has
+      been changed to a different one.
+  
+  +row
+    p.
+      Please log into your new e-mail account and find the verification
+      message you should just have gotten and click the link inside.
 
-    hr
-    .section
-      .has-text-left.has-text-small
-        p
-          | You've received this e-mail because someone changed
-          | your e-mail address on&nbsp;
-          a(href="https://openusercss.org") OpenUserCSS
-          | .
-        br
-        p
-          | To write a message, visit&nbsp;
-          a(href="https://openusercss.org/contact") the contact page
-          | !
+  +row
+    p.
+      If you did this by mistake or changed your mind, you need to change
+      your address back and request a verification e-mail afterwards.
+
+  +row
+    p.
+      If you didn't make this change, someone has gotten into your
+      OpenUserCSS account. In this case, you should change your passphrase
+      immediately.
+
+  +row(align="right")
+    | #{signoff}
+
+block reason
+  | someone (hopefully you) changed your e-mail address

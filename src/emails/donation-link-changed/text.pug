@@ -1,0 +1,17 @@
+extends ../textonly
+
+block title
+  | Account details changed - Donation link
+
+block content
+  | The donation link on your OpenUserCSS account has
+  | been changed to #{user.donationUrl}.
+  |
+  | If you didn't make this change, someone has gotten into your
+  | OpenUserCSS account. In this case, you should change your password
+  | immediately.
+  |
+  | #{signoff}
+
+block reason
+  | someone (hopefully you) changed your donation link

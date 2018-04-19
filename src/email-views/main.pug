@@ -1,21 +1,70 @@
 mixin metas
   meta(http-equiv="x-ua-compatible", content="ie=edge")
   meta(charset="utf-8")
-  meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=no")
+  meta(name="viewport", content="width=device-width, initial-scale=1, shrink-to-fit=yes")
 
 mixin assets
   link(type="text/css", rel='stylesheet', href='/css/email.min.css')
 
-mixin frame
-  doctype html
-  html(lang="en").no-js
-    head
-      title OpenUserCSS
-      +metas
-      +assets
-      body
-        if block
-          block
+mixin row
+  table(border="0", cellpadding="0", cellspacing="0")
+    tbody
+      tr
+        td&attributes(attributes)
+          if block
+            block
 
-+frame
-  block page
+mixin link-fallback(url)
+  +row
+    | In case you can't see the link to click on, open this URL in your browser:
+  +row
+    pre.is-centered.link-holder.break-word #{url}
+
+doctype html
+html(lang="en").no-js
+  head
+    title OpenUserCSS
+    +metas
+    +assets
+    body
+      table#wrapper(
+        border="0",
+        cellpadding="0",
+        cellspacing="0",
+        width="100%"
+      )
+        tr
+          td.has-text-centered(align="center", valign="top")
+            img.has-padding-top-2(src="/img/openusercss.icon-x128.png", height="96", width="96")
+            h2.has-padding-bottom-1 OpenUserCSS
+
+            #title.has-padding-horizontal-1.has-padding-top-1
+              +row
+                h4
+                  block title
+
+            hr
+            #content.has-padding-horizontal-1
+              +row
+                h5 Hey #{displayname || user.displayname},
+
+              block content
+
+            hr
+            #footer.has-padding-horizontal-1
+              block footer
+
+              +row
+                | You've received this e-mail because&nbsp;
+                block reason
+                | &nbsp;on&nbsp;
+                a.has-text-white(href="https://openusercss.org")
+                  | OpenUserCSS
+                | .
+
+              +row
+                .has-padding-bottom-2
+                  | To write a message, please visit&nbsp;
+                  a.has-text-white(href="https://openusercss.org/contact")
+                    | the contact page
+                  | !

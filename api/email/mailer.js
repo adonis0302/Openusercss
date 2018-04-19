@@ -31,24 +31,23 @@ export const createTransport = async (transportOpts) => {
   return transport
 }
 
-export const createTestTransport = async () => {
-  const testAccount = await createTestAccount()
-  const transport = nodemailer.createTransport({
-    'host':   testAccount.smtp.host,
-    'port':   testAccount.smtp.port,
-    'secure': testAccount.smtp.secure,
-    'auth':   {
-      'user': testAccount.user,
-      'pass': testAccount.pass,
-    },
-  })
-
-  await verifyConnection(transport)
-  return transport
-}
+const staticSignoffs = [
+  'Shine like rainbows!',
+  'See you soon on the Internet!',
+  'The sky tonight is going to be crimson red!',
+  'May the byte of bytes lead your way!',
+  'Keep the code flowing!',
+  'The only universal justice in this world is cuteness!',
+  'Embrace your passion!',
+  'Oh, no! My keyboarasnodnbau9dsnbc',
+  '(1) update available. Contact local computer guy for details!',
+  'Kawaii!',
+  'H̀̀͢͝a̶̢͝͠v̸̵͟͝e͟͜ ̴͞͏a̴̢̨̕͡ ̷̸̸͟g҉̷ŗ̸̷̧͠e͟a̛͠t́͏̨ ̢d̶̡̕a͘̕͝͠y̵̶!̵̕͟͞',
+  'html * {display: none !important}',
+  'ɯɯɯɯɯɯɯɯɯɯɯɯɐʞᴉuoW ƃuᴉʞɔnℲ',
+]
 
 export const sendEmail = async ({to, template, locals,}) => {
-  let transport = null
   const config = await staticConfig()
   const transportOptions = {
     'host':       config.get('mail.smtp.host'),
@@ -60,15 +59,14 @@ export const sendEmail = async ({to, template, locals,}) => {
       'pass': config.get('mail.pass'),
     },
   }
+  const transport = await createTransport(transportOptions)
 
-  if (config.get('env') === 'development') {
-    transport = await createTestTransport()
-  } else {
-    transport = await createTransport(transportOptions)
-  }
+  const signoffs = staticSignoffs.concat([
+    `I'm ${process.uptime()} seconds old`,
+    `Process ${process.pid} sends its regards!`,
+  ])
 
   const resourcePath = path.resolve('./app/static')
-
   const email = new Email({
     'views': {
       'root': path.resolve('./build/emails'),
@@ -80,8 +78,8 @@ export const sendEmail = async ({to, template, locals,}) => {
         'relativeTo': resourcePath,
       },
     },
-    'send':    config.get('env') === 'production',
-    'preview': config.get('env') === 'development',
+    'send':    true,
+    'preview': false,
     'message': {
       'from': 'notifications@openusercss.org',
     },
@@ -90,7 +88,10 @@ export const sendEmail = async ({to, template, locals,}) => {
 
   return email.send({
     template,
-    locals,
+    'locals': {
+      'signoff': signoffs[Math.floor(Math.random() * signoffs.length)],
+      ...locals,
+    },
     'message': {
       to,
     },

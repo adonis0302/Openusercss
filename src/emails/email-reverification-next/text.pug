@@ -1,0 +1,23 @@
+extends ../textonly
+
+block title
+  | Account details changed - E-mail address
+
+block content
+  | The e-mail address associated with your OpenUserCSS account has
+  | been changed to this one, but you must confirm
+  | this e-mail before being able to upload themes.
+  |
+  | If you did this by mistake or changed your mind, you need to change
+  | your address back and request a verification e-mail.
+  |
+  | If you didn't make this change, someone has gotten into your
+  | OpenUserCSS account. In this case, you should change your password
+  | immediately.
+  |
+  | Open this URL in your browser to verify your address: #{link}
+  |
+  | #{signoff}
+
+block reason
+  | someone (hopefully you) changed your e-mail address
