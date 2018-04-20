@@ -187,4 +187,11 @@ gulp.task('static:email-templates', () => {
 
 gulp.task('static:watch', () => {
   gulp.watch('src/client/img/**/*', gulp.series('static:fast'))
+  gulp.watch([
+    'app/scss/email.scss',
+  ], gulp.series('static:email'))
+  gulp.watch([
+    'src/email-views/**/*',
+    'src/emails/**/*',
+  ], gulp.series('static:email-templates'))
 })
