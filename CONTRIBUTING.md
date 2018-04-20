@@ -20,11 +20,11 @@ used and their paths:
 | Tech | Path(s) |
 | -----| ------- |
 | Gulp | `gulpfile.babel.js` <br> `tasks/` |
-| css/scss | `src/client/scss/` <br> `<style>` tags in `.vue` files in `src/components/(bits|elements|pages)`
+| css/scss | `client/client/scss/` <br> `<style>` tags in `.vue` files in `client/components/(bits|elements|pages)`
 | Express.js | `api.js` <br> `webserver.js` |
 | Concourse | `ci/pipelines/` <br> `ci/tasks/` |
 | Shell scripting | `ci/scripts/` |
-| Backend (databases, schemas) | `src/api/connector/` <br> `src/api/backend/` |
+| Backend (databases, schemas) | `client/api/connector/` <br> `client/api/backend/` |
 | Testing (AVA, Nightmare.js) | `test/` |
 
 ## Submitting issues  

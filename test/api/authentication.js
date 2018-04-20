@@ -5,8 +5,8 @@ import {connect,} from 'camo'
 import {ObjectID,} from 'mongodb'
 import jsonwebtoken from 'jsonwebtoken'
 
-import staticConfig from '../../src/shared/config'
-import User from '../../src/api/connector/schema/user'
+import staticConfig from '../../client/shared/config'
+import User from '../../client/api/connector/schema/user'
 
 const api = 'http://localhost:5000'
 const username = `testuser-${hat(64)}`

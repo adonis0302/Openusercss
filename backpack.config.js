@@ -5,10 +5,16 @@ const fs = require('fs')
 // eslint-disable-next-line no-sync
 const licenses = fs.readFileSync('./licenses.json')
 
+const entries = {
+  'api':    './api/index.js',
+  'client': './client/index.js',
+}
+
 module.exports = {
   webpack (config, options, webpack,) {
+    Reflect.deleteProperty(config.entry, 'main')
     config.entry.main = [
-      './api/index.js',
+      entries[process.env.BACKPACK_ENTRY],
     ]
 
     config.plugins.push(new DefinePlugin({

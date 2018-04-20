@@ -33,20 +33,20 @@ const sources = {
     'app/scss/email.scss',
   ],
   'emailTemplates': [
-    'src/emails/**/*.pug',
-    'src/email-views/**/*.pug',
+    'client/emails/**/*.pug',
+    'client/email-views/**/*.pug',
   ],
   'icons': [
-    'src/img/*.icon.*',
+    'client/img/*.icon.*',
   ],
   'elements': [
-    'src/img/**/*',
+    'client/img/**/*',
   ],
   'backgrounds': [
-    'src/img/**/*.bg.*',
+    'client/img/**/*.bg.*',
   ],
   'vectors': [
-    'src/img/**/*.svg',
+    'client/img/**/*.svg',
   ],
 }
 
@@ -186,12 +186,12 @@ gulp.task('static:email-templates', () => {
 })
 
 gulp.task('static:watch', () => {
-  gulp.watch('src/client/img/**/*', gulp.series('static:fast'))
+  gulp.watch('client/client/img/**/*', gulp.series('static:fast'))
   gulp.watch([
     'app/scss/email.scss',
   ], gulp.series('static:email'))
   gulp.watch([
-    'src/email-views/**/*',
-    'src/emails/**/*',
+    'client/email-views/**/*',
+    'client/emails/**/*',
   ], gulp.series('static:email-templates'))
 })

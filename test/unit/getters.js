@@ -1,6 +1,6 @@
 import test from 'ava'
 import {ObjectID,} from 'mongodb'
-import getters from '../../src/client/js/store/getters'
+import getters from '../../client/client/js/store/getters'
 
 const state = {
   'loading': false,

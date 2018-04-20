@@ -1,7 +1,7 @@
 import test from 'ava'
 import {cloneDeep,} from 'lodash'
 import {ObjectID,} from 'mongodb'
-import mutations from '../../src/client/js/store/mutations'
+import mutations from '../../client/client/js/store/mutations'
 
 const stateMock = {
   'loading': false,

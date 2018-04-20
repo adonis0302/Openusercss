@@ -1,7 +1,7 @@
 import test from 'ava'
 import {cloneDeep,} from 'lodash'
 
-import processObject from '../../src/shared/process-object'
+import processObject from '../../client/shared/process-object'
 
 test('processObject - runs function on object', (t) => {
   const source = {

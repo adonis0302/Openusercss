@@ -1,6 +1,6 @@
 import test from 'ava'
 import {ObjectID,} from 'mongodb'
-import {buildTheme,} from '../../../src/shared/usercss-builder'
+import {buildTheme,} from '../../../client/shared/usercss-builder'
 
 test('buildTheme - throws when nothing is passed', async (t) => {
   await t.throws(buildTheme())
