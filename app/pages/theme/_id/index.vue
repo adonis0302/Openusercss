@@ -13,6 +13,7 @@
   import {stringify,} from 'parse-usercss'
   import assert from 'assert'
   import delay from 'delay'
+  import path from 'path'
 
   const msgExtension = ({method, responseMethod, payload, hasKey,}) => new Promise((resolve, reject) => {
     assert(typeof method === 'string', 'Argument "method" must be a string')
@@ -92,10 +93,10 @@
       },
       installLink () {
         if (process.env.NODE_ENV === 'development') {
-          return `http://localhost:5000/theme/${this.theme._id}.user.css`
+          return `http://api.dev.openusercss.local/theme/${this.theme._id}.user.css`
         }
 
-        return `https://api.openusercss.org/theme/${this.theme._id}.user.css`
+        return `${this.apiUrl}${path.join('theme', `${this.theme._id}.user.css`)}`
       },
       license () {
         if (this.theme.license.toLowerCase() === 'other') {
