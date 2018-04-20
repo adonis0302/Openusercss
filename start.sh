@@ -32,7 +32,7 @@ fi
 function setup_files () {
   if [ ! -f .dev.env ]; then
     printf "Copying .dev.env.default\n"
-    # cp .dev.env.default .dev.env
+    cp .dev.env.default .dev.env
   fi
 
   if [ ! -f .prod.env ]; then
