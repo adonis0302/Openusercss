@@ -18,6 +18,10 @@ export default {
 
   'length': (max) => {
     return (data) => {
+      if (typeof data === 'undefined') {
+        return false
+      }
+
       return data.length <= max
     }
   },
