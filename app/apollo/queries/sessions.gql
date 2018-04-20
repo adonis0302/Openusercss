@@ -1,0 +1,10 @@
+query {
+  sessions {
+    _id
+    token
+    expiresAt
+    createdAt
+    ip
+    ua
+  }
+}

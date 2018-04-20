@@ -1,6 +1,7 @@
 <script>
   import {forOwn, cloneDeep,} from 'lodash'
   import {mapGetters,} from 'vuex'
+  import parseUA from 'ua-parser-js'
 
   import spinner from '~/components/elements/spinner.vue'
   import notification from '~/components/elements/notification.vue'
@@ -9,6 +10,8 @@
   import bInput from '~/components/bits/b-input.vue'
   import bTextarea from '~/components/bits/b-textarea.vue'
   import bSwitch from '~/components/bits/b-switch.vue'
+
+  import sessionsQuery from '~/apollo/queries/sessions.gql'
 
   export default {
     'components': {
@@ -21,8 +24,9 @@
     },
     data () {
       return {
-        'email':   '',
-        'account': {
+        'sessions': [],
+        'email':    '',
+        'account':  {
           'email':       '',
           'password':    '',
           'displayname': '',
@@ -35,13 +39,18 @@
           'displayname': null,
           'bio':         null,
           'donationUrl': null,
+          'sessions':    null,
         },
       }
+    },
+    'apollo': {
+      'sessions': sessionsQuery,
     },
     created () {
       this.account = cloneDeep(this.viewerUser)
     },
     'methods': {
+      parseUA,
       async resendVerification () {
         try {
           await this.$store.dispatch('account/resendVerify')
@@ -90,6 +99,9 @@
       token () {
         return this.$store.getters['session/token']
       },
+      viewerSession () {
+        return this.$store.getters['session/data']
+      },
       editingCount () {
         let result = 0
 
@@ -136,7 +148,7 @@
 <template lang="pug">
   mixin account-card(condition, model, title)
     .box.ouc-account-card(:disabled=condition)
-      .level
+      .level.is-mobile
         .level-left
           h5 #{title}
         .level-right
@@ -175,6 +187,53 @@
                   h3 Account details
 
                 hr
+
+                .box
+                  .level
+                    h5 Active sessions
+                  .tile.is-parent.is-vertical.is-paddingless
+                    .tile(v-for="session in sessions")
+                      .tile.is-child
+                        .card
+                          .card-header
+                            .card-header-title.level.is-brand-primary.is-mobile
+                              p.level-left(v-if="parseUA(session.ua).browser.name"
+                                              + "&& parseUA(session.ua).os.name")
+                                | {{parseUA(session.ua).browser.name}}
+                                | on {{parseUA(session.ua).os.name}}
+                              p.level-left(v-else)
+                                | Unknown device
+                              p.level-right(v-if="viewerSession._id === session._id")
+                                | (this session)
+                          .card-content.is-paddingless
+                            table.table.is-fullwidth.is-marginless.is-striped.is-hoverable
+                              tbody
+                                tr
+                                  td IP address:
+                                  td {{session.ip}}
+                                tr(v-if="parseUA(session.ua).browser.name"
+                                      + "&& parseUA(session.ua).browser.major")
+                                  td Browser:
+                                  td
+                                    | {{parseUA(session.ua).browser.name}}
+                                    | {{parseUA(session.ua).browser.major}}
+                                tr(v-if="parseUA(session.ua).os.name")
+                                  td OS:
+                                  td
+                                    | {{parseUA(session.ua).os.name}}
+                                    | {{parseUA(session.ua).os.version}}
+                                tr(v-if="!parseUA(session.ua).browser.name"
+                                      + "|| !parseUA(session.ua).os.name")
+                                  td User agent:
+                                  td {{session.ua}}
+                                tr
+                                  td Created:
+                                  td {{session.createdAt | moment('MMMM Do, YYYY HH:mm')}}
+                                tr
+                                  td Expires:
+                                  td {{session.expiresAt | moment('MMMM Do, YYYY HH:mm')}}
+                        br
+
                 +account-card("!editing.email", "editing.email", "E-mail address")
                   .tile.is-parent.is-vertical.is-paddingless
                     .tile
@@ -201,7 +260,7 @@
                           @click="resendVerification",
                           :disabled="!editing.email"
                         )
-                          | Resend verification e-mail to the current address
+                          | Resend verification e-mail
 
                 +account-card("!editing.password", "editing.password", "Passphrase")
                   .tile.is-parent.is-vertical.is-paddingless
