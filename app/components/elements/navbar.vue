@@ -47,6 +47,7 @@
   @import '../../scss/component';
 
   $primary: map-get($colors, 'primary');
+  $secondary: map-get($colors, 'secondary');
   $dark: map-get($colors, 'primary-dark');
   $background: map-get($colors, 'background');
 
@@ -67,13 +68,20 @@
     height: map-get($kerning, 'navbar-height');
   }
 
-  .ouc-navbar {
-    &.is-primary {
-      @include brand-gradient;
+  .navbar-menu {
+    * {
+      color: white;
     }
 
-    * {
-      background: transparent;
+    &.is-active {
+      border-top: 5px nth($secondary, 1) solid;
+
+      .navbar-item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 3.5rem;
+      }
     }
   }
 
@@ -100,7 +108,7 @@
 
 <template lang="pug">
   div.ouc-navbar-wrapper
-    .navbar.ouc-navbar.is-primary.md-shadow--2
+    .navbar.ouc-navbar.is-primary.is-brand-primary.md-shadow--2
       .container
         .navbar-brand.ouc-navbar-brand
           nuxt-link(to="/").navbar-item.no-active
@@ -119,7 +127,7 @@
             span
             span
             span
-        .navbar-menu.is-primary.ouc-navbar-menu(:class="{'is-active': open}")
+        .navbar-menu.is-primary.ouc-navbar-menu(:class="{'is-active': open, 'is-brand-primary': open}")
           .navbar-start
           .navbar-end(@click="close")
             nuxt-link(v-show="session", :to="profileUrl").navbar-item
