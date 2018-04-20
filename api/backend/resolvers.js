@@ -9,6 +9,7 @@ import versionQuery from './queries/version'
 import popularThemesQuery from './queries/popular-themes'
 import userThemesQuery from './queries/user-themes'
 import licensesQuery from './queries/licenses'
+import sessionsQuery from './queries/sessions'
 
 import registerMutation from './mutations/register'
 import loginMutation from './mutations/login'
@@ -32,6 +33,7 @@ export default {
     'popularThemes': popularThemesQuery,
     'userThemes':    userThemesQuery,
     'licenses':      licensesQuery,
+    'sessions':      sessionsQuery,
   },
   'Mutation': {
     viewer,

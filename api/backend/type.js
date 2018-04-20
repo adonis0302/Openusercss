@@ -108,6 +108,7 @@ const queries = `
     verifyToken: Session!
     version: Version!
     licenses: [License]!
+    sessions: [Session]!
 
     theme(
       id: ID!
