@@ -7,7 +7,15 @@ export default async (root, options, {Session, headers, token,}) => {
     return []
   }
 
-  return Session.find({
+  const results = await Session.find({
     'user': session.user._id,
   })
+
+  return results.map((result) => ({
+    '_id':       result._id,
+    'expiresAt': result.expiresAt,
+    'createdAt': result.createdAt,
+    'ip':        result.ip,
+    'ua':        result.ua,
+  }))
 }
