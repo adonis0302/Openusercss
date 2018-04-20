@@ -29,7 +29,7 @@ const sendEmail = async (locals, {template,}) => {
   let link = `https://openusercss.org/account/verify-email/${token}`
 
   if (process.env.NODE_ENV === 'development') {
-    link = `http://localhost:5010/account/verify-email/${token}`
+    link = `http://dev.openusercss.local/account/verify-email/${token}`
   }
 
   const result = await transportEmail({
@@ -98,7 +98,7 @@ export default async (root, {email, password, displayname, bio, donationUrl,}, {
 
     link = `https://openusercss.org/account/verify-email/${verificationToken}`
     if (process.env.NODE_ENV === 'development') {
-      link = `http://localhost:5010/account/verify-email/${verificationToken}`
+      link = `http://dev.openusercss.local/account/verify-email/${verificationToken}`
     }
   }
 

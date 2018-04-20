@@ -53,6 +53,7 @@ module.exports = {
     '~/scss/main.scss',
   ],
   'plugins': [
+    '~/plugins/api-url',
     '~/plugins/vue-moment',
     '~/plugins/vue-markdown',
     '~/plugins/vue-filters',

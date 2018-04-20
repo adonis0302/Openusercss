@@ -7,7 +7,7 @@ export default async ({app, config,}) => {
   ]
 
   if (process.env.NODE_ENV === 'development') {
-    origin.push('http://localhost:5010')
+    origin.push('http://dev.openusercss.local')
   }
 
   app.use(cors({

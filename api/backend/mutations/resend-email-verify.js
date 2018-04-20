@@ -19,7 +19,7 @@ const createSendEmail = async ({email, displayname,}) => {
   let link = `https://openusercss.org/account/verify-email/${token}`
 
   if (process.env.NODE_ENV === 'development') {
-    link = `http://localhost:5010/account/verify-email/${token}`
+    link = `http://dev.openusercss.local/account/verify-email/${token}`
   }
 
   const expires = moment().add(1, 'days').format('MMMM Do, HH:mm ZZ')
