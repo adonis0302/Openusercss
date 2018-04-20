@@ -42,11 +42,24 @@ than a large one that has tons of content.
 1. Install NodeJS using your package manager, or from [https://nodejs.org/en/download/](https://nodejs.org/en/download/) (use either the latest, or the latest LTS version)
 1. Install yarn ([https://yarnpkg.com/en/docs/install](https://yarnpkg.com/en/docs/install))
 1. Fork the repository into your account
-1. Clone the repo with `git clone https://github.com/<your username>/openusercss.org.git .`
+1. Clone the repo with `git clone git@github.com:<your username>/openusercss.org.git .`
 1. Type `yarn` to install all the required dependencies into the node_modules directory
 1. (optinally) Add `./node_modules/.bin` into your $PATH, as all required binaries are there
 1. Type `yarn watch` to start the development server with live reload
 1. Hack away!  
+
+With Docker:
+> The Docker development environment is currently not fully tested that it
+> will work when run on a fresh machine. Please open an issue if you encounter
+> errors while running the start script!
+
+1. Install Docker and docker-compose
+1. Fork the repository into your account
+1. Clone the repo with `git clone git@github.com:<your username>/openusercss.org.git .`
+1. Run `./start.sh` and follow the on-screen prompts
+1. Once the build is complete and both the API and the client are listening for
+changes, open http://dev.openusercss.local in your browser
+1. Hack away!
 
 ## Running tests
 There are three types of tests you can run:
