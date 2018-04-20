@@ -1,3 +1,6 @@
+@import './functional/colour-diff';
+@import './functional/map-deep-set';
+
 $tones: (
   "brand-primary":    #005FFF,
   "brand-dark":       #000FE5,
@@ -25,6 +28,8 @@ $tones: (
   "paypal":           #003087,
   "patreon":          #F96854
 );
+
+$brand-diff: colour-diff(map-get($tones, 'brand-dark'), map-get($tones, 'brand-primary'));
 
 $layout: (
   "base-size":    5.5rem,
@@ -64,6 +69,35 @@ $colors: (
   'paypal':       (map-get($tones, 'paypal'),           text-for-bg(map-get($tones, 'paypal'))),
   'patreon':      (map-get($tones, 'patreon'),          text-for-bg(map-get($tones, 'patreon')))
 );
+
+$gradients: ();
+
+@each $name, $colour in $tones {
+  $diffed: adjust-hue(
+    lighten($colour, map-get($brand-diff, 'lighten')),
+    map-get($brand-diff, 'adjust-hue')
+  );
+
+  $gradients: map-deep-set(
+    $gradients,
+    #{$name},
+    $diffed
+  );
+};
+
+@each $toneName, $tone in $tones {
+  @each $gradientName, $gradient in $gradients {
+    @if $toneName == $gradientName {
+      $newMap: ($tone, $gradient);
+
+      $gradients: map-deep-set(
+        $gradients,
+        #{$toneName},
+        $newMap
+      );
+    }
+  }
+};
 
 $kerning: (
   'size-1':        map-get($layout, 'base-size'),

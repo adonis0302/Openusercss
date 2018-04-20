@@ -9,4 +9,8 @@
   @each $kern in $kerning {
     --#{nth($kern, 1)}: nth($kern, 2);
   }
+
+  @each $gradient in $gradients {
+    --gradient-#{nth($gradient, 1)}: nth($gradient, 2);
+  }
 }

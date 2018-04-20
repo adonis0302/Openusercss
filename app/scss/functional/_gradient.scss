@@ -1,6 +1,8 @@
+$diff: colour-diff(map-get($tones, 'brand-dark'), map-get($tones, 'brand-primary'));
+
 @mixin brand-gradient(
   $from: map-get($tones, 'brand-dark'),
-  $to: map-get($tones, 'brand-primary'),
+  $to: saturate(adjust-hue(lighten($from, map-get($diff, 'lighten')), map-get($diff, 'adjust-hue')), map-get($diff, 'saturate')),
   $brush: 100%,
   $center: 50%
 ) {
