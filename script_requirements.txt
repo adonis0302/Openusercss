@@ -1,0 +1,15 @@
+docker;docker -v#Docker version 18
+docker-compose;docker-compose -v#docker-compose version 1.21;https://github.com/docker/compose/releases/download/1.21.0/docker-compose-Linux-x86_64
+id;id --version#(GNU coreutils) 8
+read;type read#is a shell builtin
+wait;type wait#is a shell builtin
+cp;cp --version#(GNU coreutils) 8
+sudo;sudo --version#Sudo version 1.8
+wget;wget --version#GNU Wget 1
+chmod;chmod --version#(GNU coreutils) 8
+mkdir;mkdir --version#(GNU coreutils) 8
+cat;cat --version#(GNU coreutils) 8
+bash;bash --version#GNU bash, version 4
+hostess;hostess --version#hostess version 0.3;https://github.com/cbednarski/hostess/releases/download/v0.3.0/hostess_linux_amd64
+printf;printf .%s -#.-
+git;git --version#git version 2
