@@ -4,15 +4,15 @@ import express from 'express'
 import log from 'chalk-console'
 import morgan from 'morgan'
 
-import staticConfig from '../lib/config'
+import staticConfig from 'lib/config'
 
 import http from 'http'
 import raven from 'raven'
 
-import secure from './modules/secure'
-import routes from './modules/routes'
-import signals from './modules/signal-handler'
-import cors from './modules/cors'
+import secure from 'lib/express/secure'
+import routes from 'lib/express/client-routes'
+import signals from 'lib/express/signal-handler'
+import cors from 'lib/express/cors'
 
 let server = null
 const init = async () => {
@@ -20,7 +20,7 @@ const init = async () => {
   const config = await staticConfig()
 
   if (config.get('env') !== 'development') {
-    raven.config(config.get('sentry.api')).install()
+    raven.config(config.get('sentry.client')).install()
     app.use(raven.requestHandler())
   }
 
@@ -36,9 +36,9 @@ const init = async () => {
 
   server = http.createServer(app)
 
-  server.listen(config.get('ports.api.http'))
-  log.info(`API started (http): ${JSON.stringify(config.get('ports.api.http'))}`)
-  log.info(`API environment: ${app.get('env')}`)
+  server.listen(config.get('ports.frontend.http'))
+  log.info(`CLIENT started (http): ${JSON.stringify(config.get('ports.frontend.http'))}`)
+  log.info(`CLIENT environment: ${app.get('env')}`)
 
   if (config.get('env') !== 'development') {
     app.use(raven.errorHandler())
@@ -60,7 +60,7 @@ const init = async () => {
 })()
 
 signals({
-  'name':   'API',
+  'name':   'CLIENT',
   'thread': process,
   cleanup () {
     return server.close()

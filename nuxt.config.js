@@ -1,8 +1,8 @@
-const rucksack = require('rucksack-css')
-const flexibility = require('postcss-flexibility')
-const willChange = require('postcss-will-change')
-const willChangeTransition = require('postcss-will-change-transition')
-const ellipsis = require('postcss-ellipsis')
+import rucksack from 'rucksack-css'
+import flexibility from 'postcss-flexibility'
+import willChange from 'postcss-will-change'
+import willChangeTransition from 'postcss-will-change-transition'
+import ellipsis from 'postcss-ellipsis'
 
 const postcss = [
   // Syntax extending plugins
@@ -24,7 +24,7 @@ const dev = process.env.NODE_ENV === 'development'
 const ci = process.env.CI
 const analyze = dev && !ci
 
-module.exports = {
+export default {
   'srcDir': './app',
   'head':   {
     'titleTemplate': '%s - OpenUserCSS',
