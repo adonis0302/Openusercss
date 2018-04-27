@@ -1,11 +1,15 @@
-#!/bin/echo This file must be sourced:
+#!/bin/sh
+# shellcheck shell=dash
 set -ex
 export PATH=$PATH":repo/node_modules/.bin:node_modules/.bin"
 export BOOTSTRAP=true
 export GIT_DISCOVERY_ACROSS_FILESYSTEM=true
-export BUILD_START=$(date +%s)
-export BUILD_PATH=$(pwd)
+export BUILD_START
+export BUILD_PATH
 export CI_BRANCH="master"
+
+BUILD_START=$(date +%s)
+BUILD_PATH=$(pwd)
 
 error () {
   echo "$@"
@@ -28,7 +32,7 @@ print_details () {
 }
 
 install_packages () {
-  apk --update add $@ --no-progress
+  apk --update add "$@" --no-progress
 }
 
 in_repo () {
@@ -56,13 +60,13 @@ prepare () {
     --network-concurrency 3 \
     --production=false
 
-  install_packages git $@
+  install_packages git "$@"
   print_details
 
   if [ -e pr/package.json ]; then
     cd pr
     git status || error "Not a git repository"
-    export CI_BRANCH=$(git rev-parse --abbrev-ref HEAD)
+    CI_BRANCH=$(git rev-parse --abbrev-ref HEAD)
 
     in_repo
     cd -
@@ -79,5 +83,5 @@ prepare () {
 }
 
 dependencies () {
-  prepare $@
+  prepare "$@"
 }

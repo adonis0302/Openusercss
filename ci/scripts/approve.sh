@@ -1,5 +1,6 @@
-#!/bin/echo This file must be sourced:
-
+#!/bin/sh
+# shellcheck shell=dash
+set -ex
 if [ -z ${BOOTSTRAP+x} ]; then
   echo "bootstrap.sh must be run before approve.sh"
   exit 2
