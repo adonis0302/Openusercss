@@ -9,10 +9,10 @@ import staticConfig from '../lib/config'
 import http from 'http'
 import raven from 'raven'
 
-import secure from './modules/secure'
-import routes from './modules/routes'
-import signals from './modules/signal-handler'
-import cors from './modules/cors'
+import secure from 'lib/express/secure'
+import routes from 'lib/express/api-routes'
+import signals from 'lib/express/signal-handler'
+import cors from 'lib/express/cors'
 
 let server = null
 const init = async () => {

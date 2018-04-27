@@ -1,21 +1,27 @@
 const {DefinePlugin,} = require('webpack')
 const git = require('git-revision')
 const fs = require('fs')
+const path = require('path')
 
-// eslint-disable-next-line no-sync
+/* eslint-disable-next-line no-sync */
 const licenses = fs.readFileSync('./licenses.json')
 
-const entries = {
-  'api':    './api/index.js',
-  'client': './client/index.js',
-}
-
-module.exports = {
+const createConfig = ({entry,}) => ({
   webpack (config, options, webpack,) {
-    Reflect.deleteProperty(config.entry, 'main')
     config.entry.main = [
-      entries[process.env.BACKPACK_ENTRY],
+      entry,
     ]
+
+    config.resolve.modules = [
+      'node_modules',
+    ]
+
+    config.resolve.alias = Object.assign({
+      '~':      path.resolve(__dirname),
+      'lib':    path.resolve(__dirname, 'lib'),
+      'api':    path.resolve(__dirname, 'api'),
+      'client': path.resolve(__dirname, 'client'),
+    }, config.resolve.alias, {})
 
     config.plugins.push(new DefinePlugin({
       'OUC.version': {
@@ -29,4 +35,8 @@ module.exports = {
 
     return config
   },
-}
+})
+
+module.exports = createConfig({
+  'entry': './api/index.js',
+})
