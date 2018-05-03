@@ -2,7 +2,7 @@
   export default {
     'transition': 'fade',
     beforeMount () {
-      null()
+      throw new Error('Manually triggered error')
     },
   }
 </script>

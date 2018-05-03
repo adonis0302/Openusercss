@@ -1,10 +1,12 @@
 <script>
   import spinner from '~/components/elements/spinner.vue'
+  import oucLoading from '~/components/elements/loading.vue'
 
   export default {
     'transition': 'fade',
     'components': {
       spinner,
+      oucLoading,
     },
     data () {
       return {
@@ -35,6 +37,9 @@
       causeError () {
         this.nonExist()
       },
+      testLoading () {
+        this.$refs.loading.start()
+      },
     },
   }
 </script>
@@ -62,4 +67,8 @@
           .column.is-2
             nuxt-link.button.is-danger(to="/test/error")
               | Test error page
+
+          .column.is-2
+            button.button.is-primary(@click="testLoading") Test loading
+            ouc-loading(ref="loading", :test="true")
 </template>
