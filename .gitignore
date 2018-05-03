@@ -9,8 +9,7 @@ bkup.*
 .ignored
 
 # Environment variables
-.*.env
-.env.json
+/.env.*
 
 # Vim temp files
 .sw[a-p]

@@ -255,6 +255,13 @@ initialise () {
   info "OpenUserCSS startscript $TAG ($SHORT) on $(date "+%Y.%m.%d - %H:%M.%S")"
   create_trap
 
+  if [ ! -f ./.env.local ]; then
+    info "Copying environment file"
+    cp .env .env.local | log
+    info "Edit .env.local to add authentication info, then press ENTER"
+    read
+  fi
+
   info "Starting before-takeoff checklist"
   check_env
 
