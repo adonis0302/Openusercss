@@ -1,0 +1,42 @@
+.fade- {
+  &enter-active,
+  &leave-active {
+    transition: opacity .2s ease-in-out;
+  }
+
+  &enter,
+  &leave-to {
+    opacity: 0;
+  }
+}
+
+@keyframes error {
+  0% {
+    background-color: nth(map-get($colors, 'danger'), 1);
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  25% {
+    transform: translateX(50px);
+  }
+  50% {
+    transform: translateX(-25px);
+  }
+  75% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    background-color: transparent;
+  }
+}
+
+.error- {
+  &enter-active {
+    animation: error .66666s;
+  }
+
+  &leave-to {
+    opacity: 0;
+  }
+}
