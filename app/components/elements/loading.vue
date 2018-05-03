@@ -1,66 +1,55 @@
-<template lang="pug">
-  div
-    .ouc-quick-loading(:class="{'show': !slow && loading}")
-    .ouc-loading-root(:class="{'show': slow && loading}")
-      .ouc-loading-cover
-      .ouc-loading-cover
-      .ouc-loading-message-wrapper
-        .ouc-loading-icon
-        .ouc-progress-wrapper
-          .ouc-progress-indicator(v-if="percent !== 0", :style="{width: percent + '%'}")
-        .ouc-loading-message(v-if="percent <= 100")
-          h1 {{percent}}%
-          h5 Looks like the network is slow. Please wait...
-        .ouc-loading-message(v-if="percent > 100")
-          h1 {{percent}}%
-          h5
-            | I'm sorry, I don't actually know the progress. Let's see how high
-            | we can count!
-            br
-            | I'll let you know when it's complete, or if I run
-            | into an error.
-</template>
-
 <script>
+  import progressiveImage from '~/components/bits/progressive-image.vue'
+
   export default {
-    'name': 'nuxt-loading',
+    'name':  'nuxt-loading',
+    'props': {
+      'test': Boolean,
+    },
+    'components': {
+      progressiveImage,
+    },
     data () {
       return {
-        'slow':    false,
-        'loading': false,
-        'failed':  false,
-        'percent': 0,
-        'timer':   null,
+        'slow':       false,
+        'loading':    false,
+        'failed':     false,
+        'slowTimer':  null,
+        'tickTimer':  null,
+        'countTimer': null,
+        'counter':    0,
       }
     },
     'methods': {
       reset () {
-        if (this.timer) {
-          clearInterval(this.timer)
-        }
+        clearTimeout(this.slowTimer)
+        clearTimeout(this.tickTimer)
+        clearInterval(this.countTimer)
 
         this.slow = false
         this.loading = false
         this.failed = false
-        this.percent = 0
+        this.counter = 0
       },
       start () {
         this.reset()
         this.loading = true
 
-        this.timer = setInterval(() => {
-          setTimeout(() => {
-            if (this.loading) {
-              this.increase(Math.floor(Math.random() * 6))
-            }
-          }, Math.random() * 600)
-        }, 600)
+        let patience = 1500
 
-        setTimeout(() => {
+        if (this.test) {
+          patience = 650
+        }
+
+        this.slowTimer = setTimeout(() => {
           if (this.loading) {
             this.slow = true
           }
-        }, 2000)
+        }, patience)
+
+        this.countTimer = setInterval(() => {
+          this.counter = this.counter + 1
+        }, 1000)
       },
       finish () {
         this.reset()
@@ -80,6 +69,20 @@
 <style lang="scss" scoped>
   @import '../../scss/component';
 
+  $size: 400px;
+  $v-gap: 50vh;
+  $h-gap: 50vw;
+
+  $leftborder: calc(#{$h-gap} - calc(#{$size} / 2));
+  $rightborder: calc(#{$h-gap} + calc(#{$size} / 2));
+  $topborder: calc(#{$v-gap} - calc(#{$size} / 2));
+  $bottomborder: calc(#{$v-gap} + calc(#{$size} / 2));
+
+  $topleft: $leftborder $topborder;
+  $topright: $rightborder $topborder;
+  $bottomleft: $leftborder $bottomborder;
+  $bottomright: $rightborder $bottomborder;
+
   @keyframes Gradient {
   	0% {
   		background-position: 100% 50%
@@ -87,6 +90,30 @@
   	100% {
   		background-position: 0 50%
   	}
+  }
+
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  .active-spin {
+    transition: transform .3s ease-in-out;
+
+    &:active {
+      animation: spin .5s;
+    }
+  }
+
+  .fill {
+    height: 100%;
+    width: 100%;
+    left: 0;
   }
 
   .ouc-quick-loading {
@@ -104,6 +131,7 @@
     animation-play-state: running;
     animation-iteration-count: infinite;
     position: fixed;
+    left: 0;
     width: 100%;
     transition-property: height;
     transition-timing-function: map-get($animations, 'animation-function');
@@ -119,124 +147,144 @@
     }
   }
 
-  .ouc-loading-root {
-    position: fixed;
-    z-index: 998;
-    left: 0;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    pointer-events: none;
-  }
-
   .ouc-loading-cover {
+    @include brand-gradient;
+
+    transition-property: transform, opacity;
+    transition-duration: .3s;
+    transition-timing-function: ease-in-out;
+    z-index: 151;
+    position:relative;
+
+    clip-path: polygon(
+        0% 0%,
+        0% 100%,
+        $leftborder 100%,
+        $topleft, /* Top left */
+        $topright, /* Top right */
+        $bottomright, /* Bottom right */
+        $bottomleft, /* Bottom left */
+        $leftborder 100%,
+        100% 100%,
+        100% 0%
+    );
+
+    opacity: 0;
+    transform: scale(.9);
+
+    @media (pointer: fine) and (max-width: 1367px) {
+      transform:
+        scale(4)
+        rotate(45deg);
+    }
+
+    @media (pointer: fine) and (max-width: 1921px) and (min-width: 1367px) {
+      transform:
+        scale(4);
+    }
+  }
+
+  .ouc-loading-inner {
     position: fixed;
-    z-index: 999;
-    left: 0;
-    height: 50%;
-    width: 100%;
-    background-color: nth($primary, 1);
-    color: nth($primary, 2);
-    pointer-events: all;
-    cursor: progress;
-    transform:
-      rotateZ(5deg)
-      scale(1.5);
-    transition-property:
-      top,
-      bottom,
-      transform;
-    transition-duration: map-get($animations, 'longtime');
-    transition-timing-function: map-get($animations, 'animation-function');
-  }
+    left: $leftborder;
+    height: $size;
+    width: $size;
+    top: $topborder;
+    background: nth(map-get($colors, 'background'), 1);
+    color: nth(map-get($colors, 'background'), 2);
+    z-index: 150;
 
-  .ouc-progress-wrapper {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    width: 100%;
-    max-width: 80vw;
-    height: 3px;
-    background-color: nth(map-get($colors, 'background'), 1);
-    display: flex;
-    align-items: flex-start;
-    flex-direction: row;
+    box-shadow: inset 0 0 70px -20px rgba(0, 0, 0, .7);
 
-    .ouc-progress-indicator {
-      transition-property: width;
-      transition-duration: map-get($animations, 'shorttime');
-      transition-timing-function: map-get($animations, 'animation-function');
-      height: 3px;
-      background-color: nth(map-get($colors, 'secondary'), 1);
-    }
-  }
+    transition-property: opacity, transform;
+    transition-duration: .3s;
+    transition-timing-function: ease-in-out;
+    transition-delay: .2s;
+    opacity: 0.0001;
+    transform: scale(.9);
 
-  .ouc-loading-message-wrapper {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-    flex-flow: column;
-    flex-direction: column;
-    z-index: 1000;
-
-    .ouc-loading-icon {
-      background-image: url('~/static/img/openusercss.icon.svg');
-      background-repeat: no-repeat;
-      background-position: top center;
-      background-size: contain;
-
-      display: flex;
-      height: 5rem;
-      width: 5rem;
-    }
-
-    .ouc-loading-message {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      color: nth($primary, 2);
-    }
+    background: repeating-linear-gradient(
+      45deg,
+      nth(map-get($colors, 'primary-dark'), 1),
+      nth(map-get($colors, 'primary-dark'), 1) 10px,
+      darken(nth(map-get($colors, 'primary-dark'), 1), 10) 10px,
+      darken(nth(map-get($colors, 'primary-dark'), 1), 10) 20px
+    );
+    background-size: 400%;
+    animation-name: Gradient;
+    animation-duration: 45s;
+    animation-timing-function: linear;
+    animation-play-state: paused;
+    animation-iteration-count: infinite;
   }
 
   .ouc-loading-root {
-    .ouc-loading-cover:nth-child(1) {
-      bottom: 130%;
-    }
-
-    .ouc-loading-cover:nth-child(2) {
-      top: 130%;
-    }
-
-    .ouc-loading-message-wrapper {
-      transition-property: opacity, transform;
-      transition-duration: map-get($animations, 'shorttime');
-      transition-timing-function: map-get($animations, 'animation-function');
-      opacity: 0;
-      transform: scale(.9);
-      pointer-events: none;
-    }
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 150;
+    pointer-events: none;
+    user-select: none;
 
     &.show {
-      .ouc-loading-cover {
+      pointer-events: all;
+
+      > .ouc-loading-cover {
+        opacity: 1;
         transform:
-          rotateZ(0)
-          scale(1);
+          scale(1)
+          rotate(0deg);
       }
 
-      .ouc-loading-cover:nth-child(1) {
-        bottom: 50%;
-      }
-
-      .ouc-loading-cover:nth-child(2) {
-        top: 50%;
-      }
-
-      .ouc-loading-message-wrapper {
+      > .ouc-loading-inner {
         opacity: 1;
         transform: scale(1);
+        animation-play-state: running;
       }
     }
   }
+
+  .is-fullwidth {
+    width: 100%;
+  }
+
+  .is-inline {
+    display: inline-flex;
+
+    > * {
+      display: inline-flex;
+    }
+  }
+
+  .mh-1 {
+    min-height: 3rem
+  }
 </style>
+
+<template lang="pug">
+  div
+    .ouc-quick-loading(:class="{'show': !slow && loading}")
+    .ouc-loading-root(:class="{'show': slow && loading}")
+      .ouc-loading-cover.fill
+        button.button.is-primary(v-if="test", @click="finish") Finish
+      .ouc-loading-inner.is-hcentered.is-vcentered
+        .tile.is-parent.is-vertical
+          .tile.is-child
+            progressive-image.active-spin(
+              src="/img/openusercss.icon-x128.png",
+              placeholder="/img/openusercss.icon-x16.png",
+              width="128px",
+              height="128px"
+            )
+          .tile.is-child.has-text-centered.mh-1
+            br
+            transition(name="push-right")
+              .is-inline(v-if="counter < 3 || counter % 6 === 0")
+                h4.is-bold(v-if="loading") Loading...
+                h4.is-bold(v-else) Done!
+            transition(name="push-left")
+              .is-inline(v-if="counter >= 3 && counter % 6 !== 0")
+                h4.is-bold {{counter}} seconds and counting
+</template>

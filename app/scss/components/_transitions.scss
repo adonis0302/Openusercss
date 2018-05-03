@@ -10,6 +10,76 @@
   }
 }
 
+.fade-zoom- {
+  &enter-active,
+  &leave-active {
+    transition:
+      transform .3s ease-in-out,
+      opacity .2s ease-in-out;
+  }
+
+  &enter,
+  &leave-to {
+    opacity: 0;
+    transform: scale(.9);
+  }
+}
+
+.zoom- {
+  &enter-active,
+  &leave-active {
+    transition:
+      transform .3s ease-in-out;
+  }
+
+  &enter,
+  &leave-to {
+    transform: scale(0);
+  }
+}
+
+.push- {
+  &left- {
+    &enter-active,
+    &leave-active {
+      position: absolute;
+      width: 100%;
+      left: 0;
+      transform: translateX(0);
+      transition:
+      transform .3s ease-in-out,
+      opacity .2s ease-in-out;
+    }
+
+    &enter,
+    &leave-to {
+      position: absolute;
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+  }
+
+  &right- {
+    &enter-active,
+    &leave-active {
+      position: absolute;
+      width: 100%;
+      left: 0;
+      transform: translateX(0);
+      transition:
+      transform .3s ease-in-out,
+      opacity .2s ease-in-out;
+    }
+
+    &enter,
+    &leave-to {
+      position: absolute;
+      opacity: 0;
+      transform: translateX(20px);
+    }
+  }
+}
+
 @keyframes error {
   0% {
     background-color: nth(map-get($colors, 'danger'), 1);
