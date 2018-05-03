@@ -108,6 +108,7 @@
   .ouc-responsive-image-raw {
     transition:
       filter .3s ease-out;
+    margin: 0 auto;
   }
 
   .is-loading {
