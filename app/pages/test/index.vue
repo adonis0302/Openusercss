@@ -2,12 +2,13 @@
   import spinner from '~/components/elements/spinner.vue'
 
   export default {
+    'transition': 'fade',
     'components': {
       spinner,
     },
     data () {
       return {
-        'spinning': true,
+        'spinning': false,
       }
     },
     'methods': {
@@ -31,6 +32,9 @@
           ],
         })
       },
+      causeError () {
+        this.nonExist()
+      },
     },
   }
 </script>
@@ -42,6 +46,7 @@
         .columns.is-multiline
           .column.is-2
             div
+              button.button(@click="spinning = !spinning") Toggle spinning
               p Spinner:
               spinner(:size="50", :spinning="spinning")
               div(style="background-color: black")
@@ -53,4 +58,8 @@
             button.button(@click="showSuccess") Success
             button.button(@click="showWarning") Warning
             button.button(@click="showError") Error
+
+          .column.is-2
+            nuxt-link.button.is-danger(to="/test/error")
+              | Test error page
 </template>

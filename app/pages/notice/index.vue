@@ -1,3 +1,9 @@
+<script>
+  export default {
+    'transition': 'fade',
+  }
+</script>
+
 <template lang="pug">
   div.ouc-route-root
     .container

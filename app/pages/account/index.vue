@@ -14,6 +14,7 @@
   import sessionsQuery from '~/apollo/queries/sessions.gql'
 
   export default {
+    'transition': 'fade',
     'components': {
       spinner,
       notification,

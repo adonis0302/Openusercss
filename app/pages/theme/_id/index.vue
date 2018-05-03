@@ -49,6 +49,7 @@
   })
 
   export default {
+    'transition': 'fade',
     fetch ({store, app, route,}) {
       return store.dispatch('themes/single', route.params.id)
       .catch(() => {

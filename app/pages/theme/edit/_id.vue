@@ -32,6 +32,7 @@
   }
 
   export default {
+    'transition': 'fade',
     'components': {
       notification,
       editor,

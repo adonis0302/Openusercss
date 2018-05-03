@@ -9,6 +9,7 @@
   import starRating from 'vue-star-rating'
 
   export default {
+    'transition': 'fade',
     fetch ({store, route,}) {
       return store.dispatch('users/single', route.params.id)
     },
@@ -93,11 +94,11 @@
   include ../../components/static/microdata/theme.pug
   include ../../components/static/theme-card.pug
 
-  div.ouc-route-root
+  .ouc-route-root
     +user-microdata
 
     .container.ouc-profile-container
-      div.ouc-profile-wrapper
+      .ouc-profile-wrapper
         .section
           .level
             .level-left

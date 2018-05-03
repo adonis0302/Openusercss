@@ -8,6 +8,7 @@
   import starRating from 'vue-star-rating'
 
   export default {
+    'transition': 'fade',
     fetch ({store,}) {
       return Promise.all([
         store.dispatch('themes/latest'),
@@ -61,11 +62,11 @@
 <template lang="pug">
   include ../components/static/theme-card.pug
 
-  div.ouc-route-root
-    .container
-      div
+  .ouc-route-root
+    .container.ouc-profile-container
+      .ouc-profile-wrapper
         .section
-          .columns.is-multiline
+          .columns
             .column.is-6
               h2.has-bottom-margin Newest themes
               .columns.is-multiline
@@ -89,7 +90,7 @@
                         p.title.is-7 {{theme.user.displayname}}
                         p.subtitle {{theme.createdAt | moment('from', 'now')}}
 
-            .column
+            .column.is-6
               h2.has-bottom-margin Popular themes
               .columns.is-multiline
                 nuxt-link.column.is-6(

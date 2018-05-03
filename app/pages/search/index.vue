@@ -8,6 +8,7 @@
   import starRating from 'vue-star-rating'
 
   export default {
+    'transition': 'fade',
     'components': {
       notification,
       themeCard,

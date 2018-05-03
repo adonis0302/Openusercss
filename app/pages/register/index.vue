@@ -18,6 +18,7 @@
   }
 
   export default {
+    'transition': 'fade',
     'components': {
       oucButton,
       bInput,
