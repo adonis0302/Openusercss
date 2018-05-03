@@ -18,6 +18,7 @@ services:
       OUC_DATABASE_MAIN: mongodb://mongodb:27017/openusercss-main
       OUC_DOMAIN: dev.openusercss.local
     labels:
+      - "traefik.docker.network=openusercss_gateway"
       - "traefik.backend=dev.openusercss"
       - "traefik.api.frontend.rule=Host: api.dev.openusercss.local"
       - "traefik.api.protocol=http"
@@ -59,3 +60,4 @@ services:
 networks:
   gateway:
     driver: bridge
+    name: openusercss_gateway
