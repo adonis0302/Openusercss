@@ -36,9 +36,9 @@
 </style>
 
 <template lang="pug">
-  div
+  .ouc-ancestor
     navbar
-    div.ouc-app-root
+    .ouc-app-root
       nuxt
     ouc-noscript
       noscript
