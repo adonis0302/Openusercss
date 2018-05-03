@@ -138,11 +138,13 @@
           }
         })
 
+        const state = window.localStorage.getItem(`ouc-state-${pkg.version}`) || ''
+
         return Object.assign(this.error, {
           'location':             'hydrated',
           'userMessage':          this.userMessage,
           'version':              pkg.version,
-          'localStorageBytes':    window.localStorage.getItem(`ouc-state-${pkg.version}`).length,
+          'localStorageBytes':    state.length,
           'timezoneOffset':       new Date().getTimezoneOffset(),
           'time':                 new Date(),
           'workerRegistered':     Boolean(navigator.serviceWorker.controller),
