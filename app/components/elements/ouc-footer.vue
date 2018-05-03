@@ -15,6 +15,9 @@
       changelog () {
         return changelog
       },
+      dev () {
+        return process.env.NODE_ENV === 'development'
+      },
     },
     data () {
       return {
@@ -128,6 +131,9 @@
               a(href="//github.com/OpenUserCSS", target="_blank")
                 fa-icon(icon="code-branch")
                 | GitHub
+              div(v-if="dev")
+                nuxt-link.has-text-primary(to="/test")
+                  | Open test page
             .column.has-text-right
               router-link(to="/contact")
                 fa-icon(icon="envelope")
