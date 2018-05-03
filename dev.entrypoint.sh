@@ -6,4 +6,4 @@ cd /ouc
 npm rebuild node-sass node-gyp
 yarn --frozen-lockfile
 
-yarn watch:v
+yarn watch

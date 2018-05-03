@@ -109,7 +109,7 @@ error () {
   local code=$2
 
   if [ -z "$msg" ]; then
-    printf "Error message _must_ be provided\n"
+    printf "Error message _must_ be provided\n" | tee /dev/fd/3
     exit 1
   fi
 
