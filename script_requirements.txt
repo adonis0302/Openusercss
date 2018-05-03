@@ -16,6 +16,7 @@ seq;seq --version | head -1#(GNU coreutils) 8
 tee;tee --version | head -1#(GNU coreutils) 8
 tr;tr --version | head -1#(GNU coreutils) 8
 du;du --version | head -1#(GNU coreutils) 8
+rm;rm --version | head -1#(GNU coreutils) 8
 diff;diff --version | head -1#(GNU diffutils) 3
 sha512sum;sha512sum --version | head -1#(GNU coreutils) 8
 bash;bash --version#GNU bash, version 4
@@ -24,3 +25,4 @@ printf;printf .%s -#.-
 git;git --version#git version 2
 nc;nc -h 2>&1 | grep netcat#OpenBSD netcat
 pv;pv --version#pv 1.6
+awk;awk --version#GNU Awk 4

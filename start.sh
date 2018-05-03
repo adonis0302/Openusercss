@@ -78,9 +78,10 @@ newline () {
 }
 
 info () {
-  content=$1
-  expect_sameline=$2
-  carriage="\\n"
+  local content=$1
+  local expect_sameline=$2
+  local carriage="\\n"
+  local info_prev_length=0
 
   if [ $info_prev_length -gt 0 ]; then
     for (( i=1; i <= $info_prev_length + 7; i++)); do
@@ -219,37 +220,34 @@ system_info () {
 
 cleanup () {
   info "Removing development domains from hosts file"
-  sudo hostess del dev.openusercss.local
-  sudo hostess del api.dev.openusercss.local
+  sudo hostess del dev.openusercss.local | log
+  sudo hostess del api.dev.openusercss.local | log
 
-  jobs -p 1>&3
-  info "Waiting for $(jobs -p | wc -l) jobs to complete..."
-  countdown 10 "Timed out"
-  wait
+  info "Stopping and deleting containers"
+  docker-compose -f dev.stack.yml down 2>&1 | log
+
+  local jobcount
+  jobcount=$(jobs -p | wc -l)
+
+  if [ $jobcount -gt 0 ]; then
+    info "Stopping $(jobs -p | wc -l) background tasks"
+    kill "$(jobs -p)" | log
+  else
+    info "No background tasks remaining"
+  fi
 }
 
 print_self () {
   cat $0
 }
 
-keep_root () {
-  if $CLEANUP_NEEDED; then
-    while true; do
-      info "Refreshing sudo session"
-
-      sudo -n true
-      kill -0 "$$" 2>/dev/null || error "Sudo session lost" 1
-      sleep 300
-    done &
-  fi
-}
-
 initialise () {
-  mkdir -p "$LOG_DIR"
+  mkdir -p "$LOG_DIR" build/data
   reset_file $LOG_FILE
-  exec 3>&1 1>>${LOG_FILE} 2>&1
+  exec 3>&1 2>&1 1>>${LOG_FILE}
 
   if [ "$TRACE" = true ]; then
+    exec {BASH_XTRACEFD}>>$LOG_FILE
     PS4='${BASH_LINENO[0]} - ${FUNCNAME[0]}() +'
     set -o xtrace
   fi
@@ -262,7 +260,7 @@ initialise () {
 
   info "Adding development domains to hosts file"
 
-  sudo printf "[INFO] Sudo session initialised\n" | tee /dev/fd/3
+  sudo printf "$CYAN[INFO]$RESET Sudo session initialised\n" | tee /dev/fd/3
   local sudostatus=$?
 
   if [ $sudostatus -gt 0 ]; then
@@ -272,8 +270,8 @@ initialise () {
     info "Add them, then press ENTER to continue"
     read
   else
-    sudo hostess add dev.openusercss.local 127.0.0.1
-    sudo hostess add api.dev.openusercss.local 127.0.0.1
+    sudo hostess add dev.openusercss.local 127.0.0.1 | log
+    sudo hostess add api.dev.openusercss.local 127.0.0.1 | log
 
     CLEANUP_NEEDED=true
   fi
@@ -310,7 +308,7 @@ check_binary () {
     if ! type "$bin" > /dev/null 2> /dev/null; then
       if [ ! -z "$url" ]; then
         info "Binary $bin is not available in \$PATH."
-        info "Download URL available, receiving from $url"
+        info "Download URL available, receiving..."
 
         if [ -z "$postprocess" ]; then
           wget \
@@ -322,8 +320,10 @@ check_binary () {
             --show-progress \
             -U $AGENT \
             -O .ignored/bin/"$bin" \
-            "$url"
+            "$url" | log
         else
+          # This is not in use currently. If a downloadable binary every requires
+          # post-processing, this is where that code goes
           wget \
             -r \
             -q \
@@ -333,10 +333,10 @@ check_binary () {
             --show-progress \
             -U $AGENT \
             -O .ignored/temp/"$bin" \
-            "$url"
+            "$url" | log
         fi
 
-        chmod +x .ignored/bin/"$bin"
+        chmod +x .ignored/bin/"$bin" | log
       else
         # error "$bin is not available in \$PATH" 1
         installed=false
@@ -356,7 +356,7 @@ check_binary () {
   expected=$(printf "%s" "$test" | cut -d '#' -f2)
 
   set +e
-  output=$(sh -c "$command")
+  output=$(sh -c "$command" 2>&1)
   outputstatus=$?
   set -e
 
@@ -373,7 +373,8 @@ check_binary () {
   fi
 
   if [ $outputstatus -gt 0 ]; then
-    error "Error while testing $bin"
+    error "Error while testing $bin:"
+    error "$output"
     error "Command $command returned error code $outputstatus" $outputstatus
     colour=$RED
     success=false
@@ -453,17 +454,14 @@ countdown () {
 ################################################################################
 
 initialise
-countdown 3 "Takeoff"
-
-printf "\\n"
-keep_root
+countdown 2 "Takeoff"
 
 info "Rotate"
 docker-compose -f dev.stack.yml build | tee /dev/fd/3 || error "Building the stack image failed" 1
 
 countdown 2 "Gear up"
 
-docker-compose -f dev.stack.yml run --rm dev.openusercss | tee /dev/fd/3 || error \
+docker-compose -f dev.stack.yml run --rm dev.openusercss 2>&1 | log || error \
   "A runtime error occurred - There is likely additional logging output above" 1
 
 cleanup
