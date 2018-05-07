@@ -32,7 +32,7 @@
   }
 
   export default {
-    'transition': 'fade',
+    'transition': 'fade-zoom',
     'components': {
       notification,
       editor,

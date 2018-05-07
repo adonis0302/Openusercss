@@ -1,6 +1,6 @@
 <script>
   export default {
-    'transition': 'fade',
+    'transition': 'fade-zoom',
   }
 </script>
 

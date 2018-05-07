@@ -49,7 +49,7 @@
   })
 
   export default {
-    'transition': 'fade',
+    'transition': 'fade-zoom',
     fetch ({store, app, route,}) {
       return store.dispatch('themes/single', route.params.id)
       .catch(() => {

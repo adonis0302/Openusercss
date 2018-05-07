@@ -9,7 +9,7 @@
   import starRating from 'vue-star-rating'
 
   export default {
-    'transition': 'fade',
+    'transition': 'fade-zoom',
     fetch ({store, route,}) {
       return store.dispatch('users/single', route.params.id)
     },

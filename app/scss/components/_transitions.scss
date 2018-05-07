@@ -13,15 +13,23 @@
 .fade-zoom- {
   &enter-active,
   &leave-active {
-    transition:
-      transform .3s ease-in-out,
-      opacity .2s ease-in-out;
+    transition-property: transform, opacity, filter;
+    transition-duration: .2s;
+  }
+
+  &enter-active {
+    transition-timing-function: cubic-bezier(.19, .84, .53, 1);
+  }
+
+  &leave-active {
+    transition-timing-function: cubic-bezier(.58,.05,.91,.53);
   }
 
   &enter,
   &leave-to {
     opacity: 0;
-    transform: scale(.9);
+    transform: scale(.95);
+    filter: grayscale(1);
   }
 }
 

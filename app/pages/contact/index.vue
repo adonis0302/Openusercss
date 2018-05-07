@@ -2,7 +2,7 @@
   import {decode,} from 'he'
 
   export default {
-    'transition': 'fade',
+    'transition': 'fade-zoom',
     mounted () {
       setTimeout(() => {
         this.showing = true

@@ -3,7 +3,7 @@
   import notification from '~/components/elements/notification.vue'
 
   export default {
-    'transition': 'fade',
+    'transition': 'fade-zoom',
     'components': {
       notification,
       spinner,

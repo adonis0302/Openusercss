@@ -6,7 +6,7 @@
   import {mapGetters,} from 'vuex'
 
   export default {
-    'transition': 'fade',
+    'transition': 'fade-zoom',
     'components': {
       oucButton,
       notification,

@@ -2,7 +2,7 @@
   import {mapGetters,} from 'vuex'
 
   export default {
-    'transition': 'fade',
+    'transition': 'fade-zoom',
     fetch ({store, route,}) {
       return store.dispatch('licenses/all')
     },

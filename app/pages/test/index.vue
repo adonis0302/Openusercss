@@ -3,7 +3,7 @@
   import oucLoading from '~/components/elements/loading.vue'
 
   export default {
-    'transition': 'fade',
+    'transition': 'fade-zoom',
     'components': {
       spinner,
       oucLoading,

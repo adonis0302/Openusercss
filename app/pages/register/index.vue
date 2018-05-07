@@ -18,7 +18,7 @@
   }
 
   export default {
-    'transition': 'fade',
+    'transition': 'fade-zoom',
     'components': {
       oucButton,
       bInput,
