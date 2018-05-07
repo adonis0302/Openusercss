@@ -5,7 +5,7 @@
   "description": "OpenUserCSS",
   "main": "index.js",
   "scripts": {
-    "env": "env-cmd --fallback ./.env.local",
+    "env": "env-cmd --no-override --fallback ./.env.local",
     "concurrent": "concurrently --raw --kill-others -s first",
     "contrib:add": "all-contributors add",
     "contrib:generate": "all-contributors generate",

@@ -5,6 +5,9 @@ set -e
 ## Variables
 ################################################################################
 
+DEFAULT_TRACE=false
+DEFAULT_DOMAIN="dev.openusercss.local"
+
 PATH=$PATH":node_modules/.bin:.ignored/bin"
 CLEANUP_NEEDED=false
 LOG_FILE=.ignored/logs/preflight.log
@@ -12,8 +15,9 @@ LOG_DIR=$(echo $LOG_FILE | rev | cut -d '/' -f2- | rev)
 SHORT=$(git rev-parse --short HEAD)
 TAG=$(git describe --always --tag --abbrev=0)
 AGENT="OpenUserCSS startscript v$TAG (github.com/OpenUserCSS/openusercss.org)"
-TRACE=false
+TRACE=$DEFAULT_TRACE
 ERROR_HANDLING=false
+DOMAIN=$DEFAULT_DOMAIN
 
 RED='\033[0;31m'
 ORANGE='\033[0;33m'
@@ -29,11 +33,12 @@ usage_example () {
 }
 
 usage () {
-  printf "OpenUserCSS development startup script version %s\n" "$TAG"
+  printf "OpenUserCSS development startup script %s (%s)\n" "$TAG" "$SHORT"
   printf "Usage: ./start.sh\n"
   printf "\n"
-  usage_example "-h --help" "Shows this help message"
-  usage_example "-t --trace" "Enables verbose logging to file"
+  usage_example "-h --help" "Show this help message"
+  usage_example "-t --trace" "Set verbose logging to file (default: $DEFAULT_TRACE)"
+  usage_example "-d --domain" "Set the development domain (default: $DEFAULT_DOMAIN)"
   printf ""
 }
 
@@ -51,10 +56,17 @@ while [ "$1" != "" ]; do
     -f | --file)
       LOG_FILE=$VALUE
       ;;
+    -d | --domain)
+      DOMAIN=$VALUE
+      ;;
+    -x | --xx)
+      printf "VALUE=%s\\n" $VALUE
+      exit 0
+      ;;
     *)
       printf "Unknown parameter \"$PARAM\"\n\n"
       usage
-      exit 1
+      exit 2
       ;;
   esac
   shift
@@ -159,7 +171,7 @@ error () {
 create_trap () {
   if [ "$ERROR_HANDLING" = false ]; then
     info "Error handling enabled"
-    trap 'error "An error occurred on line $LINENO" 1' INT ERR TERM
+    trap 'error "An error occurred on line $LINENO" 4' INT ERR TERM
     ERROR_HANDLING=true
   fi
 }
@@ -220,11 +232,11 @@ system_info () {
 
 cleanup () {
   info "Removing development domains from hosts file"
-  sudo hostess del dev.openusercss.local | log
-  sudo hostess del api.dev.openusercss.local | log
+  sudo hostess del $DOMAIN | log
+  sudo hostess del api.$DOMAIN | log
 
   info "Stopping and deleting containers"
-  docker-compose -f dev.stack.yml down 2>&1 | log
+  DOMAIN=$DOMAIN docker-compose -f dev.stack.yml down 2>&1 | log
 
   local jobcount
   jobcount=$(jobs -p | wc -l)
@@ -272,13 +284,13 @@ initialise () {
 
   if [ $sudostatus -gt 0 ]; then
     info "Root access not granted. You must manually add the following entries:"
-    info "127.0.0.1 dev.openusercss.local"
-    info "127.0.0.1 api.dev.openusercss.local"
+    info "127.0.0.1 $DOMAIN"
+    info "127.0.0.1 api.$DOMAIN"
     info "Add them, then press ENTER to continue"
     read
   else
-    sudo hostess add dev.openusercss.local 127.0.0.1 | log
-    sudo hostess add api.dev.openusercss.local 127.0.0.1 | log
+    sudo hostess add $DOMAIN 127.0.0.1 | log
+    sudo hostess add api.$DOMAIN 127.0.0.1 | log
 
     CLEANUP_NEEDED=true
   fi
@@ -286,8 +298,8 @@ initialise () {
   local hostsfile
   hostsfile=$(cat /etc/hosts)
 
-  if [[ ! "$hostsfile" = *"dev.openusercss.local"* ]] \
-     || [[ ! "$hostsfile" = *"api.dev.openusercss.local"* ]]; then
+  if [[ ! "$hostsfile" = *"$DOMAIN"* ]] \
+     || [[ ! "$hostsfile" = *"api.$DOMAIN"* ]]; then
     newline
     error "Can't find development hosts in /etc/hosts"
     error "Hosts file test failed" 1
@@ -308,7 +320,7 @@ check_binary () {
   local installed=true
 
   if [ -z "$test" ]; then
-    error "Test parameters for $bin are not specified. This is a developer error, please open an issue!" 1
+    error "Test parameters for $bin are not specified. This is a developer error, please open an issue!" 10
   fi
 
   if [ ! -z "$bin" ]; then
@@ -329,7 +341,7 @@ check_binary () {
             -O .ignored/bin/"$bin" \
             "$url" | log
         else
-          # This is not in use currently. If a downloadable binary every requires
+          # This is not in use currently. If a downloadable binary ever requires
           # post-processing, this is where that code goes
           wget \
             -r \
@@ -351,7 +363,7 @@ check_binary () {
     fi
   else
     error "A binary has not been properly specified. This is a developer error, please open an issue!"
-    error "Line: $*" 1
+    error "Line: $*" 11
   fi
 
   local command
@@ -382,7 +394,7 @@ check_binary () {
   if [ $outputstatus -gt 0 ]; then
     error "Error while testing $bin:"
     error "$output"
-    error "Command $command returned error code $outputstatus" $outputstatus
+    error "Command $command returned error code $outputstatus" $((128 + $outputstatus))
     colour=$RED
     success=false
     return
@@ -399,7 +411,7 @@ check_binary () {
   fi
 
   if [ "$installed" = false ]; then
-    error "$bin is not available in \$PATH" 1
+    error "$bin is not available in \$PATH" 5
   fi
 }
 
@@ -425,7 +437,7 @@ check_env () {
   done < script_requirements.txt
 
   if [ "$all_bin_result" = false ]; then
-    error "Failed to validate one or more binaries" 1
+    error "Failed to validate one or more binaries" 126
   fi
 
   set +e
@@ -464,11 +476,11 @@ initialise
 countdown 2 "Takeoff"
 
 info "Rotate"
-docker-compose -f dev.stack.yml build | tee /dev/fd/3 || error "Building the stack image failed" 1
+DOMAIN=$DOMAIN docker-compose -f dev.stack.yml build | tee /dev/fd/3 || error "Building the stack image failed" 126
 
 countdown 2 "Gear up"
 
-docker-compose -f dev.stack.yml run --rm dev.openusercss 2>&1 | log || error \
+DOMAIN=$DOMAIN docker-compose -f dev.stack.yml run --rm dev.openusercss 2>&1 | log || error \
   "A runtime error occurred - There is likely additional logging output above" 1
 
 cleanup

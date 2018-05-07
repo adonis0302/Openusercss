@@ -73,9 +73,6 @@ export default {
       'ssr': false,
     },
   ],
-  'serverMiddleware': [
-    '~/server-middleware/helmet.js',
-  ],
   'modules': [
     '~/modules/apollo',
     [

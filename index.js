@@ -12,7 +12,7 @@ import signals from 'lib/express/signal-handler'
 import {handler as clientHandler,} from './client'
 import {handler as apiHandler,} from './api'
 
-const createApp = async ({config,}) => {
+const createApp = ({config,}) => {
   const app = express()
 
   if (config.get('env') === 'production') {
@@ -32,7 +32,7 @@ const createApp = async ({config,}) => {
 let clientServer = null
 const clientInit = async () => {
   const config = await staticConfig()
-  const app = await createApp({config,})
+  const app = createApp({config,})
 
   await clientHandler({
     app,
@@ -50,7 +50,7 @@ const clientInit = async () => {
 let apiServer = null
 const apiInit = async () => {
   const config = await staticConfig()
-  const app = await createApp({config,})
+  const app = createApp({config,})
 
   await apiHandler({
     app,
