@@ -15,9 +15,9 @@
       changelog () {
         return changelog
       },
-      dev () {
-        return process.env.NODE_ENV === 'development'
-      },
+    },
+    mounted () {
+      this.dev = this.dev || window.location.href.includes('staging')
     },
     data () {
       return {
@@ -26,6 +26,7 @@
           'latestThemes':  [],
           'popularThemes': [],
         },
+        'dev': process.env.NODE_ENV === 'development',
       }
     },
   }
