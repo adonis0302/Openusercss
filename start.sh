@@ -169,7 +169,7 @@ error () {
     fi
 
     printf "You can help fix this error if you want by sharing your logs with me.\n" 1>&3
-    printf "Upload script logs (size: %s) to https://termbin.com? (y/N) " "$(du -ah $LOG_FILE | cut -f1)" 1>&3
+    printf "Upload script logs (size: %s) to http://termbin.com? (y/N) " "$(du -ah $LOG_FILE | cut -f1)" 1>&3
 
     read -n 1 upload
 
