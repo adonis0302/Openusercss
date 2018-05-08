@@ -7,6 +7,7 @@ set -e
 
 DEFAULT_TRACE=false
 DEFAULT_DOMAIN="dev.openusercss.local"
+DEFAULT_ROOTLESS=false
 
 PATH=$PATH":node_modules/.bin:.ignored/bin"
 CLEANUP_NEEDED=false
@@ -18,10 +19,13 @@ AGENT="OpenUserCSS startscript v$TAG (github.com/OpenUserCSS/openusercss.org)"
 TRACE=$DEFAULT_TRACE
 ERROR_HANDLING=false
 DOMAIN=$DEFAULT_DOMAIN
+ROOTLESS=$DEFAULT_ROOTLESS
 
 RED='\033[0;31m'
 ORANGE='\033[0;33m'
 CYAN='\033[0;36m'
+
+BOLD='\e[1m'
 RESET='\033[0m'
 
 ################################################################################
@@ -29,17 +33,26 @@ RESET='\033[0m'
 ################################################################################
 
 usage_example () {
-  printf '%15s\t%-s\n' "$1" "$2"
+  local MANDATORY=$3
+
+  if [ "$MANDATORY" = true ]; then
+    printf "%15s\t$BOLD%1s$RESET %-s\n" "$1" "*" "$2"
+  else
+    printf '%15s\t  %-s\n' "$1" "$2"
+  fi
 }
 
 usage () {
   printf "OpenUserCSS development startup script %s (%s)\n" "$TAG" "$SHORT"
-  printf "Usage: ./start.sh\n"
-  printf "\n"
+  printf "Usage: ./start.sh (all arguments are optional)\n"
+  printf "\\n"
   usage_example "-h --help" "Show this help message"
   usage_example "-t --trace" "Set verbose logging to file (default: $DEFAULT_TRACE)"
-  usage_example "-d --domain" "Set the development domain (default: $DEFAULT_DOMAIN)"
-  printf ""
+  usage_example "-d --domain" "Set the development domain (default: $DEFAULT_DOMAIN)" true
+  usage_example "-r --rootless" "Skip automations that require root access (default: $DEFAULT_ROOTLESS)"
+  printf "\\n"
+  printf "  $BOLD*$RESET  A value must be specified after an equals sign.\\n"
+  printf "     For example: $0 --domain$BOLD=something.local$RESET\\n"
 }
 
 while [ "$1" != "" ]; do
@@ -59,12 +72,15 @@ while [ "$1" != "" ]; do
     -d | --domain)
       DOMAIN=$VALUE
       ;;
+    -r | --rootless)
+      ROOTLESS=true
+      ;;
     -x | --xx)
       printf "VALUE=%s\\n" $VALUE
       exit 0
       ;;
     *)
-      printf "Unknown parameter \"$PARAM\"\n\n"
+      printf "${RED}[ERROR]$RESET Unknown parameter \"$PARAM\"\\n\\n"
       usage
       exit 2
       ;;
@@ -230,10 +246,19 @@ system_info () {
 ## Script lifecycle
 ################################################################################
 
-cleanup () {
+add_domains () {
+  info "Adding development domains to hosts file:"
+  info "$DOMAIN and api.$DOMAIN"
+  sudo sh -c "hostess add $DOMAIN 127.0.0.1 && hostess add api.$DOMAIN 127.0.0.1" | log
+}
+
+remove_domains () {
   info "Removing development domains from hosts file"
-  sudo hostess del $DOMAIN | log
-  sudo hostess del api.$DOMAIN | log
+  sudo sh -c "hostess del $DOMAIN && hostess del api.$DOMAIN" | log
+}
+
+cleanup () {
+  remove_domains
 
   info "Stopping and deleting containers"
   DOMAIN=$DOMAIN docker-compose -f dev.stack.yml down 2>&1 | log
@@ -277,21 +302,13 @@ initialise () {
   info "Starting before-takeoff checklist"
   check_env
 
-  info "Adding development domains to hosts file"
-
-  sudo printf "$CYAN[INFO]$RESET Sudo session initialised\n" | tee /dev/fd/3
-  local sudostatus=$?
-
-  if [ $sudostatus -gt 0 ]; then
-    info "Root access not granted. You must manually add the following entries:"
+  if [ $ROOTLESS = true ]; then
+    info "Add the following entries to your hosts file, then press ENTER:"
     info "127.0.0.1 $DOMAIN"
     info "127.0.0.1 api.$DOMAIN"
-    info "Add them, then press ENTER to continue"
     read
   else
-    sudo hostess add $DOMAIN 127.0.0.1 | log
-    sudo hostess add api.$DOMAIN 127.0.0.1 | log
-
+    add_domains
     CLEANUP_NEEDED=true
   fi
 
@@ -300,7 +317,6 @@ initialise () {
 
   if [[ ! "$hostsfile" = *"$DOMAIN"* ]] \
      || [[ ! "$hostsfile" = *"api.$DOMAIN"* ]]; then
-    newline
     error "Can't find development hosts in /etc/hosts"
     error "Hosts file test failed" 1
   fi
