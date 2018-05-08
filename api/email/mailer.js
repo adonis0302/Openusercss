@@ -86,10 +86,17 @@ export const sendEmail = async ({to, template, locals,}) => {
     transport,
   })
 
+  let domainUrl = `https://${config.get('domain')}`
+
+  if (config.get('env') === 'development') {
+    domainUrl = `http://${config.get('domain')}`
+  }
+
   return email.send({
     template,
     'locals': {
       'signoff': signoffs[Math.floor(Math.random() * signoffs.length)],
+      domainUrl,
       ...locals,
     },
     'message': {

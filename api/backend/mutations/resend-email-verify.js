@@ -15,13 +15,7 @@ const createSendEmail = async ({email, displayname,}) => {
     'issuer':    config.get('domain'),
     'algorithm': 'HS256',
   })
-
-  let link = `https://openusercss.org/account/verify-email/${token}`
-
-  if (process.env.NODE_ENV === 'development') {
-    link = `http://dev.openusercss.local/account/verify-email/${token}`
-  }
-
+  const link = `https://${config.get('domain')}/account/verify-email/${token}`
   const expires = moment().add(1, 'days').format('MMMM Do, HH:mm ZZ')
 
   const result = await sendEmail({

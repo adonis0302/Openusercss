@@ -25,12 +25,7 @@ const sendEmail = async (locals, {template,}) => {
     'issuer':    config.get('domain'),
     'algorithm': 'HS256',
   })
-
-  let link = `https://openusercss.org/account/verify-email/${token}`
-
-  if (process.env.NODE_ENV === 'development') {
-    link = `http://dev.openusercss.local/account/verify-email/${token}`
-  }
+  const link = `https://${config.get('domain')}/account/verify-email/${token}`
 
   const result = await transportEmail({
     'to':     locals.email,
@@ -96,10 +91,7 @@ export default async (root, {email, password, displayname, bio, donationUrl,}, {
       'algorithm': 'HS256',
     })
 
-    link = `https://openusercss.org/account/verify-email/${verificationToken}`
-    if (process.env.NODE_ENV === 'development') {
-      link = `http://dev.openusercss.local/account/verify-email/${verificationToken}`
-    }
+    link = `https://${config.get('domain')}/account/verify-email/${verificationToken}`
   }
 
   if (bio) {
