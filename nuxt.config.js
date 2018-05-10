@@ -50,6 +50,11 @@ export default {
   },
   'loading': '~/components/elements/loading.vue',
   'css':     [
+    'css-reset-and-normalize-sass',
+    'md-shadows',
+    './node_modules/flickity/css/flickity.css',
+    './node_modules/izitoast/dist/css/iziToast.css',
+    './node_modules/@riophae/vue-treeselect/dist/vue-treeselect.min.css',
     '~/scss/main.scss',
   ],
   'plugins': [
