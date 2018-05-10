@@ -154,7 +154,7 @@ error () {
 
     if $CLEANUP_NEEDED; then
       CLEANUP_NEEDED=false
-      cleanup || printf "Cleanup failed\n"
+      cleanup || printf "Cleanup failed\n" | log
     fi
 
     printf "\\n$RED[ERROR]$RESET %s\\n" "$msg" | tee /dev/fd/3
@@ -247,14 +247,49 @@ system_info () {
 ################################################################################
 
 add_domains () {
-  info "Adding development domains to hosts file:"
-  info "$DOMAIN and api.$DOMAIN"
-  sudo sh -c "hostess add $DOMAIN 127.0.0.1 && hostess add api.$DOMAIN 127.0.0.1" | log
+  if [ $ROOTLESS = true ]; then
+    info "Add the following entries to your hosts file, then press ENTER:"
+    info "127.0.0.1 $DOMAIN"
+    info "127.0.0.1 api.$DOMAIN"
+    read
+  else
+    info "Adding development domains to hosts file:"
+    info "$DOMAIN and api.$DOMAIN"
+    sudo sh -c "hostess add $DOMAIN 127.0.0.1 && hostess add api.$DOMAIN 127.0.0.1" | log
+
+    CLEANUP_NEEDED=true
+  fi
+
+  local hostsfile
+  hostsfile=$(cat /etc/hosts)
+
+  if [[ ! "$hostsfile" = *"$DOMAIN"* ]] \
+     || [[ ! "$hostsfile" = *"api.$DOMAIN"* ]]; then
+    error "Can't find development hosts in /etc/hosts"
+    error "Hosts file test failed" 1
+  fi
 }
 
 remove_domains () {
-  info "Removing development domains from hosts file"
-  sudo sh -c "hostess del $DOMAIN && hostess del api.$DOMAIN" | log
+  if [ $ROOTLESS = true ]; then
+    info "Remove the following entries from your hosts file, then press ENTER:"
+    info "127.0.0.1 $DOMAIN"
+    info "127.0.0.1 api.$DOMAIN"
+    read
+  else
+    info "Removing development domains from hosts file:"
+    info "$DOMAIN and api.$DOMAIN"
+    sudo sh -c "hostess del $DOMAIN && hostess del api.$DOMAIN" | log
+  fi
+
+  local hostsfile
+  hostsfile=$(cat /etc/hosts)
+
+  if [[ "$hostsfile" = *"$DOMAIN"* ]] \
+     || [[ "$hostsfile" = *"api.$DOMAIN"* ]]; then
+    error "Found development hosts in /etc/hosts"
+    error "Hosts file test failed. You must manually remove the development records." 1
+  fi
 }
 
 cleanup () {
@@ -301,26 +336,7 @@ initialise () {
 
   info "Starting before-takeoff checklist"
   check_env
-
-  if [ $ROOTLESS = true ]; then
-    info "Add the following entries to your hosts file, then press ENTER:"
-    info "127.0.0.1 $DOMAIN"
-    info "127.0.0.1 api.$DOMAIN"
-    read
-  else
-    add_domains
-    CLEANUP_NEEDED=true
-  fi
-
-  local hostsfile
-  hostsfile=$(cat /etc/hosts)
-
-  if [[ ! "$hostsfile" = *"$DOMAIN"* ]] \
-     || [[ ! "$hostsfile" = *"api.$DOMAIN"* ]]; then
-    error "Can't find development hosts in /etc/hosts"
-    error "Hosts file test failed" 1
-  fi
-
+  add_domains
   info "Before-takeoff checklist complete"
 }
 
