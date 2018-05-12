@@ -20,6 +20,7 @@ TRACE=$DEFAULT_TRACE
 ERROR_HANDLING=false
 DOMAIN=$DEFAULT_DOMAIN
 ROOTLESS=$DEFAULT_ROOTLESS
+MANAGED_HOSTS=true
 
 RED='\033[0;31m'
 ORANGE='\033[0;33m'
@@ -247,48 +248,57 @@ system_info () {
 ################################################################################
 
 add_domains () {
-  if [ $ROOTLESS = true ]; then
-    info "Add the following entries to your hosts file, then press ENTER:"
-    info "127.0.0.1 $DOMAIN"
-    info "127.0.0.1 api.$DOMAIN"
-    read
-  else
-    info "Adding development domains to hosts file:"
-    info "$DOMAIN and api.$DOMAIN"
-    sudo sh -c "hostess add $DOMAIN 127.0.0.1 && hostess add api.$DOMAIN 127.0.0.1" | log
-
-    CLEANUP_NEEDED=true
-  fi
-
-  local hostsfile
-  hostsfile=$(cat /etc/hosts)
-
-  if [[ ! "$hostsfile" = *"$DOMAIN"* ]] \
-     || [[ ! "$hostsfile" = *"api.$DOMAIN"* ]]; then
-    error "Can't find development hosts in /etc/hosts"
-    error "Hosts file test failed" 1
-  fi
-}
-
-remove_domains () {
-  if [ $ROOTLESS = true ]; then
-    info "Remove the following entries from your hosts file, then press ENTER:"
-    info "127.0.0.1 $DOMAIN"
-    info "127.0.0.1 api.$DOMAIN"
-    read
-  else
-    info "Removing development domains from hosts file:"
-    info "$DOMAIN and api.$DOMAIN"
-    sudo sh -c "hostess del $DOMAIN && hostess del api.$DOMAIN" | log
-  fi
-
   local hostsfile
   hostsfile=$(cat /etc/hosts)
 
   if [[ "$hostsfile" = *"$DOMAIN"* ]] \
-     || [[ "$hostsfile" = *"api.$DOMAIN"* ]]; then
-    error "Found development hosts in /etc/hosts"
-    error "Hosts file test failed. You must manually remove the development records." 1
+    || [[ "$hostsfile" = *"api.$DOMAIN"* ]]; then
+      MANAGED_HOSTS=false
+  fi
+
+  if [ $MANAGED_HOSTS = true ]; then
+    if [ $ROOTLESS = true ]; then
+      info "Add the following entries to your hosts file, then press ENTER:"
+      info "127.0.0.1 $DOMAIN"
+      info "127.0.0.1 api.$DOMAIN"
+      read
+    else
+      info "Adding development domains to hosts file:"
+      info "$DOMAIN and api.$DOMAIN"
+      sudo sh -c "hostess add $DOMAIN 127.0.0.1 && hostess add api.$DOMAIN 127.0.0.1" | log
+
+      CLEANUP_NEEDED=true
+    fi
+  fi
+
+  if [[ ! "$hostsfile" = *"$DOMAIN"* ]] \
+    || [[ ! "$hostsfile" = *"api.$DOMAIN"* ]]; then
+      error "Can't find development hosts in /etc/hosts"
+      error "Hosts file test failed" 1
+  fi
+}
+
+remove_domains () {
+  if [ $MANAGED_HOSTS = true ]; then
+    if [ $ROOTLESS = true ]; then
+      info "Remove the following entries from your hosts file, then press ENTER:"
+      info "127.0.0.1 $DOMAIN"
+      info "127.0.0.1 api.$DOMAIN"
+      read
+    else
+      info "Removing development domains from hosts file:"
+      info "$DOMAIN and api.$DOMAIN"
+      sudo sh -c "hostess del $DOMAIN && hostess del api.$DOMAIN" | log
+    fi
+
+    local hostsfile
+    hostsfile=$(cat /etc/hosts)
+
+    if [[ "$hostsfile" = *"$DOMAIN"* ]] \
+    || [[ "$hostsfile" = *"api.$DOMAIN"* ]]; then
+      error "Found development hosts in /etc/hosts"
+      error "Hosts file test failed. You must manually remove the development records." 1
+    fi
   fi
 }
 
