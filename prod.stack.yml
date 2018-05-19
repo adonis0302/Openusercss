@@ -11,6 +11,7 @@ services:
       dockerfile: prod.dockerfile
     volumes:
       - .ignored/data:/ouc/build/data
+      - ~/.cache/yarn:/yarn-cache
     environment:
       DISPLAY: :0
       NODE_ENV: production

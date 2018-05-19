@@ -1,5 +1,4 @@
 import rucksack from 'rucksack-css'
-import flexibility from 'postcss-flexibility'
 import fixes from 'postcss-fixes'
 import willChange from 'postcss-will-change'
 import willChangeTransition from 'postcss-will-change-transition'
@@ -24,7 +23,6 @@ export const postCssPluginsFunctional = [
   }),
   ellipsis(),
   // Zero-effort feature adding plugins
-  flexibility(),
   willChange(),
   willChangeTransition(),
 ]

@@ -10051,12 +10051,6 @@ postcss-flexbugs-fixes@^3.0.0:
   dependencies:
     postcss "^6.0.1"
 
-postcss-flexibility@^2:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/postcss-flexibility/-/postcss-flexibility-2.0.0.tgz#5612c1b85d6595ed480966839928a41617a6a768"
-  dependencies:
-    postcss "^6.0.1"
-
 postcss-font-family-system-ui@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/postcss-font-family-system-ui/-/postcss-font-family-system-ui-3.0.0.tgz#675fe7a9e029669f05f8dba2e44c2225ede80623"
@@ -13526,7 +13520,15 @@ void-elements@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
 
-vue-apollo@^3.0.0-beta.4, vue-apollo@^3.0.0-beta.5:
+vue-apollo@^3.0.0-beta.10:
+  version "3.0.0-beta.10"
+  resolved "https://registry.yarnpkg.com/vue-apollo/-/vue-apollo-3.0.0-beta.10.tgz#08a5c993a2c95a5408a2c251260d0dcbad52228f"
+  dependencies:
+    lodash.debounce "^4.0.8"
+    lodash.omit "^4.5.0"
+    lodash.throttle "^4.1.1"
+
+vue-apollo@^3.0.0-beta.5:
   version "3.0.0-beta.9"
   resolved "https://registry.yarnpkg.com/vue-apollo/-/vue-apollo-3.0.0-beta.9.tgz#5431fe46f9f536a28661f5e1cff2d2b0c4c68a19"
   dependencies:

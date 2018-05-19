@@ -34,6 +34,8 @@ const clientInit = async () => {
   const config = await staticConfig()
   const app = createApp({config,})
 
+  log.info(`CLIENT environment: ${app.get('env')}`)
+
   await clientHandler({
     app,
     config,
@@ -44,13 +46,14 @@ const clientInit = async () => {
 
   clientServer.listen(config.get('ports.frontend.http'))
   log.info(`CLIENT started (http): ${JSON.stringify(config.get('ports.frontend.http'))}`)
-  log.info(`CLIENT environment: ${app.get('env')}`)
 }
 
 let apiServer = null
 const apiInit = async () => {
   const config = await staticConfig()
   const app = createApp({config,})
+
+  log.info(`API environment: ${app.get('env')}`)
 
   await apiHandler({
     app,
@@ -62,7 +65,6 @@ const apiInit = async () => {
 
   apiServer.listen(config.get('ports.api.http'))
   log.info(`API started (http): ${JSON.stringify(config.get('ports.api.http'))}`)
-  log.info(`API environment: ${app.get('env')}`)
 }
 
 Promise.all([

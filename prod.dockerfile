@@ -9,19 +9,15 @@ COPY --chown=1000:1000 ./yarn.lock /ouc/
 COPY --chown=1000:1000 ./.yarnrc /ouc/
 
 RUN apk --update add git
-RUN cd /ouc && yarn \
-  --frozen-lockfile \
-  --non-interactive \
-  --network-timeout 10000 \
-  --network-concurrency 3 \
-  --production
 
 COPY --chown=1000:1000 ./build /ouc/build
 COPY --chown=1000:1000 ./.nuxt /ouc/.nuxt
 COPY --chown=1000:1000 ./prod.entrypoint.sh /ouc/
 COPY --chown=1000:1000 ./nuxt.config.js /ouc/
+COPY --chown=1000:1000 ./.prod.env.local /ouc/
+COPY --chown=1000:1000 ./app /ouc/
 
-VOLUME ["/ouc/build/data"]
+VOLUME ["/ouc/build/data", "/yarn-cache"]
 
 EXPOSE 5000/tcp
 EXPOSE 5010/tcp

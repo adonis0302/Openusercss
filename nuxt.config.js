@@ -1,34 +1,28 @@
+const rucksack = require('rucksack-css')
+const willChange = require('postcss-will-change')
+const willChangeTransition = require('postcss-will-change-transition')
+const ellipsis = require('postcss-ellipsis')
+
 const dev = process.env.NODE_ENV === 'development'
 const ci = process.env.CI
 const analyze = dev && !ci
 
-let postcss = []
-
-if (dev) {
-  const rucksack = require('rucksack-css')
-  const flexibility = require('postcss-flexibility')
-  const willChange = require('postcss-will-change')
-  const willChangeTransition = require('postcss-will-change-transition')
-  const ellipsis = require('postcss-ellipsis')
-
-  postcss = [
-    // Syntax extending plugins
-    rucksack({
-      'autoprefixer':      false,
-      'shorthandPosition': false,
-      'quantityQueries':   false,
-      'alias':             false,
-      'inputPseudo':       false,
-    }),
-    ellipsis(),
-    // Zero-effort feature adding plugins
-    flexibility(),
-    willChange(),
-    willChangeTransition(),
-  ]
-}
+const postcss = [
+  // Syntax extending plugins
+  rucksack({
+    'autoprefixer':      false,
+    'shorthandPosition': false,
+    'quantityQueries':   false,
+    'alias':             false,
+    'inputPseudo':       false,
+  }),
+  ellipsis(),
+  willChange(),
+  willChangeTransition(),
+]
 
 module.exports = {
+  dev,
   'srcDir': './app',
   'head':   {
     'titleTemplate': '%s - OpenUserCSS',
