@@ -253,6 +253,7 @@ add_domains () {
 
   if [[ "$hostsfile" = *"$DOMAIN"* ]] \
     || [[ "$hostsfile" = *"api.$DOMAIN"* ]]; then
+      info "The hosts file already contains all required hosts, not managing"
       MANAGED_HOSTS=false
   fi
 
