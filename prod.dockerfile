@@ -9,6 +9,13 @@ COPY --chown=1000:1000 ./yarn.lock /ouc/
 COPY --chown=1000:1000 ./.yarnrc /ouc/
 
 RUN apk --update add git
+RUN cd /ouc && yarn \
+  --frozen-lockfile \
+  --non-interactive \
+  --network-timeout 10000 \
+  --network-concurrency 3 \
+  --production \
+  --cache-folder /yarn-cache
 
 COPY --chown=1000:1000 ./build /ouc/build
 COPY --chown=1000:1000 ./.nuxt /ouc/.nuxt
