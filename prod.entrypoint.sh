@@ -11,4 +11,4 @@ yarn \
   --production \
   --cache-folder /yarn-cache
 
-NODE_ENV=production node build/main.js
+./node_modules/.bin/env-cmd .env node build/main.js

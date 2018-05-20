@@ -14,8 +14,8 @@ COPY --chown=1000:1000 ./build /ouc/build
 COPY --chown=1000:1000 ./.nuxt /ouc/.nuxt
 COPY --chown=1000:1000 ./prod.entrypoint.sh /ouc/
 COPY --chown=1000:1000 ./nuxt.config.js /ouc/
-COPY --chown=1000:1000 ./.prod.env.local /ouc/
-COPY --chown=1000:1000 ./app /ouc/
+COPY --chown=1000:1000 ./.prod.env.local /ouc/.env
+COPY --chown=1000:1000 ./app/static /ouc/static
 
 VOLUME ["/ouc/build/data", "/yarn-cache"]
 
