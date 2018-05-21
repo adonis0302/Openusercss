@@ -5,7 +5,7 @@ services:
     depends_on:
       - mongodb
       - traefik
-    image: decentm/openusercss
+    image: ${TAG}
     build:
       context: .
       dockerfile: prod.dockerfile

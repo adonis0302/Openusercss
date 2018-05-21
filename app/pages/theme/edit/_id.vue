@@ -2,7 +2,7 @@
   import semver from 'semver'
   import {cloneDeep, concat,} from 'lodash'
   import {Chrome as colorPicker,} from 'vue-color'
-  import {parse,} from 'parse-usercss'
+  import {parse,} from 'usercss-meta'
   import raven from 'raven-js'
   import {mapGetters,} from 'vuex'
   import treeSelect from '@riophae/vue-treeselect'

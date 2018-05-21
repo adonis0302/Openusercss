@@ -10,7 +10,7 @@
   import raven from 'raven-js'
   import hat from 'hat'
   import {mapGetters,} from 'vuex'
-  import {stringify,} from 'parse-usercss'
+  import {stringify,} from 'usercss-meta'
   import assert from 'assert'
   import delay from 'delay'
   import path from 'path'
