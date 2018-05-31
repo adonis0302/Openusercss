@@ -45,6 +45,8 @@ than a large one that has tons of content.
 1. Clone the repo with `git clone git@github.com:<your username>/openusercss.org.git .`
 1. Type `yarn` to install all the required dependencies into the node_modules directory
 1. (optinally) Add `./node_modules/.bin` into your $PATH, as all required binaries are there
+1. Start a MongoDB instance on your computer and set the `OUC_DATABASE_MAIN` environment
+variable to [a valid MongoDB connection string](https://docs.mongodb.com/manual/reference/connection-string/#standard-connection-string-format) in your `.env.local` file
 1. Type `yarn watch` to start the development server with live reload
 1. Hack away!  
 
