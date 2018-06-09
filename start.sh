@@ -519,7 +519,8 @@ initialise
 countdown 2 "Takeoff"
 
 info "Rotate"
-DOMAIN=$DOMAIN docker-compose -f dev.stack.yml build | tee /dev/fd/3 || error "Building the stack image failed" 126
+DOMAIN=$DOMAIN docker-compose -f dev.stack.yml build 2>&1 | log || error \
+  "Building the stack image failed" 126
 
 countdown 2 "Gear up"
 

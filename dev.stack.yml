@@ -19,7 +19,7 @@ services:
       OUC_DOMAIN: ${DOMAIN}
     labels:
       - "traefik.docker.network=openusercss_gateway"
-      - "traefik.backend=dev.openusercss"
+      # - "traefik.backend=dev.openusercss"
       - "traefik.api.frontend.rule=Host: api.${DOMAIN}"
       - "traefik.api.protocol=http"
       - "traefik.api.port=5000"

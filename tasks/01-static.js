@@ -13,7 +13,7 @@ import jpegRecompress from 'imagemin-jpeg-recompress'
 import jimp from 'gulp-jimp-resize'
 
 // SASS
-import sass from 'gulp-ruby-sass'
+import sass from 'gulp-sass'
 
 // POSTCSS
 import postcss from 'gulp-postcss'
@@ -168,7 +168,8 @@ gulp.task('static:fast', (done) => {
 
 gulp.task('static:email', () => {
   return pump([
-    sass(sources.email),
+    gulp.src(sources.email),
+    sass(),
     buffer(),
     concat('email.min.css'),
     postcss(postCssPluginsProd),
