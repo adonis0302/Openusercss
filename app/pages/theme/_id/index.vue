@@ -51,10 +51,17 @@
   export default {
     'transition': 'fade-zoom',
     fetch ({store, app, route,}) {
-      return store.dispatch('themes/single', route.params.id)
-      .catch(() => {
-        store.commit('themes/delete', route.params.id)
-      })
+      const gets = [
+        store.dispatch('themes/single', route.params.id)
+        .catch(() => {
+          store.commit('themes/delete', route.params.id)
+        }),
+        store.dispatch('ratings/theme', {
+          'id': route.params.id,
+        }),
+      ]
+
+      return Promise.all(gets)
     },
     'components': {
       notification,
@@ -75,6 +82,16 @@
       ...mapGetters({
         'viewer': 'session/viewer',
       }),
+      averageRating () {
+        const ratings = this.$store.getters['ratings/theme'](this.$route.params.id)
+        let sum = 0
+
+        ratings.forEach((rating) => {
+          sum = sum + rating.value
+        })
+
+        return Math.round(sum / ratings.length * 100) / 100
+      },
       theme () {
         return this.$store.getters['themes/single'](this.$route.params.id)
       },
@@ -121,32 +138,16 @@
     },
     'methods': {
       formatMoment,
-      averageRating (array) {
-        let sum = 0
-
-        if (!array) {
-          return sum
-        }
-
-        array.forEach((rating) => {
-          if (!rating.value) {
-            throw new Error('Rating has no value')
-          }
-
-          sum = sum + rating.value
-        })
-
-        const result = sum / array.length
-
-        if (isNaN(result)) {
-          return 0
-        }
-        return result
-      },
       sendRating (value) {
-        this.$store.dispatch('rate', {
+        this.$store.dispatch('ratings/submit', {
           'id': this.$route.params.id,
           value,
+        })
+        .then(() => {
+          this.$toast.success(`You've rated this theme with a ${value}`, 'Rating submitted')
+        })
+        .catch((error) => {
+          this.$toast.error(error.message, 'Couldn\'t submit rating')
         })
       },
       hasScreenshots (theme) {
@@ -401,8 +402,8 @@
                             ) View source
                         br
 
-                        p(v-show="averageRating(theme.ratings) !== 0") Average rating: {{averageRating(theme.ratings)}}
-                        p(v-show="averageRating(theme.ratings) === 0") Not rated yet
+                        p(v-show="averageRating !== 0") Average rating: {{averageRating}}
+                        p(v-show="averageRating === 0") Not rated yet
                         p Created: {{formatMoment(theme.createdAt)}}
                         p Last updated: {{formatMoment(theme.lastUpdate)}}
                         p Version: {{theme.version}}
@@ -434,7 +435,7 @@
                             .level-right
                               no-ssr
                                 star-rating(
-                                  :rating="averageRating(theme.ratings)",
+                                  :rating="averageRating",
                                   :star-size="25",
                                   :show-rating="false",
                                   @rating-selected="sendRating"

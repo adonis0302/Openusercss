@@ -1,0 +1,9 @@
+query ($id: ID!) {
+  ratings(id: $id) {
+    _id
+    value
+    theme {
+      _id
+    }
+  }
+}

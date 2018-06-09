@@ -15,7 +15,7 @@ mixin theme-microdata
       meta(itemprop="ratingCount", :value="theme.ratings ? theme.ratings.length : 0")
       meta(itemprop="bestRating", value="5")
       meta(itemprop="worstRating", value="1")
-      meta(itemprop="ratingValue", :value="averageRating(theme.ratings)")
+      meta(itemprop="ratingValue", :value="averageRating")
 
     meta(itemprop="url", :value="'/theme/' + theme._id")
     meta(itemprop="installUrl", :value="'https://api.openusercss.org/theme/' + theme._id + '.user.css'")
