@@ -7,7 +7,7 @@ export default async (root, {id,}, {Rating,}) => {
     'populate': true,
   })
 
-  if (!result || result.length === 0) {
+  if (!result) {
     throw new Error('no-such-rating')
   }
 
