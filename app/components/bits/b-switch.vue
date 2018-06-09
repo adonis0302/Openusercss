@@ -113,7 +113,7 @@
   @import '../../scss/component';
 
   .switch {
-    --height: $size-normal;
+    --height: 1rem;
 
     input {
       opacity: 0;
