@@ -1,7 +1,7 @@
 FROM mhart/alpine-node:9.11.1
 LABEL maintainer="DecentM <decentm@decentm.com>"
 
-RUN mkdir -p /ouc/app /.yarn /.cache/yarn /.config && touch /.yarnrc /.babel.json
+RUN mkdir -p /ouc /.yarn /.cache/yarn /.config && touch /.yarnrc /.babel.json
 RUN chown 1000:1000 -R /.yarn /.yarnrc /.cache/yarn /.babel.json /.config /ouc
 
 RUN apk --update add git
@@ -11,7 +11,7 @@ COPY --chown=1000:1000 ./.nuxt /ouc/.nuxt
 COPY --chown=1000:1000 ./prod.entrypoint.sh /ouc/
 COPY --chown=1000:1000 ./nuxt.config.js /ouc/
 COPY --chown=1000:1000 ./.prod.env.local /ouc/.env
-COPY --chown=1000:1000 ./app/static /ouc/app/static
+COPY --chown=1000:1000 ./app/static /ouc/static
 
 VOLUME ["/ouc/build/data"]
 
