@@ -15,11 +15,9 @@ export default async (root, {id, value,}, {Session, Theme, Rating, User, token,}
     throw new Error('no-such-theme')
   }
 
-  user.themes.forEach((userTheme) => {
-    if (userTheme._id.equals(id)) {
-      throw new Error('cannot-rate-own-theme')
-    }
-  })
+  if (theme.user._id.equals(user._id)) {
+    throw new Error('cannot-rate-own-theme')
+  }
 
   // Load the existing rating object
   let existing = await Rating.findOne({
@@ -41,9 +39,6 @@ export default async (root, {id, value,}, {Session, Theme, Rating, User, token,}
   }
 
   await existing.save()
-  const finalTheme = await Theme.findOne({
-    '_id': id,
-  })
 
-  return finalTheme
+  return existing
 }

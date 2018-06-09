@@ -135,6 +135,10 @@ const queries = `
     popularThemes(
       limit: Int
     ): [Theme]!
+
+    ratings(
+      id: ID!
+    ): [Rating]!
   }
 `
 
@@ -183,9 +187,9 @@ const mutations = `
     ): User!
 
     rate(
-      id:    String!
+      id:    ID!
       value: Int!
-    ): Theme!
+    ): Rating!
   }
 `
 
