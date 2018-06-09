@@ -56,6 +56,7 @@
         .catch(() => {
           store.commit('themes/delete', route.params.id)
         }),
+
         store.dispatch('ratings/theme', {
           'id': route.params.id,
         }),
@@ -90,7 +91,13 @@
           sum = sum + rating.value
         })
 
-        return Math.round(sum / ratings.length * 100) / 100
+        const result = Math.round(sum / ratings.length * 100) / 100
+
+        if (isNaN(result)) {
+          return null
+        }
+
+        return result
       },
       theme () {
         return this.$store.getters['themes/single'](this.$route.params.id)
@@ -402,8 +409,8 @@
                             ) View source
                         br
 
-                        p(v-show="averageRating !== 0") Average rating: {{averageRating}}
-                        p(v-show="averageRating === 0") Not rated yet
+                        p(v-if="averageRating") Average rating: {{averageRating}}
+                        p(v-else) Not rated yet
                         p Created: {{formatMoment(theme.createdAt)}}
                         p Last updated: {{formatMoment(theme.lastUpdate)}}
                         p Version: {{theme.version}}
