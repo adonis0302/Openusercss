@@ -121,7 +121,7 @@
           return `http://api.dev.openusercss.local/theme/${this.theme._id}.user.css`
         }
 
-        return `${this.apiUrl}${path.join('theme', `${this.theme._id}.user.css`)}`
+        return `${this.apiUrl}/${path.join('theme', `${this.theme._id}.user.css`)}`
       },
       license () {
         if (this.theme.license.toLowerCase() === 'other') {
