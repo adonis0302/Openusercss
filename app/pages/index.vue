@@ -27,27 +27,15 @@
       'popularThemes': 'themes/popular',
     }),
     'methods': {
-      averageRating (array) {
+      averageRating (theme) {
+        const ratings = this.$store.getters['ratings/theme'](theme._id)
         let sum = 0
 
-        if (!array) {
-          return sum
-        }
-
-        array.forEach((rating) => {
-          if (!rating.value) {
-            throw new Error('Rating has no value')
-          }
-
+        ratings.forEach((rating) => {
           sum = sum + rating.value
         })
 
-        const result = sum / array.length
-
-        if (isNaN(result)) {
-          return 0
-        }
-        return result
+        return sum / ratings.length
       },
     },
   }
@@ -70,6 +58,7 @@
             .column.is-6
               h2.has-bottom-margin Newest themes
               .columns.is-multiline
+                //- p {{latestThemes}}
                 nuxt-link.column.is-6(
                   v-for="(theme, index) in limitBy(latestThemes, 6)",
                   :key="theme._id",
@@ -93,6 +82,7 @@
             .column.is-6
               h2.has-bottom-margin Popular themes
               .columns.is-multiline
+                //- p {{popularThemes}}
                 nuxt-link.column.is-6(
                   v-for="(theme, index) in limitBy(popularThemes, 6)",
                   :key="theme._id",

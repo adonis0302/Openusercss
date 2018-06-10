@@ -109,7 +109,6 @@ export const actions = {
       commit('users/upsert', theme.user, {
         'root': true,
       })
-      Reflect.deleteProperty(theme, 'user')
       commit('upsert', theme)
     })
   },
@@ -126,7 +125,6 @@ export const actions = {
       commit('users/upsert', theme.user, {
         'root': true,
       })
-      Reflect.deleteProperty(theme, 'user')
       commit('upsert', theme)
     })
   },
@@ -145,7 +143,6 @@ export const actions = {
       commit('users/upsert', data.theme.user, {
         'root': true,
       })
-      Reflect.deleteProperty(data.theme, 'user')
       commit('upsert', data.theme)
       commit('loading', false)
     } catch (error) {
