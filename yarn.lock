@@ -13260,9 +13260,9 @@ user-home@^2.0.0:
   dependencies:
     os-homedir "^1.0.0"
 
-usercss-meta@^0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/usercss-meta/-/usercss-meta-0.4.0.tgz#5bfa7c7e34cb6c86b6f199f4b3fb102a64958902"
+"usercss-meta@https://github.com/DecentM/parse-usercss":
+  version "0.5.0"
+  resolved "https://github.com/DecentM/parse-usercss#469d8a431a6fd3df678ec8fe299d511542f307e5"
 
 uslug@^1.0.4:
   version "1.0.4"
