@@ -57,8 +57,44 @@ const init = async () => {
   log.info('API database initialization completed')
 }
 
+const migrate = async (version) => {
+  if (version === 'v1.0.0') {
+    log.info('Starting database migration')
+    const themes = await Theme.find()
+    const modifies = []
+    const decentm = await User.find({
+      'username': 'decentm',
+    })
+
+    themes.forEach((theme) => {
+      log.info(`Migrating ${theme._id} (${theme.title})`)
+
+      if (theme.rating) {
+        log.info(`Migrating rating ${theme.rating}`)
+        const newRating = Rating.create({
+          'value': theme.rating,
+          'user':  decentm,
+          theme,
+        })
+
+        modifies.push(newRating.save().then(() => log.info(`Rating migrated: ${theme.rating}`)))
+      }
+
+      theme.license = theme.license || 'Other'
+      Reflect.deleteProperty(theme, 'rating')
+
+      modifies.push(theme.save().then(() => log.info(`Migrated ${theme._id} (${theme.title})`)))
+    })
+
+    return Promise.all(modifies).then(() => {
+      log.info('Database migration complete')
+    })
+  }
+}
+
 export default async () => {
   await init()
+  await migrate('v1.0.0')
 
   return {
     Theme,
