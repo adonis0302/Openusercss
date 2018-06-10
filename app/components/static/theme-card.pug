@@ -18,7 +18,7 @@ mixin theme-card(hasImage)
                 .tile.is-child
                   no-ssr
                     star-rating.is-pulled-right(
-                      :rating="averageRating(theme)",
+                      :rating="countAverageRating(theme)",
                       :star-size="15",
                       :show-rating="false",
                       :read-only="true",

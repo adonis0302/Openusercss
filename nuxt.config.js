@@ -56,6 +56,7 @@ module.exports = {
     '~/scss/main.scss',
   ],
   'plugins': [
+    '~/plugins/average-rating',
     '~/plugins/api-url',
     '~/plugins/vue-moment',
     '~/plugins/vue-markdown',
