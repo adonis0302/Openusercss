@@ -165,5 +165,5 @@
                   +theme-microdata
                   +theme-card(true)
                     //- TODO: Get install count!
-                    p.subtitle Installs: {{parseInt(Math.random() * 100, 10)}}
+                    //- p.subtitle Installs: {{parseInt(Math.random() * 100, 10)}}
 </template>
