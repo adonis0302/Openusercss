@@ -253,6 +253,4 @@
                   ) submit an issue on GitHub!
               hr
               pre(@click="select") {{encode(extendedError)}}
-
-      ouc-footer
 </template>
