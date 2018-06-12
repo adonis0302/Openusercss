@@ -94,7 +94,7 @@ const migrate = async (version) => {
 
 export default async () => {
   await init()
-  await migrate('v1.0.0')
+  await migrate(process.env.MIGRATE_VERSION)
 
   return {
     Theme,
