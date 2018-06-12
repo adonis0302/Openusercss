@@ -23,8 +23,7 @@
       starRating,
     },
     'computed': mapGetters({
-      'latestThemes':  'themes/latest',
-      'popularThemes': 'themes/popular',
+      'themes': 'themes/all',
     }),
     'methods': {
       averageRating (theme) {
@@ -60,7 +59,7 @@
               .columns.is-multiline
                 //- p {{latestThemes}}
                 nuxt-link.column.is-6(
-                  v-for="(theme, index) in limitBy(latestThemes, 6)",
+                  v-for="(theme, index) in orderBy(limitBy(themes, 6), 'createdAt', -1)",
                   :key="theme._id",
                   :to="'/theme/' + theme._id"
                 )
@@ -84,7 +83,7 @@
               .columns.is-multiline
                 //- p {{popularThemes}}
                 nuxt-link.column.is-6(
-                  v-for="(theme, index) in limitBy(popularThemes, 6)",
+                  v-for="(theme, index) in limitBy(themes, 6)",
                   :key="theme._id",
                   :to="'/theme/' + theme._id"
                 )
