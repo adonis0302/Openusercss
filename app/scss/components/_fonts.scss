@@ -14,22 +14,25 @@ div,
 ul,
 span,
 b,
-i {
-  font-family: 'Nunito';
-  font-size: responsive;
-  max-font-size: 16.5px;
-  min-font-size: 15px;
-  text-decoration: none;
+i,
+body {
+  font-family: 'Nunito' !important;
+  font-size: responsive !important;
+  max-font-size: 16.5px !important;
+  min-font-size: 15px !important;
+  text-decoration: none !important;
 }
 
 @font-face {
     font-family: 'Nunito';
     font-weight: 400;
-    src: url('../fonts/Nunito.woff') format('woff');
+    src: url('../fonts/Nunito.woff') format('woff'),
+      url('../fonts/Nunito.ttf') format('truetype');
 }
 
 @font-face {
     font-family: 'Nunito';
     font-weight: 700;
-    src: url('../fonts/Nunito-Bold.woff') format('woff');
+    src: url('../fonts/Nunito-Bold.woff') format('woff'),
+      url('../fonts/Nunito-Bold.ttf') format('truetype');;
 }
