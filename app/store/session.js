@@ -103,9 +103,6 @@ export const actions = {
         'variables': loginData,
       })
 
-      commit('users/upsert', data.login.user, {
-        'root': true,
-      })
       commit('login', data.login)
       commit('loading', false)
     } catch (error) {

@@ -7,11 +7,6 @@ query($terms: String!, $limit: Int, $skip: Int) {
       avatarUrl
       smallAvatarUrl
       lastSeen
-      lastSeenReason
-      createdAt
-      lastUpdate
-      bio
-      donationUrl
     }
 
     themes {
@@ -22,27 +17,11 @@ query($terms: String!, $limit: Int, $skip: Int) {
         displayname
         avatarUrl
         smallAvatarUrl
-        lastSeen
-        lastSeenReason
-        createdAt
-        lastUpdate
-        bio
-        donationUrl
       }
       title
-      description
-      content
       createdAt
       lastUpdate
-      version
       screenshots
-      license
-      variables {
-        type
-        label
-        name
-        value
-      }
     }
   }
 }

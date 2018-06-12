@@ -38,18 +38,6 @@ export const actions = {
         },
       })
 
-      data.search.users.forEach((user) => {
-        commit('users/upsert', user, {
-          'root': true,
-        })
-      })
-
-      data.search.themes.forEach((theme) => {
-        commit('themes/upsert', theme, {
-          'root': true,
-        })
-      })
-
       commit('upsert', {
         'payload': data.search,
         terms,

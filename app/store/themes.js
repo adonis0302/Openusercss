@@ -1,6 +1,3 @@
-import {cloneDeep,} from 'lodash'
-import moment from 'moment'
-
 import client from '~/../lib/apollo-client'
 import themeMutation from '~/apollo/mutations/theme.gql'
 import latestThemesQuery from '~/apollo/queries/latest-themes.gql'
@@ -48,24 +45,6 @@ export const getters = {
   },
   editCache (state,) {
     return state.editing
-  },
-  latest (state,) {
-    const copy = cloneDeep(state.themes)
-
-    copy.sort((a, b) => {
-      return !moment(a.createdAt).isAfter(b.createdAt)
-    })
-
-    return copy
-  },
-  popular (state,) {
-    const copy = cloneDeep(state.themes)
-
-    copy.sort((a, b) => {
-      return false
-    })
-
-    return copy
   },
 }
 
