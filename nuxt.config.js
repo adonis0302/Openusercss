@@ -56,6 +56,7 @@ module.exports = {
     '~/scss/main.scss',
   ],
   'plugins': [
+    '~/plugins/matomo-api',
     '~/plugins/average-rating',
     '~/plugins/api-url',
     '~/plugins/vue-moment',
@@ -172,6 +173,9 @@ module.exports = {
     ],
   ],
   'build': {
+    'vendor': [
+      'isomorphic-fetch',
+    ],
     analyze,
     postcss,
   },

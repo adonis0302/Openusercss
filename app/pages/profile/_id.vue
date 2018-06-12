@@ -11,7 +11,9 @@
   export default {
     'transition': 'fade-zoom',
     fetch ({store, route,}) {
-      return store.dispatch('users/single', route.params.id)
+      return Promise.all([
+        store.dispatch('users/single', route.params.id),
+      ])
     },
     'components': {
       themeCard,
@@ -23,6 +25,10 @@
       this.timeInterval = setInterval(() => {
         this.time = moment()
       }, 20000)
+
+      this.themes.forEach((theme) => {
+        this.$store.dispatch('stats/hits', theme._id,)
+      })
     },
     beforeDestroy () {
       clearInterval(this.timeInterval)
@@ -30,6 +36,9 @@
     'methods': {
       isOnline (date) {
         return moment(this.time).diff(date) < 600000
+      },
+      views (id) {
+        return this.$store.getters['stats/theme'](id)
       },
     },
     data () {
@@ -155,6 +164,18 @@
                     .level
                       b {{theme.title}}
                       p Created {{theme.createdAt | moment('Do MMMM YYYY')}}
+                    .level(v-if="views(theme._id)")
+                      table.table.is-fullwidth.is-striped.is-hoverable.is-narrow
+                        tbody
+                          tr
+                            td Unique visitors
+                            td {{views(theme._id).nb_visits}}
+                          tr
+                            td Views overall
+                            td {{views(theme._id).nb_hits}}
+                          tr
+                            td Average viewing time (seconds)
+                            td {{views(theme._id).nb_hits}}
 
               .columns.is-multiline(v-else)
                 nuxt-link.column.is-6(
