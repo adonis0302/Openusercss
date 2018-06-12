@@ -15,12 +15,6 @@
       changelog () {
         return changelog
       },
-      apiReleased () {
-        return this.version.revisionTag === this.version.revisionBranch
-      },
-      clientReleased () {
-        return this.$pkg.version === this.version.revisionTag
-      },
     },
     mounted () {
       this.dev = this.dev || window.location.href.includes('staging')
@@ -159,13 +153,9 @@
               fa-icon(icon="envelope")
               | Contact the administrator
             p
-              | API version:
-              |
-              span(v-if="apiReleased") {{version.revisionTag}}
-              span(v-else) {{version.revisionBranch}} (unreleased)
+              | API version: {{version.revisionTag}}
             p
               | Client version: {{$pkg.version}}
               |
-              span(v-if="clientReleased") (unreleased)
               a(@click.prevent="$modal.show('changelog-viewer')") (changelog)
 </template>
