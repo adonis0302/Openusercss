@@ -65,5 +65,5 @@
 
 <template lang="pug">
   div.spinner-root.ouc-spinner-wrapper
-    div.ouc-spinner-wrapper(:style="computedStyle", :class="['spinner', {'spinning': spinning}]")
+    div.ouc-spinner(:style="computedStyle", :class="['spinner', {'spinning': spinning}]")
 </template>

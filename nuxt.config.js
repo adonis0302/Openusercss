@@ -118,6 +118,15 @@ module.exports = {
         'icon': {
           'iconSrc': 'app/static/img/openusercss.icon-x128.png',
         },
+        'workbox': {
+          'runtimeCaching': [
+            {
+              'urlPattern': 'https://pwk.decentm.com/.*',
+              'handler':    'staleWhileRevalidate',
+              'method':     'GET',
+            },
+          ],
+        },
         'manifest': {
           'name':             'OpenUserCSS',
           'short_name':       'OpenUserCSS',

@@ -5,8 +5,9 @@ import assert from 'assert'
 import raven from 'raven-js'
 
 export const state = () => ({
-  'themes': {},
-  'error':  null,
+  'themes':  {},
+  'error':   null,
+  'loading': false,
 })
 
 export const getters = {
@@ -18,6 +19,9 @@ export const getters = {
   },
   error (state) {
     return state.error
+  },
+  loading (state) {
+    return state.loading
   },
 }
 
@@ -38,13 +42,18 @@ export const mutations = {
 
     state.error = error.message
   },
+  loading (state, isLoading) {
+    state.loading = isLoading
+  },
 }
 
 export const actions = {
   async hits ({commit,}, id) {
+    commit('loading', true)
+
     try {
       const payload = await themeHits({id,},)
-      .timeout(1536)
+      .timeout(4096)
 
       if (payload) {
         commit('theme', {
@@ -57,9 +66,12 @@ export const actions = {
       raven.captureException(error)
       commit('error', error)
     }
+
+    commit('loading', false)
   },
 
   async refill ({rootGetters, commit,},) {
+    commit('loading', true)
     const gets = []
     const themes = rootGetters['themes/all']
 
@@ -71,7 +83,7 @@ export const actions = {
 
     try {
       const result = await Promise.all(gets)
-      .timeout(3072)
+      .timeout(4096)
 
       result.forEach((payload, index) => {
         if (payload) {
@@ -87,5 +99,7 @@ export const actions = {
       raven.captureException(error)
       commit('error', error)
     }
+
+    commit('loading', false)
   },
 }

@@ -4,6 +4,8 @@
   import themeCard from '~/components/elements/theme-card.vue'
   import notification from '~/components/elements/notification.vue'
   import progressiveImage from '~/components/bits/progressive-image.vue'
+  import bSwitch from '~/components/bits/b-switch.vue'
+  import spinner from '~/components/elements/spinner.vue'
 
   import {mapGetters,} from 'vuex'
   import starRating from 'vue-star-rating'
@@ -13,6 +15,7 @@
     fetch ({store, route,}) {
       return Promise.all([
         store.dispatch('users/single', route.params.id),
+        store.dispatch('themes/user', route.params.id),
       ])
     },
     'components': {
@@ -20,15 +23,18 @@
       notification,
       progressiveImage,
       starRating,
+      bSwitch,
+      spinner,
     },
     beforeMount () {
       this.timeInterval = setInterval(() => {
         this.time = moment()
       }, 20000)
-
-      this.themes.forEach((theme) => {
-        this.$store.dispatch('stats/hits', theme._id,)
-      })
+    },
+    mounted () {
+      if (this.viewer && this.viewer._id === this.$route.params.id) {
+        this.viewingOwn = true
+      }
     },
     beforeDestroy () {
       clearInterval(this.timeInterval)
@@ -40,16 +46,57 @@
       views (id) {
         return this.$store.getters['stats/theme'](id)
       },
+      getUserStats () {
+        if (this.showStats) {
+          const gets = []
+
+          this.themes.forEach((theme) => {
+            gets.push(this.$store.dispatch('stats/hits', theme._id,))
+          })
+
+          return Promise.all(gets)
+        }
+      },
     },
     data () {
       return {
-        'time': moment(),
+        'time':        moment(),
+        'showStats':   null,
+        'sortBy':      'createdAt',
+        'sortReverse': null,
+        'viewingOwn':  false,
       }
     },
     'computed': {
       ...mapGetters({
-        'viewer': 'session/viewer',
+        'viewer':       'session/viewer',
+        'statsError':   'stats/error',
+        'statsLoading': 'stats/loading',
       }),
+      sortOptions () {
+        return [
+          {
+            'title': 'Date created',
+            'value': 'createdAt',
+          },
+          {
+            'title': 'Last update',
+            'value': 'lastUpdate',
+          },
+          {
+            'title': 'License',
+            'value': 'license',
+          },
+          {
+            'title': 'Version',
+            'value': 'version',
+          },
+          {
+            'title': 'Title',
+            'value': 'title',
+          },
+        ]
+      },
       averageRating () {
         const ratings = this.$store.getters['ratings/theme'](this.$route.params.id)
         let sum = 0
@@ -66,17 +113,6 @@
 
         return result
       },
-      viewingOwn () {
-        if (!this.viewer) {
-          return false
-        }
-
-        if (this.viewer._id === this.$route.params.id) {
-          return true
-        }
-
-        return false
-      },
       user () {
         return this.$store.getters['users/all'].find((user) => user._id === this.$route.params.id)
       },
@@ -91,6 +127,17 @@
     },
   }
 </script>
+
+<style lang="scss" scoped>
+  .is-inline {
+    display: inline-flex;
+    flex-direction: row;
+  }
+
+  .is-fullwidth {
+    width: 100%;
+  }
+</style>
 
 <template lang="pug">
   include ../../components/static/microdata/user.pug
@@ -147,6 +194,83 @@
                     p(v-else)
                       | {{user.displayname}} has not written a bio yet.
 
+              div(v-if="viewingOwn")
+                hr
+                .card.is-paddingless
+                  table.table.is-striped.is-fullwidth.is-hoverable
+                    thead
+                      tr
+                        td(colspan="2")
+                          b View settings
+                    tbody
+                      tr
+                        td
+                          label(for="showStatsToggle")
+                            | Show statistics
+                        td.has-text-right
+                          .tile.is-parent.is-paddingless
+                            .tile.is-child
+                              transition(name="fade-zoom")
+                                spinner(
+                                  v-if="statsLoading"
+                                  :size="20",
+                                  :spinning="statsLoading"
+                                )
+                            .tile.is-child
+                              b-switch#showStatsToggle(
+                                v-model="showStats",
+                                @change="getUserStats"
+                              )
+
+                      tr
+                        td
+                          label(for="sortByDropdown")
+                            | Sort by
+                        td.has-text-right
+                          .select
+                            select#sortByDropdown(v-model="sortBy")
+                              option(
+                                v-for="option in sortOptions",
+                                :key="option.value",
+                                :value="option.value"
+                              )
+                                | {{option.title}}
+
+                      tr
+                        td
+                          label(for="sortReverseToggle")
+                            | Reverse order
+                        td.has-text-right
+                          b-switch#sortReverseToggle(
+                            ref="sortReverseToggle"
+                            v-model="sortReverse"
+                          )
+
+                transition(name="fade-zoom")
+                  .tile.is-child.is-12(v-if="statsError && showStats")
+                    hr
+                    .notification.is-danger
+                      p
+                        fa-icon(icon="times")
+                        b Error: {{statsError}}
+                        br
+                        br
+                      p
+                        | If you have an extension that filters connections,
+                        | please check if that may be blocking our connection to
+                        |
+                        code pwk.decentm.com
+                        | .
+                        br
+                        | OpenUserCSS uses a self-hosted Matomo instance to
+                        | query statistics.
+                        |
+                        a(
+                          href="https://forums.openusercss.org/topic/5/privacy-policy"
+                          rel="noopener"
+                          target="_blank"
+                        ) Check the privacy policy here
+
             .column.is-6
               div.ouc-user-donation-wrapper(v-if="user.donationUrl && user.donationUrl !== ''", is-paddingless)
                 a.button.is-primary(:href="user.donationUrl", target="_blank", rel="nofollow noopener")
@@ -154,10 +278,8 @@
                 hr
 
               .columns.is-multiline(v-if="viewingOwn")
-                .is-12
-                  p Theme stats only include not blocked data
                 nuxt-link.column.is-12(
-                  v-for="(theme, index) in themes",
+                  v-for="(theme, index) in orderBy(themes, sortBy, sortReverse ? -1 : 0)",
                   :key="theme._id",
                   :to="'/theme/' + theme._id"
                 )
@@ -165,19 +287,30 @@
                   .box
                     .level
                       b {{theme.title}}
-                      p Created {{theme.createdAt | moment('Do MMMM YYYY')}}
-                    .level(v-if="views(theme._id)")
-                      table.table.is-fullwidth.is-striped.is-hoverable.is-narrow
-                        tbody
-                          tr
-                            td Unique visitors
-                            td {{views(theme._id).nb_visits}}
-                          tr
-                            td Views overall
-                            td {{views(theme._id).nb_hits}}
-                          tr
-                            td Average viewing time (seconds)
-                            td {{views(theme._id).nb_hits}}
+
+                      p(v-if="sortBy === 'createdAt'")
+                        | {{sortOptions.find((option) => option.value === sortBy).title}}:
+                        | {{theme[sortBy] | moment('from', 'now')}}
+                      p(v-else-if="sortBy === 'lastUpdate'")
+                        | {{sortOptions.find((option) => option.value === sortBy).title}}:
+                        | {{theme[sortBy] | moment('from', 'now')}}
+                      p(v-else)
+                        | {{sortOptions.find((option) => option.value === sortBy).title}}:
+                        | {{theme[sortBy]}}
+
+                    transition(name="fade-zoom")
+                      .level(v-if="showStats && views(theme._id)")
+                        table.table.is-fullwidth.is-striped.is-hoverable.is-narrow
+                          tbody
+                            tr(v-if="views(theme._id).nb_visits !== views(theme._id).nb_hits")
+                              td Unique visitors
+                              td {{views(theme._id).nb_visits}}
+                            tr
+                              td Views overall
+                              td {{views(theme._id).nb_hits}}
+                            tr
+                              td Average viewing time (seconds)
+                              td {{views(theme._id).nb_hits}}
 
               .columns.is-multiline(v-else)
                 nuxt-link.column.is-6(

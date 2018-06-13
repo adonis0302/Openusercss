@@ -3,6 +3,7 @@ import themeMutation from '~/apollo/mutations/theme.gql'
 import latestThemesQuery from '~/apollo/queries/latest-themes.gql'
 import popularThemesQuery from '~/apollo/queries/popular-themes.gql'
 import themeQuery from '~/apollo/queries/theme.gql'
+import userQuery from '~/apollo/queries/user-themes.gql'
 
 export const state = () => ({
   'loading': false,
@@ -127,6 +128,26 @@ export const actions = {
     } catch (error) {
       commit('loading', false)
       throw error
+    }
+  },
+
+  async user ({commit,}, id,) {
+    commit('loading', true)
+
+    try {
+      const {data,} = await client.query({
+        'query':     userQuery,
+        'variables': {
+          id,
+        },
+      })
+
+      data.userThemes.forEach((theme) => {
+        commit('upsert', theme)
+      })
+      commit('loading', false)
+    } catch (error) {
+      commit('loading', false)
     }
   },
 }

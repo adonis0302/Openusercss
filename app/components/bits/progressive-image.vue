@@ -70,7 +70,9 @@
           this.$refs.raw.classList.remove('is-loading')
         } else {
           this.style['background-image'] = `url("${this.src}")`
-          this.$refs.mainWrapper.classList.remove('is-loading')
+          if (this.$refs.mainWrapper) {
+            this.$refs.mainWrapper.classList.remove('is-loading')
+          }
         }
 
         $image.remove()

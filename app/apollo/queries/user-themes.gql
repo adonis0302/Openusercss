@@ -1,0 +1,26 @@
+query($id: ID!) {
+  userThemes(id: $id) {
+    _id
+    user {
+      _id
+      username
+      displayname
+      avatarUrl
+      smallAvatarUrl
+    }
+    title
+    description
+    content
+    createdAt
+    lastUpdate
+    version
+    screenshots
+    license
+    variables {
+      type
+      label
+      name
+      value
+    }
+  }
+}
