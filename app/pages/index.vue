@@ -57,7 +57,6 @@
             .column.is-6
               h2.has-bottom-margin Newest themes
               .columns.is-multiline
-                //- p {{latestThemes}}
                 nuxt-link.column.is-6(
                   v-for="(theme, index) in orderBy(limitBy(themes, 6), 'createdAt', -1)",
                   :key="theme._id",
@@ -75,13 +74,14 @@
                             size="contain"
                           )
                       .media-content
-                        p.title.is-7 {{theme.user.displayname}}
-                        p.subtitle {{theme.createdAt | moment('from', 'now')}}
+                        p
+                          b {{theme.user.displayname}}
+                          br
+                          | {{theme.createdAt | moment('from', 'now')}}
 
             .column.is-6
               h2.has-bottom-margin Popular themes
               .columns.is-multiline
-                //- p {{popularThemes}}
                 nuxt-link.column.is-6(
                   v-for="(theme, index) in limitBy(themes, 6)",
                   :key="theme._id",
@@ -95,11 +95,11 @@
                             :src="theme.user.avatarUrl",
                             :placeholder="theme.user.smallAvatarUrl",
                             width="100%",
-                            height="4rem",
+                            height="3rem",
                             size="contain"
                           )
                       .media-content
-                        p.title.is-7 {{theme.user.displayname}}
+                        b {{theme.user.displayname}}
                         //- TODO: Get install count!
                         //- p.subtitle {{parseInt(Math.random() * 100, 10)}} installs
 </template>

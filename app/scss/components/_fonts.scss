@@ -16,11 +16,12 @@ span,
 b,
 i,
 body {
-  font-family: 'Nunito' !important;
-  font-size: responsive !important;
-  max-font-size: 16.5px !important;
-  min-font-size: 15px !important;
-  text-decoration: none !important;
+  font-family: 'Nunito';
+  font-size: responsive;
+  max-font-size: 16.5px;
+  min-font-size: 15px;
+  text-decoration: none;
+  line-height: 24px;
 }
 
 @font-face {
