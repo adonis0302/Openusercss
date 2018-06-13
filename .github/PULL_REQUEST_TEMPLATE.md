@@ -11,7 +11,7 @@
 Fixes #
 
 <!--
-  Please check if the PR fulfills these requirements.
+  Please check if the PR fulfils these requirements.
   You can also add more items to showcase your achievements in this PR!
   If they do, please check the box by putting an `x` between the brackets,
   like this:
@@ -29,5 +29,5 @@ Fixes #
 <!--
   Please explain here in depth what you would like to change and why
   Even though I'd prefer that you wrote about this PR, you can skip this section
-  if this just fixes a bug or oterwise has a small scope.
+  if this just fixes a bug or otherwise has a small scope.
 -->
