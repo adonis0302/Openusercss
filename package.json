@@ -134,6 +134,7 @@
     "postcss-fixes": "^2",
     "posthtml-schemas": "^1",
     "pre-commit": "^1",
+    "proto-timeout": "^1.0.1",
     "pug-lint": "^2",
     "pug-lint-config-emarsys": "^2",
     "pump": "^1",

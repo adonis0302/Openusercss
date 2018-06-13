@@ -3,6 +3,7 @@ import assert from 'assert'
 import QS from 'querystring'
 import pify from 'pify'
 import pkg from '~/../package.json'
+import 'isomorphic-fetch'
 
 const headers = {}
 

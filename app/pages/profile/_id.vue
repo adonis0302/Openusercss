@@ -154,6 +154,8 @@
                 hr
 
               .columns.is-multiline(v-if="viewingOwn")
+                .is-12
+                  p Theme stats only include not blocked data
                 nuxt-link.column.is-12(
                   v-for="(theme, index) in themes",
                   :key="theme._id",

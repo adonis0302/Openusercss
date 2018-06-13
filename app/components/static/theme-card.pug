@@ -1,8 +1,11 @@
-mixin theme-card(hasImage)
+mixin theme-card(hasImage, hasOverride)
   .card
     .card-header
       h6.card-header-title
-        | {{theme.title}}
+        if hasOverride && block
+          block
+        else
+          | {{theme.title}}
     if hasImage
       .card-image
         figure.image
@@ -28,6 +31,6 @@ mixin theme-card(hasImage)
                       :border-width="2"
                     )
 
-    if block
+    if block && !hasOverride
       .card-content
         block

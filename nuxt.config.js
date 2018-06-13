@@ -56,6 +56,7 @@ module.exports = {
     '~/scss/main.scss',
   ],
   'plugins': [
+    '~/plugins/proto-timeout',
     '~/plugins/matomo-api',
     '~/plugins/average-rating',
     '~/plugins/api-url',
