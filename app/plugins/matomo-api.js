@@ -11,7 +11,12 @@ if (process.server) {
   headers['user-agent'] = `openusercss-ssr/${pkg.version} (+https://github.com/OpenUserCSS/openusercss.org)`
 }
 
-const api = 'https://pwk.decentm.com/index.php'
+let api = 'https://pwk.decentm.com/index.php'
+
+if (process.server) {
+  api = 'http://pwk.decentm.com/index.php'
+}
+
 let queryQueue = []
 let lockTimeout = null
 let compiled = ''
