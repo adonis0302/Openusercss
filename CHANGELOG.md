@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.2.0"></a>
+# [1.2.0](https://github.com/OpenUserCSS/openusercss.org/compare/v1.1.0...v1.2.0) (2018-06-13)
+
+
+### Bug Fixes
+
+* **client:** Actually order latest themes based on date ([2cf5fec](https://github.com/OpenUserCSS/openusercss.org/commit/2cf5fec))
+* **client:** Let the browser choose between font types (fixes [#95](https://github.com/OpenUserCSS/openusercss.org/issues/95)) ([7c79073](https://github.com/OpenUserCSS/openusercss.org/commit/7c79073))
+* **client:** Make fonts and line-height smaller ([7d21920](https://github.com/OpenUserCSS/openusercss.org/commit/7d21920))
+* **client:** Remove footer from error template (fixes [#96](https://github.com/OpenUserCSS/openusercss.org/issues/96)) ([84c237b](https://github.com/OpenUserCSS/openusercss.org/commit/84c237b))
+* **client:** Remove the (unreleased) tag from the footer ([d912ec0](https://github.com/OpenUserCSS/openusercss.org/commit/d912ec0))
+* **docs:** Correct typos ([#99](https://github.com/OpenUserCSS/openusercss.org/issues/99)) ([be3a998](https://github.com/OpenUserCSS/openusercss.org/commit/be3a998))
+* Fix dependencies and analytics querying from inside the network ([dafa021](https://github.com/OpenUserCSS/openusercss.org/commit/dafa021))
+
+
+### Features
+
+* **client:** Add ability to order themes on prfile page ([934db6a](https://github.com/OpenUserCSS/openusercss.org/commit/934db6a))
+* **client:** Matomo integration + driver ([2a052d7](https://github.com/OpenUserCSS/openusercss.org/commit/2a052d7))
+* **client:** Show visit count on themes ([3a09f3f](https://github.com/OpenUserCSS/openusercss.org/commit/3a09f3f))
+
+
+### Performance Improvements
+
+* **client:** Omit unneeded props from query, no cross-linking in store ([a03f783](https://github.com/OpenUserCSS/openusercss.org/commit/a03f783))
+
+
+
 <a name="1.1.0"></a>
 # [1.1.0](https://github.com/OpenUserCSS/openusercss.org/compare/v0.9.6...v1.1.0) (2018-06-10)
 
