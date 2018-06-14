@@ -70,6 +70,7 @@
           this.$refs.raw.classList.remove('is-loading')
         } else {
           this.style['background-image'] = `url("${this.src}")`
+
           if (this.$refs.mainWrapper) {
             this.$refs.mainWrapper.classList.remove('is-loading')
           }
@@ -78,10 +79,14 @@
         $image.remove()
       })
 
+      const srcClass = this.src.replace(/(https?\:\/\/imageproxy\.openusercss\.org\/|https?\:\/\/|\.|\/|\:)/g, '-')
+
       if (this.raw) {
         this.$refs.raw.append($image)
+        this.$refs.raw.classList.add(srcClass)
       } else {
         this.$refs.main.appendChild($image)
+        this.$refs.main.classList.add(srcClass)
       }
     },
   }
