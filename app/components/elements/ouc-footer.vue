@@ -113,13 +113,13 @@
           .tile.is-parent.is-paddingless
             +donation-button(
               "//www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NQE35LHY6NKS6",
-              "Donate through",
+              "Donate!",
               "/img/paypal.icon-x64.png",
               "/img/paypal.icon-x16.png"
             ).is-paypal.is-pulled-left
             +donation-button(
               "//patreon.com/DecentM",
-              "Become a patron on",
+              "Become a patron!",
               "/img/patreon.icon-x64.png",
               "/img/patreon.icon-x16.png"
             ).is-patreon.is-pulled-right
