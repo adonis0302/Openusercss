@@ -1,5 +1,8 @@
 import client from '~/../lib/apollo-client'
+import assert from 'assert'
+
 import themeMutation from '~/apollo/mutations/theme.gql'
+import deleteMutation from '~/apollo/mutations/delete-theme.gql'
 import latestThemesQuery from '~/apollo/queries/latest-themes.gql'
 import popularThemesQuery from '~/apollo/queries/popular-themes.gql'
 import themeQuery from '~/apollo/queries/theme.gql'
@@ -9,6 +12,7 @@ export const state = () => ({
   'loading': false,
   'themes':  [],
   'editing': {},
+  'error':   null,
 })
 
 export const mutations = {
@@ -19,7 +23,7 @@ export const mutations = {
     state.editing[id] = theme
   },
   delete (state, id,) {
-    const index = state.themes.find((theme) => theme._id === id)
+    const index = state.themes.findIndex((theme) => theme._id === id)
 
     state.themes.splice(index, 1)
   },
@@ -30,6 +34,18 @@ export const mutations = {
       state.themes[existingIndex] = newTheme
     } else {
       state.themes.push(newTheme)
+    }
+  },
+  error (state, error) {
+    assert(
+      error instanceof Error || error === null,
+      'error passed to error mutation must be an instance of Error or be null'
+    )
+
+    if (!error) {
+      state.error = null
+    } else {
+      state.error = error.message
     }
   },
 }
@@ -46,6 +62,13 @@ export const getters = {
   },
   editCache (state,) {
     return state.editing
+  },
+  error (state) {
+    if (!state.error) {
+      return null
+    }
+
+    return state.error
   },
 }
 
@@ -148,6 +171,28 @@ export const actions = {
       commit('loading', false)
     } catch (error) {
       commit('loading', false)
+    }
+  },
+
+  async delete ({commit,}, id,) {
+    commit('loading', true)
+
+    try {
+      await client.mutate({
+        'mutation':  deleteMutation,
+        'variables': {
+          id,
+        },
+      })
+
+      commit('error', null)
+      commit('delete', id)
+      commit('loading', false)
+    } catch (error) {
+      commit('error', error)
+      commit('delete', id)
+      commit('loading', false)
+      throw error
     }
   },
 }

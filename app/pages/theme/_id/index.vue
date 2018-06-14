@@ -168,9 +168,13 @@
         this.$modal.hide('delete-theme')
       },
       deleteTheme () {
-        this.$store.dispatch('deleteTheme', {
-          'id':       this.theme._id,
-          'redirect': `/profile/${this.user._id}`,
+        this.$store.dispatch('themes/delete', this.theme._id)
+        .then((data) => {
+          this.$toast.success('The requested theme was successfully deleted', 'Theme deleted')
+          this.$router.push(`/profile/${this.viewer._id}`)
+        })
+        .catch((error) => {
+          this.$toast.error(error.message, 'Error while deleting theme')
         })
       },
       viewSource () {
