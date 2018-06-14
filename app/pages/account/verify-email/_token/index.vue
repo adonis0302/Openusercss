@@ -21,6 +21,9 @@
       token () {
         return this.$route.params.token
       },
+      viewer () {
+        return this.$store.getters['session/viewer']
+      },
     },
     mounted () {
       if (this.status === 'success') {
@@ -28,11 +31,17 @@
           this.countdown = this.countdown - 1
 
           if (!this.countdown) {
-            clearInterval(this.timer)
-            this.$router.push('/account')
+            if (this.viewer) {
+              this.$router.push('/account')
+            } else {
+              this.$router.push('/login')
+            }
           }
         }, 1000)
       }
+    },
+    beforeDestroy () {
+      clearInterval(this.timer)
     },
     async asyncData ({store, route,}) {
       let result = false
