@@ -79,6 +79,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  .has-margin-bottom {
+    margin-bottom: 1rem;
+  }
 </style>
 
 <template lang="pug">
@@ -93,8 +97,28 @@
               fa-icon(icon="exclamation")
               |
               | {{statsError}}
+
+          .is-hidden-mobile.is-hidden-widescreen.has-margin-bottom
+            h2.has-bottom-margin Newest themes
+            .columns.is-multiline
+              .column.is-4(v-for="(theme, index) in orderBy(limitBy(themes, 6), 'createdAt', -1)")
+                +theme-card(false, true)
+                  .columns.is-mobile.is-fullwidth
+                    .column.is-3
+                      progressive-image(
+                        :src="theme.user.avatarUrl",
+                        :placeholder="theme.user.smallAvatarUrl",
+                        width="3rem",
+                        height="3rem",
+                        size="contain",
+                        position="center left"
+                      )
+                    .column.has-text-right.has-text-ellipsis
+                      p {{theme.title | truncate(18)}}
+                      p {{theme.createdAt | moment('from', 'now')}}
+
           .columns
-            .column.is-3
+            .column.is-3.is-hidden-tablet-only.is-hidden-desktop-only
               h2.has-bottom-margin Newest themes
               .columns.is-multiline
                 nuxt-link.column.is-12(
@@ -117,7 +141,7 @@
                         p {{theme.title | truncate(18)}}
                         p {{theme.createdAt | moment('from', 'now')}}
 
-            .column.is-9
+            .column
               h2.has-bottom-margin Popular themes
               .columns.is-multiline
                 nuxt-link.column.is-4(
