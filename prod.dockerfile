@@ -8,6 +8,7 @@ RUN apk --update add git
 
 COPY --chown=1000:1000 ./.yarnrc /ouc/
 COPY --chown=1000:1000 ./yarn.lock /ouc/
+COPY --chown=1000:1000 ./package.json /ouc/
 
 RUN cd /ouc && yarn \
   --frozen-lockfile \
@@ -16,7 +17,6 @@ RUN cd /ouc && yarn \
   --network-concurrency 3 \
   --production
 
-COPY --chown=1000:1000 ./package.json /ouc/
 VOLUME ["/ouc/build/data"]
 
 EXPOSE 5000/tcp
