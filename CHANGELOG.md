@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.3.0"></a>
+# [1.3.0](https://github.com/OpenUserCSS/openusercss.org/compare/v1.2.0...v1.3.0) (2018-06-14)
+
+
+### Bug Fixes
+
+* **client:** Implement responsive logic on homepage (fixes [#100](https://github.com/OpenUserCSS/openusercss.org/issues/100)) ([ef2e93a](https://github.com/OpenUserCSS/openusercss.org/commit/ef2e93a))
+* **client:** Improve donation wording ([#98](https://github.com/OpenUserCSS/openusercss.org/issues/98)) ([62ff900](https://github.com/OpenUserCSS/openusercss.org/commit/62ff900))
+* **client:** Upgrade theme deletion to use refactored store ([0cc0773](https://github.com/OpenUserCSS/openusercss.org/commit/0cc0773))
+
+
+### Features
+
+* **progressive-image:** Transpile the source into a class (fixes [#103](https://github.com/OpenUserCSS/openusercss.org/issues/103)) ([e14ebe1](https://github.com/OpenUserCSS/openusercss.org/commit/e14ebe1))
+
+
+### Performance Improvements
+
+* **release:** Move package.json to after yarn finishes install ([56a8704](https://github.com/OpenUserCSS/openusercss.org/commit/56a8704))
+
+
+
 <a name="1.2.0"></a>
 # [1.2.0](https://github.com/OpenUserCSS/openusercss.org/compare/v1.1.0...v1.2.0) (2018-06-13)
 
