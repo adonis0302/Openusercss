@@ -3,6 +3,7 @@ import {
 } from '~/plugins/matomo-api'
 import assert from 'assert'
 import raven from 'raven-js'
+import timeout from 'p-timeout'
 
 export const state = () => ({
   'themes':  {},
@@ -52,8 +53,7 @@ export const actions = {
     commit('loading', true)
 
     try {
-      const payload = await themeHits({id,},)
-      .timeout(4096)
+      const payload = await timeout(themeHits({id,},), 4096)
 
       if (payload) {
         commit('theme', {
@@ -82,8 +82,7 @@ export const actions = {
     })
 
     try {
-      const result = await Promise.all(gets)
-      .timeout(4096)
+      const result = await timeout(Promise.all(gets), 4096)
 
       result.forEach((payload, index) => {
         if (payload) {

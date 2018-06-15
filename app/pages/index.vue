@@ -2,10 +2,12 @@
   import chip from '~/components/elements/chip.vue'
   import themeCard from '~/components/elements/theme-card.vue'
   import notification from '~/components/elements/notification.vue'
+  import spinner from '~/components/elements/spinner.vue'
   import progressiveImage from '~/components/bits/progressive-image.vue'
 
   import {mapGetters,} from 'vuex'
   import starRating from 'vue-star-rating'
+  import retry from 'p-retry'
 
   export default {
     'transition': 'fade-zoom',
@@ -23,6 +25,40 @@
       notification,
       progressiveImage,
       starRating,
+      spinner,
+    },
+    data () {
+      return {
+        'statsRetrying': false,
+        'statsTryLeft':  4,
+      }
+    },
+    mounted () {
+      if (this.statsError) {
+        const tries = this.statsTryLeft
+        const request = async () => {
+          await this.$store.dispatch('stats/refill')
+          const success = !this.statsError
+
+          if (!success) {
+            throw new Error('Stats request failed')
+          }
+        }
+
+        retry(request, {
+          'retries':         tries,
+          'onFailedAttempt': (error) => {
+            this.statsError = null
+            this.statsRetrying = true
+            this.statsTryLeft = error.attemptsLeft
+          },
+        }).then(() => {
+          this.statsRetrying = false
+          this.statsTryLeft = tries
+        }).catch((error) => {
+          this.statsError = error.message
+        })
+      }
     },
     'computed': {
       ...mapGetters({
@@ -92,11 +128,12 @@
     .container.ouc-main-container
       .ouc-main-wrapper
         .section
-          .notification.is-danger(v-if="statsError")
-            p
-              fa-icon(icon="exclamation")
-              |
-              | {{statsError}}
+          transition(name="fade-zoom")
+            .notification.is-danger(v-if="statsError && !statsRetrying")
+              p
+                fa-icon(icon="exclamation")
+                |
+                | {{statsError}}
 
           .is-hidden-mobile.is-hidden-widescreen.has-margin-bottom
             h2.has-bottom-margin Newest themes
@@ -144,6 +181,16 @@
             .column
               h2.has-bottom-margin Popular themes
               .columns.is-multiline
+                transition(name="fade-zoom")
+                  .column.is-12(v-if="statsRetrying")
+                    .notification.is-warning
+                      .level
+                        .level-left
+                          | Couldn't load statistics, retrying...
+                          br
+                          | {{statsTryLeft + 1}} of 4 attempts left
+                        .level-right
+                          spinner(:size="45", :spinning="statsRetrying", speed="2s")
                 nuxt-link.column.is-4(
                   v-for="(theme, index) in limitBy(popularThemes, 6)",
                   :key="theme._id",

@@ -3,6 +3,7 @@ import assert from 'assert'
 import QS from 'querystring'
 import pify from 'pify'
 import pkg from '~/../package.json'
+import raven from 'raven-js'
 import 'isomorphic-fetch'
 
 const headers = {}
@@ -74,7 +75,7 @@ export const query = pify((userOptions = {}, thisCallback) => {
       })
       .catch((error) => {
         reset()
-        throw error
+        raven.captureException(error)
       })
     }, 100)
   }
