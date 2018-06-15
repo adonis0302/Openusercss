@@ -73,6 +73,9 @@ export const actions = {
       commit('users/upsert', data.account, {
         'root': true,
       })
+      commit('session/viewer', data.account, {
+        'root': true,
+      })
       commit('loading', false)
     } catch (error) {
       commit('loading', false)

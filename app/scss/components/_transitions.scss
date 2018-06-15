@@ -1,3 +1,29 @@
+.crop- {
+  &enter-active,
+  &leave-active {
+    transition-property: clip-path;
+    transition-duration: .5s;
+  }
+
+  &enter-active {
+    transition-timing-function: cubic-bezier(.58,.05,.91,.53);
+  }
+
+  &leave-active {
+    transition-timing-function: cubic-bezier(.19, .84, .53, 1);
+  }
+
+  &enter,
+  &leave-to {
+    clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+  }
+
+  &leave,
+  &enter-to {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+  }
+}
+
 .fade- {
   &enter-active,
   &leave-active {

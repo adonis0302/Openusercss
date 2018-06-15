@@ -42,6 +42,8 @@
           'donationUrl': null,
           'sessions':    null,
         },
+        'viewingSessions': null,
+        'sessionsFilter':  '',
       }
     },
     'apollo': {
@@ -62,20 +64,24 @@
       },
       async submitAccount () {
         const validated = await this.$validator.validateAll()
-        const self = this
 
         if (validated) {
-          const gets = []
+          const puts = []
 
           Object.keys(this.editing).forEach((key) => {
             if (this.editing[key] === 'on') {
-              gets.push(this.$store.dispatch('account/submit', {
-                [key]: self.account[key] || '',
+              puts.push(this.$store.dispatch('account/submit', {
+                [key]: this.account[key] || '',
               }))
             }
           })
 
-          return Promise.all(gets).catch((error) => {
+          return Promise.all(puts)
+          .then(() => {
+            this.$toast.success('Your account details have been saved successfully', 'Saved')
+            this.$router.push(`/profile/${this.viewer._id}`)
+          })
+          .catch((error) => {
             this.$toast.error(error.message, 'Error')
           })
         }
@@ -175,6 +181,9 @@
           form.ouc-logged-in(v-if="viewer", @submit.prevent="submitAccount")
             .tile.is-parent.is-paddingless
               .tile.is-child
+                transition(name="fade-zoom")
+                  .notification.is-danger(v-if="editingCount && errors.any()")
+                    | {{errors.all()[0]}}
                 button.button.is-brand-primary.is-pulled-right(
                   type="submit",
                   :disabled="!this.editingCount",
@@ -191,49 +200,59 @@
 
                 .box
                   .level
-                    h5 Active sessions
-                  .tile.is-parent.is-vertical.is-paddingless
-                    .tile(v-for="session in sessions")
-                      .tile.is-child
-                        .card
-                          .card-header
-                            .card-header-title.level.is-brand-primary.is-mobile
-                              p.level-left(v-if="parseUA(session.ua).browser.name"
-                                              + "&& parseUA(session.ua).os.name")
-                                | {{parseUA(session.ua).browser.name}}
-                                | on {{parseUA(session.ua).os.name}}
-                              p.level-left(v-else)
-                                | Unknown device
-                              p.level-right(v-if="viewerSession._id === session._id")
-                                | (this session)
-                          .card-content.is-paddingless
-                            table.table.is-fullwidth.is-marginless.is-striped.is-hoverable
-                              tbody
-                                tr
-                                  td IP address:
-                                  td {{session.ip}}
-                                tr(v-if="parseUA(session.ua).browser.name"
-                                      + "&& parseUA(session.ua).browser.major")
-                                  td Browser:
-                                  td
-                                    | {{parseUA(session.ua).browser.name}}
-                                    | {{parseUA(session.ua).browser.major}}
-                                tr(v-if="parseUA(session.ua).os.name")
-                                  td OS:
-                                  td
-                                    | {{parseUA(session.ua).os.name}}
-                                    | {{parseUA(session.ua).os.version}}
-                                tr(v-if="!parseUA(session.ua).browser.name"
-                                      + "|| !parseUA(session.ua).os.name")
-                                  td User agent:
-                                  td {{session.ua}}
-                                tr
-                                  td Created:
-                                  td {{session.createdAt | moment('MMMM Do, YYYY HH:mm')}}
-                                tr
-                                  td Expires:
-                                  td {{session.expiresAt | moment('MMMM Do, YYYY HH:mm')}}
-                        br
+                    .level-left
+                      h5 Active sessions ({{sessions.length}})
+                    .level-right
+                      label
+                        | Show
+                        |
+                        b-switch(v-model="viewingSessions")
+
+                  transition(name="crop")
+                    .tile.is-parent.is-vertical.is-paddingless(v-if="viewingSessions")
+                      input.input(v-model="sessionsFilter", placeholder="Filter sessions")
+                      br(v-if="filterBy(sessions, sessionsFilter).length")
+                      .tile(v-for="session in filterBy(sessions, sessionsFilter)")
+                        .tile.is-child
+                          .card
+                            .card-header
+                              .card-header-title.level.is-brand-primary.is-mobile
+                                p.level-left(v-if="parseUA(session.ua).browser.name"
+                                                + "&& parseUA(session.ua).os.name")
+                                  | {{parseUA(session.ua).browser.name}}
+                                  | on {{parseUA(session.ua).os.name}}
+                                p.level-left(v-else)
+                                  | Unknown device
+                                p.level-right(v-if="viewerSession._id === session._id")
+                                  | (this session)
+                            .card-content.is-paddingless
+                              table.table.is-fullwidth.is-marginless.is-striped.is-hoverable
+                                tbody
+                                  tr
+                                    td IP address:
+                                    td {{session.ip}}
+                                  tr(v-if="parseUA(session.ua).browser.name"
+                                        + "&& parseUA(session.ua).browser.major")
+                                    td Browser:
+                                    td
+                                      | {{parseUA(session.ua).browser.name}}
+                                      | {{parseUA(session.ua).browser.major}}
+                                  tr(v-if="parseUA(session.ua).os.name")
+                                    td OS:
+                                    td
+                                      | {{parseUA(session.ua).os.name}}
+                                      | {{parseUA(session.ua).os.version}}
+                                  tr(v-if="!parseUA(session.ua).browser.name"
+                                        + "|| !parseUA(session.ua).os.name")
+                                    td User agent:
+                                    td {{session.ua}}
+                                  tr
+                                    td Created:
+                                    td {{session.createdAt | moment('MMMM Do, YYYY HH:mm')}}
+                                  tr
+                                    td Expires:
+                                    td {{session.expiresAt | moment('MMMM Do, YYYY HH:mm')}}
+                          br
 
                 +account-card("!editing.email", "editing.email", "E-mail address")
                   .tile.is-parent.is-vertical.is-paddingless
@@ -249,8 +268,8 @@
                             v-model="account.email",
                             :disabled="!editing.email",
                             placeholder="E-mail address"
-                            v-validate.disable="'required|email'",
-                            :class="{'is-danger': errors.has('email')}",
+                            v-validate.lazy="'required|email'",
+                            :class="{'is-danger': errors.has('email') && editing.email}",
                           )
                     br
                     .tile
@@ -277,8 +296,8 @@
                           v-model="account.password",
                           :disabled="!editing.password",
                           placeholder="Passphrase",
-                          v-validate.disable="'required'",
-                          :class="{'is-danger': errors.has('password')}",
+                          v-validate.lazy="'required'",
+                          :class="{'is-danger': errors.has('password') && editing.password}",
                           data-vv-as="passphrase",
                           aria-label="registration passphrase"
                         )
@@ -291,8 +310,8 @@
                           v-model="account.passwordVerify",
                           :disabled="!editing.password",
                           placeholder="Passphrase verification",
-                          v-validate.disable="'required|confirmed:password'",
-                          :class="{'is-danger': errors.has('passwordVerify')}",
+                          v-validate.lazy="'required|confirmed:password'",
+                          :class="{'is-danger': errors.has('passwordVerify') && editing.password}",
                           data-vv-as="passphrase verification",
                           aria-label="registration passphrase again"
                         )
@@ -340,8 +359,9 @@
                             v-model="account.displayname",
                             :disabled="!editing.displayname"
                             placeholder="Username",
-                            v-validate.disable="'required|alpha_num'",
-                            :class="{'is-danger': errors.has('displayname')}"
+                            v-validate.lazy="'required|max:32'",
+                            :class="{'is-danger': errors.has('displayname') && editing.displayname}"
+                            data-vv-as="username"
                           )
 
                 +account-card("!editing.bio", "editing.bio", "Bio")
@@ -351,8 +371,8 @@
                       v-model="account.bio",
                       :disabled="!editing.bio",
                       placeholder="Write something about yourself!",
-                      v-validate.disable="'required'",
-                      :class="{'is-danger': errors.has('bio')}"
+                      v-validate.lazy="'required'",
+                      :class="{'is-danger': errors.has('bio') && editing.bio}"
                     )
 
                   br

@@ -77,6 +77,9 @@ export const mutations = {
     state.session = null
     state.viewer = null
   },
+  viewer (state, newViewer) {
+    state.viewer = Object.assign({}, state.viewer, newViewer)
+  },
 }
 
 export const actions = {
