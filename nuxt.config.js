@@ -124,6 +124,16 @@ module.exports = {
               'handler':    'staleWhileRevalidate',
               'method':     'GET',
             },
+            {
+              'urlPattern': 'https://imageproxy.openusercss.org/.*',
+              'handler':    'staleWhileRevalidate',
+              'method':     'GET',
+            },
+            {
+              'urlPattern': 'https://gravatar.com/avatar/.*',
+              'handler':    'staleWhileRevalidate',
+              'method':     'GET',
+            },
           ],
         },
         'manifest': {
