@@ -2,6 +2,29 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.4.0"></a>
+# [1.4.0](https://github.com/OpenUserCSS/openusercss.org/compare/v1.3.1...v1.4.0) (2018-06-15)
+
+
+### Bug Fixes
+
+* **client:** Construct local API URL in network interface (fixes [#107](https://github.com/OpenUserCSS/openusercss.org/issues/107)) ([f16d5a9](https://github.com/OpenUserCSS/openusercss.org/commit/f16d5a9))
+* **client:** Redirect to login after email verification if not logged in ([d7bc43a](https://github.com/OpenUserCSS/openusercss.org/commit/d7bc43a))
+* **client:** Replace promise.timeout with pure function (fixes [#106](https://github.com/OpenUserCSS/openusercss.org/issues/106)) ([89c49ad](https://github.com/OpenUserCSS/openusercss.org/commit/89c49ad))
+* **client:** Restore UX on the account page (1000th commit! :tada:) ([56330ec](https://github.com/OpenUserCSS/openusercss.org/commit/56330ec))
+
+
+### Features
+
+* **client:** Add the ability to specify spinner speed ([fa20430](https://github.com/OpenUserCSS/openusercss.org/commit/fa20430))
+
+
+### Performance Improvements
+
+* **client:** Cache images from possible external sources ([3dad4c3](https://github.com/OpenUserCSS/openusercss.org/commit/3dad4c3))
+
+
+
 <a name="1.3.1"></a>
 ## [1.3.1](https://github.com/OpenUserCSS/openusercss.org/compare/v1.3.0...v1.3.1) (2018-06-14)
 
