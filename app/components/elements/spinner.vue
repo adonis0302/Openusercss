@@ -3,6 +3,7 @@
     'props': [
       'size',
       'spinning',
+      'speed',
     ],
     data () {
       return {
@@ -12,6 +13,11 @@
           'border-top-width':    this.sizePx(this.size / 2),
           'border-bottom-width': this.sizePx(this.size / 2),
         },
+      }
+    },
+    created () {
+      if (this.speed) {
+        this.computedStyle['animation-duration'] = this.speed
       }
     },
     'methods': {
