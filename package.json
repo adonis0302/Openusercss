@@ -1,6 +1,6 @@
 {
   "name": "openusercss.org",
-  "version": "1.4.3",
+  "version": "1.4.4",
   "release": "beta",
   "description": "OpenUserCSS",
   "main": "index.js",

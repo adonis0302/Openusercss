@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.4.4"></a>
+## [1.4.4](https://github.com/OpenUserCSS/openusercss.org/compare/v1.4.3...v1.4.4) (2018-06-16)
+
+
+### Bug Fixes
+
+* **build:** Correct release script ([4cb9cce](https://github.com/OpenUserCSS/openusercss.org/commit/4cb9cce))
+
+
+
 <a name="1.4.3"></a>
 ## [1.4.3](https://github.com/OpenUserCSS/openusercss.org/compare/v1.4.2...v1.4.3) (2018-06-16)
 
