@@ -58,37 +58,27 @@ const init = async () => {
 }
 
 const migrate = async (version) => {
-  if (version === 'v1.0.0') {
-    log.info('Starting database migration')
-    const themes = await Theme.find()
-    const modifies = []
-    const decentm = await User.find({
-      'username': 'decentm',
+  if (version === 'v1.4.2') {
+    const ratings = await Rating.find({
+      'user': null,
     })
 
-    themes.forEach((theme) => {
-      log.info(`Migrating ${theme._id} (${theme.title})`)
-
-      if (theme.rating) {
-        log.info(`Migrating rating ${theme.rating}`)
-        const newRating = Rating.create({
-          'value': theme.rating,
-          'user':  decentm,
-          theme,
-        })
-
-        modifies.push(newRating.save().then(() => log.info(`Rating migrated: ${theme.rating}`)))
-      }
-
-      theme.license = theme.license || 'Other'
-      Reflect.deleteProperty(theme, 'rating')
-
-      modifies.push(theme.save().then(() => log.info(`Migrated ${theme._id} (${theme.title})`)))
+    log.info(`Found ${ratings.length} malformed ratings`)
+    const user = await User.findOne({
+      '_id': '5a2f0361ba666f0b00b9c827',
     })
 
-    return Promise.all(modifies).then(() => {
-      log.info('Database migration complete')
+    log.info(`Found user ${user.username}`)
+    const saves = []
+
+    ratings.forEach((rating) => {
+      rating.user = user
+      saves.push(rating.save().then(() => {
+        log.info(`Rating ${rating._id} saved`)
+      }))
     })
+
+    await Promise.all(saves)
   }
 }
 
