@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.4.2"></a>
+## [1.4.2](https://github.com/OpenUserCSS/openusercss.org/compare/v1.4.1...v1.4.2) (2018-06-16)
+
+
+### Bug Fixes
+
+* **db:** Write migration script for missing rating owners ([89cb00c](https://github.com/OpenUserCSS/openusercss.org/commit/89cb00c))
+
+
+
 <a name="1.4.1"></a>
 ## [1.4.1](https://github.com/OpenUserCSS/openusercss.org/compare/v1.4.0...v1.4.1) (2018-06-16)
 
