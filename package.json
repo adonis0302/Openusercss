@@ -27,7 +27,7 @@
     "prebuild": "yarn ns && yarn clean",
     "build": "nuxt build && yarn env:prod gulp build && yarn env:prod backpack build",
     "prerelease": "standard-version && yarn build",
-    "release": "TAG=decentm/openusercss DOMAIN=openusercss.org yarn env:prod && docker-compose -f prod.stack.yml build",
+    "release": "TAG=decentm/openusercss DOMAIN=openusercss.org yarn env:prod docker-compose -f prod.stack.yml build",
     "postrelease": "git push --follow-tags origin master && docker push decentm/openusercss",
     "prestage": "yarn build",
     "stage": "TAG=decentm/openusercss-unstable DOMAIN=staging.openusercss.org yarn env:prod docker-compose -f prod.stack.yml build",
