@@ -55,10 +55,10 @@ module.exports = {
     './node_modules/@riophae/vue-treeselect/dist/vue-treeselect.min.css',
     '~/scss/main.scss',
   ],
+  'env':     process.env,
   'plugins': [
     '~/plugins/matomo-api',
     '~/plugins/average-rating',
-    '~/plugins/api-url',
     '~/plugins/vue-moment',
     '~/plugins/vue-markdown',
     '~/plugins/vue-filters',

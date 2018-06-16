@@ -89,10 +89,13 @@ const migrate = async (version) => {
 
 export default async () => {
   await init()
-  const migrationResult = await migrate(process.env.MIGRATE_VERSION)
 
-  if (!migrationResult) {
-    log.warn('Migration unsuccessful, continuing...')
+  if (process.env.MIGRATE_VERSION) {
+    const migrationResult = await migrate(process.env.MIGRATE_VERSION)
+
+    if (!migrationResult) {
+      log.warn('Migration unsuccessful, continuing...')
+    }
   }
 
   return {
