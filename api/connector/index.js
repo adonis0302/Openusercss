@@ -68,6 +68,11 @@ const migrate = async (version) => {
       '_id': '5a2f0361ba666f0b00b9c827',
     })
 
+    if (!user) {
+      log.warn('Could not find user, skipping migration')
+      return false
+    }
+
     log.info(`Found user ${user.username}`)
     const saves = []
 
@@ -84,7 +89,11 @@ const migrate = async (version) => {
 
 export default async () => {
   await init()
-  await migrate(process.env.MIGRATE_VERSION)
+  const migrationResult = await migrate(process.env.MIGRATE_VERSION)
+
+  if (!migrationResult) {
+    log.warn('Migration unsuccessful, continuing...')
+  }
 
   return {
     Theme,
