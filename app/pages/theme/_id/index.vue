@@ -117,13 +117,11 @@
         return this.extension.capabilities.includes('event:install-usercss')
       },
       apiUrl () {
-        if (process.server) {
-          return 'http://localhost:5000'
-        } else if (process.env.NODE_ENV === 'development') {
-          return `http://api.${process.env.OUC_DOMAIN || process.env.DOMAIN}`
+        if (process.env.NODE_ENV === 'development') {
+          return `http://api.${process.env.OUC_DOMAIN || process.env.DOMAIN || 'dev.openusercss.local'}`
         }
 
-        return `https://api.${process.env.OUC_DOMAIN || process.env.DOMAIN}`
+        return `https://api.${process.env.OUC_DOMAIN || process.env.DOMAIN || 'openusercss.org'}`
       },
       installLink () {
         return `${this.apiUrl}/${path.join('theme', `${this.theme._id}.user.css`)}`
