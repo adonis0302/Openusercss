@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.4.6"></a>
+## [1.4.6](https://github.com/OpenUserCSS/openusercss.org/compare/v1.4.5...v1.4.6) (2018-06-17)
+
+
+### Bug Fixes
+
+* **client:** Remove localhost from possible theme install URLs ([e518f6a](https://github.com/OpenUserCSS/openusercss.org/commit/e518f6a))
+
+
+
 <a name="1.4.5"></a>
 ## [1.4.5](https://github.com/OpenUserCSS/openusercss.org/compare/v1.4.4...v1.4.5) (2018-06-16)
 
