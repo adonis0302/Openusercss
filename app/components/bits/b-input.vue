@@ -4,6 +4,9 @@
       'lazy',
       'value',
     ],
+    created () {
+      console.warn('Hey, myself! b-input is deprecated, use input.input from Bulma!')
+    },
     mounted () {
       if (this.lazy) {
         this.$el.addEventListener('change', () => {

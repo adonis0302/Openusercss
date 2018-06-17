@@ -43,7 +43,14 @@
   },
   "ava": {
     "require": [
-      "babel-register"
+      "babel-register",
+      "./test/lib/ava-vue-helper"
+    ]
+  },
+  "nyc": {
+    "extension": [
+      ".js",
+      ".vue"
     ]
   },
   "devDependencies": {
@@ -65,6 +72,7 @@
     "babelify": "^7",
     "backpack-core": "^0.5.0",
     "brace": "^0",
+    "browser-env": "^3.2.5",
     "bulma": "^0",
     "concurrently": "^3",
     "coveralls": "^3",
@@ -136,6 +144,9 @@
     "pug-lint-config-emarsys": "^2",
     "pump": "^1",
     "require-dir": "^0",
+    "require-extension-hooks": "^0.3.2",
+    "require-extension-hooks-babel": "^0.1.1",
+    "require-extension-hooks-vue": "^1.0.0",
     "sass-loader": "^6",
     "shellcheck": "^0.0.8",
     "standard-version": "^4",

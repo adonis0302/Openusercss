@@ -1,40 +1,10 @@
-import test from 'ava'
-import Nightmare from 'nightmare'
+import test, {client,} from '../lib/end-to-end'
 import path from 'path'
-import log from 'chalk-console'
-
-const clientOptions = {
-  'waitTimeout':      7000,
-  'gotoTimeout':      7000,
-  'loadTimeout':      7000,
-  'executionTimeout': 13000,
-  'show':             true,
-}
-
-if (process.env.CI) {
-  clientOptions.electronPath = path.resolve('node_modules/.bin/electron')
-}
-
-const client = new Nightmare(clientOptions)
-
-test.before(async (t) => {
-  let result = null
-
-  try {
-    result = client
-    .viewport(1280, 720)
-    .goto('http://localhost:5010')
-    .wait('.ouc-app-root')
-  } catch (error) {
-    log.error(error.stack)
-  }
-
-  return result
-})
 
 test.serial('contains correct text', async (t) => {
-  await client.wait('.footer')
-  const footerContent = await client.evaluate(() => {
+  const footerContent = await client
+  .wait('.footer')
+  .evaluate(() => {
     return document.querySelector('.footer').innerHTML
   })
 
@@ -43,4 +13,15 @@ test.serial('contains correct text', async (t) => {
   t.truthy(footerContent.match(/forums.openusercss.org\/topic\/5\/privacy-policy.*Privacy policy/g))
   t.true(footerContent.includes('GitHub'))
   t.true(footerContent.includes('Contact the administrator'))
+})
+
+test.serial('contains current year', async (t) => {
+  const footerContent = await client
+  .evaluate(() => {
+    return document.querySelector('.footer').innerHTML
+  })
+
+  const year = new Date().getFullYear()
+
+  t.true(footerContent.includes(`Copyright&nbsp;©&nbsp;${year}&nbsp;`))
 })
