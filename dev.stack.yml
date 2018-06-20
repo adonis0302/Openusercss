@@ -14,12 +14,11 @@ services:
       - .ignored/data:/ouc/build/data
     environment:
       DISPLAY: :0
-      NODE_ENV: development
-      OUC_DATABASE_MAIN: mongodb://mongodb:27017/openusercss-main
       OUC_DOMAIN: ${DOMAIN}
+    env_file:
+      - .env
+      - .env.local
     labels:
-      - "traefik.docker.network=openusercss_gateway"
-      # - "traefik.backend=dev.openusercss"
       - "traefik.api.frontend.rule=Host: api.${DOMAIN}"
       - "traefik.api.protocol=http"
       - "traefik.api.port=5000"
@@ -29,8 +28,7 @@ services:
     restart: always
     stdin_open: true
     tty: true
-    networks:
-      - gateway
+    network_mode: host
     user: "1000"
 
   mongodb:
