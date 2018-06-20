@@ -50,7 +50,7 @@
               'variables': this.registerData,
             })
             this.$router.push({
-              'path': '/',
+              'path': '/login',
             })
           } catch (error) {
             this.$toast.error(error.message, 'Error')
@@ -104,7 +104,7 @@
                           name="displayname",
                           autocomplete="username",
                           placeholder="Username",
-                          v-validate.disable="'required|alpha_num'",
+                          v-validate.disable="'required|max:32'",
                           v-model="registerData.displayname"
                           :class="{'input': true, 'is-danger': errors.has('displayname') }",
                           data-vv-as="displayname",
@@ -157,10 +157,10 @@
                         ) terms of service (click here to view)
 
                   .tile.is-parent.is-vertical.is-paddingless
-                    ouc-button(icon="user-plus").is-primary
+                    ouc-button(icon="user-plus", type="submit").is-primary
                       p(slot="content") Register
                     hr(v-show="errors.any()")
-                    notification(v-show="errors.any()", icon="exclamation", color="is-danger").is-danger
+                    notification(v-show="errors.any()", icon="exclamation", color="is-danger").is-danger.error-bag
                       div(slot="content")
                         ul
                           li(v-for="error in errors.all()") {{error}}

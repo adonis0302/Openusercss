@@ -49,16 +49,21 @@ const staticSignoffs = [
 
 export const sendEmail = async ({to, template, locals,}) => {
   const config = await staticConfig()
+  const auth = {
+    'user': config.get('mail.user'),
+    'pass': config.get('mail.pass'),
+  }
   const transportOptions = {
     'host':       config.get('mail.smtp.host'),
     'port':       parseInt(config.get('mail.smtp.port'), 10),
     'secure':     config.get('mail.smtp.secure') === 'true',
     'requireTls': config.get('mail.smtp.requiretls') === 'true',
-    'auth':       {
-      'user': config.get('mail.user'),
-      'pass': config.get('mail.pass'),
-    },
   }
+
+  if (auth.user) {
+    transportOptions.auth = auth
+  }
+
   const transport = await createTransport(transportOptions)
 
   const signoffs = staticSignoffs.concat([
