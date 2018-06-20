@@ -477,6 +477,10 @@ acorn@^5.0.0, acorn@^5.3.0, acorn@^5.5.0:
   version "5.5.3"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.5.3.tgz#f473dd47e0277a08e28e9bec5aeeb04751f0b8c9"
 
+addressparser@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/addressparser/-/addressparser-1.0.1.tgz#47afbe1a2a9262191db6838e4fd1d39b40821746"
+
 ajv-keywords@^1.0.0:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/ajv-keywords/-/ajv-keywords-1.5.1.tgz#314dd0a4b3368fad3dfcdc54ede6171b886daf3c"
@@ -1900,6 +1904,10 @@ balanced-match@^0.4.2:
 balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
+
+base32.js@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/base32.js/-/base32.js-0.1.0.tgz#b582dec693c2f11e893cf064ee6ac5b6131a2202"
 
 base64-js@^1.0.2:
   version "1.3.0"
@@ -4129,6 +4137,10 @@ dot-prop@^4.1.0, dot-prop@^4.1.1:
   dependencies:
     is-obj "^1.0.0"
 
+dotenv@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-6.0.0.tgz#24e37c041741c5f4b25324958ebbc34bca965935"
+
 dotgitignore@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/dotgitignore/-/dotgitignore-1.0.3.tgz#a442cbde7dc20dff51cdb849e4c5a64568c07923"
@@ -6263,7 +6275,7 @@ hawk@~6.0.2:
     hoek "4.x.x"
     sntp "2.x.x"
 
-he@1.1.x, he@^1, he@^1.0.0, he@^1.1.0:
+he@1.1.x, he@^1, he@^1.0.0, he@^1.1.0, he@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/he/-/he-1.1.1.tgz#93410fd21b009735151f8868c2f271f3427e23fd"
 
@@ -6397,7 +6409,7 @@ html-tags@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/html-tags/-/html-tags-2.0.0.tgz#10b30a386085f43cede353cc8fa7cb0deeea668b"
 
-html-to-text@^3.3.0:
+html-to-text@3.3.0, html-to-text@^3.3.0:
   version "3.3.0"
   resolved "https://registry.yarnpkg.com/html-to-text/-/html-to-text-3.3.0.tgz#6a9b63c699b885bb7ba84b1446bfe6876bbfcfb7"
   dependencies:
@@ -6509,6 +6521,10 @@ i18n@^0.8.3:
     messageformat "^0.3.1"
     mustache "*"
     sprintf-js ">=1.0.3"
+
+iconv-lite@0.4.15:
+  version "0.4.15"
+  resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.15.tgz#fe265a218ac6a57cfe854927e9d04c19825eddeb"
 
 iconv-lite@0.4.19:
   version "0.4.19"
@@ -6780,6 +6796,10 @@ ip-regex@^1.0.1:
 ipaddr.js@1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/ipaddr.js/-/ipaddr.js-1.6.0.tgz#e3fa357b773da619f26e95f049d055c72796f86b"
+
+ipv6-normalize@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/ipv6-normalize/-/ipv6-normalize-1.0.1.tgz#1b3258290d365fa83239e89907dde4592e7620a8"
 
 irregular-plurals@^1.0.0:
   version "1.4.0"
@@ -7707,6 +7727,26 @@ levn@^0.3.0, levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
+libbase64@0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/libbase64/-/libbase64-0.1.0.tgz#62351a839563ac5ff5bd26f12f60e9830bb751e6"
+
+libbase64@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/libbase64/-/libbase64-1.0.2.tgz#2ff13ffe69b1e40159f49368e30d0dd8bb1635b5"
+
+libmime@3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/libmime/-/libmime-3.1.0.tgz#115012f1672051adc8809a8f93955ffc3648edf9"
+  dependencies:
+    iconv-lite "0.4.15"
+    libbase64 "0.1.0"
+    libqp "1.1.0"
+
+libqp@1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/libqp/-/libqp-1.1.0.tgz#f5e6e06ad74b794fb5b5b66988bf728ef1dedbe8"
+
 lie@3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/lie/-/lie-3.1.1.tgz#9a436b2cc7746ca59de7a41fa469b3efb76bd87e"
@@ -7726,7 +7766,7 @@ liftoff@^2.3.0, liftoff@^2.5.0:
     rechoir "^0.6.2"
     resolve "^1.1.7"
 
-linkify-it@^2.0.0:
+linkify-it@2.0.3, linkify-it@^2.0.0:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/linkify-it/-/linkify-it-2.0.3.tgz#d94a4648f9b1c179d64fa97291268bdb6ce9434f"
   dependencies:
@@ -8164,6 +8204,27 @@ lru-cache@^4.0.0, lru-cache@^4.0.1, lru-cache@^4.1.1:
 macaddress@^0.2.8:
   version "0.2.8"
   resolved "https://registry.yarnpkg.com/macaddress/-/macaddress-0.2.8.tgz#5904dc537c39ec6dbefeae902327135fa8511f12"
+
+mailparser@^2.0.4:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/mailparser/-/mailparser-2.2.0.tgz#e3c4d9504d4a5fa5bdd82e8de2d426d74e45e367"
+  dependencies:
+    addressparser "1.0.1"
+    he "^1.1.1"
+    html-to-text "3.3.0"
+    iconv-lite "0.4.19"
+    libmime "3.1.0"
+    linkify-it "2.0.3"
+    mailsplit "4.1.2"
+    tlds "1.199.0"
+
+mailsplit@4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/mailsplit/-/mailsplit-4.1.2.tgz#c618bc311a4cfc83b226a1edc1b503f5a924d083"
+  dependencies:
+    libbase64 "1.0.2"
+    libmime "3.1.0"
+    libqp "1.1.0"
 
 make-dir@^1.0.0:
   version "1.2.0"
@@ -8959,6 +9020,10 @@ node-sass@^4.8.3, node-sass@^4.9.0:
 node-status-codes@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/node-status-codes/-/node-status-codes-1.0.0.tgz#5ae5541d024645d32a58fcddc9ceecea7ae3ac2f"
+
+nodemailer@4.6.7:
+  version "4.6.7"
+  resolved "https://registry.yarnpkg.com/nodemailer/-/nodemailer-4.6.7.tgz#b68de7f36d65618bdeeeb76234e3547d51266373"
 
 nodemailer@^4, nodemailer@^4.2.0, nodemailer@^4.4.1:
   version "4.6.4"
@@ -12290,6 +12355,21 @@ slide@^1.1.5, slide@~1.1.3:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/slide/-/slide-1.1.6.tgz#56eb027d65b4d2dce6cb2e2d32c4d4afc9e1d707"
 
+smtp-server@^3.0.1:
+  version "3.4.6"
+  resolved "https://registry.yarnpkg.com/smtp-server/-/smtp-server-3.4.6.tgz#0f2505158ae42846f55bf374cb1a3386cabcf700"
+  dependencies:
+    base32.js "0.1.0"
+    ipv6-normalize "1.0.1"
+    nodemailer "4.6.7"
+
+smtp-tester@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/smtp-tester/-/smtp-tester-1.2.0.tgz#df39a8ca5d041b74f511b100dab63a1d455682d3"
+  dependencies:
+    mailparser "^2.0.4"
+    smtp-server "^3.0.1"
+
 snapdragon-node@^2.0.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/snapdragon-node/-/snapdragon-node-2.1.1.tgz#6c175f86ff14bdb0724563e8f3c1b021a286853b"
@@ -13074,6 +13154,10 @@ tiny-emitter@2.0.2:
 tinycolor2@^1.1.2:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/tinycolor2/-/tinycolor2-1.4.1.tgz#f4fad333447bc0b07d4dc8e9209d8f39a8ac77e8"
+
+tlds@1.199.0:
+  version "1.199.0"
+  resolved "https://registry.yarnpkg.com/tlds/-/tlds-1.199.0.tgz#a4fc8c3058216488a80aaaebb427925007e55217"
 
 tmp@^0.0.33:
   version "0.0.33"
