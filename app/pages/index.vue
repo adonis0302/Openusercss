@@ -138,7 +138,11 @@
           .is-hidden-mobile.is-hidden-widescreen.has-margin-bottom
             h2.has-bottom-margin Newest themes
             .columns.is-multiline
-              .column.is-4(v-for="(theme, index) in orderBy(limitBy(themes, 6), 'createdAt', -1)")
+              nuxt-link.column.is-4(
+                v-for="(theme, index) in orderBy(limitBy(themes, 6), 'createdAt', -1)",
+                :key="theme._id",
+                :to="'/theme/' + theme._id"
+              )
                 +theme-card(false, true)
                   .columns.is-mobile.is-fullwidth
                     .column.is-3
