@@ -5,16 +5,16 @@
   <a href="https://openusercss.org">OpenUserCSS</a>
 </h1>
 
-![Website screenshot](https://i.imgur.com/NbBFSqd.png)
+![Website screenshot](https://raw.githubusercontent.com/OpenUserCSS/openusercss.org/master/.github/screenshots/index.png)
 
 <details>
   <summary><strong>More screenshots</strong> (click to expand)</summary>
 
   ----
-  ![Theme view](https://i.imgur.com/VYmoPsV.png)
+  ![Theme view](https://raw.githubusercontent.com/OpenUserCSS/openusercss.org/master/.github/screenshots/theme.png)
 
   ----
-  ![Profile view](https://i.imgur.com/AwVkfSI.png)
+  ![Profile view](https://raw.githubusercontent.com/OpenUserCSS/openusercss.org/master/.github/screenshots/profile.png)
 </details>
 
 ----
