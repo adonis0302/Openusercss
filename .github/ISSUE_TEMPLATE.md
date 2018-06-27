@@ -2,6 +2,8 @@
   You may delete sections that you think are not relevant to your situation.
   For example, if your bug is obvious, you can delete the `Expected behaviour` bit
   If you have ten minutes, please read this article by Simon Tatham: https://www.chiark.greenend.org.uk/~sgtatham/bugs.html
+  
+  -- Have you checked if your issue is already reported? --
 -->
 
 | Expected behaviour | Actual behaviour |
