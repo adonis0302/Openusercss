@@ -5,6 +5,9 @@ export default ({store,}) => {
   const persistState = createPersistedState({
     'key':     `ouc-state-${pkg.version}`,
     'storage': window.localStorage,
+    'paths':   [
+      'session',
+    ],
   })
 
   if (store.getters['session/token']) {
