@@ -4,7 +4,7 @@ import test, {
   username,
   password,
   email,
-} from '../lib/end-to-end'
+} from '../helpers/end-to-end'
 
 const emailField = 'input[name="email"]'
 const usernameField = 'input[name="displayname"]'

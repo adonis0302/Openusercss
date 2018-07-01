@@ -1,4 +1,4 @@
-import test, {client, appURL,} from '../lib/end-to-end'
+import test, {client, appURL,} from '../helpers/end-to-end'
 import hat from 'hat'
 import path from 'path'
 

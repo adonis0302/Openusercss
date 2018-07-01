@@ -8,10 +8,11 @@ set -e
 DEFAULT_TRACE=false
 DEFAULT_DOMAIN="dev.openusercss.local"
 DEFAULT_ROOTLESS=false
+DEFAULT_LOG_FILE=.ignored/logs/preflight.log
 
 PATH=$PATH":node_modules/.bin:.ignored/bin"
 CLEANUP_NEEDED=false
-LOG_FILE=.ignored/logs/preflight.log
+LOG_FILE=$DEFAULT_LOG_FILE
 LOG_DIR=$(echo $LOG_FILE | rev | cut -d '/' -f2- | rev)
 SHORT=$(git rev-parse --short HEAD)
 TAG=$(git describe --always --tag --abbrev=0)
@@ -21,6 +22,8 @@ ERROR_HANDLING=false
 DOMAIN=$DEFAULT_DOMAIN
 ROOTLESS=$DEFAULT_ROOTLESS
 MANAGED_HOSTS=true
+FOR_TESTS=false
+ENV_FILE=.env.local
 
 RED='\033[0;31m'
 ORANGE='\033[0;33m'
@@ -47,47 +50,16 @@ usage () {
   printf "OpenUserCSS development startup script %s (%s)\n" "$TAG" "$SHORT"
   printf "Usage: ./start.sh (all arguments are optional)\n"
   printf "\\n"
+  usage_example "-f --file" "File path and name to log to (default: $DEFAULT_LOG_FILE)" true
   usage_example "-h --help" "Show this help message"
   usage_example "-t --trace" "Set verbose logging to file (default: $DEFAULT_TRACE)"
   usage_example "-d --domain" "Set the development domain (default: $DEFAULT_DOMAIN)" true
   usage_example "-r --rootless" "Skip automations that require root access (default: $DEFAULT_ROOTLESS)"
+  usage_example "-m --for-tests" "Whether of not the fake e-mail server should be used"
   printf "\\n"
   printf "  $BOLD*$RESET  A value must be specified after an equals sign.\\n"
   printf "     For example: $0 --domain$BOLD=something.local$RESET\\n"
 }
-
-while [ "$1" != "" ]; do
-  PARAM=`echo $1 | awk -F= '{print $1}'`
-  VALUE=`echo $1 | awk -F= '{print $2}'`
-  case $PARAM in
-    -h | --help)
-      usage
-      exit
-      ;;
-    -t | --trace)
-      TRACE=true
-      ;;
-    -f | --file)
-      LOG_FILE=$VALUE
-      ;;
-    -d | --domain)
-      DOMAIN=$VALUE
-      ;;
-    -r | --rootless)
-      ROOTLESS=true
-      ;;
-    -x | --xx)
-      printf "VALUE=%s\\n" $VALUE
-      exit 0
-      ;;
-    *)
-      printf "${RED}[ERROR]$RESET Unknown parameter \"$PARAM\"\\n\\n"
-      usage
-      exit 2
-      ;;
-  esac
-  shift
-done
 
 ################################################################################
 ## Logging
@@ -126,7 +98,7 @@ info () {
     info_prev_length=${#content}
   fi
 
-  printf "$CYAN[INFO]$RESET %s$carriage" "$content" | log
+  printf "${CYAN}[INFO]$RESET %s$carriage" "$content" | log
 }
 
 ################################################################################
@@ -158,7 +130,7 @@ error () {
       cleanup || printf "Cleanup failed\n" | log
     fi
 
-    printf "\\n$RED[ERROR]$RESET %s\\n" "$msg" | tee /dev/fd/3
+    printf "\\n${RED}[ERROR]$RESET %s\\n" "$msg" | tee /dev/fd/3
 
     print_trace
     newline
@@ -181,7 +153,7 @@ error () {
 
     exit "$code"
   else
-    printf "$ORANGE[WARN]$RESET %s\\n" "$msg" | tee /dev/fd/3
+    printf "${ORANGE}[WARN]$RESET %s\\n" "$msg" | tee /dev/fd/3
   fi
 }
 
@@ -307,7 +279,7 @@ cleanup () {
   remove_domains
 
   info "Stopping and deleting containers"
-  DOMAIN=$DOMAIN docker-compose -f dev.stack.yml down 2>&1 | log
+  DOMAIN=$DOMAIN ENV_FILE=$ENV_FILE docker-compose -f dev.stack.yml down 2>&1 | log
 
   local jobcount
   jobcount=$(jobs -p | wc -l)
@@ -515,16 +487,62 @@ countdown () {
 ## Main
 ################################################################################
 
+if [ -f .env.local ]; then
+  source .env.local
+fi
+
+while [ "$1" != "" ]; do
+  PARAM=`echo $1 | awk -F= '{print $1}'`
+  VALUE=`echo $1 | awk -F= '{print $2}'`
+  case $PARAM in
+    -h | --help)
+      usage
+      exit
+      ;;
+    -t | --trace)
+      TRACE=true
+      ;;
+    -f | --file)
+      LOG_FILE=$VALUE
+      ;;
+    -d | --domain)
+      DOMAIN=$VALUE
+      ;;
+    -r | --rootless)
+      ROOTLESS=true
+      ;;
+    -m | --for-tests)
+      FOR_TESTS=true
+      source .test.env
+      ;;
+    -x | --xx)
+      printf "VALUE=%s\\n" $VALUE
+      exit 0
+      ;;
+    *)
+      printf "${RED}[ERROR]$RESET Unknown parameter \"$PARAM\"\\n\\n"
+      usage
+      exit 2
+      ;;
+  esac
+  shift
+done
+
 initialise
 countdown 2 "Takeoff"
 
 info "Rotate"
-DOMAIN=$DOMAIN docker-compose -f dev.stack.yml build 2>&1 | log || error \
+
+if [ "$FOR_TESTS" = true ]; then
+  ENV_FILE=.test.env
+fi
+
+DOMAIN=$DOMAIN ENV_FILE=$ENV_FILE docker-compose -f dev.stack.yml build 2>&1 | log || error \
   "Building the stack image failed" 126
 
 countdown 2 "Gear up"
 
-DOMAIN=$DOMAIN docker-compose -f dev.stack.yml run --rm dev.openusercss 2>&1 | log || error \
+DOMAIN=$DOMAIN ENV_FILE=$ENV_FILE docker-compose -f dev.stack.yml run --rm dev.openusercss 2>&1 | log || error \
   "A runtime error occurred - There is likely additional logging output above" 1
 
 cleanup

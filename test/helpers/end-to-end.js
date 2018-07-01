@@ -3,7 +3,6 @@ import Nightmare from 'nightmare'
 import hat from 'hat'
 import {load as loadEnv,} from 'dotenv'
 import smtp from 'smtp-tester'
-// import log from 'chalk-console'
 
 const clientOptions = {
   'waitTimeout':      7000,
@@ -14,9 +13,18 @@ const clientOptions = {
   'show':             !process.env.CI,
 }
 
-export const {'parsed': env,} = loadEnv({
+const {'parsed': env,} = loadEnv({
   'path': '.env.local',
 })
+const {'parsed': testEnv,} = loadEnv({
+  'path': '.test.env',
+})
+
+Object.keys(testEnv).forEach((key, index) => {
+  env[key] = testEnv[key]
+})
+
+export {env,}
 export const client = new Nightmare(clientOptions)
 export const appURL = 'http://dev.openusercss.local'
 export const resolution = [1366, 768,]
@@ -43,8 +51,10 @@ test.beforeEach('Setup test context', (t) => {
 })
 
 test.after.always('Close fake mail server and Electron client', (t) => {
-  mailServer.stop()
-  return client.end()
+  return Promise.all([
+    mailServer.stop(),
+    client.end(),
+  ])
 })
 
 export default test

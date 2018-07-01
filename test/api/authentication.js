@@ -2,7 +2,7 @@ import {request,} from 'graphql-request'
 import {ObjectID,} from 'mongodb'
 import jsonwebtoken from 'jsonwebtoken'
 
-import test, {apiURL, context,} from '../lib/api'
+import test, {apiURL, context,} from '../helpers/api'
 
 test.serial('register', async (t) => {
   const regData = await request(apiURL, `

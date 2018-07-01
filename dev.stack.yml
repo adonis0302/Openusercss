@@ -17,7 +17,7 @@ services:
       OUC_DOMAIN: ${DOMAIN}
     env_file:
       - .env
-      - .env.local
+      - ${ENV_FILE}
     labels:
       - "traefik.api.frontend.rule=Host: api.${DOMAIN}"
       - "traefik.api.protocol=http"

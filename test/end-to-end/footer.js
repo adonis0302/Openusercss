@@ -1,4 +1,4 @@
-import test, {client,} from '../lib/end-to-end'
+import test, {client,} from '../helpers/end-to-end'
 import path from 'path'
 
 test.serial('contains correct text', async (t) => {
