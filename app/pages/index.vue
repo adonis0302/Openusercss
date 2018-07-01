@@ -81,9 +81,15 @@
           }
         })
         const withStats = merged.filter((item) => Boolean(item))
-        const results = withStats.sort((base, compare) => compare.stat.nb_hits - base.stat.nb_hits)
+        const results = withStats
+        .sort((base, compare) => compare.stat.nb_hits - base.stat.nb_hits)
+        .map((item) => item.theme)
 
-        return results.map((item) => item.theme)
+        if (results.length === 0) {
+          return this.themes
+        }
+
+        return results
       },
     },
     'methods': {
@@ -213,7 +219,7 @@
                           )
                       .media-content
                         b {{theme.user.displayname}}
-                        p
+                        p(v-if="themeStats(theme._id)")
                           | {{themeStats(theme._id).nb_hits}}
                           | {{themeStats(theme._id).nb_hits | pluralize('visit')}}
 </template>
