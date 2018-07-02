@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.5.0"></a>
+# [1.5.0](https://github.com/OpenUserCSS/openusercss.org/compare/v1.4.6...v1.5.0) (2018-07-02)
+
+
+### Bug Fixes
+
+* Fix issues found by testing, add empty mail auth env variables ([2e6af00](https://github.com/OpenUserCSS/openusercss.org/commit/2e6af00))
+* **client:** Only store session data persistently ([07eddf6](https://github.com/OpenUserCSS/openusercss.org/commit/07eddf6))
+* **client:** Show themes even if no ranked themes are found ([2e27dee](https://github.com/OpenUserCSS/openusercss.org/commit/2e27dee))
+* **client:** Wrap new-theme cards in nuxt-links on tablet sized screens ([7a8a2d0](https://github.com/OpenUserCSS/openusercss.org/commit/7a8a2d0))
+* **test:** Bring the network in from inside the Docker container ([e01e4bd](https://github.com/OpenUserCSS/openusercss.org/commit/e01e4bd))
+
+
+### Features
+
+* **docs:** Add code of conduct ([00b2ac8](https://github.com/OpenUserCSS/openusercss.org/commit/00b2ac8))
+* **docs:** Add reminder to check for existing issues ([1eaf3c1](https://github.com/OpenUserCSS/openusercss.org/commit/1eaf3c1))
+* Enable test conditions with Docker ([8d053ea](https://github.com/OpenUserCSS/openusercss.org/commit/8d053ea))
+
+
+
 <a name="1.4.6"></a>
 ## [1.4.6](https://github.com/OpenUserCSS/openusercss.org/compare/v1.4.5...v1.4.6) (2018-06-17)
 
