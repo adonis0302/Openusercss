@@ -46,7 +46,7 @@
   "ava": {
     "require": [
       "babel-register",
-      "./test/helpers/ava-vue-helper"
+      "./test/helpers/vue"
     ]
   },
   "nyc": {
