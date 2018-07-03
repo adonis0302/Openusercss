@@ -24,6 +24,7 @@ ROOTLESS=$DEFAULT_ROOTLESS
 MANAGED_HOSTS=true
 FOR_TESTS=false
 ENV_FILE=.env.local
+CLEANUP_ONLY=false
 
 RED='\033[0;31m'
 ORANGE='\033[0;33m'
@@ -54,6 +55,7 @@ usage () {
   usage_example "-h --help" "Show this help message"
   usage_example "-t --trace" "Set verbose logging to file (default: $DEFAULT_TRACE)"
   usage_example "-d --domain" "Set the development domain (default: $DEFAULT_DOMAIN)" true
+  usage_example "-c --cleanup" "Run cleanup and exit"
   usage_example "-r --rootless" "Skip automations that require root access (default: $DEFAULT_ROOTLESS)"
   usage_example "-m --for-tests" "Whether of not the fake e-mail server should be used"
   printf "\\n"
@@ -280,6 +282,8 @@ cleanup () {
 
   info "Stopping and deleting containers"
   DOMAIN=$DOMAIN ENV_FILE=$ENV_FILE docker-compose -f dev.stack.yml down 2>&1 | log
+
+  docker-clean | log
 
   local jobcount
   jobcount=$(jobs -p | wc -l)
@@ -515,6 +519,9 @@ while [ "$1" != "" ]; do
       FOR_TESTS=true
       source .test.env
       ;;
+    -c | --cleanup)
+      CLEANUP_ONLY=true
+      ;;
     -x | --xx)
       printf "VALUE=%s\\n" $VALUE
       exit 0
@@ -531,10 +538,18 @@ done
 initialise
 countdown 2 "Takeoff"
 
+cleanup
+
+if [ "$CLEANUP_ONLY" = true ]; then
+  info "Only cleanup was requested, exiting"
+  exit 0
+fi
+
 info "Rotate"
 
 if [ "$FOR_TESTS" = true ]; then
   ENV_FILE=.test.env
+  DOCKER_ARGS=-d
 fi
 
 DOMAIN=$DOMAIN ENV_FILE=$ENV_FILE docker-compose -f dev.stack.yml build 2>&1 | log || error \
@@ -542,7 +557,19 @@ DOMAIN=$DOMAIN ENV_FILE=$ENV_FILE docker-compose -f dev.stack.yml build 2>&1 | l
 
 countdown 2 "Gear up"
 
-DOMAIN=$DOMAIN ENV_FILE=$ENV_FILE docker-compose -f dev.stack.yml run --rm dev.openusercss 2>&1 | log || error \
+DOMAIN=$DOMAIN ENV_FILE=$ENV_FILE docker-compose -f dev.stack.yml run $DOCKER_ARGS --rm dev.openusercss 2>&1 | log || error \
   "A runtime error occurred - There is likely additional logging output above" 1
 
-cleanup
+if [ "$FOR_TESTS" = false ]; then
+  cleanup
+else
+  info "Test mode enabled, waiting for services to come online - infinite timeout"
+
+  until curl --output /dev/null --silent --head --fail http://$DOMAIN; do
+    printf '.' | log
+    sleep 1
+  done
+
+  printf "\\n" | log
+  info "Services respond with non-error, resuming control"
+fi

@@ -1,5 +1,6 @@
 docker;docker -v#Docker version 18
 docker-compose;docker-compose -v#docker-compose version 1.21;https://github.com/docker/compose/releases/download/1.21.0/docker-compose-Linux-x86_64
+docker-clean;docker-clean --version#2.0;https://raw.githubusercontent.com/ZZROTDesign/docker-clean/v2.0.4/docker-clean
 id;id --version | head -1#(GNU coreutils) 8
 read;type read#is a shell builtin
 wait;type wait#is a shell builtin
